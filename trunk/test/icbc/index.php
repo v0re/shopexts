@@ -3,10 +3,10 @@
 define("MERCCERTFILE",dirname(__FILE__)."/LSSMKJ.crt");
 define("MERCRRVIFILE",dirname(__FILE__)."/LSSMKJ.key");
 define("ICBCCERTFILE",dirname(__FILE__)."/admin.key");
-define("MERCPASSWORD",'88870705');
-define("MERID",'1203EC20001060');
-define("MERACCT",'1203202019045150941');
-define("MERID",'1203EC20001060');
+define("MERCPASSWORD",'xxxx');
+define("MERID",'xxxx');
+define("MERACCT",'xxx');
+define("MERID",'xxx');
 
 
 $action = $_GET['action'];
