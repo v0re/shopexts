@@ -1,0 +1,20 @@
+#!/bin/sh
+
+BASEDIR='../../../..'
+. $BASEDIR/config
+. $BASEDIR/functions
+
+DEPOT=$BASEDIR/$DEPOT
+
+pkgname='pcre'
+#ppkgname='nginx'
+
+extract $pkgname
+
+getSrcdir
+
+#pushd $srcdir 2>&1 >/dev/null
+#prefix=$INSTDIR/$ppkgname
+#cmd="./configure --prefix=$prefix"
+#compile $cmd
+#popd

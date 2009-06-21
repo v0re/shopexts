@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ -f config ] && . config
+[ -f functions ] && . functions
+
+
+for iterator in mysql nginx php proftpd ; do
+    work=work/$iterator
+    pushd $work > /dev/null
+    [ -f process ] && ./process
+    popd > /dev/null
+done

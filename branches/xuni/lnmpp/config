@@ -1,0 +1,30 @@
+#!/bin/sh
+
+
+ME="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+MEAT=$(dirname $ME)
+
+#directory list
+DEPOT=depot
+INSTDIR=/tmp/test
+
+#Web server settings
+RUNWEBUSR='apache'
+RUNWEBGRP='apache'
+DOMAINNAME='zzzforever.com'
+HTDOCS='/tmp/htdocs'
+test -d $HTDOCS || mkdir -p $HTDOCS
+
+#MySQL relative settings
+RUNMYSQLUSR='mysql'
+RUNMYSQLGRP='mysql'
+MYSQLUSR='root'
+MYSQLPWD='root'
+MYSQLDATADIR='/tmp/mysqldb'
+test -d $MYSQLDATADIR || mkdir -p $MYSQLDATADIR
+
+#misc settings
+FTPUSR='up'
+FTPPWD='go'
+SHOPEXPWD='admin'
+SHOPEXPWD='admin'

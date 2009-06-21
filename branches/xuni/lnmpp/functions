@@ -1,0 +1,101 @@
+#!/bin/sh
+
+#hight line echo
+msg () {
+    echo -e  "\E[31;40m""\033[1m$1\033[0m"
+    sleep 3
+}
+#para $1 package name like nginx php ....
+#it will automatic guess  version and compree type
+extract () {
+    local pkgname=$1
+    local tarball=$DEPOT/$(ls $DEPOT | grep $pkgname)
+    [ $tarball = $DEPOT/ ] && msg "$pkgname source file not found in $DEPOT" && exit
+    if [ -f $tarball ]
+    then
+        msg "Found source file $tarball , extract it now...."
+        local filetype=$(file $tarball | sed 's/\(.*\) \(.*\) compressed\(.*\)/\2/g')
+        case $filetype in
+            "gzip")
+                tar zxf $tarball -C src
+            ;;
+            "bzip2")
+                tar jxf $tarball -C src
+            ;;
+            *)
+                msg "$tarball isn't a compressed file"
+                exit
+            ;;
+        esac
+        msg "Extract $tarball to src  finished!"
+    else
+        msg "$tarball NOT exist"
+        exit
+    fi
+}
+#This is a recursive function
+getSrcdir () {
+    srcdir='src'
+    local pkgname=$1
+    for srcdir in $srcdir/$(ls $srcdir | grep $pkgname)
+    do
+        if [ $(ls $srcdir | wc -l) -gt 1 ] 
+        then
+            break
+        fi
+    done
+}
+
+setstat () {
+    sleep 3
+    echo "stat=$1" > $OLDPWD/.stat
+}
+
+getstat () {
+    local statfile=$OLDPWD/.stat
+    if [ -f $statfile ] ; then 
+        . $statfile
+    else
+        stat=-1
+    fi
+}
+
+compile () {
+    msg "we are going to do"
+    msg "$cmd"
+    getstat
+    if [ $stat -lt 1 ] ; then
+        eval $cmd
+        msg "configure finished!"
+        setstat 1
+    else
+        msg "configure has done at last time!"
+    fi
+    if [ $stat -lt 2 ] ; then
+        msg "make it now...."
+        make || exit
+        msg "make finished"
+        setstat 2
+    else
+        msg "make has done at last time"
+    fi
+    if [ $stat -lt 3 ] ; then
+        msg "install it now...."
+        make install || exit
+        msg "install finished"
+        setstat 9
+    else 
+        msg "install has done at last time"
+    fi
+    msg "all done"
+}
+
+replaceinfile () {
+    [ $# -ne 2 ] && exit
+    for iterator in $1
+    do 
+        replace=$(eval echo \$$iterator)
+        cmd="sed -i 's,$iterator,$replace,g' $2"
+        eval $cmd || exit
+    done
+}
