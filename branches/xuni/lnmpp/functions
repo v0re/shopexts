@@ -3,7 +3,7 @@
 #hight line echo
 msg () {
     echo -e  "\E[31;40m""\033[1m$1\033[0m"
-    sleep 3
+    sleep 1
 }
 #para $1 package name like nginx php ....
 #it will automatic guess  version and compree type
@@ -47,7 +47,6 @@ getSrcdir () {
 }
 
 setstat () {
-    sleep 3
     echo "stat=$1" > $OLDPWD/.stat
 }
 

@@ -7,20 +7,6 @@ BASEDIR='../..'
 
 DEPOT=$BASEDIR/$DEPOT
 
-#slove the depdence
-#if [ -d dep ];then
-#    for depmodule in $(ls dep)
-#    do
-#        pushd dep/$depmodule
-#        ./process
-#        popd
-#    done
-#fi
-
-#pcrehandler='dep/pcre/progress'
-#if [ -f $pcrehandler ] ; then
-#    . $pcrehandler
-#fi
 pkgname='pcre'
 extract $pkgname
 getSrcdir $pkgname
@@ -33,7 +19,7 @@ getSrcdir $pkgname
 prefix=$INSTDIR/$pkgname
 test -d $prefix && rm -rf $prefix  
 cmd="./configure --user=$RUNWEBUSR --group=$RUNWEBGRP  --prefix=$prefix --with-pcre=$pcresrcdir  --with-http_stub_status_module"
-echo $cmd >> .log
+echo $cmd > .log
 pushd $srcdir >/dev/null  
 compile $cmd
 popd >/dev/null
