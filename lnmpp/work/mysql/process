@@ -1,0 +1,49 @@
+#!/bin/sh
+ME="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+MEPATH=$(dirname $ME)
+BASEDIR='../..'
+. $BASEDIR/config
+. $BASEDIR/functions
+
+DEPOT=$BASEDIR/$DEPOT
+#
+pkgname='mysql'
+extract $pkgname
+getSrcdir $pkgname
+#
+prefix=$INSTDIR/$pkgname
+test -d $prefix && rm -rf $prefix  
+cmd="./configure  \
+--prefix=$prefix \
+--with-charset=utf8 \
+--with-collation=utf8_general_ci \
+--enable-thread-safe-client  \
+--with-extra-charsets=all \
+--with-client-ldflags=-all-static \
+--with-mysqld-ldflags=-all-static \
+--enable-assembler \
+--with-unix-socket-path=$MYSQLDATADIR \
+--without-debug \
+--with-pthread \
+--with-plugins=all
+"
+echo $cmd > .log
+pushd $srcdir >/dev/null  
+compile $cmd
+popd >/dev/null
+msg "$pkgname make complete!!"
+#
+pushd $prefix > /dev/null
+bin/mysql_install_db --user=$RUNMYSQLUSR --datadir=$MYSQLDATADIR
+chown $RUNMYSQLUSR:$RUNMYSQLGRP . -R
+chown $RUNMYSQLUSR:$RUNMYSQLGRP $MYSQLDATADIR -R
+popd > /dev/null
+test -d conf/tmp || mkdir conf/tmp
+/bin/cp -vf conf/my.ini conf/tmp/my.cnf
+replaceinfile "MYSQLDATADIR" 'conf/tmp/my.cnf'
+#
+confdir=$MYSQLDATADIR
+/bin/cp -vf conf/tmp/my.cnf $confdir
+rm -rf conf/tmp
+msg "$pkgname all done!!"
+

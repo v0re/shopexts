@@ -1,0 +1,45 @@
+#!/bin/sh
+
+[ -f functions ] &&  . functions
+
+case $1 in
+    
+    'clean')
+        for iterator in $(find . -type d -name "src") ; do
+            [ -d $iterator ] && rm -rf $iterator/* && msg "$iterator is clear"
+        done
+        msg "All done!"
+    ;;
+
+    'package')
+        pkgname='lnmpp.tar.gz'
+        [ -f $pkgname ] && rm -f $pkgname
+        here=$(basename $(pwd))
+        pushd .. > /dev/null
+        tar -zvcf  $pkgname $here --exclude "$here/depot/*" --exclude "\.*"
+        [ -f $pkgname ] && mv $pkgname $here/
+        popd > /dev/null
+      
+    ;;
+
+    'restat')
+        for iterator in $(find . -type f -name "\.stat") ; do
+            msg "Reset $iterator"
+            sed -i 's/stat=.*/stat=0/g' $iterator
+        done
+    ;;
+
+
+    *)
+        echo "
+Usage $0 option
+options:
+    clean       clean src temporary directory
+    package     make a distribution
+    restat      set compile stat to zero
+"
+    ;;
+
+esac
+
+#

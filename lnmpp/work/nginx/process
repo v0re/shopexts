@@ -1,0 +1,37 @@
+#!/bin/sh
+ME="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+MEPATH=$(dirname $ME)
+BASEDIR='../..'
+. $BASEDIR/config
+. $BASEDIR/functions
+
+DEPOT=$BASEDIR/$DEPOT
+
+pkgname='pcre'
+extract $pkgname
+getSrcdir $pkgname
+pcresrcdir=$MEPATH/$srcdir
+#
+pkgname='nginx'
+extract $pkgname
+getSrcdir $pkgname
+#
+prefix=$INSTDIR/$pkgname
+test -d $prefix && rm -rf $prefix  
+cmd="./configure --user=$RUNWEBUSR --group=$RUNWEBGRP  --prefix=$prefix --with-pcre=$pcresrcdir  --with-http_stub_status_module"
+echo $cmd > .log
+pushd $srcdir >/dev/null  
+compile $cmd
+popd >/dev/null
+msg "$pkgname make complete!!"
+#
+test -d conf/tmp || mkdir conf/tmp
+/bin/cp -vf conf/*.conf conf/tmp
+replaceinfile "RUNWEBUSR RUNWEBGRP DOMAINNAME HTDOCS" 'conf/tmp/nginx.conf'
+#
+confdir=$prefix/conf
+/bin/cp -vf conf/tmp/nginx.conf $confdir
+/bin/cp -vf conf/tmp/php_fcgi.conf $confdir
+rm -rf conf/tmp
+msg "$pkgname all done!!"
+
