@@ -1,0 +1,43 @@
+#!/bin/sh
+ME="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+MEPATH=$(dirname $ME)
+BASEDIR='../..'
+. $BASEDIR/config
+. $BASEDIR/functions
+
+DEPOT=$BASEDIR/$DEPOT
+#
+pkgname='php'
+extract $pkgname
+getSrcdir $pkgname
+#
+prefix=$INSTDIR/$pkgname
+test -d $prefix && rm -rf $prefix  
+cmd="./configure  \
+--prefix=$prefix \
+--with-config-file-path=$prefix/etc \
+--with-mysql=$MYSQLINSDIR \ 
+--with-freetype-dir=$freetypedir \
+--with-jpeg-dir=$jpegdir \
+--with-png-dir=$pngdir \
+--with-zlib=$zipdir \
+--with-gd \
+--with-libxml-dir=$libxmldir \
+--disable-debug \
+--disable-rpath \
+--enable-inline-optimization \
+--enable-mbregex \
+--enable-fastcgi \
+--enable-force-cgi-redirect \
+--enable-mbstring \
+--with-iconv-dir \
+--enable-fpm  
+"
+echo $cmd > .log
+pushd $srcdir >/dev/null  
+compile $cmd
+popd >/dev/null
+msg "$pkgname make complete!!"
+#
+msg "$pkgname all done!!"
+
