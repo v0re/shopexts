@@ -5,24 +5,42 @@ BASEDIR='../..'
 . $BASEDIR/config
 . $BASEDIR/functions
 
+
+rm -rf src/*
+
 DEPOT=$BASEDIR/$DEPOT
+#
+for pkgname in freetype png jpeg xml
+do
+    extract $pkgname
+    getSrcdir $pkgname
+    tmpdirname=$pkgname'dir'
+    eval "$tmpdirname=$MEPATH/$srcdir" 
+done
+
 #
 pkgname='php'
 extract $pkgname
 getSrcdir $pkgname
+#
+msg "patching php...."
+fpmfile=$DEPOT/fpm.diff.gz
+if [ -f $fpmfile ] ; then
+    gzip -cd  $fpmfile | patch -d $MEPATH/$srcdir -p1 > /dev/null
+fi
+msg "patched"
 #
 prefix=$INSTDIR/$pkgname
 test -d $prefix && rm -rf $prefix  
 cmd="./configure  \
 --prefix=$prefix \
 --with-config-file-path=$prefix/etc \
---with-mysql=$MYSQLINSDIR \ 
+--with-mysql=$INSTDIR/mysql  
 --with-freetype-dir=$freetypedir \
 --with-jpeg-dir=$jpegdir \
 --with-png-dir=$pngdir \
---with-zlib=$zipdir \
 --with-gd \
---with-libxml-dir=$libxmldir \
+--with-libxml-dir=$xmldir \
 --disable-debug \
 --disable-rpath \
 --enable-inline-optimization \
@@ -36,8 +54,19 @@ cmd="./configure  \
 echo $cmd > .log
 pushd $srcdir >/dev/null  
 compile $cmd
+#copy configure file
+/bin/cp -f php.ini-dist $prefix/etc/php.ini
 popd >/dev/null
 msg "$pkgname make complete!!"
 #
+msg "config fpm"
+if pushd $prefix/etc > /dev/null
+then
+    sedcmd="sed -i 's,<!--.*<value name=\"user\">nobody</value>.*-->,<value name=\"user\">apache</value>,' php-fpm.conf"
+    eval $sedcmd
+    sedcmd="sed -i 's,<!--.*<value name=\"group\">nobody</value>.*-->,<value name=\"user\">apache</value>,' php-fpm.conf"
+    eval $sedcmd
+fi
+
 msg "$pkgname all done!!"
 

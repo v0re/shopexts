@@ -1,0 +1,15 @@
+#!/bin/sh
+
+BASEDIR='../../../..'
+. $BASEDIR/config
+. $BASEDIR/functions
+
+DEPOT=$BASEDIR/$DEPOT
+
+pkgname='freetype'
+
+extract $pkgname
+#
+getSrcdir $pkgname
+
+echo $srcdir
