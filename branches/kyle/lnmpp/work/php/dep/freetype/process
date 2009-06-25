@@ -12,4 +12,4 @@ extract $pkgname
 #
 getSrcdir $pkgname
 
-echo $srcdir
+
