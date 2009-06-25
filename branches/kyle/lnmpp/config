@@ -11,6 +11,8 @@ INSTDIR=/tmp/test
 #Web server settings
 RUNWEBUSR='apache'
 RUNWEBGRP='apache'
+RUNWEBUSRID=$(id $RUNWEBUSR | sed 's,uid=\([0-9]*\)\((.*\),\1,g')
+RUNWEBGRPID=$(id $RUNWEBGRP | sed 's,uid=\(.*\) gid=\([0-9]*\)\((.*\),\2,g')
 DOMAINNAME='zzzforever.com'
 HTDOCS='/tmp/htdocs'
 test -d $HTDOCS || mkdir -p $HTDOCS
@@ -24,7 +26,12 @@ MYSQLDATADIR='/tmp/mysqldb'
 test -d $MYSQLDATADIR || mkdir -p $MYSQLDATADIR
 
 #misc settings
+RUNFTPUSR=$RUNWEBUSR
+RUNFTPGRP=$RUNWEBGRP
+RUNFTPUSRID=$RUNWEBUSRID
+RUNFTPGRPID=$RUNWEBGRPID
 FTPUSR='up'
 FTPPWD='go'
+#
 SHOPEXPWD='admin'
 SHOPEXPWD='admin'

@@ -1,0 +1,33 @@
+#!/bin/sh
+ME="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+MEPATH=$(dirname $ME)
+BASEDIR='../..'
+. $BASEDIR/config
+. $BASEDIR/functions
+
+DEPOT=$BASEDIR/$DEPOT
+#
+pkgname='proftpd'
+extract $pkgname
+getSrcdir $pkgname
+#
+prefix=$INSTDIR/$pkgname
+cmd="./configure  \
+--prefix=$prefix \
+--with-modules=mod_sql:mod_sql_mysql:mod_quotatab:mod_quotatab_sql
+--with-includes=$INSTDIR/mysql/include/mysql \
+--with-libraries=$INSTDIR/mysql/lib/mysql  
+"
+echo $cmd > .log
+pushd $srcdir >/dev/null  
+compile $cmd
+popd >/dev/null
+msg "$pkgname make complete!!"
+#
+[ -d conf/tmp ] ||  mkdir conf/tmp
+/bin/cp -f conf/proftpd.conf conf/tmp/
+replaceinfile "RUNFTPUSR RUNFTPGRP FTPUSR FTPPWD HTDOCS" 'conf/tmp/proftpd.conf'
+/bin/cp -f conf/tmp/proftpd.conf $prefix/etc/proftpd.conf
+#
+msg "$pkgname all done!!"
+
