@@ -26,8 +26,15 @@ msg "$pkgname make complete!!"
 #
 [ -d conf/tmp ] ||  mkdir conf/tmp
 /bin/cp -f conf/proftpd.conf conf/tmp/
-replaceinfile "RUNFTPUSR RUNFTPGRP FTPUSR FTPPWD HTDOCS" 'conf/tmp/proftpd.conf'
+/bin/cp -f conf/user.conf conf/tmp/
+PREFIX=$prefix
+replaceinfile "RUNFTPUSR RUNFTPGRP FTPUSR FTPPWD HTDOCS PREFIX" 'conf/tmp/proftpd.conf'
+cmd="perl -e 'print crypt(\"$FTPPWD\",\"proftpd\")'"
+FTPPWD=$(eval $cmd)
+replaceinfile "FTPUSR FTPPWD RUNFTPUSRID RUNFTPGRPID HTDOCS" 'conf/tmp/user.conf'
 /bin/cp -f conf/tmp/proftpd.conf $prefix/etc/proftpd.conf
+/bin/cp -f conf/tmp/user.conf $prefix/etc/user.conf
+rm -rf conf/tmp
 #
 msg "$pkgname all done!!"
 

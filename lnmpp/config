@@ -38,7 +38,7 @@ FTPPWD='go'
 SHOPEXPWD='admin'
 SHOPEXPWD='admin'
 
-if [ $1='--list' ] ; then
+if [ "$1" = "--list" ] ; then
 		for iterator in $(cat $0 | grep  "^[A-Z].*" | sed 's,\([A-Z]*\)=.*,\1,g')
 		do
 			echo $iterator=$(eval "echo \$$iterator")
