@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. ../functions
+. ../config
+
+TTTT='kyle'
+TTTTTT='xuni'
+
+cp $0.conf $0.conf.bak
+replaceinfile "TTTT TTTTTT" "$0.conf.bak"
+cat $0.conf.bak
+rm $0.conf.bak

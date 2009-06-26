@@ -89,9 +89,22 @@ compile () {
     msg "all done"
 }
 
+sortbylength () {
+    [ $# -ne 1 ] && exit
+    sortedstr=$(
+        for iterator in $1 
+        do  
+            wlength=$(echo $iterator | wc -m); 
+            echo "$iterator $wlength"; 
+        done | sort -n -k 2 -r | cut -d ' ' -f1 | tr "\n" " "
+    )
+}
+
 replaceinfile () {
     [ $# -ne 2 ] && exit
-    for iterator in $1
+    #$1 should be quoted by double quotation mark
+    sortbylength "$1"
+    for iterator in $sortedstr
     do 
         replace=$(eval echo \$$iterator)
         cmd="sed -i 's,$iterator,$replace,g' $2"
