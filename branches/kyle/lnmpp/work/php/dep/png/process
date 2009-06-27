@@ -6,7 +6,7 @@ BASEDIR='../../../..'
 
 DEPOT=$BASEDIR/$DEPOT
 
-pkgname='freetype'
+pkgname='png'
 
 extract $pkgname
 #

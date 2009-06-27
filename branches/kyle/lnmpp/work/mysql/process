@@ -12,7 +12,7 @@ extract $pkgname
 getSrcdir $pkgname
 #
 prefix=$INSTDIR/$pkgname
-test -d $prefix && rm -rf $prefix  
+#test -d $prefix && rm -rf $prefix  
 cmd="./configure  \
 --prefix=$prefix \
 --with-charset=utf8 \

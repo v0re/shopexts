@@ -10,12 +10,11 @@ rm -rf src/*
 
 DEPOT=$BASEDIR/$DEPOT
 #
-for pkgname in freetype png jpeg xml
+for iterator in $(ls dep)
 do
-    extract $pkgname
-    getSrcdir $pkgname
-    tmpdirname=$pkgname'dir'
-    eval "$tmpdirname=$MEPATH/$srcdir" 
+	pushd dep/$iterator > /dev/null
+	[ -f process ] && ./process
+	popd > /dev/null
 done
 
 #
@@ -26,12 +25,18 @@ getSrcdir $pkgname
 msg "patching php...."
 fpmfile=$DEPOT/fpm.diff.gz
 if [ -f $fpmfile ] ; then
-    gzip -cd  $fpmfile | patch -d $MEPATH/$srcdir -p1 > /dev/null
+    gzip -cd  $fpmfile | patch -d $MEPATH/$srcdir -p1 > /dev/null 
 fi
 msg "patched"
 #
 prefix=$INSTDIR/$pkgname
-test -d $prefix && rm -rf $prefix  
+freetype=$prefix
+jpegdir=$prefix
+pngdir=$prefix
+xmldir=$prefix
+zlibdir=$prefix
+#
+#test -d $prefix && rm -rf $prefix  
 cmd="./configure  \
 --prefix=$prefix \
 --with-config-file-path=$prefix/etc \
@@ -39,6 +44,7 @@ cmd="./configure  \
 --with-freetype-dir=$freetypedir \
 --with-jpeg-dir=$jpegdir \
 --with-png-dir=$pngdir \
+--with-zlib-dir=$zlibdir \
 --with-gd \
 --with-libxml-dir=$xmldir \
 --disable-debug \

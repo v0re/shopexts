@@ -1,4 +1,0 @@
-#!/usr/bin/perl 
-
-print  $encrypted_string = crypt('kyle','proftpd');
-
