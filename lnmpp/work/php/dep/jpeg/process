@@ -6,16 +6,17 @@ BASEDIR='../../../..'
 
 DEPOT=$BASEDIR/$DEPOT
 
-pkgname='freetype'
+pkgname='jpeg'
 
 extract $pkgname
 #
 getSrcdir $pkgname
 
 prefix=$INSTDIR/php
-
+mandir=$prefix/man/man1
+[ -d $mandir ] || mkdir -p $mandir 
 cmd="
-./configure --prefix=$prefix
+./configure --prefix=$prefix --mandir=$mandir
 "
 echo $cmd > .log
 pushd $srcdir > /dev/null
