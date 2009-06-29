@@ -8,6 +8,8 @@ BASEDIR='../..'
 DEPOT=$BASEDIR/$DEPOT
 #
 pkgname='mysql'
+#
+rm -rf src/*
 extract $pkgname
 getSrcdir $pkgname
 #
