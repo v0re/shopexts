@@ -1,0 +1,673 @@
+<script>
+/*fix Image size*/
+var fixProductImageSize=function(images,ptag){
+        if(!images||!images.length)return;
+         images.each(function(img){
+             if(!img.src)return;
+             new Asset.image(img.src,{
+                  onload:function(){
+                  if(!this||!this.get('width'))return;
+                  var imgparent=img.getParent((ptag||'a'));
+				  var imgpsize={x:imgparent.getTrueWidth(),y:imgparent.getTrueHeight()};
+				  var nSize=this.zoomImg(imgpsize.x,imgpsize.y,true);
+                  img.set(nSize);
+                  var _style={'margin-top':0};
+                  if(img.get('height').toInt()<imgpsize.y){
+    				     _style=$merge(_style,{'margin-top':(imgpsize.y-img.get('height').toInt())/2});
+    				  }
+                     img.setStyles(_style);
+                     return true;
+                  }
+             });
+         });
+};
+
+window.addEvent('load',function(){
+         var Imgs_1=$$('#goods-rels .goodpic img');
+         var Imgs_2=$$('#goods-viewer .goods-detail-pic-thumbnail img');
+         var Imgs_3=$$('#goods-viewer .GoodsPackageWrap .goodpic img');
+        try{
+         fixProductImageSize($$(Imgs_1,Imgs_2,Imgs_3));
+         }catch(e){}
+    });
+</script>
+
+
+<div class="GoodsInfoWrap">
+<div id="goods-viewer">
+  <table width="100%">
+  <tr>
+    <td valign="top" align="center" class="goodspic">
+    <div class="goods-detail-pic" style='<{if $env.small_pic_width !=0 && $env.small_pic_height !=0}> width:<{$env.small_pic_width}>px;height:<{$env.small_pic_height}>px;<{/if}>'>
+        <a href="<{link ctl=product act=viewpic arg0=$goods.goods_id arg0=$goods.goods_id arg1=def}>" target="_blank" style="visibility: visible; opacity: 1; margin-top: 8px;">
+            <img  src="<{$goods.image_default|gimage:'small'}>"  alt="<{$goods.name}>"/></a>
+    </div>
+    <div class="goods-detail-pic-thumbnail">
+    <{assign var="key" value=0}>
+	<{if $goods.image_file}>
+    <{section name=thumb loop=$goods.image_file max=4}>
+      <a href="<{link ctl=product act=viewpic arg0=$goods.goods_id arg0=$goods.goods_id arg1=$key}>" target="_blank">
+         <img src="<{$goods.image_file[thumb]|gimage:'thumbnail'}>" alt='<{$goods.name}>' width='45' height='45'/>
+      </a>
+    <{assign var="key" value=$key+1}>
+    <{/section}>
+	<{/if}>
+    <span style='clear:both'></span>
+    </div>
+    <div style="clear:both"></div>
+    <a href="<{link ctl=product act=viewpic arg0=$goods.goods_id arg0=$goods.goods_id arg1=def}>" target="_blank"><{img src="statics/icons/btn_goods_gallery.gif" alt="查看商品相册"}></a>
+    </td>
+    <td width="60%" valign="top">
+<!------------------------------------ 购买区域 开始 -------------------------------->
+    <h1 class="goodsname"><{$goods.name|escape:"html"}></h1>
+    <{if $goods.brief}>
+    <p class="brief"><{$goods.brief}></p>
+    <{/if}>
+      <ul class="goodsprops clearfix">
+        <{if $goods.bn}><li><span><{t}>货　　号：<{/t}></span><span id="goodsBn"><{$goods.bn}></span></li><{/if}>
+        <{if $goods.weight && $goods.weight != 0.000 }><li><span><{t}>商品重量：<{/t}></span><{$goods.weight}><{t}> 克(g)<{/t}></li><{/if}>
+        <{if $goods.brand_name}><li><span><{t}>品　　牌：<{/t}></span><{$goods.brand_name}></li><{/if}>
+        <{if $goods.unit}><li><span><{t}>计量单位：<{/t}></span><{$goods.unit}></li><{/if}>
+		<li><span><{t}>订购次数：<{/t}></span><{if $goods.buy_count}><{$goods.buy_count}><{else}>0<{/if}></li>
+		<li><span><{t}>浏览次数：<{/t}></span><{if $goods.view_count}><{$goods.view_count}><{else}>0<{/if}></li>
+        <{if $goods.setting.score && $goods.score}><li><span><{t}>所得积分：<{/t}></span><span id="goodsScore"><{$goods.score}></span><{/if}>
+    <{if $trading.score && $trading.score <>$goods.score}><li><{t}>特价积分：<{/t}><{$trading.score}></li><{/if}>
+    <{foreach from=$goods.prototype.props item=prop key=key}>
+      <{assign var="pkey" value=p_$key}>
+      <{assign var="pcol" value=$goods.$pkey}>
+      <{if trim($pcol) !== ''}>
+      <li>
+      <span><{$prop.name}>：</span>
+      <{if $prop.type == 'select'}>
+        <{$prop.options[$pcol]}>
+      <{else}>
+        <{$pcol}>
+      <{/if}>
+          </li>
+      <{/if}>
+    <{/foreach}>
+
+        <{if $goods.mktprice && $goods.setting.mktprice}>
+      <li >
+        <span><{t}>市场价：<{/t}></span><i class="mktprice1"><{$goods.mktprice|cur}></i>
+      </li>
+    <{/if}>
+    <{if count($goods.products)<1 && !$goods.adjunct}>
+      <li >
+        <span><{t}>销售价：<{/t}></span>
+      <span class="price1"><{$goods.price|cur}></span>
+      <{if $goods.mktprice > $goods.price && $goods.setting.mktprice && $goods.setting.saveprice > 0}>
+            <li><span class="discount">折扣：<{if $goods.setting.saveprice == 1}><{$goods.mktprice-$goods.price|cur}>
+          <{else}><{$goods.price/$goods.mktprice*100|number}>%<{/if}></span></li>
+      
+      <{/if}>
+      </li>
+    <{/if}>
+      </ul>
+      
+      <{if count($promotions)>0}>
+      <ul class="boxBlue list">
+        <{foreach from=$promotions item=promotion key=key}>
+          <li><{$promotion.pmt_describe}><span class="font11px fontcolorBlack"><{$promotion.pmt_time_begin|userdate}> ~ <{$promotion.pmt_time_end|userdate}></span></li>
+        <{/foreach}>
+    </ul>
+      <{/if}>
+    
+    <{if $goods.spec || $goods.adjunct && count($goods.adjunct)>0}>
+        <div id="goods-interact">
+    <div class="userselect">
+    <{if $goods.spec}>
+        <table width="100%" cellpadding="0" cellspacing="0" class="goodsspec">
+            <{foreach from=$goods.spec item=spec key=key name="goodsSpec"}>
+                <tr>
+                    <td width="10%"><{$spec}>：</td>
+              <td><select name="spec" spec="<{$key}>" title="<{$spec}>">
+                        <option value="_"><{t}>—请选择—<{/t}></option>
+                        <{foreach from=$goods.specinfo[$key] item=a key=value}>
+                        <option value="<{$value}>"><{$value}></option>
+                        <{/foreach}>
+                        </select></td>
+                </tr>
+            <{/foreach}>
+        </table>
+        <{/if}>
+<!------------------------------------ 货品 开始 -------------------------------->
+<{if count($goods.products)>0}>
+  <table width="100%" cellpadding="3" cellspacing="0" class="liststyle goods-products" style="display:none">
+    <thead>
+      <tr>
+        <th width="30">&nbsp;</th>
+        <{foreach from=$goods.spec item=spec key=key}>
+          <th><{$spec}></th>
+        <{/foreach}>
+        <th class="ident"><{t}>货号<{/t}></th>
+        <th class="price"><{t}>价格<{/t}></th>
+      </tr>
+    </thead>
+    <tbody>
+    <{foreach from=$goods.products item=item}>
+    <tr product="<{$item.product_id}>" bn="<{$item.bn}>" info="<{$item.params_tr}>"<{if $item.store!==null && $item.store !=='' && ($item.store - $item.freez <= 0)}> nostore="nostore"<{/if}>>
+        <td><input type="radio" name="product" value="<{$item.product_id}>" /></td>
+      <{foreach from=$item.props.spec key=key item=value}>
+      <td><{$value}></td>
+      <{/foreach}>
+      <td class="ident"><{$item.bn}></td>
+      <td class="price" price="<{$item.price|cur:null:true}>"><{$item.price|cur}><{if 0&&($item.store - $item.freez<= 0)}>&nbsp;<span style="color:#f00"><{t}>缺货<{/t}></span><{/if}>
+      <{foreach from=$item.mprice item=mpitem key=mpkey}>
+      <input type="hidden" id="mprice_<{$item.product_id}>_<{$mpkey}>" value="<{$mpitem|cur}>"/>
+      <{/foreach}>
+      </td>
+    </tr>
+    <{/foreach}>
+    </tbody>
+  </table>
+<{/if}>
+
+<!------------------------------------ 配件 开始 -------------------------------->
+<{if $goods.adjunct && count($goods.adjunct)>0}>
+    <{foreach from=$goods.adjunct item=adj key="adj_key"}>
+    <div class="choose">
+    <div class="adjtitle"><{$adj.name}><em><{if $adj.min_num || $adj.max_num}><{t}>可选 <{/t}><{if $adj.min_num == $adj.max_num}><{$adj.min_num}><{else}><{$adj.min_num|default:0}>-<{$adj.max_num}><{/if}><{t}> 件<{/t}><{/if}></em><span adj="<{$adj.name}>"></span></div>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tbody class="goods-adjunct-row" adjkey="<{$adj_key}>" adjname="<{$adj.name}>" min_num="<{$adj.min_num|default:0}>" max_num="<{$adj.max_num|default:-1}>" >
+    <{foreach from=$adj.items item=items key="key" name=adjitems}>
+      <tr price="<{$items.adjprice|cur:null:true}>" product="<{$items.goods_id}>" <{if $smarty.foreach.adjitems.last}>class="last"<{/if}>>
+        <td width="5%" valign="top"><input type="checkbox" name="adj[<{$items.product_id}>]" value="<{$items.product_id}>" id="adj_<{$adj_key}>_<{$key}>" /></td>
+        <td width="55%"><label for="adj_<{$adj_key}>_<{$key}>">
+          <p class="adjpc">
+          <a<{if $items.marketable == 'true' && $items.disabled == 'false'}> href="<{link ctl="product" act="index" arg0=$items.goods_id}>" target="_blank" title="<{$items.name}>"<{/if}>>
+          <{$items.name}><{if $items.pdt_desc}>[<{$items.pdt_desc}>]<{/if}></a></p>
+            <{if $items.price != $items.adjprice}>
+            <span class="mktprice"><{t}>原价格：<{/t}><i><{$items.price|cur}></i></span>&nbsp;&nbsp;&nbsp;&nbsp;<{/if}><span class="memberprice"><{t}>配件价格：<{/t}><i><{$items.adjprice|cur}></i></span>
+            </label>
+        </td>
+        <td><{t}>数量：<{/t}><input size="1" length="2" type="text" class="inputstyle"  class="buynum" name="buynum" value="<{if $adj.min_num == 0}>1<{else}><{$adj.min_num|default:1}><{/if}>" /><span class="adj-total-price" style="display:none"><{$items.adjprice|cur}></span></td>
+        <td<{if $items.marketable == 'false' || $items.disabled == 'true'}> style="display:none"<{/if}>><a title="您可以单把独这个商品加入购物车" buy="<{$items.goods_id}>" product="<{$items.product_id}>" type="g" href="<{link ctl="cart" act="addGoodsToCart" arg0=$items.goods_id arg1=$items.product_id}>" <{if $goods.setting.buytarget==2}> target="_blank_cart"<{elseif $goods.setting.buytarget==0}> target="_blank"<{/if}> class="addtocart" rel="nofollow"><{img src="statics/icons/btn_adj_buy.gif" alt="您可以单把独这个商品加入购物车"}></a></td>
+      </tr>
+    <{/foreach}>
+    </tbody>
+    </table>
+    </div>
+    <{/foreach}>
+<{/if}>
+
+<!------------------------------------ 信息区 -------------------------------->
+    <div class="goodsaction" id="goodsdynamic">
+        <strong><{t}>总价：<{/t}></strong><span class="memberprice"><i class="g-total-price"></i></span>
+        <p class="g-msg">
+        </p>
+    </div>
+</div>
+<div class="userselectfoot"></div>
+</div>
+<{/if}>
+
+<!------------------------------------ 购买 开始 -------------------------------->
+<form class="goods-action" action="<{link ctl=cart act=addGoodsToCart}>" gnotify="<{link ctl=product act=gnotify}>" method="post"<{if $goods.setting.buytarget==2}> target="_blank_cart"<{elseif $goods.setting.buytarget==0}> target="_blank"<{/if}>>
+<input type="hidden" name="goods[goods_id]" value="<{$goods.goods_id}>">
+<input type="hidden" name="goods[pmt_id]" value="<{$goods.pmt_id}>">
+<table width="100%" class="goodsactionhidden" style="display:none;">
+  <tr>
+    <td width="60%"><p class="g-product"></p>
+  <p class="g-adjunct"></p></td>
+    <td align="right"><{t}>销售价：<{/t}><strong class="g-total-price"></strong></td>
+  </tr>
+</table>
+<div class="btnBar">
+  <div class="floatLeft">
+        <input class="actbtn btn-buy" value="加入购物车" type="submit">
+        <input style="display: none;" class="actbtn btn-notify" value="缺货登记" type="submit">
+    </div>
+    <ul class="floatLeft">
+      <li <{if $login!="nologin"}>star="<{$goods.goods_id}>"<{/if}> title="<{$goods.name}>" class="star-off"><a <{if $login=="nologin"}> href="<{link ctl="passport" act="login"}>" <{else}>href="#" rel="nofollow" onclick="return false;" <{/if}> class="btn-fav"><{t}>收藏此商品<{/t}></a></li>
+        <!-- <li><a href="#" class="btn-send"><{t}>发送给好友<{/t}></a></li> -->
+    </ul>
+</div>
+<div class="x-adjuncts"></div>
+
+</form>
+
+<!--<div class="lnks" style="display:none;"><a href="#"><{t}>加入收藏<{/t}></a>|<a href="#"><{t}>发给好友<{/t}></a>|<a href="#"><{t}>复制链接<{/t}></a>|<a href="#"><{t}>查看批发方案<{/t}></a></div>-->
+<!------------------------------------ 购买区域 结束 -------------------------------->
+    </td>
+  </tr>
+  <tr>
+  <td></td>
+  <td>
+
+<div id="product-level-price">
+<{if $mLevel}>
+    <ul class="goodsprops clearfix">
+    <{foreach from=$mLevel item=mlitem}>
+        <li><span><{$mlitem.name}>：</span>
+        <span id="e_mprice_<{$mlitem.member_lv_id}>"></span>
+        <input type="hidden" class="m-level" value="<{$mlitem.member_lv_id}>"/>
+        </li>
+    <{/foreach}>
+    </ul>
+<{/if}>
+</div>
+
+<{if count($goods.products)==0}>
+<{foreach from=$goods.mprice item=mpitem key=mpkey}>
+<input type="hidden" id="mprice_<{$goods.product_id}>_<{$mpkey}>" value="<{$mpitem|cur}>" />
+<{/foreach}>
+
+<script>
+(function(){
+    if($('product-level-price').value=='')
+        return;
+    $('product-level-price').style.display='';
+    $ES('input[class=m-level]').each(function(me,mv){
+        $('e_mprice_'+me.value).innerHTML=$('mprice_<{$goods.product_id}>_'+me.value).value
+    });
+})()
+</script>
+<{/if}>
+</td>
+  </tr>
+  </table>
+<div style="clear:both"></div>
+
+
+<{if count($package)>0}>
+<div class="goodspackagewrap clearfix">
+<div class="active"><span><{t}>捆绑销售<{/t}></span></div>
+</div>
+<div class="GoodsPackageWrap">
+  <{foreach from=$package item=package key=key name=packageitems}>
+    <div class="items <{if $smarty.foreach.packageitems.last}>last<{/if}>">
+          <div class="itemwrap">
+            <table cellpadding="0" cellspacing="0">
+            <tr valign="top">
+      <{foreach from=$package.items item=items name=packagetd}>
+            <td>
+      <dl>
+        <dt class="goodpic">
+            <a<{if $items.marketable == 'true' && $items.disabled == 'false' && $items.goods_id != $goods.goods_id}> href="<{link ctl="product" act="index" arg0=$items.goods_id}>" target="_blank" title="<{$items.name}>"<{/if}>>
+              <img src="<{$items.image_default|gimage:'thumbnail'}>" width="55" height="55" alt="<{$items.name}>"/></a>
+          </dt>
+        <dd><a<{if $items.marketable == 'true' && $items.disabled == 'false' && $items.goods_id != $goods.goods_id}> href="<{link ctl="product" act="index" arg0=$items.goods_id}>" target="_blank" title="<{$items.name}>"<{/if}>><{$items.name}></a><span class="fontcolorOrange">×<{$items.pkgnum}></span><br /><{t}>价格:<{/t}><span class="fontcolorBlack fontbold"><{$items.price|cur}></span></dd>
+      </dl>
+            </td>
+            <{if !$smarty.foreach.packagetd.last}><td class="plus">+</td><{/if}>
+            <{/foreach}>
+            </tr>
+            </table>
+          </div>
+    <ul class="priceinfo">
+          <li><h3><{$package.name}><span class="desc"><{$package.intro}></span></h3></li>
+      <li class="mktprice1"><{t}>原价：<{/t}><{$package.mktprice|cur}></li>
+      <li class="price1"><{t}>捆绑价：<{/t}><{$package.price|cur}></li>
+            <li class="huered"><{if $package.mktprice > $package.price && $goods.setting.mktprice && $goods.setting.saveprice > 0}>
+        折扣：
+        <{if $goods.setting.saveprice == 1}><{$package.mktprice-$package.price|cur}>
+        <{else}><{$package.price/$package.mktprice*100|number}>%<{/if}><{/if}>
+            </li>
+      <li><a rel="nofollow" href="<{link ctl="cart" act="addPkgToCart" arg0=$package.goods_id arg1=1}>"<{if $goods.setting.buytarget == 2}> target="_blank_cart"<{elseif $goods.setting.buytarget == 0}> target="_blank"<{/if}>><{img class="buy" src="statics/icons/btn_pkg_buy.gif" alt="购买"}></a></li>
+    </ul>
+        <div class="clear"></div>
+    </div>
+  <{/foreach}>
+</div>
+<{/if}>
+
+
+<div class="goods-detail-tab clearfix">
+</div>
+<div class="clear"></div>
+<{foreach from=$addons item=tmpl}>
+  <{require file=$tmpl}>
+<{/foreach}>
+
+<{if count($goods.params)>0 && $goods.params}>  
+<div class="section pdtdetail" tab="详细参数" visible="hide" style="display:none">
+<h2><{t}>详细参数<{/t}></h2>
+<div class="body"  id="goods-params">
+<table width="100%" cellpadding="0" cellspacing="0" class="liststyle data">
+<colgroup class="span-4 ColColorGray fontcolorBlack"></colgroup>
+  <{foreach from=$goods.params item=params key=group}>
+  <tr><td colspan="2" class="colspan ColColorGraydark"><{$group}><span class="gname"></span></td></tr>
+    <{foreach from=$params item=value key=key}>
+        <{if $value != ''}>
+      <tr><th><{$key}></th><td><{$value|default:'-'}></td></tr>
+        <{/if}>    
+        <{/foreach}>
+  <{/foreach}>
+  </table>
+</div>
+</div>
+<{/if}>
+
+<{if $goods.intro}>
+<div class="section pdtdetail" tab="详细介绍">
+
+<div class="body indent" id="goods-intro">
+<{$goods.intro}>
+</div>
+</div>
+<{/if}>
+
+
+<{if $goods.link_count > 0}>
+<div class="section pdtdetail" tab="相关商品">
+<h2><{t}>相关商品<{/t}></h2>
+<div class="body" id="goods-rels">
+  <div class="GoodsSearchWrap">
+    <table width="100%" border="0" cellpadding="0" cellspacing="6">
+  <tr valign="top"> <{foreach from=$goods.link item=linklist name=goods}>
+    <td class="items-gallery" product="<{$linklist.goods_id}>" width="25%">
+    <div class="goodpic" align='center'>
+    <a href="<{link ctl="product" act="index" arg0=$linklist.goods_id}>" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_width !=0}> width:<{$env.thumbnail_pic_height}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>;padding:0;margin:0 auto;'>
+     <img src="<{$linklist.thumbnail_pic|gimage:'thumbnail'}>"/>
+     </a> </div>
+      <div class="goodinfo">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td colspan="2"><h6 style="text-align:center"><a href="<{link ctl="product" act="index" arg0=$linklist.goods_id}>" title="<{$linklist.name}>"><{$linklist.name}></a></h6></td>
+          </tr>
+          <tr>
+            <td><ul>
+                <li><span class="price1"><{$linklist.price|cur}></span></li>
+				<{if $goods.setting.mktprice}>
+                <li><span class="mktprice1"><{$linklist.mktprice|cur}></span></li>
+				<{/if}>
+              </ul></td>
+            <td><ul class="button">
+                <li><a class="viewpic" href="<{link ctl=product act=viewpic arg0=$linklist.goods_id arg1=def}>" target="_blank"><{t}>查看图片<{/t}></a></li>
+        <{assign var="dddd" value="333"}>
+                <{goodsmenu product=$linklist setting=$setting login=$login}>
+              </ul></td>
+          </tr>
+        </table>
+      </div></td>
+    <{if !($smarty.foreach.goods.iteration%4)}> </tr>
+  <{if !$smarty.foreach.goods.last}>
+  <tr valign="top"> <{/if}>
+    
+    <{elseif $smarty.foreach.goods.last}>
+    <td colspan="<{math equation='4 - y' y=$smarty.foreach.goods.iteration%4}>">&nbsp;</td>
+  </tr>
+  <{/if}>
+  <{/foreach}>
+</table>
+  </div>
+</div>
+</div>
+
+<{/if}>
+
+<{if $sellLog.display.switch  && $sellLogList.data|@count > 0 && $sellLog.display.limit <= $sellLogList.data|@count }>
+<div class="section pdtdetail" tab="销售记录">
+<h2><{t}>销售记录<{/t}></h2>
+<div class="body">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="liststyle">
+    <col class="span-5"> 
+    <col class="span-3"> 
+    <col > 
+    <col class="span-3"> 
+    <thead>
+        <tr>
+            <th>买家</th>
+            <th>购买价</th>
+            <th>购买数量</th>
+            <th>购买时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <{foreach from=$sellLogList.data item=sellLogListData key=key}>
+        <tr>
+            <td><{$sellLogListData.name|substr:0:2}>***</td>
+            <td><{$sellLogListData.price}></td> 
+            <td><{$sellLogListData.number}>  <{if $sellLogListData.pdt_desc}><span class="fontcolorGray">( <{$sellLogListData.pdt_desc}> )</span><{/if}> </td>
+            <td><{$sellLogListData.createtime|userdate}></td>
+        </tr>
+        <{/foreach}>
+        
+        
+        </tbody>
+    </table>
+<div class="tips">截至今日， 累计成交<span class="font14px fontbold fontcolorOrange"><{$sellLogList.total}></span>笔<{if $sellLogList.total > $sellLogList.data|@count}><a href="<{link ctl=product act=selllog arg0=$goods.goods_id}>" target="_blank">，查看更多...</a><{/if}></div>
+</div>
+
+</div>
+<{/if}>
+
+
+<{if $comment.switch.ask == 'on'}>
+<div class="section pdtdetail" tab="购买咨询(<em><{$comment.askCount|default:'0'}></em>)">
+<h2><{t}>购买咨询<{/t}><span><a href="<{link ctl="comment" act="commentlist" arg0=$goods.goods_id arg1="ask"}>"><{t}>（已有<{/t}><{$comment.askCount|default:'0'}><{t}>条咨询）<{/t}></a></span></h2>
+<div class="FormWrap">
+<{if count($comment.list.ask) == 0}>
+<div class="boxBlue division">
+<{$comment.null_notice.ask}>
+</div>
+<{else}>
+<div class=" Comments" id="goods-comment">
+<{foreach from=$comment.list.ask item=comlist name=asklist}>
+
+
+
+  <div class="division boxBlue clearfix" >
+    <div class=" floatLeft commentMain">
+    <span class="author fontcolorOrange"><{$comlist.author}><!--<{if $comlist.levelname!=""}> [<{$comlist.levelname}>]<{/if}> --></span> <{t}>说：<{/t}>
+    <span class="timpstamp font10px fontcolorGray"><{$comlist.time|cdate:'SDATE_STIME'}></span>
+    <div><{$comlist.comment|escape:'html'}></div>
+    </div><a class="floatRight lnk " href="<{link ctl="comment" act="reply" arg0=$comlist.comment_id}>" arg1="ask"><{t}>回复此评论<{/t}></a>
+    </div>
+    <div class="commentReply prepend-1">
+    <{foreach from=$comlist.items item=items}>
+    <div class="division  item " style=" margin-top:0;" >
+    <span class="author fontcolorOrange"><{$items.author}><!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}> --> <{t}>回复：<{/t}></span>
+    <span class="timpstamp font10px fontcolorGray"><{$items.time|cdate:'SDATE_STIME'}></span>
+    <div><{$items.comment}></div>
+    </div>
+ <{/foreach}> 
+ </div>    
+    
+
+ 
+ 
+<{/foreach}>
+</div>
+<div class="textright"><a href="<{link ctl="comment" act="commentlist" arg0=$goods.goods_id arg1="ask"}>"><{t}>查看所有咨询&gt;&gt;<{/t}></a></div>
+<{/if}>
+
+<form class="addcomment" method="post" action="<{link ctl="comment" act="toComment" arg0=$goods.goods_id arg1="ask"}>">
+  <h4><{t}>发表咨询<{/t}></h4>
+  <div class="division">
+      <table border="0" width="100%" cellpadding="0" cellspacing="0" class="forform">
+          <tr>
+            <th><em>*</em><{t}>咨询标题：<{/t}></th>
+                <td><{input type="text" class="inputstyle"  required="true" size=50 name="title"}></td>
+            </tr>
+           <tr>
+           <th><em>*</em><{t}>联系方式：<{/t}></th>
+                <td><{input type="text" class="inputstyle"  required="true" size=20 name="contact"}><span class="infotips"><{t}>(可以是电话、email、qq等)<{/t}></span></td>
+            </tr>
+            <tr>
+            <th><em>*</em><{t}>咨询内容：<{/t}></th>
+              <td><{input type="textarea" class="inputstyle"  required="true" rows="5" name="comment" style="width:80%;"}></td>
+            </tr>
+            <tr>
+            <{if $askshow == "on"}>
+            <th><em>*</em><{t}>验证码：<{/t}></th>
+              <td><{input type="text" required="true" size="4" maxlength="4" name="askverifyCode"}>&nbsp;<img src="<{link ctl="passport" act="verifyCode" arg0="ask"}>" border="1" id="askimgVerifyCode"/><a href="javascript:changeimg('askimgVerifyCode','ask')">&nbsp;看不清楚?换个图片</a></td>
+            </tr>
+            <{/if}>
+            <tr>
+            <td></td>
+              <td><input type="submit" value="提交咨询"></td>
+            </tr>
+        </table>
+  </div>
+</form>
+</div>
+</div>
+<{/if}>
+
+<{if $comment.switch.discuss == 'on'}>
+<div class="section pdtdetail" tab="商品评论 (<em><{$comment.discussCount|default:'0'}></em>)">
+<h2><{t}>商品评论<{/t}><span><a href="<{link ctl="comment" act="commentlist" arg0=$goods.goods_id arg1="discuss"}>"><{t}>（已有<{/t}><em><{$comment.discussCount|default:'0'}></em><{t}>条评论）<{/t}></a></span></h2>
+<div class="FormWrap">
+<{if count($comment.list.discuss) == 0}>
+<div class="boxBrown division">
+<{$comment.null_notice.discuss}>
+</div>
+<{else}>
+<div class=" Comments" id="goods-comment">
+<{foreach from=$comment.list.discuss item=comlist name=discusslist}>
+
+
+
+  <div class="division boxBrown clearfix" >
+    <div class=" floatLeft commentMain">
+    <span class="author fontcolorOrange"><{$comlist.author}><!--<{if $comlist.levelname!=""}> [<{$comlist.levelname}>]<{/if}> --></span> <{t}>说：<{/t}>
+    <span class="timpstamp font10px fontcolorGray"><{$comlist.time|cdate:'SDATE_STIME'}></span>
+    <div><{$comlist.comment|escape:'html'}></div>
+    </div><a class="floatRight lnk " href="<{link ctl="comment" act="reply" arg0=$comlist.comment_id}>" arg1="ask"><{t}>回复此评论<{/t}></a>
+    </div>
+    <div class="commentReply prepend-1">
+    <{foreach from=$comlist.items item=items}>
+    <div class="division  item " style=" margin-top:0;" >
+    <span class="author fontcolorOrange"><{$items.author}><!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}> --> <{t}>回复：<{/t}></span>
+    <span class="timpstamp font10px fontcolorGray"><{$items.time|cdate:'SDATE_STIME'}></span>
+    <div><{$items.comment}></div>
+    </div>
+ <{/foreach}> 
+ </div>    
+
+<{/foreach}>
+</div>
+<div class="textright"><a href="<{link ctl="comment" act="commentlist" arg0=$goods.goods_id arg1="discuss"}>"><{t}>查看所有评论&gt;&gt;<{/t}></a></div>
+<{/if}>
+
+<form class="addcomment" method="post" action="<{link ctl="comment" act="toComment" arg0=$goods.goods_id arg1="discuss"}>">
+  <h4><{t}>发表评论<{/t}></h4>
+  <div class="division">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="forform">
+          <tr>
+            <th><em>*</em><{t}>评论标题：<{/t}></th>
+                <td><{input type="text" class="inputstyle"  required="true" size=50 name="title"}></td>
+            </tr>
+           <tr>
+           <th><em>*</em><{t}>联系方式：<{/t}></th>
+                <td><{input type="text" class="inputstyle"  required="true" size=20 name="contact"}><span class="infotips"><{t}>(可以是电话、email、qq等)<{/t}></span></td>
+            </tr>
+            <tr>
+            <th><em>*</em><{t}>评论内容：<{/t}></th>
+              <td><{input type="textarea" class="inputstyle"  required="true" rows="5" name="comment" style="width:80%;"}></td>
+            </tr>
+            <{if $discussshow == "on"}>
+            <tr>
+            <th><em>*</em><{t}>验证码：<{/t}></th>
+                <td><{input type="text" required="true" size="4" maxlength="4" name="discussverifyCode"}>&nbsp;<img src="<{link ctl="passport" act="verifyCode" arg0="discuss"}>" border="1" id="discussimgVerifyCode"/><a href="javascript:changeimg('discussimgVerifyCode','discuss')">&nbsp;看不清楚?换个图片</a>
+                </td>
+            </tr>
+            <{/if}>
+            <tr>
+            <td></td>
+              <td><input type="submit" value="提交评论"></td>
+            </tr>
+        </table>
+  </div>
+</form>
+</div>
+</div>
+<{/if}>
+
+<{if count($gift)>0}>
+<div class="section pdtdetail" tab="赠品">
+<h2><{t}>赠品<{/t}></h2>
+<div class="body" id="goods-gift">
+  <div class="GoodsSearchWrap">
+    <{foreach from=$gift item=gift key=key}>
+      <div class="items-list" product="<{$gift.gift_id}>">
+      <div class="goodpic">
+      <{input type="checkbox" name="g[]" value=$gift.goods_id }>
+      <a href="<{link ctl="product" act="index" arg0=$gift.goods_id}>" title="<{$gift.name}>" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_width !=0}> width:<{$env.thumbnail_pic_height}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>
+     overflow:hidden;text-align:center;vertical-align: middle;margin:0px auto; line-height:<{$env.small_pic_height}>px;'>
+        <img src="<{$goods.image_default|gimage:'thumbnail'}>" alt="<{$gift.name}>"/></a></div>
+      <div class="goodinfo">
+        <h6><a href="<{link ctl="gift" act="index" arg0=$gift.gift_id}>" title="<{$gift.name}>"><{$gift.name}></a></h6>
+        <ul>
+        <li class="intro"><{$gift.intro}></li>
+        <li><{$gift.describe}></li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+      </div>
+      <{/foreach}>
+  </div>
+</div>
+</div>
+<{/if}>
+
+<{if count($coupon)>0}>
+<div class="section pdtdetail" tab="可得优惠券">
+<h2><{t}>可得优惠券<{/t}></h2>
+<div class="body" id="goods-coupon">
+  <ul style="padding:5px 20px;">
+  <{foreach from=$coupon item=coupon key=key}>
+    <li><{$coupon.cpns_name}></li>
+  <{/foreach}>
+  </ul>
+</div>
+</div>
+<{/if}>
+
+
+<!-- <{if count($bound)>0}>
+<div class="section pdtdetail" tab="捆绑促销">
+<h2><{t}>捆绑促销<{/t}></h2>
+<div class="body" id="goods-bound">
+  
+</div>
+</div>
+<{/if}> -->
+
+</div>
+</div>
+
+<script language="javascript">
+window.addEvent('domready', function(){
+try{
+  new ProductViewer('goods-viewer',{name:'<{$goods.name|replace:"'":"\'"}>',basePrice:'<{$goods.price}>',money_format:<{$money_format|default:'null'}>,scoresetting:'<{$goods.setting.score}>',scorerate:'<{$goods.setting.scorerate}>'<{if count($goods.products)<1}>,productName:'<{$goods.name|escape:'quotes'}>',nostore:'<{if $goods.store===null || $goods.store===''}>9999<{else}><{$goods.store}><{/if}>',productId:'<{$goods.product_id}>'<{/if}>});
+}catch(e){}
+
+try{
+  var goodsPic = new GoodsPic(<{$env.small_pic_width}>,<{$env.small_pic_height}>,{
+     readingGlass:<{$readingGlass|default:0}>,
+	 readingGlassWidth:<{$readingGlassWidth|default:0}>,
+	 readingGlassHeight:<{$readingGlassHeight|default:0}>
+  });
+}catch(e){}
+
+try{
+  var productTabViewer = new ProductTabViewer();
+  }catch(e){}
+
+ 
+  
+});
+/*设置浏览过的商品*/
+window.withUStatus(function(uStatus){
+  uStatus.get('history',function(history){
+  history=JSON.decode(history);
+  if(!history||$type(history)!=='array')history=[];
+   if(history.length==40){history.pop()};
+   var newhis={'goodsId':<{$goods.goods_id}>,
+               'goodsName':'<{$goods.name|replace:"'":"\'"}>',
+               'goodsImg':'<{$goods.image_default|gimage:thumbnail|replace:"'":"\'"}>'
+              };
+   if(history.filter(function(i){return i['goodsId']==newhis['goodsId']}).length<1)
+   history.include(newhis);
+   uStatus.set('history',history);
+  
+  });
+});
+
+function changeimg(id,type){
+    $(id).set('src','<{link ctl="passport" act="verifyCode" arg0="'+type+'"}>#'+$time());
+}
+</script>
