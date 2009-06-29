@@ -26,7 +26,7 @@
 								$dirName = dirname($truePath);		//文件目录名
 								$baseName = basename($truePath);	//文件名
 								//判断是否定义FLAG常量为upper
-								if (defined('FLAG') && FLAG=='upper')
+								if (defined('IS_LOWER') && FLAG==false)
 								{
 									$flag = '大写';
 									$toLowerFileName = strtoupper($baseName);		//转换文件名为大写
@@ -66,7 +66,7 @@
 		set_time_limit(0);
 		error_reporting(E_ALL^E_NOTICE);
 		
-		//define(FLAG,'upper');			//定义常量FLAG,为upper(即大写) 默认为小写
+		//define(IS_LOWER,false);			//定义常量IS_LOWER,true为小写,false为大写 默认为小写
 		$i = 0;
 		fileToLower('images/goods');	//在此修改要改写的目录
 		echo '总共修改了<font color="red">'. $i .'</font>个文件<br />';
