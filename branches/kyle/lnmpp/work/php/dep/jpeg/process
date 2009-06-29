@@ -7,7 +7,8 @@ BASEDIR='../../../..'
 DEPOT=$BASEDIR/$DEPOT
 
 pkgname='jpeg'
-
+#
+rm -rf src/*
 extract $pkgname
 #
 getSrcdir $pkgname

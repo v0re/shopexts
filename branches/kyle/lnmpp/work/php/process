@@ -30,7 +30,7 @@ fi
 msg "patched"
 #
 prefix=$INSTDIR/$pkgname
-freetype=$prefix
+freetypedir=$prefix
 jpegdir=$prefix
 pngdir=$prefix
 xmldir=$prefix
@@ -70,7 +70,7 @@ if pushd $prefix/etc > /dev/null
 then
     sedcmd="sed -i 's,<!--.*<value name=\"user\">nobody</value>.*-->,<value name=\"user\">$RUNWEBUSR</value>,' php-fpm.conf"
     eval $sedcmd
-    sedcmd="sed -i 's,<!--.*<value name=\"group\">nogroup</value>.*-->,<value name=\"user\">$RUNWEBGRP</value>,' php-fpm.conf"
+    sedcmd="sed -i 's,<!--.*<value name=\"group\">nobody</value>.*-->,<value name=\"user\">$RUNWEBGRP</value>,' php-fpm.conf"
     eval $sedcmd
 fi
 

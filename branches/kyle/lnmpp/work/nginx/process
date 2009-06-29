@@ -8,6 +8,8 @@ BASEDIR='../..'
 DEPOT=$BASEDIR/$DEPOT
 
 pkgname='pcre'
+#
+rm -rf src/*
 extract $pkgname
 getSrcdir $pkgname
 pcresrcdir=$MEPATH/$srcdir
@@ -33,5 +35,10 @@ confdir=$prefix/conf
 /bin/cp -vf conf/tmp/nginx.conf $confdir
 /bin/cp -vf conf/tmp/php_fcgi.conf $confdir
 rm -rf conf/tmp
+#
+echo "<?php phpinfo();" > $HTDOCS/index.php
+#
+chown $RUNWEBUSR:$RUNWEBGRP $HTDOCS -R
+#
 msg "$pkgname all done!!"
 

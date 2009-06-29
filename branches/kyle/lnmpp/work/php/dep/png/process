@@ -6,6 +6,8 @@ BASEDIR='../../../..'
 
 DEPOT=$BASEDIR/$DEPOT
 
+#
+rm -rf src/*
 pkgname='png'
 
 extract $pkgname

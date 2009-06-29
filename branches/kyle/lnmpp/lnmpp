@@ -1,0 +1,109 @@
+#!/bin/sh
+
+ME="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+MEAT=$(dirname $ME)
+
+msg () {
+    echo -e  "\E[31;40m""\033[1m$1\033[0m"
+}
+
+isused () {
+    if netstat -an | egrep ":$1 .*LISTEN" > /dev/null
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+getprocnamebyport () {
+    procname=$(netstat -tlnp | grep ":$1 .*LISTEN" | awk '{print $7}' | awk -F '/' '{print $2}')
+    msg "$procname is listening port $1"
+}
+
+killbyport () {
+    getprocnamebyport $1
+    if [ -n $procname ] ; then
+        msg "we are going to kill $procname"
+        killall $procname && msg "$procname was killed"
+        #recursive kill
+        if isused 80 ; then
+            killbyport $1
+        fi
+    fi
+}
+
+checkport () {
+    if isused $1 ; then
+        killbyport $1 
+    fi
+}
+#nginx 
+startnginx () {
+    checkport 80
+    #
+    msg "starting nginx..."
+    nginxdir=$MEAT/nginx
+    if [ -d nginx  ] ; then
+        pushd nginx > /dev/null
+        ulimit -SHn 51200
+        sbin/nginx
+        popd > /dev/null
+    fi
+    #
+    if isused 80  ; then
+        msg "start nginx  successful!"
+    else
+        msg "start nginx failed!"
+    fi
+}
+
+stopnginx() {
+    killbyport 80
+}
+
+#php fast cgi
+
+startphp () {
+    checkport 9000
+    #
+    msg "starting php fast cgi"
+    if [ -d php ] ; then
+        pushd php > /dev/null
+        ulimit -SHn 51200
+        sbin/php-fpm start
+        popd > /dev/null
+    fi
+    #
+    if isused 9000 ; then
+        msg "start php fast cgi sucessful!"
+    else
+        msg "start php fast cgi failed!"
+    fi
+}
+
+stopphp () {
+    killbyport 9000
+}
+
+
+################################################################################
+
+case $1 in
+    "start")
+        startnginx
+        startphp
+    ;;
+
+    "stop")
+        stopphp
+        stopnginx
+    ;;
+
+    *)
+        echo "Usage: $0 <action>"
+        echo ""
+        echo "  start        Start NMPP (Nginx, MySQL, PHP Fastcgi, ProFTPd)"
+    ;;
+
+esac
