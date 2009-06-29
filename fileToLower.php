@@ -1,16 +1,9 @@
 <?php 
-		set_time_limit(0);
-		error_reporting(E_ALL^E_NOTICE);
+
 		/**
 		 **	此函数实现将一个目录下的的所有文件重命名为小写(包含子目录)		 	
 		 **
 		 */
-		
-		//define(FLAG,'upper');			//定义常量FLAG,为upper(即大写) 默认为小写
-		$i = 0;
-		fileToLower('images/goods');	//在此修改要改写的目录
-		echo '总共修改了<font color="red">'. $i .'</font>个文件<br />';
-
 		function fileToLower($srcDir)		//$srcDir = 源目录
 		{
 			global $i;		//全局变量$i 记录重命名的文件数目		
@@ -69,4 +62,12 @@
 				echo $srcDir.'不是正确的目录';
 			}			
 		}
+
+		set_time_limit(0);
+		error_reporting(E_ALL^E_NOTICE);
+		
+		//define(FLAG,'upper');			//定义常量FLAG,为upper(即大写) 默认为小写
+		$i = 0;
+		fileToLower('images/goods');	//在此修改要改写的目录
+		echo '总共修改了<font color="red">'. $i .'</font>个文件<br />';
 ?>
