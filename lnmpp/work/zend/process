@@ -1,0 +1,34 @@
+#!/bin/sh
+ME="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+MEPATH=$(dirname $ME)
+BASEDIR='../..'
+. $BASEDIR/config
+. $BASEDIR/functions
+
+DEPOT=$BASEDIR/$DEPOT
+#
+pkgname='zend'
+extract $pkgname
+#getSrcdir $pkgname
+#
+prefix=$INSTDIR/$pkgname
+[ -d $prefix ] mkdir $prefix
+/bin/cp -rf src/* $prefix
+phpinidir=$INSTDIR/php/etc
+phpini=$phpinidir/php.ini
+if [ -f $phpini ] ; then
+	pushd $phpinidir > /dev/null
+	/bin/cp php.ini php.ini.$(date +%Y%m%d%H%M%S)
+	cat >>php.ini<<EOF
+[Zend]
+zend_extension_manager.optimizer=$INSTDIR/zend/lib/Optimizer-3.3.3
+zend_extension_manager.optimizer_ts=$INSTDIR/zend/lib/Optimizer_TS-3.3.3
+zend_optimizer.version=3.3.3
+zend_extension=$INSTDIR/zend/lib/ZendExtensionManager.so
+zend_extension_ts=$INSTDIR/zend/lib/ZendExtensionManager_TS.so
+EOF
+	popd > /dev/null
+fi
+#
+msg "$pkgname all done!!"
+

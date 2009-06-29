@@ -25,9 +25,10 @@ killbyport () {
     getprocnamebyport $1
     if [ -n $procname ] ; then
         msg "we are going to kill $procname"
-        killall $procname && msg "$procname was killed"
+		kill -9 $(ps -ef | grep $procname)
+        #killall $procname && msg "$procname was killed"
         #recursive kill
-        if isused 80 ; then
+        if isused $1 ; then
             killbyport $1
         fi
     fi
@@ -62,6 +63,9 @@ stopnginx() {
     killbyport 80
 }
 
+testnginx() {
+	
+}
 #php fast cgi
 
 startphp () {
@@ -76,7 +80,7 @@ startphp () {
     fi
     #
     if isused 9000 ; then
-        msg "start php fast cgi sucessful!"
+        msg "start php fast cgi successful!"
     else
         msg "start php fast cgi failed!"
     fi
@@ -86,6 +90,28 @@ stopphp () {
     killbyport 9000
 }
 
+#proftpd
+
+startproftpd () {
+	checkport 21
+	#
+	msg "starting proftpd..."
+	if [ -d proftpd ] ; then
+		pushd proftpd > /dev/null
+		sbin/proftpd -c $(pwd)/etc/proftpd.conf
+		popd > /dev/null
+	fi
+	#
+	if isused 21 ; then
+		msg "start proftpd successful!"
+	else
+		msg "start proftpd failed!"
+	fi
+}
+
+stopproftpd () {
+	killbyport 21
+}
 
 ################################################################################
 
@@ -93,12 +119,18 @@ case $1 in
     "start")
         startnginx
         startphp
+		startproftpd
     ;;
 
     "stop")
+		stopproftpd
         stopphp
         stopnginx
     ;;
+
+	"test")
+		testnginx
+	;;
 
     *)
         echo "Usage: $0 <action>"
