@@ -25,7 +25,7 @@ killbyport () {
     getprocnamebyport $1
     if [ -n $procname ] ; then
         msg "we are going to kill $procname"
-		kill -9 $(ps -ef | grep $procname)
+		kill -9 $(ps -ef | grep $procname | grep -v 'grep' | awk '{print $2}')
         #killall $procname && msg "$procname was killed"
         #recursive kill
         if isused $1 ; then
@@ -39,17 +39,21 @@ checkport () {
         killbyport $1 
     fi
 }
+
+###################################################################################
+
 #nginx 
 startnginx () {
     checkport 80
     #
     msg "starting nginx..."
-    nginxdir=$MEAT/nginx
-    if [ -d nginx  ] ; then
-        pushd nginx > /dev/null
+    nginxctl=$MEAT/nginx/sbin/nginx
+    if [ -f $nginxctl  ] ; then
         ulimit -SHn 51200
-        sbin/nginx
-        popd > /dev/null
+        $nginxctl
+    else
+        msg "nginx controller not found!"
+        exit
     fi
     #
     if isused 80  ; then
@@ -64,19 +68,54 @@ stopnginx() {
 }
 
 testnginx() {
-	
+    nginxctl=$MEAT/nginx/sbin/nginx
+    [ -f $nginxctl ] && $nginxctl -t	
 }
+#
+
+startmysql () {
+    checkport 3306
+    #
+    msg "starting mysql..."
+    mysqlctl=$MEAT/mysql/share/mysql/mysql.server
+    if [ -f $mysqlctl ] ; then
+         $mysqlctl start
+    else 
+        msg "mysql controller not found!"
+        exit
+    fi
+    #
+    if isused 3306 ; then
+        msg "start mysql successful!"
+    else
+        msg "start mysql failed!"
+    fi
+}
+
+stopmysql () {
+    mysqlctl=$MEAT/mysql/share/mysql/mysql.server
+    if [ -f $mysqlctl ] ; then
+         $mysqlctl stop
+    else 
+        msg "mysql controller not found!"
+        exit
+    fi
+}
+
+#
 #php fast cgi
 
 startphp () {
     checkport 9000
     #
     msg "starting php fast cgi"
-    if [ -d php ] ; then
-        pushd php > /dev/null
+    phpfastcgictl=$MEAT/php/sbin/php-fpm
+    if [ -f $phpfastcgictl ] ; then
         ulimit -SHn 51200
-        sbin/php-fpm start
-        popd > /dev/null
+         $phpfastcgictl start
+    else
+        msg "php fastcgi controller not found!"
+        exit
     fi
     #
     if isused 9000 ; then
@@ -96,11 +135,14 @@ startproftpd () {
 	checkport 21
 	#
 	msg "starting proftpd..."
-	if [ -d proftpd ] ; then
-		pushd proftpd > /dev/null
-		sbin/proftpd -c $(pwd)/etc/proftpd.conf
-		popd > /dev/null
-	fi
+    proftpdctl=$MEAT/proftpd/sbin/proftpd
+    proftpdetc=$MEAT/proftpd/etc/proftpd.conf
+	if [ -f $proftpdctl ] ; then
+	    $proftpdctl -c $proftpdetc
+    else
+        msg "proftpd controller not found!"
+        exit
+    fi
 	#
 	if isused 21 ; then
 		msg "start proftpd successful!"
@@ -118,6 +160,7 @@ stopproftpd () {
 case $1 in
     "start")
         startnginx
+        startmysql
         startphp
 		startproftpd
     ;;
@@ -125,6 +168,7 @@ case $1 in
     "stop")
 		stopproftpd
         stopphp
+        stopmysql
         stopnginx
     ;;
 
@@ -136,6 +180,8 @@ case $1 in
         echo "Usage: $0 <action>"
         echo ""
         echo "  start        Start NMPP (Nginx, MySQL, PHP Fastcgi, ProFTPd)"
+        echo "  stop         Stop NMPP (Nginx, MySQL, PHP Fastcgi, ProFTPd)"
+        echo "  test         Test NMPP (Nginx, MySQL, PHP Fastcgi, ProFTPd)"
     ;;
 
 esac
