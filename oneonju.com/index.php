@@ -9,7 +9,7 @@ ShopEx48版本数据转换框架，
 */
 set_time_limit(0);
 error_reporting(E_ALL^E_NOTICE);
-include_once("../config/config.php");
+include_once("config/config.php");
 $link=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD); 
 mysql_select_db(DB_NAME);
 
@@ -27,15 +27,15 @@ mysql_query("set names utf8");
 
 $do = new transfer;
 //
-$do->goodsCategory();
-$do->goodsBrand();
+//$do->goodsCategory();
+//$do->goodsBrand();
 $do->goodsDetail();
-$do->relaGoods();
-$do->goodsImage();
-$do->goodsComment();
+//$do->relaGoods();
+//$do->goodsImage();
+//$do->goodsComment();
 //
-$do->memberLevel();
-$do->memberDetail();
+//$do->memberLevel();
+//$do->memberDetail();
 
 
 class transfer{
@@ -46,25 +46,25 @@ class transfer{
 		
 		///////////////////////请修改这个区域///////////////////////////
 		$aMap = array(
-			'cat_id'					=>	'c_id',
-			'parent_id'				=>	0,
+			'cat_id'				=>	'PRODUCT_CATEGORY_ID',
+			'parent_id'				=>	'PRIMARY_PARENT_CATEGORY_ID',
 			'supplier_id'			=>	'',
-			'supplier_cat_id'	=>	'',
+			'supplier_cat_id'	    =>	'',
 			'cat_path'				=>	'',
-			'is_leaf'					=>	true,
-			'type_id'					=>	'',
-			'cat_name'				=>	'c_name',
+			'is_leaf'				=>	true,
+			'type_id'				=>	1,
+			'cat_name'				=>	'CATEGORY_NAME',
 			'disabled'				=>	'',
-			'p_order'					=>	'c_order',
+			'p_order'				=>	'',
 			'goods_count'			=>	0,
-			'tabs'						=>	'',
-			'finder'					=>	'',
-			'addon'						=>	'',
+			'tabs'					=>	'',
+			'finder'				=>	'',
+			'addon'					=>	'',
 			'child_count'			=>	0
 		);
 		$to = 'sdb_goods_cat';
-		$from = 'jk_class';
-		$where = 'nsort=\'shop\' group by c_id';
+		$from = 'product_category';
+		$where = '1=1 order by PRODUCT_CATEGORY_ID';
 		//////////////////////////////////////////////////
 		
 		$insertsql = $this->getInsertSQL($aMap,$to,$from,$where);		
@@ -72,29 +72,29 @@ class transfer{
 		echo "商品母分类转换完毕!<br>";
 	
 		/////////////////////////请修改这个区域////////////////////////
-		$aMap = array(
-			'cat_id'				=>	's_id',
-			'parent_id'			=>	'c_id',
+		/*$aMap = array(
+			'cat_id'			=>	'PRODUCT_CATEGORY_ID',
+			'parent_id'			=>	'',
 			'cat_path'			=>	'',
-			'is_leaf'				=>	true,
-			'type_id'				=>	'',
-			'cat_name'			=>	's_name',
+			'is_leaf'			=>	true,
+			'type_id'			=>	'',
+			'cat_name'			=>	'CATEGORY_NAME',
 			'disabled'			=>	'',
-			'p_order'				=>	's_order',
+			'p_order'			=>	'',
 			'goods_count'		=>	0,
-			'tabs'					=>	'',
-			'finder'				=>	'',
-			'addon'					=>	'',
+			'tabs'				=>	'',
+			'finder'			=>	'',
+			'addon'				=>	'',
 			'child_count'		=>	0
 		);
 		$to = 'sdb_goods_cat';
-		$from = 'jk_sort';
-		$where = ' c_id in (29,30,31,32,33,34,35,36,38,55) group by s_id ';
+		$from = 'product_category';
+		$where = ' c_id in (29,30,31,32,33,34,35,36,38,55) group by PRODUCT_CATEGORY_ID ';
 		//////////////////////////////////////////////////
 		
 		$insertsql = $this->getInsertSQL($aMap,$to,$from,$where);
 		$rs = $this->dbQ($insertsql);	
-		echo "商品子分类转换完毕!<br>";
+		echo "商品子分类转换完毕!<br>";*/
 		
 		//修正catpath
 		$this->rebuilidCatPath();
@@ -142,72 +142,72 @@ class transfer{
 		$this->truncate($aTable);
 		/////////////////////////////////////////插入商品表数据/////////////////////////////////
 		$aMap = array(		
-			'goods_id'			=>	'id',
-			'cat_id'				=>	's_id',
-			'type_id'				=>	'1',	//通用商品都是1
+			'goods_id'			=>	'PRODUCT_ID',
+			'cat_id'			=>	'',
+			'type_id'			=>	'1',	//通用商品都是1
 			'goods_type'		=>	'',
 			'brand_id'			=>	'',
-			'brand'					=>	'brand',
-			'image_default'	=>	'',
-			'udfimg'				=>	'',
-			'thumbnail_pic'	=>	'',
-			'small_pic'			=>	'smallimg',
-			'big_pic'				=>	'bigimg',
+			'brand'				=>	'',
+			'image_default'	    =>	'DETAIL_IMAGE_URL',
+			'udfimg'			=>	'',
+			'thumbnail_pic'	    =>	'',
+			'small_pic'			=>	'SMALL_IMAGE_URL',
+			'big_pic'			=>	'LARGE_IMAGE_URL',
 			'image_file'		=>	'',
-			'brief'					=>	'keyes',		//临时借用，稍后清空
-			'intro'					=>	'concat(remark_1,\'<br><br>\',remark_2)',
-			'mktprice'			=>	'price',
-			'price'					=>	'price*discount*0.01',
-			'bn'						=>	'concat(\'BN-\',substring_index(rand()*10000,\'.\',1),\'-\',substring_index(rand()*10000,\'.\',1))',
-			'name'					=>	'name',
+			'brief'				=>	'',		//临时借用，稍后清空
+			'intro'				=>	'LONG_DESCRIPTION',
+			'mktprice'			=>	'',
+			'price'				=>	'',
+			'bn'				=>	'concat(\'BN-\',substring_index(rand()*10000,\'.\',1),\'-\',substring_index(rand()*10000,\'.\',1))',
+			'name'				=>	'INTERNAL_NAME',
 			'marketable'		=>	'',
-			'weight'				=>	'',
-			'unit'					=>	'',
-			'store'					=>	99,
-			'score_setting'	=>	'',
-			'score'					=>	'',
-			'spec'					=>	'',
+			'weight'			=>	'',
+			'unit'				=>	'',
+			'store'				=>	'100',
+			'score_setting'	    =>	'',
+			'score'				=>	'',
+			'spec'				=>	'',
 			'pdt_desc'			=>	'',
-			'params'				=>	'',
-			'uptime'				=>	'unix_timestamp(tim)',
+			'params'			=>	'',
+			'uptime'			=>	'unix_timestamp(LAST_UPDATED_STAMP)',
 			'downtime'			=>	'',
 			'last_modify'		=>	'',
 			'disabled'			=>	'',
 			'notify_num'		=>	'',
-			'rank'					=>	'',
-			'rank_count'		=>	'hidden', //临时借用，稍后清空
-			'comments_count'=>	'',	
-			'view_w_count'	=>	'',
-			'view_count'		=>	'counter',
-			'buy_count'			=>	'buy_counter',
+			'rank'				=>	'',
+			'rank_count'		=>	'', //临时借用，稍后清空
+			'comments_count'    =>	'',	
+			'view_w_count'	    =>	'',
+			'view_count'		=>	'',
+			'buy_count'			=>	'',
 			'buy_w_count'		=>	'',
 			'count_stat'		=>	'',
-			'p_order'				=>	'',
-			'd_order'				=>	''
+			'p_order'			=>	'',
+			'd_order'			=>	''
 		);
 		$to = 'sdb_goods';
-		$from = 'shop_product';
-		$where = ' 1=1 group by id order by tim DESC';
+		$from = 'product';
+		$where = ' 1=1 order by LAST_UPDATED_STAMP DESC';
 		//////////////////////////////////////////////////////////////////////////////////////////
 		$insertsql = $this->getInsertSQL($aMap,$to,$from,$where);
 		$rs = $this->dbQ($insertsql);	
 		/////////////////////////////////////////货品表也要插入数据///////////////////////////////
 		$aMap = array(		
-			'product_id'	=>	'',
-			'goods_id'		=>	'goods_id',
-			'barcode'			=>	'',
-			'title'				=>	'',
-			'bn'					=>	'bn',
-			'price'				=>	'price',
-			'cost'				=>	'',
-			'name'				=>	'name',
-			'weight'			=>	'',
-			'unit'				=>	'',
-			'store'				=>	'',
-			'freez'				=>	'',
+			'product_id'	=>	'PRODUCT_ID',
+			'goods_id'		=>	'',
+			'barcode'		=>	'',
+			'title'			=>	'',
+			'bn'			=>	'bn',
+			'price'			=>	'',
+			'cost'			=>	'',
+			'name'			=>	'INTERNAL_NAME',
+			'weight'		=>	'',
+			'unit'			=>	'',
+			'store'			=>	'100',
+			'freez'			=>	'',
 			'pdt_desc'		=>	'',
-			'props'				=>	'',
-			'uptime'			=>	'uptime',
+			'props'			=>	'',
+			'uptime'		=>	'',
 			'last_modify'	=>	'',
 		);
 		$to = 'sdb_products';
@@ -234,18 +234,18 @@ class transfer{
 			$row['intro'] = addslashes(stripslashes($row['intro']));
 			//
 			if($row['rank_count'] == 1){
-				$marketable = '\'false\'';
-			}else{
 				$marketable = '\'true\'';
+			}else{
+				$marketable = '\'false\'';
 			}
 			$sql = "UPDATE sdb_goods SET intro='".$row['intro']."',marketable=".$marketable.",rank_count='0' WHERE goods_id='".$row['goods_id']."'";
 			$this->dbQ($sql,false);
 		}
 		//更新原商品编号
-		$sql = "SELECT id,serial FROM `shop_product` WHERE serial <> '' GROUP BY `serial`";
+		$sql = "SELECT PRODUCT_ID,PRODUCT_NAME FROM `product` WHERE PRODUCT_ID <> '' GROUP BY `PRODUCT_ID`";
 		$rs = $this->dbQ($sql,false);
 		while($row = mysql_fetch_array($rs)){
-			$sql = "UPDATE sdb_goods SET bn='".$row['serial']."' WHERE goods_id='".$row['id']."'";
+			$sql = "UPDATE sdb_goods SET bn='".$row['PRODUCT_ID']."' WHERE goods_id='".$row['id']."'";
 			$this->dbQ($sql,false);
 		}
 	}
@@ -291,23 +291,23 @@ class transfer{
 		
 		////////////////////////////////////////////////////
 		$aMap = array(
-			'comment_id'			=>	'rid',
-			'for_comment_id'	=>	'',	//null表示为主题，comment_id表示为comment_id主题的回复（包括管理员的）
-			'goods_id'				=>	're_id',
-			'object_type'			=>	'\'discuss\'',	//枚举类型ask:,discuss:评论,buy:
+			'comment_id'			=>	'',
+			'for_comment_id'	    =>	'',	//null表示为主题，comment_id表示为comment_id主题的回复（包括管理员的）
+			'goods_id'				=>	'',
+			'object_type'			=>	'',	//枚举类型ask:,discuss:评论,buy:
 			'author_id'				=>	'',
-			'author'					=>	'rusername',
+			'author'				=>	'',
 			'levelname'				=>	'',
-			'contact'					=>	'remail',
-			'mem_read_status'	=>	'',
-			'adm_read_status'	=>	'',
-			'time'						=>	'unix_timestamp(rtim)',
+			'contact'				=>	'',
+			'mem_read_status'	    =>	'',
+			'adm_read_status'	    =>	'',
+			'time'					=>	'unix_timestamp(rtim)',
 			'lastreply'				=>	'',
 			'reply_name'			=>	'',
-			'title'						=>	'',
-			'comment'					=>	'rword',
-			'ip'							=>	'',
-			'display'					=>	'\'true\''
+			'title'					=>	'',
+			'comment'				=>	'',
+			'ip'					=>	'',
+			'display'				=>	'\'true\''
 		);
 		$to = 'sdb_comments';
 		$from = 'review';
@@ -372,7 +372,7 @@ class transfer{
 			'name'					=>	'nname',
 			'lastname'			=>	'',
 			'firstname'			=>	'',
-			'password'			=>	'lcase(password)', //md5全部改小写，保持兼容性，16位的要修改mdl.account.php
+			'password'			=>	'password',
 			'area'					=>	'',
 			'mobile'				=>	'',
 			'tel'						=>	'phone',
@@ -458,9 +458,15 @@ class transfer{
 		$string = preg_replace("/\[(\/?center)\]/i","<\\1>",$string);
 		$string = preg_replace("/\[align=([a-zA-Z]+)\]/i","<p align=\\1>",$string);
 		$string = preg_replace("/\[(\/align)\]/i","<\\1>",$string);
-		$string = preg_replace("/\[url\=(.+)\](.+)\[\/url\]/i","<a href=\\1>\\2</a>",$string);
-		$string = preg_replace("/\[url\](.+)\[\/url\]/i","<a href=\\1>\\1</a>",$string);
-		$string = preg_replace("/\[img\](.+)\[\/img\]/i","<img src=\\1 />",$string);
+		//$string = preg_replace("/\[url\=(.+)\](.+)\[\/url\]/i","<a href=\\1 target=\"_blank\">\\2</a>",$string);
+		//$string = preg_replace("/\[url\](.+)\[\/url\]/i","<a href=\\1 target=\"_blank\">\\1</a>",$string);
+		//替换掉[url]标签
+		$string = preg_replace("/\[url\=(.+)\](.+)\[\/url\]/i","\\2",$string);
+		$string = preg_replace("/\[url\](.+)\[\/url\]/i","\\1",$string);
+		//统一给url加上链接
+		$string = preg_replace("/(.*)\s*(http:\/\/\S+)\s*(.*)/i","<a href=\\2 target=_blank>\\2</a>",$string);
+		//
+		$string = preg_replace("/\[img\](.+)\[\/img\]/i","<a href=\\1 target=\"_blank\"><img src=\\1 onload=\"javascript:if(this.width>500)this.width=500\"/></a>",$string);
 		$string = preg_replace("/\[color=(.+)\](.+)\[\/color\]/i","<font color=\\1>\\2</font>",$string);
 		$string = preg_replace("/\[size=([0-9]{1})\](.+)\[\/size\]/i","<font size=\\1>\\2</font>",$string);
 		$string = nl2br($string);
