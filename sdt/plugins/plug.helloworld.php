@@ -7,7 +7,7 @@ class helloworld {
 		switch($_REQUEST['action']){
 
 			case "show":
-				print_r($_POST);				
+				echo "您好 $_POST[name] ";
 			break;
 			
 			default:
@@ -18,10 +18,11 @@ class helloworld {
 
 	function showForm() {
 		echo <<<EOF
-<form name='hello' id='hello'>
+<form name='hello' id='hello' method=post>
+<input type=hidden name=module value=helloworld>
 <input type=hidden name=action value=show>
 请输入你的名字<input type=text name='name' >
-<input type=botton onclick=postdata(this,'helloword') value='提交'>
+<input type=submit value='提交'>
 
 </form>
 
