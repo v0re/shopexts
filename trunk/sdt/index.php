@@ -1,6 +1,7 @@
 <?php
 
 define('MEAT',dirname(__FILE__));
+define('PLUGINSDIR',MEAT."/plugins");
 
 include MEAT."/functions.php";
 
@@ -23,15 +24,26 @@ if(file_exists($configfile)){
 	}
 }
 
-$plugins = loadPlugins();
-#
-$module = $_REQUEST['module'];
-if($module){
-	#loadPlugins函数中已经把类文件包含进来了，这里可以直接new一个实例
-	$instance = new $module;
-	$instance->run();
-}else{
-#
+mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) or die(mysql_error());
+mysql_select_db(DB_NAME);
+
+#装载全部的插件
+
+$d = dir(PLUGINSDIR);
+$plugins = array();
+while (false !== ($iterator = $d->read())) {
+	if(@preg_match("/^plug\.(.+)\.php$/",$iterator,$rent)){
+		$classfilename = $rent[0];
+		$classname = $rent[1];
+		include(PLUGINSDIR."/$classfilename");
+		$instance = new $classname();
+		$classvars = get_class_vars(get_class($instance));
+		$plugins[$classname]['classfilename'] = $classfilename;
+		$plugins[$classname]['classvars'] = $classvars;
+	}
+}
+$d->close();
+
 ?>
 
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
@@ -43,31 +55,10 @@ if($module){
 	@import url( statics/css.css );
 </style>
 <script type="text/javascript" src="statics/ajax.js"></script>
-<script type=text/javascript>
-//<![cdata[
-	function updatecontentpage(result) {
-		contentpage = document.getElementById('ae-content');
-		contentpage.innerHTML = result.responseText;
-	}
-	
-	function loadmodule(name){
-		var url="index.php";//url地址
-		var pars="module="+name;
-		var myajax = new ajax(url,pars,updatecontentpage);
-		myajax.get();
-	}
-
-	function postdata(){
-		var url="index.php";//url地址
-		var pars="module="+name;
-		var myajax = new ajax(url,pars,updatecontentpage);
-		myajax.post();
-	}
-
-//]]>
-</script>
+<script type="text/javascript" src="statics/functions.js"></script>
 </head>
 <body>
+
 <div class=g-doc>
 <!-- header //-->
 <div id=hd class=g-section>
@@ -85,35 +76,30 @@ if($module){
 <ul id=menu>
 <?php
 	foreach($plugins as $classname=>$iterator) {
-		echo "<li><a class='handshape' onclick=loadmodule('".$classname."')>".$iterator['classvars']['label']."</a> </li>";
+		echo "<li><a href='?module=".$classname."'>".$iterator['classvars']['label']."</a> </li>";
 	}
 ?>
 </ul>
 </div>
 </div>
 <!-- end //-->
-<div id=ae-content class=g-unit></div>
+<div id=ae-content class=g-unit>
+<?php
+
+$module = $_REQUEST['module'];
+if($module){
+	#loadPlugins函数中已经把类文件包含进来了，这里可以直接new一个实例	
+	$instance = new $module;
+	$instance->run();
+}
+?>
+</div>
 <!-- end //-->
 </div>
 <!-- foot //-->
 <div id=ft>
 <p>©2009  Do something for better life </p></div>
 
-<script type=text/javascript>
-  //<![cdata[
 
-	function s() {
-		if(document.body.scrollheight>document.body.clientheight-30) {
-			scroll(0,document.body.scrollheight-document.body.clientheight+30);
-		}
-	}
-
-  //]]>
-  </script>
 </div></div></body></html>
 
-<?php
-
-}
-
-?>
