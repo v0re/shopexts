@@ -24,8 +24,16 @@ if(file_exists($configfile)){
 	}
 }
 
+if(!defined(DB_PORT)){
+	define('DB_PORT','3306');
+}
+if(!defined(DB_CHARSET)){
+	define('DB_CHARSET','utf8');
+}
+
 mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) or die(mysql_error());
 mysql_select_db(DB_NAME);
+mysql_query("set nmaes ".DB_CHARSET);
 
 #装载全部的插件
 
@@ -45,12 +53,11 @@ while (false !== ($iterator = $d->read())) {
 $d->close();
 
 ?>
-
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ShopEx工具箱</title>
-<meta content="text/html; charset=utf-8" http-equiv=content-type>
 <style type=text/css>
 	@import url( statics/css.css );
 </style>
