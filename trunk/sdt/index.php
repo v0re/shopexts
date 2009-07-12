@@ -33,7 +33,7 @@ if(!defined(DB_CHARSET)){
 
 mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) or die(mysql_error());
 mysql_select_db(DB_NAME);
-mysql_query("set nmaes ".DB_CHARSET);
+mysql_query("set names ".DB_CHARSET);
 
 #装载全部的插件
 
@@ -105,7 +105,7 @@ if($module){
 </div>
 <!-- foot //-->
 <div id=ft>
-<p>©2009  Do something for better life </p></div>
+<p>Do something for better life ©2009  </p></div>
 
 
 </div></div></body></html>

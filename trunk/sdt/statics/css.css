@@ -185,94 +185,7 @@ li {
  border-right: 0px;
  padding-top: 0px
 }
-table {
- border-bottom: 1px;
- border-left: 1px;
- padding-bottom: 1px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 0px;
- border-right: 0px;
- padding-top: 0px
-}
-caption {
- border-bottom: 0px;
- border-left: 0px;
- padding-bottom: 0px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 0px;
- border-right: 0px;
- padding-top: 0px
-}
-tbody {
- border-bottom: 0px;
- border-left: 0px;
- padding-bottom: 0px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 0px;
- border-right: 0px;
- padding-top: 0px
-}
-tfoot {
- border-bottom: 0px;
- border-left: 0px;
- padding-bottom: 0px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 0px;
- border-right: 0px;
- padding-top: 0px
-}
-thead {
- border-bottom: 0px;
- border-left: 0px;
- padding-bottom: 0px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 0px;
- border-right: 0px;
- padding-top: 0px
-}
-tr {
- border-bottom: 1px;
- border-left: 1px;
- padding-bottom: 0px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 1px;
- border-right: 1px;
- padding-top: 0px
-}
-th {
- border-bottom: 1px;
- border-left: 1px;
- padding-bottom: 0px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 1px;
- border-right: 1px;
- padding-top: 0px
-}
-td {
- border-bottom: 1px;
- border-left: 1px;
- padding-bottom: 0px;
- margin: 0px;
- padding-left: 0px;
- padding-right: 0px;
- border-top: 1px;
- border-right: 1px;
- padding-top: 0px
-}
+
 form {
  border-bottom: 0px;
  border-left: 0px;
@@ -343,14 +256,7 @@ a:active {
 a:visited {
  color: #551a8b
 }
-table {
- border-right-width: 0px;
- border-collapse: collapse;
- empty-cells: show;
- border-top-width: 0px;
- border-bottom-width: 0px;
- border-left-width: 0px
-}
+
 ul {
  padding-bottom: 1em;
  padding-left: 1em;
@@ -421,9 +327,7 @@ h4 {
 h5 {
  font-size: 1em
 }
-table {
- font-size: 1em
-}
+
 sup {
  font-size: 0.7em
 }
@@ -1437,7 +1341,8 @@ h1 {
 }
 .ae-table td {
  border-bottom: #c5d7ef 1px solid;
- border-top: #c5d7ef 1px solid
+ border-top: #c5d7ef 1px solid;
+ border-right: #c5d7ef 1px solid
 }
 .ae-even td {
  border-bottom: #c5d7ef 1px solid;
@@ -1622,9 +1527,6 @@ a.ae-nav-selected {
  color: #00c
 }
 
-
-
-
 #datastore_search {
  margin-bottom: 1em
 }
@@ -1651,50 +1553,7 @@ a.ae-nav-selected {
 #pagetotal .count {
  font-weight: bold
 }
-table.entities {
- border-bottom: #c5d7ef 1px solid;
- border-left: #c5d7ef 1px solid;
- width: 100%;
- border-collapse: collapse;
- margin-bottom: 0px;
- border-top: #c5d7ef 1px solid;
- border-right: #c5d7ef 1px solid
-}
-table.entities th {
- padding-bottom: 0.5em;
- padding-left: 0.5em;
- padding-right: 1.5em;
- padding-top: 0.25em
-}
-table.entities td {
- padding-bottom: 0.5em;
- padding-left: 0.5em;
- padding-right: 1.5em;
- padding-top: 0.25em
-}
-table.entities th {
- text-align: left;
- white-space: nowrap;
- background: #e5ecf9;
- font-weight: bold
-}
-table.entities th a {
- color: black;
- text-decoration: none
-}
-table.entities th a:visited {
- color: black;
- text-decoration: none
-}
-table.entities td {
- text-align: left;
- background-color: #fff;
- vertical-align: top;
- cursor: pointer
-}
-table.entities tr.even td {
- background-color: #f9f9f9
-}
+
 div.entities {
  background-color: #c5d7ef;
  margin-top: 0px
@@ -1728,4 +1587,11 @@ div.entities {
 .handshape {
 	cursor:hand;
 	cursor:pointer;
+}
+
+.iframelike{
+	width: 940px;
+	height: 355px;
+	overflow: auto;
+	border: #e5ecf9 1px solid;
 }
