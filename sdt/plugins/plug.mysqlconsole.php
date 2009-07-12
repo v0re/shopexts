@@ -5,6 +5,7 @@ class mysqlconsole {
 
 	var $sql;
 	var $logfile;
+	var $timecost;
 
 	function mysqlconsole() {
 		$this->logfile = MEAT.'/log/sql.log';
@@ -12,7 +13,6 @@ class mysqlconsole {
 
 	function run(){
 		switch($_REQUEST['action']){
-
 			case "query":
 				$this->sql = trim($_POST['sql']);
 				if(get_magic_quotes_gpc()){
@@ -20,30 +20,15 @@ class mysqlconsole {
 				}
 				$this->showForm();		
 				$this->wlog();
+				$t1=microtime(true);
 				$rs = mysql_query($this->sql) or die(mysql_error());
+				$this->timecost = microtime(true) - $t1;
+				#有查询结果用表格显示
 				if( in_array(strtolower(substr($this->sql,0,4)),array('sele','desc','show')) ){
-					echo "<p><table border=1>";
-					$i = 0;
-					while($row = mysql_fetch_array( $rs, MYSQL_ASSOC )){
-						if($i == 0 ){
-							echo "<tr>";
-							foreach(array_keys($row) as $val){
-								echo "<td>".$val."</td>";
-							}	
-							echo "<tr>";
-						}
-
-						echo "<tr>";
-						foreach($row as $val){
-								echo "<td>".htmlspecialchars($val)."</td>";			
-						}
-						echo "</tr>";	
-						$i++;		
-					}
-					echo "</table></p>";
+						$this->query($rs);
 				}else{
 					if($rs){
-						echo "命令执行成功";
+						echo "命令执行成功，花费了 {$this->timecost} ms";
 					}else{
 						echo "命令执行失败<br><p>".mysql_error()."</p>";
 					}
@@ -57,30 +42,58 @@ class mysqlconsole {
 	}
 
 	function showForm() {
-
 		$mysqluri = "mysql://".DB_USER.":".DB_PASSWORD."@".DB_HOST.":".DB_PORT."/".DB_NAME;
+		$sqllog = $this->rlog();
 		echo <<<EOF
-当前位置:{$mysqluri}
-<form method=post>
+<form method=post >
+当前位置:{$mysqluri} <input type=submit value='提交查询'> <br>
 <input type=hidden name=module value=mysqlconsole>
 <input type=hidden name=action value=query>
-<textarea name="sql" rows=9 cols=100 >{$this->sql}</textarea>
-<br>
-<input type=submit value='提交'>
-
+<textarea name="sql" rows=9 cols=70 >{$this->sql}</textarea><textarea rows=9 cols=70 >{$sqllog}</textarea>
 </form>
-
 EOF;
 	}
 
+	function query($rs){
+		echo "<div class='iframelike'>";
+		echo "<table class='ae-table'>";
+		$i = 0;
+		while($row = mysql_fetch_array( $rs, MYSQL_ASSOC )){
+			if($i == 0 ){
+				echo "<thead>";
+				foreach(array_keys($row) as $val){
+					echo "<th>".$val."</th>";
+				}	
+				echo "</thead>";
+			}
+			echo "<tr>";
+			foreach($row as $val){
+				echo "<td>".htmlspecialchars($val)."</td>";			
+			}
+			echo "</tr>";	
+			$i++;		
+		}
+		echo "</table>";
+		echo "</div>";
+	}
+
 	function wlog(){
-		$log = $this->sql;
-		$log = $log."\r\n";
-		error_log($log,3,$this->logfile);
+		if(strlen($this->sql) > 0){
+			$log = $this->sql;
+			$log = $log."\r\n";
+			error_log($log,3,$this->logfile);
+		}
 	}
 
 	function rlog(){
-		
+		/*读取最后三行，我们预期这个sql.log不会太大，所以直接用file，如果文件很大，要采用优化算法，可以参考这个：
+		*http://pgregg.com/projects/php/code/tail-10.phps
+		*/
+		$aTmp = file($this->logfile);
+		$aTmp = array_slice($aTmp,-5,5);
+		$aTmp = array_reverse($aTmp); 
+		$seperator = str_repeat('-',80)."\r\n";
+		return implode($seperator,$aTmp);
 	}
 }
 
