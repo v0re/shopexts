@@ -63,4 +63,19 @@ function AutoSizeDIV(objID){
 	obj.style.height = (document.documentElement.clientHeight - 310) + "px"; 
 }
 
+function ShowDialog(url) { 
+	var iWidth=800; //窗口宽度
+	var iHeight=400;//窗口高度
+	var iTop=(window.screen.height-iHeight)/2;
+	var iLeft=(window.screen.width-iWidth)/2;
+	window.open(url,"","Scrollbars=yes,Toolbar=no,Location=no,Direction=no,Resizeable=yes, Width="+iWidth+" ,Height="+iHeight+",top="+iTop+",left="+iLeft); 
+}
+
+function DeleteCfm(url){
+	if(confirm('真的要删除?')){
+		window.location=url;
+	}
+}
+
+
   

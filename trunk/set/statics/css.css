@@ -1595,3 +1595,15 @@ div.entities {
 	overflow: auto;
 	border: #e5ecf9 1px solid;
 }
+
+.centerdiv{
+  position: absolute;
+  height: 400px;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  border: 1px solid #555;
+  z-index:99
+}
