@@ -82,7 +82,7 @@ $d->close();
 	<a href="/"><img id=ae-logo src="statics/logo.gif" width=153 height=47></a>
 </div>
 <div id=ae-appbar-lrg class=g-section>
-<h1>ShopEx Tools Console</h1></div></div>
+<h1>ShopEx Tools Console(47/48版本适用)</h1></div></div>
 <!-- end //-->
 <div id=bd class=g-section>
 <div class="g-section g-tpl-160">

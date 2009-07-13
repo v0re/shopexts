@@ -19,7 +19,7 @@ class mysqlconsole {
 					$this->sql = stripslashes($this->sql);
 				}
 				$this->showForm();		
-				$this->wlog();
+				$this->wLog();
 				$t1=microtime(true);
 				$rs = mysql_query($this->sql) or die(mysql_error());
 				$this->timecost = microtime(true) - $t1;
@@ -44,7 +44,7 @@ class mysqlconsole {
 
 	function showForm() {
 		$mysqluri = "mysql://".DB_USER.":".DB_PASSWORD."@".DB_HOST.":".DB_PORT."/".DB_NAME;
-		$sqllog = $this->rlog();
+		$sqllog = $this->rLog();
 		echo <<<EOF
 <form method=post >
 当前位置:{$mysqluri} <input type=submit value='提交查询'> <br>
@@ -80,7 +80,7 @@ EOF;
 		echo "<script>AutoSizeDIV('sqlquerycontent');</script>";
 	}
 
-	function wlog(){
+	function wLog(){
 		if(strlen($this->sql) > 0){
 			$log = $this->sql;
 			$log = $log."\r\n";
@@ -88,7 +88,7 @@ EOF;
 		}
 	}
 
-	function rlog(){
+	function rLog(){
 		/*读取最后三行，我们预期这个sql.log不会太大，所以直接用file，如果文件很大，要采用优化算法，可以参考这个：
 		*http://pgregg.com/projects/php/code/tail-10.phps
 		*/
