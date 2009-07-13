@@ -8,7 +8,7 @@ class mysqlconsole {
 	var $timecost;
 
 	function mysqlconsole() {
-		$this->logfile = MEAT.'/log/sql.log';
+		$this->logfile = VARDIR.'/sql.log';
 	}
 
 	function run(){
@@ -23,6 +23,7 @@ class mysqlconsole {
 				$t1=microtime(true);
 				$rs = mysql_query($this->sql) or die(mysql_error());
 				$this->timecost = microtime(true) - $t1;
+				$this->timecost = number_format($this->timecost,3,'.','');
 				#有查询结果用表格显示
 				if( in_array(strtolower(substr($this->sql,0,4)),array('sele','desc','show')) ){
 						$this->query($rs);
@@ -55,7 +56,7 @@ EOF;
 	}
 
 	function query($rs){
-		echo "<div class='iframelike'>";
+		echo "<div class='iframelike' id='sqlquerycontent'>";
 		echo "<table class='ae-table'>";
 		$i = 0;
 		while($row = mysql_fetch_array( $rs, MYSQL_ASSOC )){
@@ -68,6 +69,7 @@ EOF;
 			}
 			echo "<tr>";
 			foreach($row as $val){
+				//$val = cnSubStr($val,10);
 				echo "<td>".htmlspecialchars($val)."</td>";			
 			}
 			echo "</tr>";	
@@ -75,6 +77,7 @@ EOF;
 		}
 		echo "</table>";
 		echo "</div>";
+		echo "<script>AutoSizeDIV('sqlquerycontent');</script>";
 	}
 
 	function wlog(){
