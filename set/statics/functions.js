@@ -57,4 +57,10 @@ function postdata(id,module){
 	var myajax = new ajax(url,pars,updatecontentpage);
 	myajax.post();
 }
+
+function AutoSizeDIV(objID){
+	var obj = document.getElementById(objID);
+	obj.style.height = (document.documentElement.clientHeight - 310) + "px"; 
+}
+
   

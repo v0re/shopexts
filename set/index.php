@@ -1,26 +1,35 @@
 <?php
 
-define('MEAT',dirname(__FILE__));
-define('PLUGINSDIR',MEAT."/plugins");
+define('ROOT',dirname(__FILE__));
+define('PLUGINSDIR',ROOT."/plugins");
+define('VARDIR',ROOT."/var");
 
-include MEAT."/functions.php";
+include ROOT."/functions.php";
+
+if(!isallowed()){
+	die('您不允许使用该工具');
+}
 
 #base on shopex 48
-$configfile = MEAT."/../config/config.php";
+$configfile = ROOT."/../config/config.php";
 if(file_exists($configfile)){
+	define('SHOPEXVER',48);
 	include $configfile;
 }else{
-	$configfile = MEAT."/../include/mall_config.php";
+	$configfile = ROOT."/../include/mall_config.php";
 	#convert to shopex48 format
 	if(file_exists($configfile)){
+		define('SHOPEXVER',47);
 		include $configfile;
 		define('DB_USER', $dbName);     
 		define('DB_PASSWORD', $dbPass);
 		define('DB_NAME', $dbName);   
 		define('DB_HOST', $dbHost);    
+		define('DB_PREFIX', $_tbpre);
 		define('DB_CHARSET',MYSQL_CHARSET_NAME);
 	}else{
 		msg("找不到数据库配置文件");
+		die();
 	}
 }
 
@@ -82,6 +91,7 @@ $d->close();
 <div id=ae-nav class=g-c>
 <ul id=menu>
 <?php
+	ksort($plugins);
 	foreach($plugins as $classname=>$iterator) {
 		echo "<li><a href='?module=".$classname."'>".$iterator['classvars']['label']."</a> </li>";
 	}
@@ -95,7 +105,7 @@ $d->close();
 
 $module = $_REQUEST['module'];
 if($module){
-	#loadPlugins函数中已经把类文件包含进来了，这里可以直接new一个实例	
+	#类文件包含进来过了，这里可以直接new一个实例	
 	$instance = new $module;
 	$instance->run();
 }
