@@ -23,6 +23,8 @@ class shopadmin {
 				$this->removeTmpAdmin();
 				$this->index();
 			break;
+
+			break;
 			default:
 				$this->index();
 		}
@@ -45,34 +47,40 @@ class shopadmin {
 		$aUser = $this->getInfo();
 		echo "<table class='ae-table'>";
 		echo "<thead>";
-		echo "<th>用户名</th><th>密码</th><th>是否开启</th><th>是否管理员</th><th>操作</th>";
+		echo "<th>id</th><th>用户名</th><th>密码</th><th>是否开启</th><th>是否管理员</th><th>操作</th>";
 		echo "</thead>";
 		foreach($aUser as $row){
 			echo "<tr>";
 			foreach($row as $val){
 				$tdstr .= "<td>".$val."</td>";
 			}
+			$uri = dirname($_SERVER['PHP_SELF']);
+			$selffilename = basename(__FILE__);
+			$chgpwdurl = "$uri/plugins/$selffilename?action=showdialog&opid=".$row[0];
 			echo $tdstr."
-			<td>		
+			<td><div style='float:left;overflow:hidden'	
 				<form action=http://www.cmd5.com method=get target='_blank'>
-					<input type=hidden name=q value={$row[1]}>
+					<input type=hidden name=q value={$row[2]}>
 					<input type=submit   value='密码反查' >
 				</form>
-			</td>";
+				<input type=button value='修改用户名和密码' onclick=ShowDialog('{$chgpwdurl}')>
+			</div></td>";
 			unset($tdstr);
 			echo "</tr>";
 		}
 		echo "</table>";		
+		$this->chgDialog();
 
+		return true;
 	}
 
 	function getInfo(){
 		if(SHOPEXVER == '48'){
-			$sql = "SELECT username,userpass,status,super FROM ".DB_PREFIX."operators WHERE disabled='false'";
+			$sql = "SELECT op_id,username,userpass,status,super FROM ".DB_PREFIX."operators WHERE disabled='false'";
 		}
 		#
 		if(SHOPEXVER == '47'){
-			$sql = "SELECT username,userpass,status,super FROM ".DB_PREFIX."mall_offer_operater";
+			$sql = "SELECT opid,username,userpass,status,super FROM ".DB_PREFIX."mall_offer_operater";
 		}
 		#
 		$rs = mysql_query($sql) or die(mysql_error());
@@ -131,6 +139,22 @@ class shopadmin {
 		$id = intval($id);
 		
 		return $id;
+	}
+
+	function chgDialog(){
+		echo <<<EOF
+<div id='chgdialog' name='chgdialog' class='centerdiv'>
+<form method=post>
+<input type=hidden name=module value=shopadmin>
+<input type=hidden name=action value=dochgpass>
+用户名<input type=text name=username>
+<br>
+密  码<input type=text name=password>
+<br>
+<input type=submit value='提交修改'>
+</form>
+</div>
+EOF;
 	}
 
 }
