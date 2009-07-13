@@ -1,0 +1,3 @@
+desc sdb_operators
+desc sdb_operators
+select * from  sdb_operators
