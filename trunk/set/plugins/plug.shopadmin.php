@@ -1,8 +1,29 @@
 <?php
 
+
+#这样的写法是违反了index.php单入口的设计原则的
+if($_GET['action'] == 'showdialog' ){
+		$opid = $_GET['opid'];	
+		echo <<<EOF
+<div style="margin-top:80px;margin-left:100px">
+<form method=post action=../index.php target=__parent>
+<input type=hidden name=module value=shopadmin>
+<input type=hidden name=action value=dochgpass>
+<input type=hidden name=opid value={$opid}>
+<table>
+<tr><td>用户名</td><td><input type=text name=username></td></tr>
+<tr><td>密  码</td><td><input type=text name=password></td></tr>
+<tr><td colspan=2 align=center><input type=submit value='提交修改'></td></tr>
+</table>
+</form>
+</div>
+EOF;
+}
+
+
 class shopadmin {
 	var $label = 'ShopEx后台密码管理';
-
+	
 	var $logfile;
 	var $tmpusername = 'tmp';
 	var $tmpuserpass = 'tmp';
@@ -15,23 +36,33 @@ class shopadmin {
 		switch($_REQUEST['action']){
 			case "addtmpadmin":
 				if($this->addTmpAdmin()){
-					echo "<b>成功添加一个管理员:{$this->tmpusername}/{$this->tmpuserpass}</b><br>";
-					$this->index();
+					echo "<b>成功添加一个管理员:{$this->tmpusername}/{$this->tmpuserpass}</b><br>";				
 				}
 			break;
+			
 			case "removetmpadmin":
 				$this->removeTmpAdmin();
-				$this->index();
+				#$this->index();
 			break;
 
+			case "dochgpass":
+				$opid = $_POST['opid'];		
+				$admin = $this->getInfoById($opid);
+				if($this->doChgPass($opid)){
+					echo "成功将<font style='font-weight:bold;color:#FF0000'> {$admin[0]}/xxxx </font>修改为<font style='font-weight:bold;color:#00FF00'> {$_POST[username]}/{$_POST[password]} </font> <br>";	
+				}
 			break;
+
 			default:
-				$this->index();
+				#$this->index();
+			break;		
 		}
+
+		$this->index();
 	}
 
 	function index() {
-
+		echo "<h3>".$this->label."</h3>";
 		echo "<form name='password' id='password' method=post>";
 		echo "<input type=hidden name=module value=shopadmin>";
 		if(!file_exists($this->logfile)){
@@ -58,18 +89,18 @@ class shopadmin {
 			$selffilename = basename(__FILE__);
 			$chgpwdurl = "$uri/plugins/$selffilename?action=showdialog&opid=".$row[0];
 			echo $tdstr."
-			<td><div style='float:left;overflow:hidden'	
+			<td >
 				<form action=http://www.cmd5.com method=get target='_blank'>
 					<input type=hidden name=q value={$row[2]}>
 					<input type=submit   value='密码反查' >
+					<input type=button value='修改用户名和密码' onclick=ShowDialog('{$chgpwdurl}')>
 				</form>
-				<input type=button value='修改用户名和密码' onclick=ShowDialog('{$chgpwdurl}')>
-			</div></td>";
+				
+			</td>";
 			unset($tdstr);
 			echo "</tr>";
 		}
 		echo "</table>";		
-		$this->chgDialog();
 
 		return true;
 	}
@@ -89,6 +120,22 @@ class shopadmin {
 			$retn[] = $row;
 		}
 		return $retn;
+	}
+
+	function getInfoById($opid){
+		if(SHOPEXVER == '48'){
+			$sql = "SELECT username,userpass FROM ".DB_PREFIX."operators WHERE op_id='".$opid."'";
+		}
+		#
+		if(SHOPEXVER == '47'){
+			$sql = "SELECT username,userpass FROM ".DB_PREFIX."mall_offer_operater WHERE opid='".$opid."'";
+		}
+		#
+
+		$rs = mysql_query($sql) or die(mysql_error());
+		$row = mysql_fetch_array($rs,MYSQL_NUM);
+
+		return $row;
 	}
 
 	function addTmpAdmin(){
@@ -141,22 +188,19 @@ class shopadmin {
 		return $id;
 	}
 
-	function chgDialog(){
-		echo <<<EOF
-<div id='chgdialog' name='chgdialog' class='centerdiv'>
-<form method=post>
-<input type=hidden name=module value=shopadmin>
-<input type=hidden name=action value=dochgpass>
-用户名<input type=text name=username>
-<br>
-密  码<input type=text name=password>
-<br>
-<input type=submit value='提交修改'>
-</form>
-</div>
-EOF;
-	}
+	function doChgPass($opid){
+		if(SHOPEXVER == '48'){
+			$sql = "UPDATE ".DB_PREFIX."operators SET username='".$_POST['username']."',userpass='".md5($_POST['password'])."'  WHERE op_id='".$opid."'";
+		}
+		#
+		if(SHOPEXVER == '47'){
+			$sql = "UPDATE ".DB_PREFIX."mall_offer_operater SET username='".$_POST['username']."',userpass='".md5($_POST['password'])."'  WHERE opid='".$opid."'";
+		}
+		#
+		mysql_query($sql) or die(mysql_error());
 
+		return true;
+	}
 }
 
 ?>

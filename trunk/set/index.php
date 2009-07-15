@@ -55,12 +55,16 @@ while (false !== ($iterator = $d->read())) {
 		include(PLUGINSDIR."/$classfilename");
 		$instance = new $classname();
 		$classvars = get_class_vars(get_class($instance));
-		$plugins[$classname]['classfilename'] = $classfilename;
-		$plugins[$classname]['classvars'] = $classvars;
+		$label = $classvars['label'];
+		$plugins[$label]['classname'] = $classname;
+		$plugins[$label]['classfilename'] = $classfilename;
+		$plugins[$label]['classvars'] = $classvars;
+
 	}
 }
 $d->close();
-
+#
+$module = $_REQUEST['module'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -79,7 +83,7 @@ $d->close();
 <!-- header //-->
 <div id=hd class=g-section>
 <div class=g-section>
-	<a href="/"><img id=ae-logo src="statics/logo.gif" width=153 height=47></a>
+	<a href="<?php echo $_SERVER['PHP_SELF']; ?>"><img id=ae-logo src="statics/logo.gif" width=153 height=47></a>
 </div>
 <div id=ae-appbar-lrg class=g-section>
 <h1>ShopEx Tools Console(47/48版本适用)</h1></div></div>
@@ -91,9 +95,14 @@ $d->close();
 <div id=ae-nav class=g-c>
 <ul id=menu>
 <?php
+
 	ksort($plugins);
-	foreach($plugins as $classname=>$iterator) {
-		echo "<li><a href='?module=".$classname."'>".$iterator['classvars']['label']."</a> </li>";
+	foreach($plugins as $label=>$iterator) {
+		if($module == $iterator['classname']){
+			echo "<li><a class='ae-nav-selected' href='?module=".$iterator['classname']."'>".$label."</a> </li>";
+		}else{
+			echo "<li><a href='?module=".$iterator['classname']."'>".$label."</a> </li>";
+		}
 	}
 ?>
 </ul>
@@ -103,7 +112,6 @@ $d->close();
 <div id=ae-content class=g-unit>
 <?php
 
-$module = $_REQUEST['module'];
 if($module){
 	#类文件包含进来过了，这里可以直接new一个实例	
 	$instance = new $module;
