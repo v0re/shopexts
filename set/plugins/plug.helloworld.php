@@ -17,6 +17,7 @@ class helloworld {
 	}
 
 	function showForm() {
+		echo "<h3>".$this->label."</h3>";
 		echo <<<EOF
 <form name='hello' id='hello' method=post>
 <input type=hidden name=module value=helloworld>

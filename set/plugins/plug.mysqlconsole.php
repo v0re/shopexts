@@ -43,11 +43,13 @@ class mysqlconsole {
 	}
 
 	function showForm() {
+		echo "<h3>".$this->label."</h3>";
 		$mysqluri = "mysql://".DB_USER.":".DB_PASSWORD."@".DB_HOST.":".DB_PORT."/".DB_NAME;
 		$sqllog = $this->rLog();
 		echo <<<EOF
 <form method=post >
-当前位置:{$mysqluri} <input type=submit value='提交查询'> <br>
+<div style='float:left'>当前位置:<font style="font-weight:bold;color=#FF0000">{$mysqluri}</font> </div> 
+<div style="padding-left:400px"><input type=submit value='提交查询'></div> <br>
 <input type=hidden name=module value=mysqlconsole>
 <input type=hidden name=action value=query>
 <textarea name="sql" rows=9 cols=70 >{$this->sql}</textarea><textarea rows=9 cols=70 >{$sqllog}</textarea>
