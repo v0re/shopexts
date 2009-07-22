@@ -1,0 +1,138 @@
+<style>
+
+#AllSort {
+	background:#FFFFF5 none repeat scroll 0 0;
+	margin-bottom:6px;
+	position:relative;
+	text-align:left;
+	width:170px;
+	z-index:2200;
+}
+#AllSort h3 {color:#025FA8;height:22px;line-height:22px;padding:3px 5px 0 9px;width:155px;}
+#AllSort h3 a:link, #AllSort h3 a:visited {
+color:#D6290B;
+}
+#AllSort dl {
+overflow:visible;
+width:170px;
+}
+#AllSort dt {
+background:transparent url(http://www.360buy.com/images/jo_item.gif) no-repeat scroll 160px -140px;
+cursor:default;
+height:24px;
+line-height:24px;
+overflow:auto;
+padding:3px 5px 0 9px;
+width:170px;
+}
+
+#AllSort dt span {
+color:#999999;
+display:block;
+float:right;
+height:21px;
+overflow:hidden;
+padding-right:5px;
+width:140px;
+}
+.pop_wrap {
+background:transparent url(http://www.360buy.com/images/shadow_04.gif) no-repeat scroll left top;
+display:none;
+left:150px;
+margin-top:-27px;
+padding:0 3px 3px 0;
+position:absolute;
+width:201px;
+z-index:2299;
+}
+.pop {
+background:#FFFFFF url(http://www.360buy.com/images/jo_line1.gif) no-repeat scroll 0 -780px;
+border-color:#959595;
+border-style:solid;
+border-width:1px 1px 1px 0;
+line-height:24px;
+overflow:hidden;
+padding:3px 10px;
+width:180px;
+}
+
+.cutword {
+overflow:hidden;
+white-space:nowrap;
+text-overflow:ellipsis;
+width:80px;
+}
+
+#AllSort dd span, #AllSort div span {
+background:transparent url(http://www.360buy.com/images/jo_item.gif) no-repeat scroll 0 -143px;
+display:block;
+float:left;
+padding-left:8px;
+width:82px;
+}
+
+#AllSort .curr{width:170px;border-top:1px solid #959595;height:19px;line-height:19px;padding-bottom:4px;background:url(http://www.360buy.com/images/jo_line_bg.jpg) #fff repeat-x 0 -478px;}
+#AllSort .curr span{display:none;}
+
+</style>
+
+
+<div class="STYLE3" id="AllSort">
+  <{foreach from=$data item=parent key=parentId}>
+    <{if $parent.sub}>
+      <h3><a href="<{link ctl='gallery' act=$setting.view arg0=$parentId}>"><{$parent.label}></a></h3>
+        <{if $setting.showCatDepth_dropdown == '3'}>
+        <dl>  
+          <{foreach from=$parent.sub item=child key=childId}>                    
+            <{if $child.sub }>
+                <dt><a href="<{link ctl='gallery' act=$setting.view arg0=$childId}>"><{$child.label}></a> 
+				  &nbsp;- <{ $child.thirdtotal|cut:30 }>				 
+				</dt>
+            	<dd class="pop_wrap"><div class="pop">      
+                <{foreach from=$child.sub item=gChild key=gChildId}><span>
+                <a href="<{link ctl='gallery' act=$setting.view arg0=$gChildId}>"><{$gChild.label}></a></span>               
+                <{/foreach}> </div></dd>
+			<{else}>
+				<dt><a href="<{link ctl='gallery' act=$setting.view arg0=$childId}>"><{$child.label}></a></dt>
+			<{/if}>
+			<{/foreach}>
+		</dl>
+        <{elseif $setting.showCatDepth_dropdown == '2'}>
+			<ul class="s-cat-dropdown">
+            <{foreach from=$parent.sub item=child key=childId}>
+				<li><a href="<{link ctl='gallery' act=$setting.view arg0=$childId}>"><{$child.label}></a></li>
+			<{/foreach}>
+            </ul>
+        <{/if}>
+     <{else}>
+		<dt><a href="<{link ctl='gallery' act=$setting.view arg0=$parentId}>"><{$parent.label}></a></dt>
+		<{/if}>
+  <{/foreach}>
+</div>
+
+<script>
+
+	$ES('#AllSort dt').addEvents({
+		'mouseover':function(e){				
+			if(!this.getNext('.pop_wrap'))	return;	
+			$('LeftColumn').setStyle('overflow','visible');
+			this.addClass('curr');	
+			this.getNext('.pop_wrap').setStyle('display','block');
+		
+			this.getNext('.pop_wrap').addEvents({'mouseover':function(e){		
+				this.getPrevious('dt').addClass('curr');					
+				this.setStyle('display','block');
+			},'mouseleave':function(e){					
+					this.getPrevious('dt').removeClass('curr');					
+					this.setStyle('display','none');	
+			}			
+			});
+		},
+		'mouseleave':function(){	
+			if(!this.getNext('.pop_wrap'))	return;			
+			this.removeClass('curr');
+			this.getNext('.pop_wrap').setStyle('display','none');
+		}	
+	});
+
+</script>
