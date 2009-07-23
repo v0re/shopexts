@@ -29,3 +29,4 @@ select * from sdb_gimages order by gimage_id DESC
 select * from sdb_gimages order by gimage_id DESC
 select * from sdb_gimages order by gimage_id DESC
 select * from sdb_gimages order by gimage_id DESC
+show tables
