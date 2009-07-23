@@ -16,11 +16,6 @@ function loadmodule(name){
 	myajax.get();
 }
 
-function getpoststring(id){
-	
-	
-	alert(form.getElementByTags['input'])
-}
 
 //把表单数据转换成一串请求字符串函数  
 function getpoststring(form_obj){  

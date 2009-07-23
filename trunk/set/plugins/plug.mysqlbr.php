@@ -1,35 +1,181 @@
 <?php
 
 class mysqlbr {
-	var $label = 'ShopEx数据库备份';
+	var $label = 'ShopEx数据库备份恢复';
 
+	
+	var $backupdir;
+	var $backupfileprefix;
 
+	function mysqlbr(){
+		$this->backupdir = VARDIR.'/backup';
+		if(!file_exists($this->backupdir)){
+			mkdir($this->backupdir);
+			chmod($this->backupdir,0666);
+		}
+	}
 
 	function run(){
 		switch($_REQUEST['action']){
 
-			case "show":
-				echo "您好 $_POST[name] ";
+			case "backup":
+				$this->backup();
 			break;
 			
-			default:
-				$this->showForm();
+			case "restore":
+				$this->restore();
 			break;
+			
+			case "delete":
+				$this->delete();
+			break;
+	
 		}
+
+		$this->index();
 	}
 
-	function showForm() {
+	function index() {
 		echo "<h3>".$this->label."</h3>";
 		echo <<<EOF
-<form name='hello' id='hello' method=post>
-<input type=hidden name=module value=helloworld>
-<input type=hidden name=action value=show>
-请输入你的名字<input type=text name='name' >
-<input type=submit value='提交'>
+<script>
 
+	function restore(filename){
+		action_elm=document.getElementById('action');
+		action_elm.value='restore';
+		filename_elm=document.getElementById('filename'); 
+		filename_elm.value=filename;
+		frm_elm = document.getElementById('mysqlbr');
+		frm_elm.submit();
+	}
+
+	function delfile(filename){		
+		action_elm=document.getElementById('action');
+		action_elm.value='delete';
+		filename_elm=document.getElementById('filename'); 
+		filename_elm.value=filename;
+		frm_elm = document.getElementById('mysqlbr');
+		frm_elm.submit();
+	}
+</script>
+<form name='hello' id='hello' method=post>
+<input type='hidden' name=module value=mysqlbr>
+<input type='hidden' name=action value="backup">
+<input type='submit' value='备份数据库'>
 </form>
 
 EOF;
+		$this->backupSelector();
+	}
+
+	function delete(){
+		$identifer = $_POST['filename'];
+		$aInfo = $this->getBackupFileInfo();
+		if(count($aInfo))
+		foreach($aInfo[$identifer]['filename'] as $filename){
+			$file = "$this->backupdir/$filename";
+			if(file_exists($file)) unlink($file);
+		}
+
+		return;
+	}
+
+	function backupSelector(){
+		echo "<form name='mysqlbr' id='mysqlbr' method=post>";
+		echo "<input type='hidden' name=module value=mysqlbr>";
+		echo "<input type='hidden' id=action name=action value=restore>";
+		echo "<input type='hidden' id=filename name=filename value=>";
+		echo "<table class='ae-table'>";
+		echo "<thead>";
+		echo "<th>序号</th><th>文件名</th><th>大小(byte)</th><th>操作</th>";
+		echo "</thead>";
+		$aInfo = $this->getBackupFileInfo();
+		$i = 1;
+		if(count($aInfo))
+		foreach($aInfo as $key=>$iterator){
+			echo "<tr><td>".$i."</td><td>".$key."</td><td>".number_format($iterator['filesize'],0,',',',')."</td><td><input type=button value='恢复' onclick=restore('".$key."');>&nbsp;&nbsp;&nbsp;<input type=button value='删除' onclick=delfile('".$key."');></td><tr>";
+			$i++;
+		}
+		echo "</table>";
+	}
+
+	function getBackupFileInfo(){
+		$retn = array();
+		$aInfo = scandir($this->backupdir);
+		array_shift($aInfo);
+		array_shift($aInfo);	
+		if(count($aInfo))
+		foreach($aInfo as $filename){
+			if(@preg_match("/^\d{14}_\d{1,4}\.sql$/",$filename)){
+				$identifer = substr($filename,0,14);
+				$retn[$identifer]['filename'][] = $filename;
+				$retn[$identifer]['filesize'] += filesize("$this->backupdir/$filename");		
+			}
+		}
+
+		return $retn;					
+	}
+
+	function backup(){
+		$dumper = new Mysqldumper(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+		$dumper->setDroptables(true);
+		$dumper->nodata = array();
+		$dumper->tableid = 0;
+		$fileid = 0;
+		$this->backupfileprefix = date("YmdHis",time());
+		msg("开始数据库备份...\n");		
+		do{
+			$backupfilename = $this->backupfileprefix."_".($fileid + 1).".sql";
+			$bakfile = "$this->backupdir/$backupfilename";
+			$finished = $dumper->multiDump($bakfile,$fileid,1024);
+			$fileid++;
+			msg("数据库备份文件 $backupfilename 已生成\n");	
+		}while(!$finished);
+		msg("<hr><font color=green>数据库备份完毕</font>\n");
+	}
+
+	function restore(){
+		print_r($_POST);
+		die();
+		$fileid = $_GET['fileid'] == '' ? 1 : $_GET['fileid'];
+		$link = mysql_connect($dbHost, $dbUser, $dbPass,true)		or die("Could not connect : " . mysql_error($link)); 
+
+		$bakfile = "data_".$fileid.".sql";
+		if(!file_exists($bakfile)){
+			echo "No back file exist else";
+			exit;
+		}
+		mysql_select_db($dbName,$link) or die("Could not select database");
+		if(mysql_get_server_info()>'5.0.1') mysql_query("SET sql_mode=''",$link);
+		if(defined("DB_CHARSET"))	mysql_query("SET NAMES '".DB_CHARSET."'",$link);
+		$fp = fopen($bakfile, "r");
+		$i = 0;
+		while (fgetline($fp,$buffer)!==false)
+		{
+			if (trim($buffer) != "" && substr($buffer, 0, 1) != "#")
+			{
+				$buffer = trim($buffer);
+				if(substr(trim($buffer),-1)==";") $buffer = substr(trim($buffer),0,strlen($buffer)-1);
+				//替换前缀定义
+				$buffer = str_replace('{shopexdump_table_prefix}',$GLOBALS['_tbpre'],$buffer);
+				if(defined("DB_CHARSET"))
+					$buffer = str_replace('{shopexdump_create_specification}',' DEFAULT CHARACTER SET '.DB_CHARSET,$buffer);
+				else
+					$buffer = str_replace('{shopexdump_create_specification}','',$buffer);
+
+				if(!mysql_query($buffer,$link)) echo mysql_error($link)."<br>";
+				usleep(5);
+				$i++;
+			}
+		}
+		fclose($fp);
+		msg("数据文件".$bakfile."恢复成功!\n");
+
+		$fileid++;
+		
+		mysql_close($link);
+
+		jsjmp($_SERVER['PHP_SELF']."?action=restore&fileid={$fileid}");
 	}
 
 }
@@ -96,34 +242,31 @@ class Mysqldumper {
 	function isDroptables() {
 		return $this->_isDroptables;
 	}
+
+	function _getBackupTable(){
+		$result = mysql_query("SHOW TABLES");
+		$tables = $this->result2Array(0, $result);
+
+		return $tables;
+	}
 	
 
 
-	function multiDump($filename,$fileid,$savetype,$sizelimit) {
+	function multiDump($bakfile,$fileid,$sizelimit) {
 		// Set line feed
 		$ret = true;
 		$lf = "\r\n";
 		$lencount = 0;
-		$bakfile = "data_".($fileid+1).".sql";
-
 		$fw = @fopen($bakfile, "wb+");
 		if(!$fw) exit("export file write failed");
 		$resource = mysql_connect($this->getHost(), $this->getDBuser(), $this->getDBpassword(),true);
 		mysql_select_db($this->getDbname(), $resource);
-		if(defined("MYSQL_CHARSET_NAME"))
-				mysql_query("SET NAMES '".MYSQL_CHARSET_NAME."'",$resource);
-		$result = mysql_query("SHOW TABLES");
-		$tables = $this->result2Array(0, $result);
-
-		$a48 = file('484.sma');
-		foreach($a48 as $kk=>$vv){
-			$aTmp[$kk] = trim($vv);
-		}
-		
-		array_unshift($aTmp,' ');
+		if(defined("DB_CHARSET"))
+				mysql_query("SET NAMES '".DB_CHARSET."'",$resource);
 	
-		$this->tablearr = $aTmp;
-	
+		if(!$this->tablearr){
+			$this->tablearr = $this->_getBackupTable();
+		}	
 		// Set header
 		fwrite($fw, "#". $lf);
 		fwrite($fw,  "# SHOPEX SQL MultiVolumn Dump ID:".($fileid+1) . $lf);
