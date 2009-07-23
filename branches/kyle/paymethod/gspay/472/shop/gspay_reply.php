@@ -1,9 +1,9 @@
 <?php
 /**
 * 
-* ç¨‹åºå¤„ç†æ–‡ä»¶
+* ³ÌĞò´¦ÀíÎÄ¼ş
 *
-* @package  ShopExç½‘ä¸Šå•†åº—ç³»ç»Ÿ
+* @package  ShopExÍøÉÏÉÌµêÏµÍ³
 * @version  4.6
 * @author   ShopEx.cn <develop@shopex.cn>
 * @url		http://www.shopex.cn/
@@ -17,17 +17,17 @@ if (!defined("ISSHOP"))
 	exit;
 }
 
-//=========================== æŠŠå•†å®¶çš„ç›¸å…³ä¿¡æ¯è¿”å›å» =======================
-$transactionStatus	= $_REQUEST['transactionStatus'];			//å•†åº—è®¢å•å·
-$customerOrderID		= $_REQUEST['customerOrderID'];		//å•†æˆ·å·
-$transactionAmount	= $_REQUEST['transactionAmount'];	//çŠ¶æ€
+//=========================== °ÑÉÌ¼ÒµÄÏà¹ØĞÅÏ¢·µ»ØÈ¥ =======================
+$transactionStatus	= $_REQUEST['transactionStatus'];			//ÉÌµê¶©µ¥ºÅ
+$customerOrderID		= $_REQUEST['customerOrderID'];		//ÉÌ»§ºÅ
+$transactionAmount	= $_REQUEST['transactionAmount'];	//×´Ì¬
 
 
-//æ£€æŸ¥ç­¾å
+//¼ì²éÇ©Ãû
 //$shopPayment = newclass("shopPayment");
 //$key = $shopPayment->getKey($INC_SHOPID, $mer_id, "2CHECKOUT");
 
-//æ•´åˆmd5åŠ å¯†
+//ÕûºÏmd5¼ÓÃÜ
 //$text = $key.$mer_id.$orderid.$amount;
 //$md5digest = strtoupper(md5($text));
 
@@ -35,10 +35,10 @@ if (true){
 		$Order = newclass("Order");
 		$Order->shopId = $INC_SHOPID;
 		$Order->payid = $customerOrderID;
-		$tmp_orderno = $Order->getorderidbyPayid($Order->payid);	//æ‹¿å‡ºå•†åº—è®¢å•å·
+		$tmp_orderno = $Order->getorderidbyPayid($Order->payid);	//ÄÃ³öÉÌµê¶©µ¥ºÅ
 		
 		if ($Order->paymoney <= $transactionAmount){
-			$arr_paytime = getUnixtime();	//æ”¯ä»˜æ—¶é—´
+			$arr_paytime = getUnixtime();	//Ö§¸¶Ê±¼ä
 			$Order->onlinePayed($arr_paytime[0], $arr_paytime[1]);
 			$state = 2 ;
 			$strinfo = $PROG_TAGS["ptag_1334"];
@@ -51,6 +51,9 @@ if (true){
 	$strinfo = $PROG_TAGS["ptag_1336"];
 }
 
-Header("Location: ./index.php?gOo=pay_reply.dwt&orderid=".$tmp_orderno."&state=".$state."&strinfo=".urlencode($strinfo));
+mt_srand((double)microtime()*1000000);
+$signstr = mt_rand(10000000,99999999);
+$Order->updateOrderSign($tmp_orderno, $signstr);
+header("Location: index.php?gOo=pay_reply.dwt&signstr=".$signstr."&orderid=".$tmp_orderno."&state={$state}&strinfo=".urlencode($strinfo));
 
 ?>

@@ -1304,23 +1304,23 @@ class Pay {
         $OrderItem->getlist();
 				$goodstotalprice = 0;
 				$iterator = 1;
-        while($OrderItem->next())
-        {
+				while($OrderItem->next())
+				{
 					$hiddenString .= "<input type=\"hidden\" name=\"OrderDescription%5B".$iterator."%5D\" value=\"".$OrderItem->name."(".$this->orderno.")\">";
 					$hiddenString .= "<input type=\"hidden\" name=\"Amount%5B".$iterator."%5D\" value=\"".$OrderItem->price."\">";
 					$hiddenString .= "<input type=\"hidden\" name=\"Qty%5B".$iterator."%5D\" value=\"".$OrderItem->num."\">";
-					$goodstotalprice += $OrderItem->price;
+					$goodstotalprice += ( $OrderItem->price * $OrderItem->num );
 					$iterator++;
-        }
+				}
 				$shippingfee =  $this->amount - $goodstotalprice;
-				$hiddenString .= "<input type=\"hidden\" name=\"OrderDescription%5B".$iterator."%5D\" value=\"Shipping Fee\">";		
-				$hiddenString .= "<input type=\"hidden\" name=\"Amount%5B".$iterator."%5D\" value=\"".$shippingfee."\">";
-				$hiddenString .= "<input type=\"hidden\" name=\"Type%5B".$iterator."%5D\" value=\"Shipping\">";
-
+				if($shippingfee > 0 ){
+					$hiddenString .= "<input type=\"hidden\" name=\"OrderDescription%5B".$iterator."%5D\" value=\"Shipping Fee\">";		
+					$hiddenString .= "<input type=\"hidden\" name=\"Amount%5B".$iterator."%5D\" value=\"".$shippingfee."\">";
+					$hiddenString .= "<input type=\"hidden\" name=\"Type%5B".$iterator."%5D\" value=\"Shipping\">";
+				}
 				$hiddenString .= "<input type=\"hidden\" name=\"returnUrl\" value=\"".$tmp_url."\">";
 				$this->action = "https://secure.rdgateway.com/payment/pay.php";
 				return $hiddenString;
-				break;
 
 		}
 	}
