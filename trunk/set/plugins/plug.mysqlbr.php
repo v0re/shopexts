@@ -87,13 +87,13 @@ EOF;
 		echo "<input type='hidden' id=filename name=filename value=>";
 		echo "<table class='ae-table'>";
 		echo "<thead>";
-		echo "<th>序号</th><th>文件名</th><th>大小(byte)</th><th>操作</th>";
+		echo "<th>序号</th><th>文件名</th><th>大小(byte)</th><th>卷数</th><th>操作</th>";
 		echo "</thead>";
 		$aInfo = $this->getBackupFileInfo();
 		$i = 1;
 		if(count($aInfo))
 		foreach($aInfo as $key=>$iterator){
-			echo "<tr><td>".$i."</td><td>".$key."</td><td>".number_format($iterator['filesize'],0,',',',')."</td><td><input type=button value='恢复' onclick=restore('".$key."');>&nbsp;&nbsp;&nbsp;<input type=button value='删除' onclick=delfile('".$key."');></td><tr>";
+			echo "<tr><td>".$i."</td><td>".$key."</td><td>".number_format($iterator['filesize'],0,',',',')."</td><td>".count($iterator['filename'])."</td><td><input type=button value='恢复' onclick=restore('".$key."');>&nbsp;&nbsp;&nbsp;<input type=button value='删除' onclick=delfile('".$key."');></td><tr>";
 			$i++;
 		}
 		echo "</table>";
@@ -135,49 +135,63 @@ EOF;
 	}
 
 	function restore(){
-		print_r($_POST);
-		die();
-		$fileid = $_GET['fileid'] == '' ? 1 : $_GET['fileid'];
-		$link = mysql_connect($dbHost, $dbUser, $dbPass,true)		or die("Could not connect : " . mysql_error($link)); 
-
-		$bakfile = "data_".$fileid.".sql";
-		if(!file_exists($bakfile)){
-			echo "No back file exist else";
-			exit;
-		}
-		mysql_select_db($dbName,$link) or die("Could not select database");
+		$link = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("无法连接到数据库，错误原因是: " . mysql_error($link)); 
+		mysql_select_db(DB_NAME,$link) or die("无法使用数据库".DB_NAME);
 		if(mysql_get_server_info()>'5.0.1') mysql_query("SET sql_mode=''",$link);
 		if(defined("DB_CHARSET"))	mysql_query("SET NAMES '".DB_CHARSET."'",$link);
-		$fp = fopen($bakfile, "r");
-		$i = 0;
-		while (fgetline($fp,$buffer)!==false)
-		{
-			if (trim($buffer) != "" && substr($buffer, 0, 1) != "#")
-			{
-				$buffer = trim($buffer);
-				if(substr(trim($buffer),-1)==";") $buffer = substr(trim($buffer),0,strlen($buffer)-1);
-				//替换前缀定义
-				$buffer = str_replace('{shopexdump_table_prefix}',$GLOBALS['_tbpre'],$buffer);
-				if(defined("DB_CHARSET"))
-					$buffer = str_replace('{shopexdump_create_specification}',' DEFAULT CHARACTER SET '.DB_CHARSET,$buffer);
-				else
-					$buffer = str_replace('{shopexdump_create_specification}','',$buffer);
-
-				if(!mysql_query($buffer,$link)) echo mysql_error($link)."<br>";
-				usleep(5);
-				$i++;
+		#获取sql文件
+		$identifer = $_POST['filename'];
+		$aInfo = $this->getBackupFileInfo();
+		$aFileList = $aInfo[$identifer]['filename'];
+		if(count($aFileList))
+		foreach($aFileList as $filename){
+			$bakfile = "$this->backupdir/$filename";
+			if(!file_exists($bakfile)){			
+				break;
 			}
+			$fp = fopen($bakfile, "r");
+			$i = 0;
+			while ($this->fgetline($fp,$buffer)!==false) {
+				if (trim($buffer) != "" && substr($buffer, 0, 1) != "#") {
+					$buffer = trim($buffer);
+					if(substr(trim($buffer),-1)==";") $buffer = substr(trim($buffer),0,strlen($buffer)-1);
+					//替换前缀定义
+					$buffer = str_replace('{shopexdump_table_prefix}',DB_PREFIX,$buffer);
+					if(defined("DB_CHARSET"))
+						$buffer = str_replace('{shopexdump_create_specification}',' DEFAULT CHARACTER SET '.DB_CHARSET,$buffer);
+					else
+						$buffer = str_replace('{shopexdump_create_specification}','',$buffer);
+
+					if(!mysql_query($buffer,$link)) echo mysql_error($link)."<br>";
+					usleep(5);
+					$i++;
+				}
+			}
+			fclose($fp);
+			msg("数据文件".$filename."恢复成功!\n");
+
 		}
-		fclose($fp);
-		msg("数据文件".$bakfile."恢复成功!\n");
-
-		$fileid++;
-		
+		#
+		msg($identifer.'全部还原完毕');	
 		mysql_close($link);
-
-		jsjmp($_SERVER['PHP_SELF']."?action=restore&fileid={$fileid}");
 	}
 
+	function fgetline($handle,&$line) {
+		$buffer = fgets($handle, 4096);
+		if (!$buffer)	{
+			return false;
+		}
+
+		if(( 4095 > strlen($buffer)) || ( 4095 == strlen($buffer) && '\n' == $buffer{4094} ))	{
+			$line = $buffer;
+		} else {
+			$line = $buffer;
+			while( 4095 == strlen($buffer) && '\n' != $buffer{4094} ) {
+				$buffer = fgets($handle,4096);
+				$line.=$buffer;
+			}
+		}
+	}
 }
 
 //mysqldump
@@ -282,7 +296,7 @@ class Mysqldumper {
 		$i=0;
 		for($j=$this->tableid;$j<count($this->tablearr);$j++){
 			$tblval = $this->tablearr[$j];
-			$table_prefix = (isset($GLOBALS['_tbpre']))?$GLOBALS['_tbpre']:'';
+			$table_prefix = DB_PREFIX ? DB_PREFIX : '';
 			$written_tbname = '{shopexdump_table_prefix}'.substr($tblval,strlen($table_prefix));
 			if($this->startid ==-1)
 			{
