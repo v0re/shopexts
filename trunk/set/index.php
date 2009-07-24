@@ -21,7 +21,7 @@ if(file_exists($configfile)){
 	if(file_exists($configfile)){
 		define('SHOPEXVER',47);
 		include $configfile;
-		define('DB_USER', $dbName);     
+		define('DB_USER', $dbUser);     
 		define('DB_PASSWORD', $dbPass);
 		define('DB_NAME', $dbName);   
 		define('DB_HOST', $dbHost);    
