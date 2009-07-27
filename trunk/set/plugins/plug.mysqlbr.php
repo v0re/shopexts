@@ -36,6 +36,7 @@ class mysqlbr {
 	}
 
 	function index() {
+		$dbname = DB_NAME;
 		echo "<h3>".$this->label."</h3>";
 		echo <<<EOF
 <script>
@@ -61,9 +62,11 @@ class mysqlbr {
 <form name='hello' id='hello' method=post>
 <input type='hidden' name=module value=mysqlbr>
 <input type='hidden' name=action value="backup">
-<input type='submit' value='备份数据库'>
+备份全部的表<input type=radio name=type value=all checked>
+仅备份网店的表<input type=radio name=type value=shoponly>
+<input type='submit' value='备份数据库({$dbname})'>
 </form>
-
+<br>
 EOF;
 		$this->backupSelector();
 	}
@@ -120,7 +123,11 @@ EOF;
 		$dumper = new Mysqldumper(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		$dumper->setDroptables(true);
 		$dumper->nodata = array();
-		$dumper->tableid = 0;
+		#
+		if($_POST['type'] == 'shoponly'){
+			$dumper->backuptype = 'shoponly';
+		}
+		#
 		$fileid = 0;
 		$this->backupfileprefix = date("YmdHis",time());
 		msg("开始数据库备份...\n");		
@@ -205,7 +212,7 @@ class Mysqldumper {
 	var $startid;
 	var $tablearr;
 	var $nodata;
-
+	var $backuptype;
 	
 	function Mysqldumper($host = "localhost", $dbuser = "", $dbpassword = "", $dbname = "") {
 		$this->setHost($host);
@@ -214,6 +221,9 @@ class Mysqldumper {
 		$this->setDBname($dbname);
 		// Don't drop tables by default.
 		$this->setDroptables(false);
+		$this->startid = -1;
+		$this->tableid = 0;
+		$this->backuptype = 'all';
 	}
 	
 	function setHost($host) {
@@ -260,10 +270,17 @@ class Mysqldumper {
 	function _getBackupTable(){
 		$result = mysql_query("SHOW TABLES");
 		$tables = $this->result2Array(0, $result);
+		#过滤掉
+		if($this->backuptype == 'shoponly'){
+			$tables = array_filter($tables,array($this,'isShopTable'));
+		}
 
 		return $tables;
 	}
-	
+
+	function isShopTable($tablename){
+		return strstr($tablename,DB_PREFIX);
+	}
 
 
 	function multiDump($bakfile,$fileid,$sizelimit) {
@@ -297,8 +314,12 @@ class Mysqldumper {
 		for($j=$this->tableid;$j<count($this->tablearr);$j++){
 			$tblval = $this->tablearr[$j];
 			$table_prefix = DB_PREFIX ? DB_PREFIX : '';
-			$written_tbname = '{shopexdump_table_prefix}'.substr($tblval,strlen($table_prefix));
-			if($this->startid ==-1)
+			if($this->isShopTable($tblval)){
+				$written_tbname = '{shopexdump_table_prefix}'.substr($tblval,strlen($table_prefix));
+			}else{
+				$written_tbname = $tblval;
+			}
+			if($this->startid == -1)
 			{
 				fwrite($fw,  $lf . $lf . "# --------------------------------------------------------" . $lf . $lf);
 				$lencount += strlen($lf . $lf . "# --------------------------------------------------------" . $lf . $lf);
