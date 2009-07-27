@@ -29,8 +29,7 @@ function getip(){
 	return $onlineip;
 }
 
-function msg($str)
-{
+function msg($str){
 	echo $str."<br><script>s();</script>";
 	flush();
 }
