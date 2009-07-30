@@ -22,6 +22,8 @@ $transactionStatus	= $_REQUEST['transactionStatus'];			//ÉÌµê¶©µ¥ºÅ
 $customerOrderID		= $_REQUEST['customerOrderID'];		//ÉÌ»§ºÅ
 $transactionAmount	= $_REQUEST['transactionAmount'];	//×´Ì¬
 
+$payid = substr($customerOrderID,-6);
+
 
 //¼ì²éÇ©Ãû
 //$shopPayment = newclass("shopPayment");
@@ -34,7 +36,7 @@ $transactionAmount	= $_REQUEST['transactionAmount'];	//×´Ì¬
 if (true){
 		$Order = newclass("Order");
 		$Order->shopId = $INC_SHOPID;
-		$Order->payid = $customerOrderID;
+		$Order->payid = $payid;
 		$tmp_orderno = $Order->getorderidbyPayid($Order->payid);	//ÄÃ³öÉÌµê¶©µ¥ºÅ
 		
 		if ($Order->paymoney <= $transactionAmount){

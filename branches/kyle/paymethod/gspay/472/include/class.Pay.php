@@ -15,14 +15,14 @@ function shopex_hmac_md5($data,$key)
         if (strlen($key) < 64) {
             $key = str_pad($key, 64, chr(0));
         }
-        
+
         $_ipad = (substr($key, 0, 64) ^ str_repeat(chr(0x36), 64));
         $_opad = (substr($key, 0, 64) ^ str_repeat(chr(0x5C), 64));
         return md5($_opad . pack('H32', md5($_ipad . $data)));
 }
 Function appendParam($returnStr,$paramId,$paramValue){
-    if($returnStr!=""){    
-        if($paramValue!=""){        
+    if($returnStr!=""){
+        if($paramValue!=""){
             $returnStr.="&".$paramId."=".$paramValue;
         }
     }else{
@@ -149,11 +149,11 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"Rettype\" value=\"1\">";
                 $hiddenString.= "<input type=HIDDEN name=\"ServerUrl\" value=\"".$tmp_urlserver."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"SignMD5\" value=\"".$StrMd5."\">";
-                
+
                 $this->action = "https://pay.ips.com.cn/ipayment.aspx";
                 return $hiddenString;
                 break;
-                
+
             case "IPAY":    //IPAY
 //                if(empty($this->ikey)) $this->ikey = "test";
                 $v_mobile = "13800138000";
@@ -166,7 +166,7 @@ class Pay {
                 $this->rnote = $this->dolocal($this->rnote,"zh");
                 $this->payname = $this->dolocal($this->payname,"zh");
                 $tmp_url = $this->url."index.php?gOo=ipay_reply.do&";
-                
+
                 $hiddenString = "<input type=hidden name=shopex_encoding value=\"gb2312\">";
                 $hiddenString.= "<input type=HIDDEN name=\"v_mid\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"v_oid\" value=\"".$this->orderid."\">";
@@ -196,7 +196,7 @@ class Pay {
                 {
                     $this->action = (!$this->test_mode)?"http://pay.beijing.com.cn/prs/user_payment.checkit":"";
                 }
-                
+
                 $mallConfig = newclass("mallConfig");
                 $mallConfig->getInfo();
 
@@ -228,7 +228,7 @@ class Pay {
 
                 return $hiddenString;
                 break;
-            
+
             case "6688":    //6688
                 $this->rnote = utf2local(strtoupper($this->rnote),"zh");
                 $md5string=md5("tmbrid=" .$this->merid. "&tsummoney=" .$this->amount. "&tcontent1=" .$this->rnote. "&todrid=" .$this->orderid. "&tpwd=" .$this->ikey);
@@ -269,7 +269,7 @@ class Pay {
                 include_once $tmp_dir."/nusoap.php";
                 $tmp_url = $this->url."index.php?gOo=8848_reply.do&";
                 $src_string = "USERNAME=".$this->payname."|SHOPID=".$this->merid."|ORDERID=".$this->orderid."|ORDERMONEY=".$this->amount."|RETURNFLAG=1|RETURNURL=".$tmp_url."|MEMO=".$this->rnote;
-                
+
                 $this->rname = $this->dolocal($this->rname,"zh");
                 $this->remail = $this->dolocal($this->remail,"zh");
                 $this->raddr = $this->dolocal($this->raddr,"zh");
@@ -277,7 +277,7 @@ class Pay {
                 $this->rtel = $this->dolocal($this->rtel,"zh");
                 $this->rnote = $this->dolocal($this->rnote,"zh");
                 $this->payname = $this->dolocal($this->payname,"zh");
-                
+
                 //生成参数
                 $parameters=array(
                     "sStrFromStore" => $src_string,
@@ -307,7 +307,7 @@ class Pay {
                 $tmp_url = $this->url."index.php?gOo=epay_reply.do&";
                 $lnkStr = trim($this->merid).":".trim($this->secondkey).":".trim($this->orderid).":".trim($this->amount).":".trim($this->ikey);
                 $strCountSignature = MD5($lnkStr);
-                
+
                 $hiddenString = "<input type=hidden name=shopex_encoding value=\"gb2312\">";
                 $hiddenString.= "<input type=HIDDEN name=\"epayClientMerchID\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"epayClientMerchPwd\" value=\"".$this->secondkey."\">";
@@ -317,8 +317,8 @@ class Pay {
 
                 $this->action = "http://www.ipost.cn/pay/pay.aspx";
                 return $hiddenString;
-                break;            
-            
+                break;
+
             case "NPS":
                 $this->rname = utf2local($this->rname, "zh");
                 $this->raddr = utf2local($this->raddr, "zh");
@@ -331,7 +331,7 @@ class Pay {
                 if ($this->rpost == "") $this->rpost = "NA";
                 if ($this->rtel == "") $this->rtel = "NA";
                 if ($this->remail == "") $this->remail = "NA";
-                
+
                 $m_info = $this->merid."|".$this->orderid."|".$this->amount."|".$this->currency."|".$tmp_url."|".$this->lang ;
                 $s_info = $this->rname."|".$this->raddr."|".$this->rpost."|".$this->rtel."|".$this->remail ;
                 $r_info = $this->rname."|".$this->raddr."|".$this->rpost."|".$this->rtel."|".$this->remail."|".$this->rnote."|".$state."|".date("Ymd",$this->ordertime) ;
@@ -348,12 +348,12 @@ class Pay {
                 $this->action = "https://payment.nps.cn/PHPReceiveMerchantAction.do";
                 return $hiddenString;
                 break;
-            
+
             case "NPS_OUT":
                 $this->rname = utf2local($this->rname, "zh");
                 $this->raddr = utf2local($this->raddr, "zh");
                 $this->rnote = utf2local($this->rnote, "zh");
-                
+
                 $this->lang = "1" ;
                 $state = "0" ;
                 $tmp_url = $this->url."index.php?gOo=npsout_reply.do&";
@@ -362,7 +362,7 @@ class Pay {
                 if ($this->rpost == "") $this->rpost = "NA";
                 if ($this->rtel == "") $this->rtel = "NA";
                 if ($this->remail == "") $this->remail = "NA";
-                
+
                 $m_info = $this->merid."|".$this->orderid."|".$this->amount."|".$this->currency."|".$tmp_url."|".$this->lang ;
                 $s_info = $this->rname."|".$this->raddr."|".$this->rpost."|".$this->rtel."|".$this->remail ;
                 $r_info = $this->rname."|".$this->raddr."|".$this->rpost."|".$this->rtel."|".$this->remail."|".$this->rnote."|".$state."|".date("Ymd",$this->ordertime) ;
@@ -371,7 +371,7 @@ class Pay {
 //                $OrderInfo = StrToHex($OrderInfo);
                 $OrderInfo = stringToHex (des ($this->ikey, $OrderInfo, 1, 1, null));
                 $digest = md5($OrderInfo.$this->ikey);
-                
+
                 $hiddenString = "<input type=hidden name=shopex_encoding value=\"gb2312\">";
                 $hiddenString.= "<input type=HIDDEN name=\"M_ID\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"procode\" value=\"php\" />";
@@ -389,7 +389,7 @@ class Pay {
                 $tmp_url = $this->url."index.php?gOo=wangjin_reply.do&";
                 $md5string=md5($this->amount.$this->currency.$this->orderid.$this->merid.$tmp_url.$this->ikey);
                 $md5string = strtoupper($md5string);
-                
+
                 $this->rname = $this->dolocal($this->rname,"zh");
                 $this->remail = $this->dolocal($this->remail,"zh");
                 $this->raddr = $this->dolocal($this->raddr,"zh");
@@ -425,7 +425,7 @@ class Pay {
 
                 $md5string=md5($this->amount.$this->currency.$this->orderid.$this->merid.$tmp_url.$this->ikey);
                 $md5string = strtoupper($md5string);
-                
+
                 $this->rname = $this->dolocal($this->rname,"zh");
                 $this->remail = $this->dolocal($this->remail,"zh");
                 $this->raddr = $this->dolocal($this->raddr,"zh");
@@ -458,7 +458,7 @@ class Pay {
 
             case "YEEPAY":
                 $tmp_url = $this->url."index.php?gOo=yeepay_reply.do&";
-                
+
                 $b = 64;
                 if (strlen($this->ikey) > $b){
                     $this->ikey = pack("H*",md5($this->ikey));
@@ -470,7 +470,7 @@ class Pay {
                 $k_opad = $this->ikey ^ $opad;
                 $data = "Buy".$this->merid.$this->orderid.$this->amount.$this->currency.$this->orderno.$this->remail.$tmp_url."0".$this->merid;
                 $hmac = md5($k_opad . pack("H*",md5($k_ipad.$data)));
-                
+
                 $this->remail = $this->dolocal($this->remail,"zh");
                 $this->raddr = $this->dolocal($this->raddr,"zh");
                 $this->rnote = $this->dolocal($this->rnote,"zh");
@@ -504,12 +504,12 @@ class Pay {
                     $chinapay = new COM('CPNPC.NPC');
                     $chinapay->setMerKeyFile($realpath.$this->keyfile);
                     $chinapay->setPubKeyFile($realpath.$this->certfile);
-                    $chkvalue = $chinapay->sign($this->merid,$ordId,$this->amount,'156',date("Ymd",$this->ordertime),$TransType);//商户号，订单号，交易金额，货币代码，交易日期，交易类型 
+                    $chkvalue = $chinapay->sign($this->merid,$ordId,$this->amount,'156',date("Ymd",$this->ordertime),$TransType);//商户号，订单号，交易金额，货币代码，交易日期，交易类型
                 }
                 else{
                     setMerKeyFile($realpath.$this->keyfile);
                      setPubKeyFile($realpath.$this->certfile);
-                     $chkvalue = signOrder($this->merid,$ordId,$this->amount,'156',date("Ymd",$this->ordertime),$TransType);//商户号，订单号，交易金额，货币代码，交易日期，交易类型 
+                     $chkvalue = signOrder($this->merid,$ordId,$this->amount,'156',date("Ymd",$this->ordertime),$TransType);//商户号，订单号，交易金额，货币代码，交易日期，交易类型
                 }
                 switch ($chkvalue){
                     case '-100':
@@ -582,7 +582,7 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"return\" value=\"".$tmpr_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"notify_url\" value=\"".$tmp_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"lc\" value=\"US\">";
-                
+
                 $this->action = "https://www.paypal.com/cgi-bin/webscr";
                 return $hiddenString;
                 break;
@@ -619,7 +619,7 @@ class Pay {
                 $this->action = "https://www.paypal.com/cgi-bin/webscr";
                 return $hiddenString;
                 break;
-            
+
             case "PAYPAL_CN":
                 if($this->currency == "CNY")
                 {
@@ -651,14 +651,14 @@ class Pay {
                 $this->action = "https://www.paypal.com/cgi-bin/webscr";
                 return $hiddenString;
                 break;
-            
+
             case "HOMEWAY":
                 $this->currency = "2002";
                 $mer_key="asdfghjk12345678";
                 $this->amount *= 100;
                 $info = $this->merid.$this->amount.$this->orderid.date("Ymd",$this->ordertime).$this->currency.$this->ikey;
                 $msign = md5($info);
-                
+
                 $hiddenString = "<input type=hidden name=shopex_encoding value=\"gb2312\">";
                 $hiddenString.= "<input type=HIDDEN name=\"MerchID\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"OrderNum\" value=\"".$this->orderid."\">";
@@ -666,33 +666,33 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"TransType\" value=\"".$this->currency."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"TransDate\" value=\"".date("Ymd",$this->ordertime)."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"Signature\" value=\"".$msign."\">";
-                
+
                 $this->action = "http://payment.homeway.com.cn/pay/pay_new.php3";
                 return $hiddenString;
                 break;
-                
+
             case "NOCHEK":
                 $tmp_url = $this->url."index.php?gOo=nochek_reply.do&";
-                
+
                 $hiddenString = "";
                 $hiddenString.= "<input type=HIDDEN name=\"email\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"ordernumber\" value=\"".$this->orderid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"amount\" value=\"".$this->amount."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"responderurl\" value=\"".$tmp_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"description\" value=\"".$this->rnote."\">";
-                
+
                 $this->action = "https://www.nochex.com/nochex.dll/checkout";
                 return $hiddenString;
                 break;
-            
+
             case "99BILL":
 //                $tmp_url = $this->url."index.php?gOo=99bill_reply.do&";
                 $tmp_url = $this->url."99billdo.php";
-                
+
                 $key = $this->ikey;  //私钥值，商户可上99BILL快钱后台自行设定
                 $text="merchant_id=".$this->merid."&orderid=".$this->orderid."&amount=".$this->amount."&merchant_url=".$tmp_url."&merchant_key=".$key;
                 $mac = strtoupper(md5($text)); //对参数串进行私钥加密取得值
-                
+
                 $hiddenString = "<input type=hidden name=shopex_encoding value=\"utf-8\">";
                 $hiddenString.= "<input type=HIDDEN name=\"merchant_id\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"orderid\" value=\"".$this->orderid."\">";
@@ -704,16 +704,16 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"isSupportDES\" value=\"2\">";
                 $hiddenString.= "<input type=HIDDEN name=\"mac\" value=\"".$mac."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"pid\" value=\"879905060102977462\">";
-                
+
                 $this->action = "https://www.99bill.com/webapp/receiveMerchantInfoAction.do";
                 return $hiddenString;
                 break;
            /*
             case "99BILL_NEW": //2007-11-7号后注册块钱的用户用改接口 注：文档有问题其中的version和language是必填的
                 $tmp_url = $this->url."index.php?gOo=99bill_new_reply.do";
-                
+
                 $amount = $this->amount * 100;
-                $orderTime = date('YmdHis');                
+                $orderTime = date('YmdHis');
                 $tempStr = "pageUrl=".$tmp_url."&version=v2.0&language=1&signType=1&merchantAcctId=".$this->merid."&orderId=".$this->orderid."&orderAmount=".$amount."&orderTime=".$orderTime."&payType=00&key=".$this->ikey;
                 $signMsg = strtoupper(md5($tempStr)); //对参数串进行私钥加密取得值
 
@@ -731,7 +731,7 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"payType\" value=\"00\">"; //支付方式
                 #$hiddenString.= "<input type=HIDDEN name=\"pid\" value=\"879905060102977462\">";  //暂时不填，新版本里这老大id值好像不能用
                 $hiddenString.= "<input type=HIDDEN name=\"signMsg\" value=\"".$signMsg."\">"; //签名字符串
-                
+
                 $this->action = "https://www.99bill.com/gateway/recvMerchantInfoAction.htm";
                 return $hiddenString;
                 break;*/
@@ -777,7 +777,7 @@ class Pay {
                 $signMsgVal=appendParam($signMsgVal,"productDesc",$productDesc);
                 $signMsgVal=appendParam($signMsgVal,"ext1",$ext1);
                 $signMsgVal=appendParam($signMsgVal,"ext2",$ext2);
-                $signMsgVal=appendParam($signMsgVal,"payType",$payType);    
+                $signMsgVal=appendParam($signMsgVal,"payType",$payType);
                 $signMsgVal=appendParam($signMsgVal,"redoFlag",$redoFlag);
                 $signMsgVal=appendParam($signMsgVal,"pid",$pid);
                 $signMsgVal=appendParam($signMsgVal,"key",$key);
@@ -814,11 +814,11 @@ class Pay {
                 $tmp_url = $this->url."index.php?gOo=paydollar_reply.do&";
 
                 $this->rnote = $this->dolocal($this->rnote,"zh");
-                
+
                 $key = $this->ikey;  //私钥值，商户可上99BILL快钱后台自行设定
                 $text="merchant_id=".$this->merid."&orderid=".$this->orderid."&amount=".$this->amount."&merchant_url=".$tmp_url."&merchant_key=".$key;
                 $mac = strtoupper(md5($text)); //对参数串进行私钥加密取得值
-                
+
                 $hiddenString = "";
                 $hiddenString.= "<input type=HIDDEN name=\"merchantId\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"orderRef\" value=\"".$this->orderid."\">";
@@ -831,7 +831,7 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"payType\" value=\"N\">";
                 $hiddenString.= "<input type=HIDDEN name=\"payMethod\" value=\"ALL\">";
                 $hiddenString.= "<input type=HIDDEN name=\"remark\" value=\"".$this->rnote."\">";
-                
+
                 $this->action = "https://www.paydollar.com/b2c2/eng/payment/payForm.jsp";
                 return $hiddenString;
                 break;
@@ -848,7 +848,7 @@ class Pay {
                 $subject = str_replace('"','`',$subject);
                 $this->orderdetail = str_replace("'",'`',trim($this->orderdetail));
                 $this->orderdetail = str_replace('"','`',$this->orderdetail);
-                $ali_arr = array(); 
+                $ali_arr = array();
                 switch($this->transport)
                 {
                     case 1:        //免运费|实体商品标准双接口,平邮
@@ -888,7 +888,7 @@ class Pay {
                         $ali_arr['logistics_fee'] = $this->ordinary_fee+$this->express_fee;
                         $ali_arr['logistics_payment'] = "BUYER_PAY";
                         break;
-                   case 7://实体商品纯担保交易，平邮 
+                   case 7://实体商品纯担保交易，平邮
                         $ali_arr['service'] = 'create_partner_trade_by_buyer';
                         $ali_arr['logistics_type'] = "POST";
                         $ali_arr['logistics_fee'] = $this->ordinary_fee+$this->express_fee;
@@ -905,7 +905,7 @@ class Pay {
                         break;
                     //------------
                 }
-                
+
                 $ali_arr['agent'] = 'C4335304346520951111';
                 $ali_arr['payment_type'] = 1;
                 if(trim($this->ikey) != ''){
@@ -923,7 +923,7 @@ class Pay {
                 if ($this->transport==5||$this->transport==6)//即时到帐
                     $ali_arr['price'] = $this->amount + $ali_arr['logistics_fee'];
                 else
-                    $ali_arr['price'] = $this->amount; 
+                    $ali_arr['price'] = $this->amount;
                 if($ali_arr['price']==0 &&$ali_arr['logistics_fee']>0.01){
                     $ali_arr['price'] = 0.01;
                     $ali_arr['logistics_fee'] = $ali_arr['logistics_fee'] - 0.01;
@@ -935,10 +935,10 @@ class Pay {
                     $ali_arr['seller_email'] = $this->merid;
                 }
                 $ali_arr['buyer_msg'] = $this->rnote;
-                $ali_arr['_input_charset'] = "utf-8"; 
+                $ali_arr['_input_charset'] = "utf-8";
                 ksort($ali_arr);
                 reset($ali_arr);
-                
+
                 $mac= "";
                 while(list($k,$v)=each($ali_arr))
                 {
@@ -949,7 +949,7 @@ class Pay {
                 $mac = substr($mac,1);
                 $hiddenString.= "<input type=hidden name=\"sign\" value=\"".md5($mac.$key)."\">";  //验证信息
                 $hiddenString.= "<input type=hidden name=\"sign_type\" value=\"MD5\">";  //验证信息
-                
+
                 $this->action = "https://www.alipay.com/cooperate/gateway.do?_input_charset=utf-8";
                 return $hiddenString;
                 break;
@@ -1022,7 +1022,7 @@ class Pay {
                         $ali_arr['logistics_fee'] = $this->ordinary_fee+$this->express_fee;
                         $ali_arr['logistics_payment'] = "BUYER_PAY";
                         break;
-                   case 7://实体商品纯担保交易，平邮 
+                   case 7://实体商品纯担保交易，平邮
                         $ali_arr['service'] = 'create_partner_trade_by_buyer';
                         $ali_arr['logistics_type'] = "POST";
                         $ali_arr['logistics_fee'] = $this->ordinary_fee+$this->express_fee;
@@ -1068,10 +1068,10 @@ class Pay {
                     $ali_arr['seller_email'] = $this->merid;
                 }
                 $ali_arr['buyer_msg'] = $this->rnote;
-                $ali_arr['_input_charset'] = "utf-8"; 
+                $ali_arr['_input_charset'] = "utf-8";
                 ksort($ali_arr);
                 reset($ali_arr);
-                
+
                 $mac= "";
                 while(list($k,$v)=each($ali_arr))
                 {
@@ -1082,7 +1082,7 @@ class Pay {
                 $mac = substr($mac,1);
                 $hiddenString.= "<input type=hidden name=\"sign\" value=\"".md5($mac.$key)."\">";  //验证信息
                 $hiddenString.= "<input type=hidden name=\"sign_type\" value=\"MD5\">";  //验证信息
-                
+
                 $this->action = "https://www.alipay.com/cooperate/gateway.do?_input_charset=utf-8";
                 return $hiddenString;
                 break;
@@ -1098,9 +1098,9 @@ class Pay {
                 $actioncode = "sell";
                 $actionParameter = "";
                 $ver = "2.0";
-                $msign = md5($this->ikey.":".$this->amount.",".$this->merid.$this->orderid.",".$this->merid.",".$card.",".$scard.",".$actioncode.",".$actionParameter.",".$ver);// 
+                $msign = md5($this->ikey.":".$this->amount.",".$this->merid.$this->orderid.",".$this->merid.",".$card.",".$scard.",".$actioncode.",".$actionParameter.",".$ver);//
                 $msign = strtolower($msign);
-                
+
                 $hiddenString = "<input type=hidden name=shopex_encoding value=\"gb2312\">";
                 $hiddenString.= "<input type=HIDDEN name=\"prc\" value=\"".$this->amount."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"bid\" value=\"".$this->merid.$this->orderid."\">";
@@ -1118,39 +1118,39 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"md\" value=\"".$msign."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"sitename\" value=\"".$this->shopname."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"siteurl\" value=\"".$this->url."\">";
-                
+
                 $this->action = "http://pay.xpay.cn/pay.aspx";
                 return $hiddenString;
                 break;
-                
-                
+
+
             case "NPAY":
                 $tmp_url = $this->url."index.php?gOo=npay_reply.do&";
                 $this->lang = "gb2312";
 
                 $md5string=md5($this->merid . $this->orderid . $this->amount . $this->remail . $this->buyer_mobile . $this->ikey);
                 $md5string = strtoupper($md5string);
-                
+
                 $hiddenString ="<input type=\"hidden\" name=shopex_encoding value=\"gb2312\">";
-                $hiddenString.="<input type=\"hidden\" name=\"v_mid\" value=\"".$this->merid."\">"; 
+                $hiddenString.="<input type=\"hidden\" name=\"v_mid\" value=\"".$this->merid."\">";
                 $hiddenString.="<input type=\"hidden\" name=\"v_oid\" value=\"".$this->orderid."\">";
-                $hiddenString.="<input type=\"hidden\" name=\"v_amount\" value=\"".$this->amount."\">"; 
-                $hiddenString.="<input type=\"hidden\" name=\"v_email\" value=\"".$this->remail."\">"; 
-                $hiddenString.="<input type=\"hidden\" name=\"v_mobile\" value=\"".$this->buyer_mobile."\">"; 
-                $hiddenString.="<input type=\"hidden\" name=\"v_md5\" value=\"".$md5string."\">"; 
-                $hiddenString.="<input type=\"hidden\" name=\"v_url\" value=\"".$tmp_url."\">"; 
-    
+                $hiddenString.="<input type=\"hidden\" name=\"v_amount\" value=\"".$this->amount."\">";
+                $hiddenString.="<input type=\"hidden\" name=\"v_email\" value=\"".$this->remail."\">";
+                $hiddenString.="<input type=\"hidden\" name=\"v_mobile\" value=\"".$this->buyer_mobile."\">";
+                $hiddenString.="<input type=\"hidden\" name=\"v_md5\" value=\"".$md5string."\">";
+                $hiddenString.="<input type=\"hidden\" name=\"v_url\" value=\"".$tmp_url."\">";
+
                 $this->action = "http://www.npay.com.cn/4.0/bank.shtml";
                 return $hiddenString;
                 break;
-                
+
             case "EGOLD":
                 $tmp_url = $this->url."index.php?gOo=egold_reply.do&";
                 $tmp2_url = $this->url."index.php";//EGOLD支付成功跟失败在前台都会有返回，而且必须指定地址，如果支付不成功，就让他返回网店首页好了。
-                
+
                 $this->lang = "gb2312";
-    
-        
+
+
                 $hiddenString = "<input type=hidden name=shopex_encoding value=\"gb2312\">";
 
                 $hiddenString.= "<input type=HIDDEN name=\"PAYMENT_METAL_ID\" value=\"1\">";
@@ -1168,13 +1168,13 @@ class Pay {
 
                 $this->action = "https://www.e-gold.com/sci_asp/payments.asp";
                 return $hiddenString;
-                break;                        
-                
+                break;
+
             case "IEPAY":
                 $tmp_url = $this->url."index.php?gOo=iepay_reply.php&";
                 $this->lang = "gb2312";
 
-                $msign = md5($this->ikey.":".$this->amount.",".$this->merid.$this->orderid.",".$this->merid.",".$card.",".$scard.",".$actioncode.",".$actionParameter.",".$ver);// 
+                $msign = md5($this->ikey.":".$this->amount.",".$this->merid.$this->orderid.",".$this->merid.",".$card.",".$scard.",".$actioncode.",".$actionParameter.",".$ver);//
                 $msign = strtolower($msign);
 
                     //storeid:授權商店代碼 相当于商户号
@@ -1183,15 +1183,15 @@ class Pay {
                     //account:金額
                     //remark:訂單註解
                     //storename:顯示的商店名稱
-            
+
                 $hiddenString.= "<input type=HIDDEN name=\"storeid\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"password\" value=\"".$this->ikey."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"account\" value=\"".$this->amount."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"remark\" value=\"".$this->rnote."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"orderid\" value=\"".$this->orderid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"charset\" value=\"utf-8\">";
-                $hiddenString.= "<input type=HIDDEN name=\"invoiceflag\" value=\"0\">";        
-                
+                $hiddenString.= "<input type=HIDDEN name=\"invoiceflag\" value=\"0\">";
+
                 $this->action = "https://www2.epay.cc/cardfinance.php";
                 return $hiddenString;
                 break;
@@ -1200,7 +1200,7 @@ class Pay {
 //                $this->currency = "LVL";
                 //$tmp_url = $this->url."index.php?gOo=ecs_reply.php");
                 $tmp_url = $_SERVER['HTTP_HOST'];
-                
+
                 $key = $this->ikey;  //私钥值，
                 $mac="goodsTitle".$this->orderid."goodsBid".$this->amount."ordinaryFee0.00expressFee0.00sellerEmail".$this->merid."no".$this->orderid."memo".$key;
                 $mac = md5($mac); //对参数串进行私钥加密取得值
@@ -1217,7 +1217,7 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"Email\" value=\"".$this->remail."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"IP\" value=\"".$_SERVER["REMOTE_ADDR"]."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"Site\" value=\"".$tmp_url."\">";
-                
+
                 $this->action = "https://secure.cps.lv/scripts/rprocess.dll?authorize";
                 return $hiddenString;
                 break;
@@ -1242,11 +1242,11 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"version\" value=\"1.0\">";
                 $hiddenString.= "<input type=HIDDEN name=\"return_url\" value=\"".$tmp_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"verify\" value=\"".$verify."\">";
-                
+
                 $this->action = "https://www.twv.com.tw/openpay/pay.php";
                 return $hiddenString;
                 break;
-            
+
             case "GWPAY":
                 $tmp_url = $this->url."index.php?gOo=gwpay_reply.do&";
                 if ($FRONTEND_LANG == "en")
@@ -1262,7 +1262,7 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"amount\" value=\"".$this->amount."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"email\" value=\"".$this->remail."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"roturl\" value=\"".$tmp_url."\">";
-                
+
                 $this->action = $posturl;
                 return $hiddenString;
                 break;
@@ -1273,7 +1273,7 @@ class Pay {
 
                 $hiddenString.= "<input type=HIDDEN name=\"mid\" value=\"".$this->merid."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"amount\" value=\"".$this->amount."\">";
-                $hiddenString.= "<input type=HIDDEN name=\"txnRef\" value=\"".$this->orderid."\">";                
+                $hiddenString.= "<input type=HIDDEN name=\"txnRef\" value=\"".$this->orderid."\">";
                 $this->action = "https://www.enetspayments.com.sg/masterMerchant/collectionPage.jsp";
                 return $hiddenString;
                 break;
@@ -1283,7 +1283,7 @@ class Pay {
                 $tmp_url = $this->url."cncard_autoredirect.php";
                 $orderdate = date("Ymd",$this->ordertime);
                 $md5string = md5($this->merid.$this->orderid.$this->amount.$orderdate."0"."1".$tmp_url."0"."0".$this->ikey);
-            
+
                 $this->rname = $this->dolocal($this->rname,"zh");
                 $this->remail = $this->dolocal($this->remail,"zh");
                 $this->raddr = $this->dolocal($this->raddr,"zh");
@@ -1311,7 +1311,7 @@ class Pay {
             case "TENPAY":          //腾讯
                 $this->currency = "1";
                 $tmp_url = $this->url."index.php?gOo=tenpay_reply.do&";
-                $orderdate = date("Ymd",$this->ordertime);    
+                $orderdate = date("Ymd",$this->ordertime);
                 $this->amount = ceil($this->amount*100);
                 $v_orderid = $this->merid.$orderdate."0000".$this->orderid;
                 $md5string=strtoupper(md5("cmdno=1&date=".$orderdate."&bargainor_id=".$this->merid."&transaction_id=".$v_orderid."&sp_billno=".$this->orderno."&total_fee=".$this->amount."&fee_type=1&return_url=".$tmp_url."&attach=1&key=".$this->ikey));
@@ -1366,8 +1366,8 @@ class Pay {
                 $mch_type = $this->mch_type;
                 $hiddenString="<input  type=HIDDEN name=\"attach\" value=\"".$attach."\">";
                 $hiddenString.="<input type=HIDDEN name=\"chnid\" value=\"".$chnid."\">";
-                $hiddenString.="<input type=HIDDEN name=\"cmdno\" value=\"12\">";    
-                $hiddenString.="<input type=HIDDEN name=\"encode_type\" value=\"".$encode_type."\">"; 
+                $hiddenString.="<input type=HIDDEN name=\"cmdno\" value=\"12\">";
+                $hiddenString.="<input type=HIDDEN name=\"encode_type\" value=\"".$encode_type."\">";
                 $hiddenString.="<input type=HIDDEN name=\"mch_desc\" value=\"".$mch_desc."\">";
                 $hiddenString.="<input type=HIDDEN name=\"mch_name\" value=\"".$mchname."\">";
                 $hiddenString.="<input type=HIDDEN name=\"mch_price\" value=\"".$this->amount."\">";
@@ -1382,7 +1382,7 @@ class Pay {
                 $hiddenString.="<input type=HIDDEN name=\"version\" value=\"".$version."\">";
                 $hiddenString.="<input type=HIDDEN name=\"ikey\" value=\"".$this->ikey."\">";
                 $hiddenString.="<input type=HIDDEN name=\"shopex_encoding\" value=\"gb2312\">";
-                $this->action="https://www.tenpay.com/cgi-bin/med/show_opentrans.cgi"; 
+                $this->action="https://www.tenpay.com/cgi-bin/med/show_opentrans.cgi";
                 return $hiddenString;
                 break;
             case "PAY100":          //百付通
@@ -1410,12 +1410,12 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"ReturnUrl\" value=\"".$tmp_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"RedirectUrl\" value=\"".$tmp_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"SignCode\" value=\"".strtoupper(md5($StrContent))."\">";
-                
+
                 $this->action = "https://www.pay100.com/interface/Professional/paypre.aspx";
 //                $this->action = "http://tech.pay100.com/interface/Professional/paypre.aspx";
                 return $hiddenString;
                 break;
-            
+
             case "MONEYBOOKERS":          //MONEYBOOKERS
                 $tmp_url = $this->url."index.php?gOo=moneybookers_reply.do&";
                 $orderdate = date("Y-m-d H:i:s",$this->ordertime);
@@ -1438,11 +1438,11 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"status_url\" value=\"".$tmp_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"return_url\" value=\"".$tmp_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"cancel_url\" value=\"".$tmp_url."\">";
-                
+
                 $this->action = "https://www.moneybookers.com/app/payment.pl";
                 return $hiddenString;
                 break;
-            
+
             case "2CHECKOUT":          //2CHECKOUT
                 //$tmp_url = $this->url."index.php?gOo=2checkout_reply.do&";
                 $tmp_url = $this->url."index.php";
@@ -1463,18 +1463,18 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"lang\" value=\"en\">";
                 $hiddenString.= "<input type=HIDDEN name=\"email\" value=\"".$this->remail."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"return_url\" value=\"".$tmp_url."\">";
-                
+
                 $this->action = "https://www.2checkout.com/2co/buyer/purchase";
                 return $hiddenString;
                 break;
-            
+
             case "MOBILE88":          //MOBILE88
                 $tmp_url = $this->url."index.php?gOo=mobile88_reply.do&";
                 $ordAmount = number_format($this->amount, 2, ".", "");
                 $tmpOrdAmount = str_replace(".", "", $ordAmount);
                 include_once(dirname(__FILE__)."/class.Shafunction.php");
                 $sha1 = new Shafunction();
-                
+
                 $Signature = base64_encode($sha1->sha1($this->ikey.$this->merid.$this->orderid.$tmpOrdAmount.$this->currency, true));
                 $this->rname = $this->dolocal($this->rname,"zh");
                 $this->raddr = $this->dolocal($this->raddr,"zh");
@@ -1491,7 +1491,7 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"Remark\" value=\"\">";
                 $hiddenString.= "<input type=HIDDEN name=\"Signature\" value=\"".$Signature."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"return_url\" value=\"".$tmp_url."\">";
-                
+
                 $this->action = "https://www.mobile88.com/epayment/entry.asp";
                 return $hiddenString;
                 break;
@@ -1501,17 +1501,17 @@ class Pay {
                 $this->url = str_replace("http://", "https://", $this->url);
                 $tmp_url = $this->url."index.php?gOo=google_reply.do&";
                 $ordAmount = number_format($this->amount, 2, ".", "");
-                
-                $cart =  new GoogleCart($this->merid, $this->ikey, "checkout"); 
+
+                $cart =  new GoogleCart($this->merid, $this->ikey, "checkout");
                 $item1 = new GoogleItem($this->orderid, $this->orderno, 1, $ordAmount, $this->currency);
                 $cart->AddItem($item1);
-                
+
                 $hiddenString = $cart->CheckoutButtonCode("large");
-                
+
                 $this->action = "https://checkout.google.com/cws/v2/Merchant/".$this->merid."/checkout";
                 return $hiddenString;
                 break;
-            
+
             case "UDPAY":          //UDPAY
                 include_once(dirname(__FILE__)."/func_udpay.php");
                 $tmp_url = $this->url."index.php?gOo=udpay_reply.do&";
@@ -1549,12 +1549,12 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"interfaceType\" value=\"5\">";
                 $hiddenString.= "<input type=HIDDEN name=\"sign\" value=\"".$testRsaDecrypt."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"merURL\" value=\"".$tmp_url."\">";
-                
+
 //                $this->action = "http://124.42.2.165/gateway/transForward.jsp";
                 $this->action = "https://www.udpay.com.cn/gateway/transForward.jsp";
                 return $hiddenString;
                 break;
-            
+
             case "CHINAPNR":          //汇付天下
                 $ret_url = $this->url."index.php?gOo=chinapnr_reply.do&";
                 $ret_server_url = $this->url."index.php?gOo=chinapnr_server.do&";
@@ -1586,25 +1586,25 @@ class Pay {
                 $hiddenString.= "<input type=HIDDEN name=\"ChkValue\" value=\"".$ChkValue."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"PageRetUrl\" value=\"".$ret_url."\">";
                 $hiddenString.= "<input type=HIDDEN name=\"BgRetUrl\" value=\"".$ret_server_url."\">";
-                
+
                 //$this->action = "http://tech.chinapnr.com/pay/TransGet";
                 $this->action = "https://payment.chinapnr.com/pay/TransGet";
                 return $hiddenString;
                 break;
-            
+
             case "800PAY":          //800-Pay
                 $m_url = $this->url."index.php?gOo=800pay_reply.do&";
                 $m_odate = date("Y-m-d H:i:s",mktime());
-                
+
                 if($this->currency == 'RMB') $m_language = 'cn';
                 elseif($this->currency == 'USD') $m_language = 'en';
                 elseif($this->currency == 'KRW') $m_language = 'kr';
                 else $m_language = 'cn';
-                
+
                 $this->rname =  '';
-                $this->raddr =  ''; 
+                $this->raddr =  '';
                 $this->rnote =  '';
-                
+
                 $m_info = $this->merid."|".$this->orderid."|".$this->amount."|".$this->currency."|".$m_url."|".$m_language;
                 $t_info = $this->orderno."||||";
                 $s_info = $this->rname."|".$this->raddr."|".$this->rpost."|".$this->rtel."|".$this->remail."|".$this->rname;
@@ -1620,7 +1620,7 @@ class Pay {
                 $this->action = "https://www.800-pay.com/PayAction/ReceivePayOrder.aspx";
                 return $hiddenString;
                 break;
-                
+
             case "ADVANCE":
                 $hiddenString.= "<input type=hidden name=orderid value=\"".$this->orderno."\">";
                 $hiddenString.= "<input type=hidden name=amount value=\"".$this->amount."\">";
@@ -1635,7 +1635,7 @@ class Pay {
                 $hiddenString.= "<input type=hidden name=pname value=\"".$this->payname."\">";
                 $hiddenString.= "<input type=hidden name=currency value=\"".$this->currency."\">";
                 $hiddenString.= "<input type=hidden name=lang value=\"".$this->lang."\">";
-                
+
                 $this->action = "./index.php?gOo=advance_reply.do&";
                 return $hiddenString;
                 break;
@@ -1645,14 +1645,14 @@ class Pay {
                 if (strtoupper(substr(PHP_OS,0,3))=="WIN"){//windows系统
                     $root_path = substr(dirname(__FILE__), 0, -7) . "syssite/shopadmin/images/";
                     $bb = new COM("ICBCEBANKUTIL.B2CUtil");
-                    
+
                     $rc = $bb->init($root_path . "user.crt", $root_path . "user.crt", $root_path . "user.key", $this->ikey);
                     $src = $this->merid . $tmp_url  . "HS" . $this->orderid . $this->amount . $this->currency . "0";
                     $ssrc = $bb->signC($src, strlen($src));
-                    
+
                     $rc = $bb->verifySignC($src, strlen($src), $ssrc, strlen($ssrc)); //数据签名
                     $cert = $bb->getCert(1); //商户证书
-                    
+
                     $hiddenString .= "<input type=hidden name=merchantid value=\"" . $this->merid . "\" >";
                     $hiddenString .= "<input type=hidden name=interfaceType value=\"HS\" >";
                     $hiddenString .= "<input type=hidden name=merURL value=\"" . $tmp_url . "\" >";
@@ -1676,18 +1676,18 @@ class Pay {
                      * passwd.php的内容为 $passwd=密码;
                      */
                      $pass = $this->keyPass;
-                     
-                     if(!file_exists($key)){ 
+
+                     if(!file_exists($key)){
                         die("ICBC key file not found!");
                      }
-                     if(!file_exists($cert)){ 
+                     if(!file_exists($cert)){
                         die("ICBC Cert file not found!");
                      }
                      /*/////////////////////////////////////////////////////////////////////
                      *      开始构建工行要求的参数
                      *///////////////////////////////////////////////////////////////////////
                      //接口名称固定为“ICBC_PERBANK_B2C”
-                     $aREQ["interfaceName"] = "ICBC_PERBANK_B2C"; 
+                     $aREQ["interfaceName"] = "ICBC_PERBANK_B2C";
                      //接口版本目前为“1.0.0.0”
                      $aREQ["interfaceVersion"] = "1.0.0.3";
                      //商城代码，ICBC提供
@@ -1703,7 +1703,7 @@ class Pay {
                      //金额以分为单位
                      $aREQ["amount"] = $this->amount * 100;
                      //币种目前只支持人民币，代码为“001”
-                     $aREQ["curType"] = "001"; 
+                     $aREQ["curType"] = "001";
                      //对于HS方式“0”：发送成功或者失败信息；“1”，只发送交易成功信息。
                      $aREQ["resultType"] = 0;
                      //14位时间戳
@@ -1730,8 +1730,8 @@ class Pay {
 
                      //构造V3版的xml
                      $tranData = "<?xml version=\"1.0\" encoding=\"GBK\" standalone=\"no\"?><B2CReq><interfaceName>".$aREQ["interfaceName"]."</interfaceName><interfaceVersion>".$aREQ["interfaceVersion"]."</interfaceVersion><orderInfo><orderDate>".$aREQ["orderDate"]."</orderDate><orderid>". $aREQ["orderid"]."</orderid><amount>".$aREQ["amount"]."</amount><curType>".$aREQ["curType"]."</curType><merID>".$aREQ["merID"]."</merID><merAcct>".$aREQ["merAcct"]."</merAcct></orderInfo><custom><verifyJoinFlag>".$aREQ["verifyJoinFlag"]."</verifyJoinFlag><Language>ZH_CN</Language></custom><message><goodsID>".$aREQ["goodsID"]."</goodsID><goodsName>".$aREQ["goodsName"] ."</goodsName><goodsNum>".$aREQ["goodsNum"]."</goodsNum><carriageAmt>".$aREQ["carriageAmt"]."</carriageAmt><merHint>". $aREQ["merHint"]."</merHint><remark1>".$aREQ["remark1"]."</remark1><remark2>".$aREQ["remark2"]."</remark2><merURL>".$aREQ["merURL"]."</merURL><merVAR></merVAR></message></B2CReq>";
-                        
-                    
+
+
                      //商户签名数据BASE64编码
                      $cmd = "/bin/icbc_sign '{$key}' '{$passwd}' '{$tranData}'";
                      //error_log($cmd,3,__FILE__.".log");
@@ -1752,20 +1752,20 @@ class Pay {
                      */
 
                      $this->action = "https://B2C.icbc.com.cn/servlet/ICBCINBSEBusinessServlet";
-                     
+
                      $aFinalReq['interfaceName'] = $aREQ["interfaceName"];
                      $aFinalReq['interfaceVersion'] = $aREQ["interfaceVersion"];
                      $aFinalReq['tranData'] = base64_encode($tranData);
                      $aFinalReq['merSignMsg'] = $merSignMsg;
                      $aFinalReq['merCert'] = $merCert;
-                     
+
                      $hiddenString = "<input type=hidden name=shopex_encoding value=\"gb2312\">";
                      foreach($aFinalReq as $key=>$val) {
                         $hiddenString .= "<INPUT TYPE=\"hidden\" NAME=\"".$key."\" value=\"".$val."\" >";
                      }
-                     
+
                      return $hiddenString;
-                     break;  
+                     break;
                 }
                 break;
             case "ABANK": //联银通支付平台-收汇宝
@@ -1778,19 +1778,20 @@ class Pay {
                         $this->language=1;
                     else
                         $this->language=2;
-                $hiddenString.= "<input type=hidden name=\"BillNo\" value=\"".$this->orderid."\">";    //订单编号  
-                $hiddenString.= "<input type=hidden name=\"MerNo\"  value=\"".$this->merid."\">";    //商户编号  
-                $hiddenString.= "<input type=hidden name=\"Amount\" value=\"".$this->amount."\">"; //订单金额  
-                $hiddenString.= "<input type=hidden name=\"Currency\" value=\"".$this->currency."\">";    //支付卡种  
-                $hiddenString.= "<input type=hidden name=\"ReturnURL\" value=\"".$ret_url."\">";    //支付结果返回的商户URL   
-                $hiddenString.= "<input type=hidden name=\"Language\" value=\"".$this->language."\">";    //语言 
+                $hiddenString.= "<input type=hidden name=\"BillNo\" value=\"".$this->orderid."\">";    //订单编号
+                $hiddenString.= "<input type=hidden name=\"MerNo\"  value=\"".$this->merid."\">";    //商户编号
+                $hiddenString.= "<input type=hidden name=\"Amount\" value=\"".$this->amount."\">"; //订单金额
+                $hiddenString.= "<input type=hidden name=\"Currency\" value=\"".$this->currency."\">";    //支付卡种
+                $hiddenString.= "<input type=hidden name=\"ReturnURL\" value=\"".$ret_url."\">";    //支付结果返回的商户URL
+                $hiddenString.= "<input type=hidden name=\"Language\" value=\"".$this->language."\">";    //语言
                 $md5src = $this->merid.$this->orderid.$this->currency.$this->amount.$this->language.$ret_url.$this->ikey;
                 $hiddenString.= "<input type=hidden name=\"MD5info\" value=\"".strtoupper(md5($md5src))."\">";    //MD5签名验证
-                $hiddenString.= "<input type=hidden name=\"Remark\" value=\"".$this->rnote."\">";    //商户数据包 -- 备注  
+                $hiddenString.= "<input type=hidden name=\"Remark\" value=\"".$this->rnote."\">";    //商户数据包 -- 备注
                 if ($this->arr['ctopaytype'])
                     $this->action = "https://payment.ttopay.com/payment/Interface";
                 else
                     $this->action = "https://payment.xtopay.com/payment/Interface";
+                //echo htmlspecialchars($hiddenString);
                 return $hiddenString;
                 break;
             case "HYL":
@@ -1805,7 +1806,7 @@ class Pay {
                     if (file_exists(dirname(dirname(__FILE__))."/cert/HYL/".$this->certfile))
                       $certFile = dirname(dirname(__FILE__))."/cert/HYL/".$this->certfile;
                 }
-                
+
                 $BankCode=$ResultMode=$Reserved01=$Reserved01="";
                 $keyPass=$this->keypass?$this->keypass:"123456";
                 $SourceText = "MerId=".$this->merid."&";
@@ -1827,7 +1828,7 @@ class Pay {
                     echo $PROG_TAGS['ptag_Encrypterror'];
                     exit;
                 }
-                $ret=$obj->SignMsg($SourceText,$keyFile,$keyPass);//信息签名   
+                $ret=$obj->SignMsg($SourceText,$keyFile,$keyPass);//信息签名
                 if($ret==true)
                 {
                     $SignedMsg=$obj->getLastResult();
@@ -1841,12 +1842,13 @@ class Pay {
                 $this->action = "http://test.gnete.com/Bin/Scripts/OpenVendor/Gnete/V34/GetOvOrder.asp";
                 return $hiddenString;
                 break;
-
 						case "GSPAY":
 							$tmp_url = $this->url."index.php?gOo=gspay_reply.do";
 
+							$orderid = $this->orderno.$this->orderid;
+
 							$hiddenString .= "<input type=\"hidden\" name=\"siteID\" value=\"".$this->merid."\">";
-							$hiddenString .= "<input type=\"hidden\" name=\"OrderID\" value=\"".$this->orderid."\">";
+							$hiddenString .= "<input type=\"hidden\" name=\"OrderID\" value=\"".$orderid."\">";
 
 							$OrderItem = newclass("orderItems");
 							$OrderItem->shopId = 1;
@@ -1872,6 +1874,7 @@ class Pay {
 							$this->action = "https://secure.rdgateway.com/payment/pay.php";
 							return $hiddenString;
 							break;
+							
         }
     }
 
