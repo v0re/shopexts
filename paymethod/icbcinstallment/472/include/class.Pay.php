@@ -1887,9 +1887,9 @@ class Pay {
 								define("MERCRRVIFILE",dirname(__FILE__)."/../cert/ICBC/user.key");
 								#工行公钥文件
 								define("ICBCCERTFILE",dirname(__FILE__)."/../cert/ICBC/ebb2cpublic.crt");
-								define("MERCPASSWORD",'12345679');
-								define("MERID",'1402EC20000798');
-								define("MERACCT",'1402020319006926868');
+								define("MERCPASSWORD",'xxxxx');
+								define("MERID",'xxxxx');
+								define("MERACCT",'xxxxxxx');
                  /*/////////////////////////////////////////////////////////////////////
                  *      开始构建工行要求的参数
                  *///////////////////////////////////////////////////////////////////////  								 
