@@ -1,0 +1,20 @@
+<form method="post" action="<{link ctl=member act=toDelOrderMsg }>">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="liststyle data">
+<tr>
+  
+    <td>确定要删除订单？订单取消后无法自动恢复！</td>
+</tr>
+<tr>
+   
+    <td><input type="submit" value="取消订单"/></td>
+
+</table>
+<input type="hidden" name="msg[orderid]" value="<{$orderId}>"/>
+<input type="hidden" name="msg[msgType]" value="<{$msgType}>"/>
+</form>
+
+
+
+
+
