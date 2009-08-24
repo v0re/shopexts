@@ -1,0 +1,18 @@
+<?php
+$PROG_TAGS["ptag_375"] = "请选择";
+$PROG_TAGS["ptag_1549"] = "国际化编码(utf-8)";
+$PROG_TAGS["ttag_1925"] = "请选择所属分类和上传文件！";
+$PROG_TAGS["ttag_586"] = "购物流程设置";
+$PROG_TAGS["ttag_587"] = "商品";
+$PROG_TAGS["ttag_1860"] = "商品批量上传";
+$PROG_TAGS["ttag_134"] = "取消";
+$PROG_TAGS["ttag_135"] = "保存";
+$PROG_TAGS["ttag_902"] = "所属分类：";
+$PROG_TAGS["ttag_618"] = "上传批量CSV文件：";
+$PROG_TAGS["ttag_1979"] = "（CSV文件中一次上传商品数量不得超过1000，CSV文件大小最好不要超过500K.）";
+$PROG_TAGS["ttag_1903"] = "文件编码：";
+$PROG_TAGS["ttag_1974"] = "下载批量CSV文件（简体中文）";
+$PROG_TAGS["ttag_1975"] = "下载批量CSV文件（繁体中文）";
+$PROG_TAGS["ttag_1976"] = "下载批量CSV文件（英文）";
+$PROG_TAGS["ttag_1980"] = "使用步骤：<br>1.按照用户使用习惯，下载对应语言的csv文件，譬如港台用户则下载繁体语言的文件；<br><br>2.填写csv文件，其中遇到“是否发布”之类，填写数字0或者1，0代表“否”，1代表“是”；<br>商品缩略图和清晰图请填写图片文件名，譬如abc.jpg，远程链接图片直接写地址，譬如http://www.shopabcd.cn/images/star.gif；<br>商品性质填写1代表实体商品，0代表虚拟卡类，2代表数字文件，如果商品属于数字文件商品，则在最后一栏填写数字文件名，如abc.zip，并将相应文件上传至../syssite/home/shop/1/digital目录下<br><br>3.将填写的商品图片的缩略图和清晰图上传到目录：./syssite/home/shop/1/pic_upload<br><br>4.选择所上传商品的类别，上传csv文件<br><br>注意：批量上传文件只能属于同一个商品类别，不要将两个或两个以上类别的商品输入在同一个csv文件中。";
+?>
