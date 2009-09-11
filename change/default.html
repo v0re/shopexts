@@ -1,0 +1,11 @@
+﻿<div align="left">
+  <table border="1" cellspacing="0" bordercolor="#3333FF"  align="left">
+  <{foreach name=outer item=contact from=$data key=key}>
+  <tr bordercolor="#3333FF">
+    <td bordercolor="#3366FF"><{$data.$key.one}></td>
+    <td bordercolor="#3366FF"><{$data.$key.two}> </td>
+    <td bordercolor="#3366FF"><{$data.$key.three}> </td>
+  </tr>
+  <{/foreach}>
+  </table>
+</div>
