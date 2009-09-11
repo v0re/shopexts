@@ -1,0 +1,7 @@
+<div>
+<table border="1" cellpadding="3" cellspacing="3">
+<{foreach name=outer item=contact from=$data key=key}>
+<tr><td><{$data.$key.a}></td><td><{$data.$key.b}></td></tr>
+<{/foreach}>
+</table>
+</div>
