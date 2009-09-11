@@ -1,0 +1,123 @@
+<?php
+error_reporting(0);
+
+require("class.HttpDown.php");
+
+
+define("PAGEURL","http://www.cmbchina.com/cmb2005web/cmbaspxbin/rate/realtimefxrate.aspx");
+define("LANG",'cn');
+define("COLNUM",7);
+
+//include_once("shopex/pluginswidgets/include/class.HttpDown.php");
+
+global $forex_table;
+global $rnt;
+
+
+//表头
+ $aTblHeader = array(
+array('en'=>'Currency Name','cn'=>'交易币'),
+array('en'=>'Trading Unit','cn'=>'交易币单位'),
+array('en'=>'Base Currency','cn'=>'基本币'),
+array('en'=>'Middle Rate','cn'=>'中间价'),
+array('en'=>'Selling Rate','cn'=>'卖出价'),
+array('en'=>'Buying Rate','cn'=>'现汇买入价'),
+array('en'=>'Cash Buying Rate','cn'=>'现钞买入价')
+);
+
+
+//货币名称
+ $aMoneyList = array(
+array('en'=>'HKD','cn'=>'港币'),
+array('en'=>'AUD','cn'=>'澳大利亚元'),
+array('en'=>'USD','cn'=>'美元'),
+array('en'=>'EUR','cn'=>'欧元'),
+array('en'=>'CAD','cn'=>'加拿大元'),
+array('en'=>'GBP','cn'=>'英镑'),
+array('en'=>'JPY','cn'=>'日元'),
+array('en'=>'SGD','cn'=>'新加坡元'),
+array('en'=>'CHF','cn'=>'瑞士法郎')
+);
+
+
+ $wget = new HttpDown;
+//打开页面
+$wget->OpenUrl(PAGEURL);
+$html = $wget->GetHtml();
+
+
+$doc = new DOMDocument("1.0","UTF-8");
+$doc->loadHTML($html);
+$node = $doc->getElementById('ExrateDataGrid');
+
+
+$aTDNodeList = $node->getElementsByTagName("td");
+
+
+$aTemp = array();
+for ($i = 0; $i <= $aTDNodeList->length; $i++) {
+$aTemp[] = $aTDNodeList->item($i)->nodeValue;
+}
+//替换表头，前7个元素
+for($i=0;$i<COLNUM;$i++){
+$aTemp[$i] = $aTblHeader[$i][LANG];
+}
+//按COLNUM切分
+$aRent = array_chunk($aTemp,COLNUM);
+
+
+ $forex_table =  make_table($aRent);
+//echo $forex_table;
+//file_put_contents("default.html",$forex_table); 
+
+
+//注入模板引擎
+
+//$t->set_var("forex_table",$forex_table);
+
+
+
+
+
+function make_table($arr){
+global $aMoneyList;
+$rnt = LANG == 'cn' ? "时间基准：" : "Date:";
+$rnt .= date("Y-m-d H:i:s",time());
+$rnt .= "<table  rules=\"all\" cellspacing=\"0\" bordercolor=\"Silver\" border=\"1\" style=\"border-style: solid; border-color: Silver; background-color: White; height: 38px; width: 60%; border-collapse: collapse;\">\r\n";
+//行数归零
+$row_num = -1;
+foreach($arr as $aRow){
+$rnt .= "<tr>";
+//列数归零
+$col_num = 0;
+foreach($aRow as $col_value){
+//替换货币名称
+if($col_num == 0 && $row_num >= 0){
+$col_value = $aMoneyList[$row_num][LANG];
+}
+//替换基础货币
+if($col_num == 2 && $row_num >= 0){
+$col_value = LANG == 'cn' ? "人民币" : "RMB";
+}
+if($col_num == 0 && $row_num >= 0){
+$rnt .= "<td align=left>".$col_value."</td>";
+}elseif($col_num > 2 && $row_num >=0){
+$rnt .= "<td align=right>".$col_value."</td>";
+}else{
+$rnt .= "<td align=center>".$col_value."</td>";
+}
+$col_num++;
+}
+$rnt .= "</tr>\r\n";
+$row_num++;
+}
+$rnt .= "</table>";
+return $rnt;
+
+}
+
+
+
+
+
+?>

@@ -1,0 +1,26 @@
+
+<?php
+
+
+$setting['author']='sanow';
+
+$setting['name']='外币汇率';
+
+$setting['version']='1.0';
+
+$setting['description']    = '本板显示不同国家的货币兑换率';
+
+
+$setting['catalog']='自定义板块';
+
+$setting['usual']    = '1';
+
+$setting['stime']='2009-8-24';
+
+$setting['template'] = array(
+                            'default.html'=>'默认' 
+							//'dollos.php'=>'默认'                           
+                        );
+
+?>
+

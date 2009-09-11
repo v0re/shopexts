@@ -1,0 +1,7 @@
+﻿
+
+ <{foreach name=outer item=contact from=$data key=key}>
+    <li> 
+      <{$data}> </li>
+    <{/foreach}>
+	
