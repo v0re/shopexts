@@ -90,7 +90,7 @@ function getFile($id){
         $dir = '/'.$type.'/'.date('Ymd').'/';
 
         $uri = $dir.substr(md5(($addons?$addons:$file).microtime()),0,16).ext_name(basename($addons?$addons:$file));
-		error_log(print_r($uri,true),3,__FILE__.'uri.log');
+		//error_log(print_r($uri,true),3,__FILE__.'uri.log');
         $path = FTP_SAVEDIR.'images'.$uri;
         //$url = 'images'.$uri;
         $url=FTP_REFURL.'images'.$uri;
