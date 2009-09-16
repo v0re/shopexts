@@ -1,14 +1,17 @@
 <?php
 /**
+ *Author: shuhanbing
+ *email :sanow@126.com
  * Storager:图片文件的存储方式
- * 本插件可用来将图片上传到指定的ftp服务器上
+ * 本插件可用来将图片上传到指定的ftp服务器上，如果前后台不显示，修改数据表sdb_gimages中small,big,thumbnail 字段长度为200；
  *
- * 系统配置项：
- * system.storager.ftp.url  ->  访问地址前缀
- * system.storager.ftp.server  ->  访问地址前缀
- * system.storager.ftp.uname -> ftp用户名
- * system.storager.ftp.password  -> ftp密码
- * system.storager.ftp.dir  -> 上传路径
+ * 系统配置项：在config.php 配置
+ * define('WITH_STORAGER','ftp_storage');
+ * define('FTP_SERVER',"FTP的IP地址");
+ * define('FTP_UNAME',"登陆用户名");
+ * define('FTP_PASSWD',"登陆密码");
+ * define('FTP_SAVEDIR',"/上传路径/");
+ * define('FTP_REFURL','访问地址');
  * 
  */
 
