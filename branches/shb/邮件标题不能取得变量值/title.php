@@ -3,7 +3,7 @@
 /*
 
 */
-//ÔÚ¸øÓÃ»§·¢ËÍÓÊ¼þµÄÊ±ºò£¬ÓÊ¼þ±êÌâ±äÁ¿ÃûÓÐµÄÄÜÈ¡µ½ÓÐµÄ²»ÄÜÈ¡µ½£¬²»ÄÜÈ¡µ½µ½µÄÊÇ±äÁ¿ÃûÐÎÈç<{$delivery.ship_name}> ÖÐ¼ä´ø'.'Õâ¸ö×Ö·ûµÄ£¬ÒòÎªÔÚÊý×éÖÐÃ»ÓÐ//delivery.ship_name¼ü£¬¶øËü¶ÔÓ¦µÄ¼üÊÇ[delivery][ship_name] ,°Ñ/core/model/system/ÖÐmdl.messenger.phpÎÄ¼þµÄloadTitle·½·¨¸Ä³ÉÒÔÏÂ´úÂë£¬¼´¿É½â¾ö´ËÎÊÌâ¡£
+//åœ¨ç»™ç”¨æˆ·å‘é€é‚®ä»¶çš„æ—¶å€™ï¼Œé‚®ä»¶æ ‡é¢˜å˜é‡åæœ‰çš„èƒ½å–åˆ°æœ‰çš„ä¸èƒ½å–åˆ°ï¼Œä¸èƒ½å–åˆ°åˆ°çš„æ˜¯å˜é‡åå½¢å¦‚<{$delivery.ship_name}> ä¸­é—´å¸¦'.'è¿™ä¸ªå­—ç¬¦çš„ï¼Œå› ä¸ºåœ¨æ•°ç»„ä¸­æ²¡æœ‰//delivery.ship_nameé”®ï¼Œè€Œå®ƒå¯¹åº”çš„é”®æ˜¯[delivery][ship_name] ,æŠŠ/core/model/system/ä¸­mdl.messenger.phpæ–‡ä»¶çš„loadTitleæ–¹æ³•æ”¹æˆä»¥ä¸‹ä»£ç ï¼Œå³å¯è§£å†³æ­¤é—®é¢˜ã€‚
 function loadTitle($action,$msg,$lang='',$data=''){
       $title = $this->system->getConf('messenger.title.'.$action.'.'.$msg);
  
