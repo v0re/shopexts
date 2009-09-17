@@ -1,23 +1,23 @@
-��ַ:http://192.168.0.71/?find-find.html 
-��ɲ��裺 
- 1.��/themes/shhlĿ¼�´���һ��find.html�ļ����ļ��������⣩�� 
- 2.��/model/system/mdl_template.php �������ǺŸ����д��롣
- function templateList($theme){//Ĭ��ģ���б�
+地址:http://192.168.0.71/?find-find.html 
+完成步骤： 
+ 1.在/themes/shhl目录下创建一个find.html文件（文件名可随意）。 
+ 2.在/model/system/mdl_template.php 中添加星号隔离中代码。
+ function templateList($theme){//默认模板列表
         include('shopctls.php');
         $ctl = array(
-            'gallery'=>'��Ʒ�б�ҳ',
-            'product'=>'��Ʒ��ϸҳ',
-            'page'=>'վ����Ŀ����ҳ',
-            'article'=>'����ҳ',
-            'gift'=>'��Ʒҳ',
-            'cart'=>'���ﳵҳ',
-            'comment'=>'��Ʒ����/��ѯҳ',
-            'member'=>'��Ա����ҳ',
-            'passport'=>'ע��/��¼ҳ',
-            'search'=>'�߼�����ҳ',
+            'gallery'=>'商品列表页',
+            'product'=>'商品详细页',
+            'page'=>'站点栏目单独页',
+            'article'=>'文章页',
+            'gift'=>'赠品页',
+            'cart'=>'购物车页',
+            'comment'=>'商品评论/咨询页',
+            'member'=>'会员中心页',
+            'passport'=>'注册/登录页',
+            'search'=>'高级搜索页',
   );
         $data = array(
-            array('name'=>'��ҳ','file'=>'index.html','available'=>file_exists(THEME_DIR.'/'.$theme.'/index.html')),
+            array('name'=>'首页','file'=>'index.html','available'=>file_exists(THEME_DIR.'/'.$theme.'/index.html')),
         );
         foreach($ctl as $c=>$a){
             if($ctl[$c]){
@@ -32,16 +32,16 @@
                 $data[]=$item;
             }
         }
-        $data[]=array('name'=>'����ҳ��','file'=>'default.html','available'=>file_exists(THEME_DIR.'/'.$theme.'/default.html')); 
+        $data[]=array('name'=>'其它页面','file'=>'default.html','available'=>file_exists(THEME_DIR.'/'.$theme.'/default.html')); 
 *******************************************************************
-  $data[]=array('name'=>'�Զ���ҳ��','file'=>'find.html','available'=>file_exists         
+  $data[]=array('name'=>'自定义页面','file'=>'find.html','available'=>file_exists         
 (THEME_DIR.'/'.$theme.'/find.html')); 
 *******************************************************************
         return $data;
     } 
-�����̨������ʾһ���ɱ༭��ҳ�档 
-3.Ҫ�뽫ҳ�������ӵ�ҵ����ȥ�ͱ��룬����ģ�����ӵ����﷨�� 
-  ��/shop/controller/Ŀ¼���½�һ���������ļ�ctl_find.php; 
+到这后台就能显示一个可编辑的页面。 
+3.要想将页面框架添加到业务中去就必须，明白模板连接调用语法。 
+  在/shop/controller/目录下新建一个控制类文件ctl_find.php; 
    <?php
      class ctl_find extends shopPage{
        function  find(){
@@ -50,8 +50,8 @@
      }
   }
  ?> 
-4.��/shop/viewĿ¼�� 
- �½�һ��find�ļ��У������ļ������½�һ��find.html 
-5.��ǰ̨�Լ���Ҫ�������ӵĵط���������<a href="<{link ctl=find act=find}>" target="_blank"><{t}>  �����Զ���ҳ��<{/t}></a>.ctl�������࣬act���������������ctl_find.php����ķ�������index����ôact=index��ʡ�Բ�д�� 
+4.在/shop/view目录下 
+ 新建一个find文件夹，并在文件夹里新建一个find.html 
+5.在前台自己想要添加链接的地方添加链接<a href="<{link ctl=find act=find}>" target="_blank"><{t}>  进入自定义页面<{/t}></a>.ctl控制器类，act控制器方法。如果ctl_find.php定义的方法名是index，那么act=index可省略不写。 
   
- ���������ģ�����ļ����к�ҵ��/shop/view/Ŀ¼����ͬ���ļ��Ļ���ϵͳ�ͻ����ģ���е��ļ������Լ���Ҫҵ�����ӵ����档 
+ 这样，如果模板里文件中有和业务/shop/view/目录下相同的文件的话，系统就会掉用模板中的文件，将自己想要业务添加到上面。 
