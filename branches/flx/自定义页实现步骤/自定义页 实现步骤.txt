@@ -1,0 +1,57 @@
+地址:http://192.168.0.71/?find-find.html 
+完成步骤： 
+ 1.在/themes/shhl目录下创建一个find.html文件（文件名可随意）。 
+ 2.在/model/system/mdl_template.php 中添加星号隔离中代码。
+ function templateList($theme){//默认模板列表
+        include('shopctls.php');
+        $ctl = array(
+            'gallery'=>'商品列表页',
+            'product'=>'商品详细页',
+            'page'=>'站点栏目单独页',
+            'article'=>'文章页',
+            'gift'=>'赠品页',
+            'cart'=>'购物车页',
+            'comment'=>'商品评论/咨询页',
+            'member'=>'会员中心页',
+            'passport'=>'注册/登录页',
+            'search'=>'高级搜索页',
+  );
+        $data = array(
+            array('name'=>'首页','file'=>'index.html','available'=>file_exists(THEME_DIR.'/'.$theme.'/index.html')),
+        );
+        foreach($ctl as $c=>$a){
+            if($ctl[$c]){
+                $item = array('name'=>$ctl[$c],'items'=>array(),'file'=>($file=$c.'.html'),'available'=>file_exists(THEME_DIR.'/'.$theme.'/'.$file));
+                foreach($a as $act=>$i){
+                    $item['items'][] = array_merge(array(
+                            'act'=>$act,
+                            'file'=>($file = $c.'-'.$act.'.html'),
+                            'available'=>file_exists(THEME_DIR.'/'.$theme.'/'.$file),
+                        ),$i);
+                }
+                $data[]=$item;
+            }
+        }
+        $data[]=array('name'=>'其它页面','file'=>'default.html','available'=>file_exists(THEME_DIR.'/'.$theme.'/default.html')); 
+*******************************************************************
+  $data[]=array('name'=>'自定义页面','file'=>'find.html','available'=>file_exists         
+(THEME_DIR.'/'.$theme.'/find.html')); 
+*******************************************************************
+        return $data;
+    } 
+到这后台就能显示一个可编辑的页面。 
+3.要想将页面框架添加到业务中去就必须，明白模板连接调用语法。 
+  在/shop/controller/目录下新建一个控制类文件ctl_find.php; 
+   <?php
+     class ctl_find extends shopPage{
+       function  find(){
+     //$this->_tmpl='common/find.html';
+         $this->output();
+     }
+  }
+ ?> 
+4.在/shop/view目录下 
+ 新建一个find文件夹，并在文件夹里新建一个find.html 
+5.在前台自己想要添加链接的地方添加链接<a href="<{link ctl=find act=find}>" target="_blank"><{t}>  进入自定义页面<{/t}></a>.ctl控制器类，act控制器方法。如果ctl_find.php定义的方法名是index，那么act=index可省略不写。 
+  
+ 这样，如果模板里文件中有和业务/shop/view/目录下相同的文件的话，系统就会掉用模板中的文件，将自己想要业务添加到上面。 
