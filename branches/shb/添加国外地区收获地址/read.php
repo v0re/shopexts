@@ -1,19 +1,19 @@
 <?php
-/*  ¸Ã³ÌÐòÊÇ¸ù¾Ýhttp://code.google.com/intl/zh-CN/apis/adwords/docs/developer/adwords_api_cities.htmlÉÏ¸÷¸ö¹ú¼Ò³ÇÊÐÐÅÏ¢´úÂë
-    ¹éÄÉ³ö¸÷Ê¡»òÖÝËù°üº¬µÄ³ÇÊÐ£¬²¢ÒÔ "Ê¡/ÖÝ:³ÇÊÐ" ÐÎÊ½Êä³ö¡£
+/*  è¯¥ç¨‹åºæ˜¯æ ¹æ®http://code.google.com/intl/zh-CN/apis/adwords/docs/developer/adwords_api_cities.htmlä¸Šå„ä¸ªå›½å®¶åŸŽå¸‚ä¿¡æ¯ä»£ç 
+    å½’çº³å‡ºå„çœæˆ–å·žæ‰€åŒ…å«çš„åŸŽå¸‚ï¼Œå¹¶ä»¥ "çœ/å·ž:åŸŽå¸‚" å½¢å¼è¾“å‡ºã€‚
  *Author: shuhanbing
  *email :sanow@126.com
  *
  *
 */
-$file="/DE.txt";                          //´æ·Å¹ú¼Ò³ÇÊÐÐÅÏ¢ÎÄ¼þ
+$file="/DE.txt";                          //å­˜æ”¾å›½å®¶åŸŽå¸‚ä¿¡æ¯æ–‡ä»¶
  if($handle = fopen(dirname(__FILE__).$file,"r")){               
 
 while ($data = fgets($handle, 500)){
-                $data = trim($data);      // »ñÈ¡Ã¿ÐÐÊý¾Ý
+                $data = trim($data);      // èŽ·å–æ¯è¡Œæ•°æ®
 				$aTmp=explode(',',$data); 
-				$a[$aTmp[1]][]=$aTmp[0];  //Ã¿¸öÊ¡·Ý»òÖÝËù¾ßÓÐµÄ³ÇÊÐ
-				$c[$aTmp[1]]=0;          //ËùÓÐÊ¡·Ý»òÖÝ
+				$a[$aTmp[1]][]=$aTmp[0];  //æ¯ä¸ªçœä»½æˆ–å·žæ‰€å…·æœ‰çš„åŸŽå¸‚
+				$c[$aTmp[1]]=0;          //æ‰€æœ‰çœä»½æˆ–å·ž
 
 
 }
@@ -21,14 +21,14 @@ while ($data = fgets($handle, 500)){
 }
 fclose($handle);
 
-$cKey=array_keys ($c);//·µ»ØÊý×éCµÄËùÓÐ¼ü£¬¼´ËùÓÐÊ¡»òÖÝ´æÈëÊý×écKey
+$cKey=array_keys ($c);//è¿”å›žæ•°ç»„Cçš„æ‰€æœ‰é”®ï¼Œå³æ‰€æœ‰çœæˆ–å·žå­˜å…¥æ•°ç»„cKey
 
 foreach($cKey as $d){
 	echo $d.":";
 	$count=count($a[$d]);
 	$i=0;
 	foreach($a[$d] as $b){
-		if($i==$count-1){   //ÅÐ¶Ï¸Ã³ÇÊÐÊÇ·ñÊÇ¸ÃÊ¡»òÖÝµÄ×îºóÒ»¸ö³ÇÊÐ
+		if($i==$count-1){   //åˆ¤æ–­è¯¥åŸŽå¸‚æ˜¯å¦æ˜¯è¯¥çœæˆ–å·žçš„æœ€åŽä¸€ä¸ªåŸŽå¸‚
 			$content="";
 		}
 		else{
