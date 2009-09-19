@@ -3,11 +3,13 @@ error_reporting(E_ERROR);
 
 define("REGIONURL", 'http://code.google.com/apis/adwords/docs/developer/adwords_api_regions.html');
 define("CITYURL",'http://code.google.com/apis/adwords/docs/developer/adwords_api_cities.html');
+define('USACITYURL','http://code.google.com/apis/adwords/docs/developer/adwords_api_us_cities.html');
 
 
 $html = getHTML(CITYURL);
 $doc = new DOMDocument("1.0","UTF-8");
 $doc->loadHTML($html);
+//$doc->loadHTMLFile('adwords_api_cities.html');
 
 $aNodelist = getNodelist($doc);
 
@@ -18,11 +20,21 @@ if(count($aCountries))
 foreach($aCountries as $country){
 	$aCitys[$country] = getCitysByCountry($aNodelist, $country);
 }
+#找美国的城市列表
+$html = getHTML(USACITYURL);
+$doc = new DOMDocument("1.0","UTF-8");
+$doc->loadHTML($html);
+//$doc->loadHTMLFile('adwords_api_us_cities.html');
+
+$aCitys['United States'] = getUSACityes($doc);
+
+##
 
 #获取地区列表
 $html = getHTML(REGIONURL);
 $doc = new DOMDocument("1.0","UTF-8");
 $doc->loadHTML($html);
+//$doc->loadHTMLFile('adwords_api_regions.html');
 
 $aNodelist = getNodelist($doc);
 
@@ -33,6 +45,7 @@ if(count($aCountries))
 foreach($aCountries as $country){
 	$aRegions[$country] = getRegionsByCountry($aNodelist, $country);
 }
+
 
 #生成符合shopex规范的area.txt
 makeAreaTxt($aCountries,$aRegions,$aCitys);
@@ -57,8 +70,8 @@ function makeAreaTxt(&$aCountries,&$aRegions,&$aCitys){
 		$area .= $country."::\r\n";
 		if( $regions = $aRegions[$country] ){ 	
 			# regions[地区代码]=>地区全称
-			foreach($regions as $r_id=>$region){				
-				if( $citys = $aCitys[$country] ){
+			foreach($regions as $r_id=>$region){					
+				if( $citys = $aCitys[$country] ){	
 					$area .= $region.":";
 					# $city['城市所在地区代码']=>城市名
 					foreach($citys as $city){
@@ -70,21 +83,23 @@ function makeAreaTxt(&$aCountries,&$aRegions,&$aCitys){
 					$area = rtrim($area,",");
 					$area .= "\r\n";
 				}else{
-					$area .= $region."\r\n";
+					$area .= $region.":\r\n";
 				}
 			}
 		}
 		fwrite($fp,$area);
 	}
+	#写入休止标识
+	fwrite($fp,"::");
 	fclose($fp);
 }
 
 
 
 
-function getNodelist(&$doc){
+function getNodelist(&$doc,$identifier='country_list'){
 	$aNodelist = array();
-	$seeknode = $doc->getElementById('country_list');
+	$seeknode = $doc->getElementById($identifier);
 	$wrapper = $seeknode->parentNode;
 	for($i = 0; $i < $wrapper->childNodes->length; $i++){
 		#获取数据源
@@ -170,6 +185,30 @@ function getRegionsByCountry(&$aNodelist,$country){
 		}
 	}
 	return false;
+}
+
+
+function getUSACityes(&$doc){
+	$nodelist = $doc->getElementsByTagName('table');
+	$aRet = array();
+	for($tableindex = 0; $tableindex < $nodelist->length; $tableindex++){
+		$item = $nodelist->item($tableindex);
+		#根据class的值来定位美国城市表格
+		if($item->attributes->getNamedItem('class')->nodeValue == "codes"){
+			$list = $item->getElementsByTagName('li');
+			for($i = 0; $i < $list->length; $i++){
+				$city = $list->item($i)->nodeValue;
+				#格式化为http://code.google.com/apis/adwords/docs/developer/adwords_api_regions.html的标准
+				$aTmp = explode(',', $city);
+				$aTT = explode(" ",trim($aTmp[1]));
+				$identifier = trim($aTT[1]).'-'.trim($aTT[0]);
+				$aFinal[$identifier] = $aTmp[0];
+				$aRet[] = $aFinal;
+				unset($aFinal);
+			}
+		}	
+	}
+	return $aRet;
 }
 
 ?>
