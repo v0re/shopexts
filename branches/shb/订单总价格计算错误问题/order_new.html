@@ -1,0 +1,46 @@
+﻿<div id="order_create" class="tableform">
+<h4><{t}>第一步：选择顾客用户名和订单中商品<{/t}></h4>
+<div class="division">
+<form name="form1" method="post" action="index.php?ctl=order/order&act=newtotal" target="{update:'c_order_total'}">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><{t}>请输入用户名：<{/t}></th>
+    <td><input type="text" name="username" style="width:120px" value=""> &nbsp; <{help}>此处填写订单客户的前台会员用户名，如果该顾客没有注册过会员请留空<{/help}></td>
+  </tr>
+  <tr>
+    <th><{t}>添加订单商品：<{/t}></th>
+    <td><{finder_result type="products" view="order/new_items.html" select="checkbox"}><label><input type="checkbox" id="package_controller_box">添加捆绑销售商品</label></td>
+  </tr>
+  <tr id="package_tr">
+    <th><{t}>添加捆绑销售商品：<{/t}></th>
+    <td><{finder_result type="package" view="order/new_pkgitems.html" select="checkbox"}></td>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <td>        <b class="submitBtn"><INPUT TYPE="submit" value="删除/增加/查看价格"></b><font color='red'>增加和删除商品后请点击此按钮确认增加和删除，还可以查看商品总价格</font></td>
+  </tr>   
+</table>
+</form>
+<div class="division">
+<form name="form2" method="post" action="index.php?ctl=order/order&act=newcreate" target="{update:'c_order_detail'}" >
+
+
+<b class="submitBtn"><INPUT TYPE="submit" value="下一步" align="center"></b><font color='red'>点击下一步填写收货信息，在点击之前请确保是否把商品增加到订单</font>
+
+</form>
+</div>
+</div>
+<div id="c_order_total">
+</div>
+</div>
+<div id="c_order_detail">
+
+</div>
+<script>
+var changepackage=function(){
+    $('package_tr').style.display=($('package_controller_box').checked)?"":"none";
+}
+$('package_controller_box').addEvent('click',changepackage);
+changepackage();
+</script>
