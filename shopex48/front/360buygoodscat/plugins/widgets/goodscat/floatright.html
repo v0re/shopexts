@@ -5,7 +5,7 @@
 	margin-bottom:6px;
 	position:relative;
 	text-align:left;
-	width:170px;
+	width:216px;
 	z-index:2200;
 }
 #AllSort h3 {color:#025FA8;height:22px;line-height:22px;padding:3px 5px 0 9px;width:155px;}
@@ -86,7 +86,7 @@ width:82px;
           <{foreach from=$parent.sub item=child key=childId}>                    
             <{if $child.sub }>
                 <dt><a href="<{link ctl='gallery' act=$setting.view arg0=$childId}>"><{$child.label}></a> 
-				  &nbsp;- <{ $child.thirdtotal|cut:30 }>				 
+				  <font color=#B0B0B0>&nbsp;- <{ $child.thirdtotal|cut:16 }></font>				 
 				</dt>
             	<dd class="pop_wrap"><div class="pop">      
                 <{foreach from=$child.sub item=gChild key=gChildId}><span>
@@ -111,11 +111,12 @@ width:82px;
 </div>
 
 <script>
-
+$('AllSort').getParent('div').setStyle('overflow','visible');
 	$ES('#AllSort dt').addEvents({
-		'mouseover':function(e){				
+		'mouseover':function(e){
+		
 			if(!this.getNext('.pop_wrap'))	return;	
-			$('LeftColumn').setStyle('overflow','visible');
+			$('inleft').setStyle('overflow','visible');
 			this.addClass('curr');	
 			this.getNext('.pop_wrap').setStyle('display','block');
 		
