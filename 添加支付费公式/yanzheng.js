@@ -1,10 +1,10 @@
-var checkExp=function(btn){
+ï»¿var checkExp=function(btn){
         btn=$(btn);
         var ipt=btn.getPrevious('input');
         var expValue=ipt.getValue();
         new Dialog('index.php?ctl=trading/delivery&act=checkExp&expvalue='+encodeURIComponent(expValue),
         { modal:true,
-         title:'ÑéËãÅäËÍ¹«Ê½',
+         title:'éªŒç®—é…é€å…¬å¼',
          onShow:function(){
 
              this.dialog.store('targetIpt',ipt);
