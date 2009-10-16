@@ -1,0 +1,2 @@
+int cibSign(unsigned char *key,unsigned char *message,unsigend char *mac)
+
