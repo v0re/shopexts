@@ -1,0 +1,9 @@
+void setMerKeyFile(char keyFile[256])
+void unsetMerKeyFile()
+void setPubKeyFile(char keyFile[256])
+void unsetPubKeyFile()
+int signOrder(char *MerId,OrderNo,char *TransAmt,char *CurrencyCode,char *TransDate,char *TransType,char *CheckValue)
+int verifyTransResponse(char *MerId,char *OrdId,char *TransAmt,char *CuryId,char *TransDate,char *TransType,char *OrdStat,char *ChkValue)
+int signData(char MerId[15], char SignData[2048], char ChkValue[256])
+int verifySignData(char SignData[2049], char ChkValue[256])
+
