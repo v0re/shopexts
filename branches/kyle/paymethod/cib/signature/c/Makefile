@@ -1,4 +1,8 @@
-cibsign:libcib.a 
+cibverify.o:libcib.a
+
+	gcc cibverify.c -o cibverify  -static -L. -lcib
+	
+cibsign.o:libcib.a 
 	
 	gcc cibsign.c -o cibsign -static -L. -lcib
 
