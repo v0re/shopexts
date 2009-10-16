@@ -25,41 +25,40 @@
 #include "php.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
-#include "php_icbc.h"
-#include "icbc.h"
+#include "php_cib.h"
 
-/* If you declare any globals in php_icbc.h uncomment this:
-ZEND_DECLARE_MODULE_GLOBALS(icbc)
+/* If you declare any globals in php_cib.h uncomment this:
+ZEND_DECLARE_MODULE_GLOBALS(cib)
 */
 
 /* True global resources - no need for thread safety here */
-static int le_icbc;
+static int le_cib;
 
-/* {{{ icbc_functions[]
+/* {{{ cib_functions[]
  *
- * Every user visible function must have an entry in icbc_functions[].
+ * Every user visible function must have an entry in cib_functions[].
  */
-zend_function_entry icbc_functions[] = {
-	PHP_FE(confirm_icbc_compiled,	NULL)		/* For testing, remove later. */
-	PHP_FE(icbcSign,	NULL)
-	PHP_FE(icbcVerifySign,	NULL)
-	{NULL, NULL, NULL}	/* Must be the last line in icbc_functions[] */
+zend_function_entry cib_functions[] = {
+	PHP_FE(confirm_cib_compiled,	NULL)		/* For testing, remove later. */
+	PHP_FE(cibSign,	NULL)
+	PHP_FE(,	NULL)
+	{NULL, NULL, NULL}	/* Must be the last line in cib_functions[] */
 };
 /* }}} */
 
-/* {{{ icbc_module_entry
+/* {{{ cib_module_entry
  */
-zend_module_entry icbc_module_entry = {
+zend_module_entry cib_module_entry = {
 #if ZEND_MODULE_API_NO >= 20010901
 	STANDARD_MODULE_HEADER,
 #endif
-	"icbc",
-	icbc_functions,
-	PHP_MINIT(icbc),
-	PHP_MSHUTDOWN(icbc),
-	PHP_RINIT(icbc),		/* Replace with NULL if there's nothing to do at request start */
-	PHP_RSHUTDOWN(icbc),	/* Replace with NULL if there's nothing to do at request end */
-	PHP_MINFO(icbc),
+	"cib",
+	cib_functions,
+	PHP_MINIT(cib),
+	PHP_MSHUTDOWN(cib),
+	PHP_RINIT(cib),		/* Replace with NULL if there's nothing to do at request start */
+	PHP_RSHUTDOWN(cib),	/* Replace with NULL if there's nothing to do at request end */
+	PHP_MINFO(cib),
 #if ZEND_MODULE_API_NO >= 20010901
 	"0.1", /* Replace with version number for your extension */
 #endif
@@ -67,34 +66,34 @@ zend_module_entry icbc_module_entry = {
 };
 /* }}} */
 
-#ifdef COMPILE_DL_ICBC
-ZEND_GET_MODULE(icbc)
+#ifdef COMPILE_DL_CIB
+ZEND_GET_MODULE(cib)
 #endif
 
 /* {{{ PHP_INI
  */
 /* Remove comments and fill if you need to have entries in php.ini
 PHP_INI_BEGIN()
-    STD_PHP_INI_ENTRY("icbc.global_value",      "42", PHP_INI_ALL, OnUpdateLong, global_value, zend_icbc_globals, icbc_globals)
-    STD_PHP_INI_ENTRY("icbc.global_string", "foobar", PHP_INI_ALL, OnUpdateString, global_string, zend_icbc_globals, icbc_globals)
+    STD_PHP_INI_ENTRY("cib.global_value",      "42", PHP_INI_ALL, OnUpdateLong, global_value, zend_cib_globals, cib_globals)
+    STD_PHP_INI_ENTRY("cib.global_string", "foobar", PHP_INI_ALL, OnUpdateString, global_string, zend_cib_globals, cib_globals)
 PHP_INI_END()
 */
 /* }}} */
 
-/* {{{ php_icbc_init_globals
+/* {{{ php_cib_init_globals
  */
 /* Uncomment this function if you have INI entries
-static void php_icbc_init_globals(zend_icbc_globals *icbc_globals)
+static void php_cib_init_globals(zend_cib_globals *cib_globals)
 {
-	icbc_globals->global_value = 0;
-	icbc_globals->global_string = NULL;
+	cib_globals->global_value = 0;
+	cib_globals->global_string = NULL;
 }
 */
 /* }}} */
 
 /* {{{ PHP_MINIT_FUNCTION
  */
-PHP_MINIT_FUNCTION(icbc)
+PHP_MINIT_FUNCTION(cib)
 {
 	/* If you have INI entries, uncomment these lines 
 	REGISTER_INI_ENTRIES();
@@ -105,7 +104,7 @@ PHP_MINIT_FUNCTION(icbc)
 
 /* {{{ PHP_MSHUTDOWN_FUNCTION
  */
-PHP_MSHUTDOWN_FUNCTION(icbc)
+PHP_MSHUTDOWN_FUNCTION(cib)
 {
 	/* uncomment this line if you have INI entries
 	UNREGISTER_INI_ENTRIES();
@@ -117,7 +116,7 @@ PHP_MSHUTDOWN_FUNCTION(icbc)
 /* Remove if there's nothing to do at request start */
 /* {{{ PHP_RINIT_FUNCTION
  */
-PHP_RINIT_FUNCTION(icbc)
+PHP_RINIT_FUNCTION(cib)
 {
 	return SUCCESS;
 }
@@ -126,7 +125,7 @@ PHP_RINIT_FUNCTION(icbc)
 /* Remove if there's nothing to do at request end */
 /* {{{ PHP_RSHUTDOWN_FUNCTION
  */
-PHP_RSHUTDOWN_FUNCTION(icbc)
+PHP_RSHUTDOWN_FUNCTION(cib)
 {
 	return SUCCESS;
 }
@@ -134,10 +133,10 @@ PHP_RSHUTDOWN_FUNCTION(icbc)
 
 /* {{{ PHP_MINFO_FUNCTION
  */
-PHP_MINFO_FUNCTION(icbc)
+PHP_MINFO_FUNCTION(cib)
 {
 	php_info_print_table_start();
-	php_info_print_table_header(2, "icbc support", "enabled");
+	php_info_print_table_header(2, "cib support", "enabled");
 	php_info_print_table_end();
 
 	/* Remove comments if you have entries in php.ini
@@ -152,9 +151,9 @@ PHP_MINFO_FUNCTION(icbc)
    purposes. */
 
 /* Every user-visible function in PHP should document itself in the source */
-/* {{{ proto string confirm_icbc_compiled(string arg)
+/* {{{ proto string confirm_cib_compiled(string arg)
    Return a string to confirm that the module is compiled in */
-PHP_FUNCTION(confirm_icbc_compiled)
+PHP_FUNCTION(confirm_cib_compiled)
 {
 	char *arg = NULL;
 	int arg_len, len;
@@ -164,7 +163,7 @@ PHP_FUNCTION(confirm_icbc_compiled)
 		return;
 	}
 
-	len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "icbc", arg);
+	len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "cib", arg);
 	RETURN_STRINGL(strg, len, 0);
 }
 /* }}} */
@@ -174,99 +173,54 @@ PHP_FUNCTION(confirm_icbc_compiled)
    follow this convention for the convenience of others editing your code.
 */
 
-/* {{{ proto int icbcSign()
-   unsigned char *src,unsigned char *privateKey,char *keyPass) */
-PHP_FUNCTION(icbcSign)
+/* {{{ proto int cibSign()
+   unsigned char *key,unsigned char *message,unsigend char *mac) */
+PHP_FUNCTION(cibSign)
 {
+
+	int  len,i,mac_key_len,message_len;
+	char *mac_key,mac[9],*asc_buff,*message;
 	
-	char	*src;
-    int		srclen;
+	int err;
 
-    char	*pkey;
-    int		privateKeyLen;
-    
-	char	*keypass;
-    int		keypasslen;
-    
-	char	*signedbuf;
-    int		signedbuflen;
-    
-	FILE	*fp;
-    char	key[2000];
-    int		rcc,flen;
-
-    if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"sss",&src,&srclen,&pkey,&privateKeyLen,&keypass,&keypasslen) == FAILURE){
-        return;
-    }
-
-    fp = fopen(pkey,"rb");
-    if(fp == NULL)
-    {
-        return;
-    }
-    fseek(fp,0,2);
-	flen = ftell(fp);
-	rewind(fp);
-	fread(key,1,flen,fp);
-	fclose(fp);
-	privateKeyLen = ( key[0] << 8 ) | key[1];
-	if( privateKeyLen < flen - 2 )
-	{
-		return;
+	if (ZEND_NUM_ARGS() != 2) {
+		WRONG_PARAM_COUNT;
 	}
+	
+	//获得参数
+	if (
+			zend_parse_parameters(
+				ZEND_NUM_ARGS() TSRMLS_CC, "ss",
+				&mac_key,
+				&mac_key_len,
+				&message,
+				&message_len
+			) == FAILURE
+		) return;
+	len = strlen(message);
+	//des加密
+	err = ANSIX99(mac_key, message, len, mac); 
+	if(err < 0) {
+		RETURN_LONG(err);
+	}
+	asc_buff = malloc(16);
+	memset( asc_buff, 0, 16);
+	bcd_to_asc( asc_buff, mac, 16, 1 );
+	memset( mac, 0, 9);
+	strncpy(mac, asc_buff, 8);
 
-    if( rcc = sign(src,srclen,(key + 2),privateKeyLen,keypass,&signedbuf,&signedbuflen) == 0 ){
-        base64enc(signedbuf,signedbuflen,&signedbuf,&signedbuflen);
-        src = estrndup(signedbuf,signedbuflen);
-        if(signedbuf != NULL) infosec_free(signedbuf);
-        RETURN_STRING(src,1);
-    }else{
-        RETURN_LONG(rcc);
-    }
+	RETURN_STRING(mac,1);
 }
 /* }}} */
 
-/* {{{ proto int icbcVerifySign()
-   unsigned char *src,unsigned char *cert,unsigned char *signBuf) */
-PHP_FUNCTION(icbcVerifySign)
+/* {{{ proto  ()
+    */
+PHP_FUNCTION()
 {
-	char	*src;
-    int		srclen;
-
-    char	*cert;
-    int		certlen;
-    
-	char	*vsignedbuf;
-    int		vsignedbuflen;
-    
-	FILE	*fp;
-    char	vcert[2000];
-    int		rcc,flen;
-
-    if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"sss",&src,&srclen,&cert,&certlen,&vsignedbuf,&vsignedbuflen) == FAILURE){
-        return;
-    }
-
-    fp = fopen(cert,"rb");
-    if(fp == NULL)
-    {
-        return;
-    }
-	fseek(fp,0,2);
-	flen = ftell(fp);
-	rewind(fp);
-	fread(vcert,1,flen,fp);
-	fclose(fp);
-
-    base64dec(vsignedbuf,vsignedbuflen,&vsignedbuf,&vsignedbuflen);
-
-    if(	rcc = verifySign(src,srclen,vcert,flen,vsignedbuf,vsignedbuflen) == 0 ){
-        if(vsignedbuf != NULL) infosec_free(vsignedbuf);
-        RETURN_TRUE;
-    }else{
-        if(vsignedbuf != NULL) infosec_free(vsignedbuf);
-        RETURN_LONG(rcc);
-    }
+	if (ZEND_NUM_ARGS() != 0) {
+		WRONG_PARAM_COUNT;
+	}
+	php_error(E_WARNING, ": not yet implemented");
 }
 /* }}} */
 
