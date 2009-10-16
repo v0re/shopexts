@@ -1,0 +1,2 @@
+int icbcSign(unsigned char *src,unsigned char *privateKey,char *keyPass)
+int icbcVerifySign(unsigned char *src,unsigned char *cert,unsigned char *signBuf)
