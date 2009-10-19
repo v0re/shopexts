@@ -1,0 +1,124 @@
+找回密码后修改密码失败及首页模板显示问题：
+
+问题描述：客户密码忘记之后通过邮件找回密码，找回的密码能登录但是修改失败。
+
+以下是修改代码：
+
+代码位置：core\model\member\mdl.account.php
+
+
+   //密码修改
+    function saveSecurity($nMemberId,$aData){
+		  //error_log(print_r($aData,true),3,__FILE__.'.5.log');
+		//  Array
+//(
+  //  [old_passwd] => zhangsan
+   // [passwd] => lisi123
+    //[passwd_re] => lisi123
+//)
+
+     if(!($aTemp = $this->db->selectrow("SELECT password,pw_question,pw_answer,uname,name,email FROM sdb_members WHERE  member_id=".intval($nMemberId)))){
+            trigger_error('无效的用户Id', E_USER_ERROR);
+            return false;
+        }
+
+        if(empty($aData['passwd'])){//根据页面获取密码表格是否为空，判断页面是密码问题修改还是密码修改
+            if( !$aData['pw_answer'] || !$aData['pw_question'] ){
+                trigger_error('安全问题修改失败！', E_USER_ERROR);
+                return false;
+            }
+            return $this->db->exec("UPDATE sdb_members SET pw_answer = '".$aData['pw_answer']."' ,pw_question = '".$aData['pw_question']."' WHERE member_id = ".intval($nMemberId));
+        }
+        else{   // if(($aData['pw_question'] == $aTemp['pw_question']) && ($aData['pw_answer'] == $aTemp['pw_answer']))
+            $pObj=$this->system->loadModel('member/passport');
+            if ($obj=$pObj->function_judge('edituser')){
+				//error_log(print_r($obj,true),3,__FILE__.'.11.log');
+               $res = $obj->edituser($aTemp['uname'],$aData['old_passwd'],$aData['passwd'],$aTemp['email']);
+				//error_log(print_r($res,true),3,__FILE__.'.22.log');
+				 if ($res<0){
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			 if($aData['passwd'] == $aData['passwd_re']){
+                        if(isset($aData['passwd']{3})){
+                            if(!isset($aData['passwd']{20})){
+                        $aSet['password'] = md5($aData['passwd']);
+                        $aRs = $this->db->query("SELECT password FROM sdb_members WHERE  member_id=".intval($nMemberId));
+                        $sSql = $this->db->getUpdateSql($aRs,$aSet);
+                                if(!$sSql || $this->db->exec($sSql)){
+                                    $aData = array_merge($aTemp,$aData);
+                                    $this->fireEvent('chgpass',$aData,$nMemberId);        //会员更改密码事件
+                                    $this->system->setCookie('MEMBER',$this->cookieValue($nMemberId));
+            //                        $message = __('密码修改成功！');
+                                    return true;
+                                }else{
+                                    trigger_error('密码修改失败！', E_USER_ERROR);
+                                    return false;
+                                }
+
+                            }else{
+                                trigger_error('密码长度不能大于20', E_USER_ERROR);
+                                return false;
+                            }
+                        }else{
+                            trigger_error('密码长度不能小于4', E_USER_ERROR);
+                            return false;
+                        }
+
+                    }else{
+                        trigger_error('两次输入的密码不一致！', E_USER_ERROR);
+                        return false;
+                    }
+             //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    return true;
+               }
+                else{
+					//error_log(print_r('##########################',true),3,__FILE__.'.B.log');
+                   trigger_error('输入的旧密码与原密码不符！', E_USER_ERROR);
+                    return false;
+                }
+           }
+           else{
+                //$passwdLen=strlen($aData['passwd']);
+                if(md5($aData['old_passwd']) == $aTemp['password']){//页面获取密码加密与数据库中提取的加密密码做比较，看是否相等。
+                    if($aData['passwd'] == $aData['passwd_re']){
+                        if(isset($aData['passwd']{3})){
+                            if(!isset($aData['passwd']{20})){
+                        $aSet['password'] = md5($aData['passwd']);
+                        $aRs = $this->db->query("SELECT password FROM sdb_members WHERE  member_id=".intval($nMemberId));
+                        $sSql = $this->db->getUpdateSql($aRs,$aSet);
+                                if(!$sSql || $this->db->exec($sSql)){
+                                    $aData = array_merge($aTemp,$aData);
+                                    $this->fireEvent('chgpass',$aData,$nMemberId);        //会员更改密码事件
+                                    $this->system->setCookie('MEMBER',$this->cookieValue($nMemberId));
+            //                        $message = __('密码修改成功！');
+                                    return true;
+                                }else{
+                                    trigger_error('密码修改失败！', E_USER_ERROR);
+                                    return false;
+                                }
+
+                            }else{
+                                trigger_error('密码长度不能大于20', E_USER_ERROR);
+                                return false;
+                            }
+                        }else{
+                            trigger_error('密码长度不能小于4', E_USER_ERROR);
+                            return false;
+                        }
+
+                    }else{
+                        trigger_error('两次输入的密码不一致！', E_USER_ERROR);
+                        return false;
+                    }
+                }else{
+					//$pObj=$this->system->loadModel('member/passport');0
+					//$obj=$pObj->function_judge('edituser');
+                    //error_log(print_r($obj->edituser($aTemp['uname'],$aData['old_passwd'],$aData['passwd'],$aTemp['email']),true),3,__FILE__.'.B.log');
+				    //error_log(print_r('*************************',true),3,__FILE__.'.B.log');
+                    trigger_error('输入的旧密码与原密码不符！', E_USER_ERROR);
+                    return false;
+                }
+            }
+        }
+
+
+    }
