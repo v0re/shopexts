@@ -1,13 +1,14 @@
-ÕÒ»ØÃÜÂëºóĞŞ¸ÄÃÜÂëÊ§°Ü¼°Ê×Ò³Ä£°åÏÔÊ¾ÎÊÌâ£º
+/*
+*å¯†ç ä¿®æ”¹é—®é¢˜ã€‚
+Ã—é—®é¢˜æè¿°ï¼šç”¨æˆ·æ‰¾å›å¯†ç åï¼Œç™»å½•æˆåŠŸï¼Œä½†æ˜¯ä¿®æ”¹å¯†ç å¤±è´¥ã€‚
+Ã—
+*/
 
-ÎÊÌâÃèÊö£º¿Í»§ÃÜÂëÍü¼ÇÖ®ºóÍ¨¹ıÓÊ¼şÕÒ»ØÃÜÂë£¬ÕÒ»ØµÄÃÜÂëÄÜµÇÂ¼µ«ÊÇĞŞ¸ÄÊ§°Ü¡£
+ä¿®æ”¹åçš„ä»£ç ï¼š
+ä»£ç ä½ç½®ï¼šcore/model/member/mdl.account.php
 
-ÒÔÏÂÊÇĞŞ¸Ä´úÂë£º
-
-´úÂëÎ»ÖÃ£ºcore\model\member\mdl.account.php
-
-
-   //ÃÜÂëĞŞ¸Ä
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //å¯†ç ä¿®æ”¹
     function saveSecurity($nMemberId,$aData){
 		  //error_log(print_r($aData,true),3,__FILE__.'.5.log');
 		//  Array
@@ -18,13 +19,13 @@
 //)
 
      if(!($aTemp = $this->db->selectrow("SELECT password,pw_question,pw_answer,uname,name,email FROM sdb_members WHERE  member_id=".intval($nMemberId)))){
-            trigger_error('ÎŞĞ§µÄÓÃ»§Id', E_USER_ERROR);
+            trigger_error('æ— æ•ˆçš„ç”¨æˆ·Id', E_USER_ERROR);
             return false;
         }
 
-        if(empty($aData['passwd'])){//¸ù¾İÒ³Ãæ»ñÈ¡ÃÜÂë±í¸ñÊÇ·ñÎª¿Õ£¬ÅĞ¶ÏÒ³ÃæÊÇÃÜÂëÎÊÌâĞŞ¸Ä»¹ÊÇÃÜÂëĞŞ¸Ä
+        if(empty($aData['passwd'])){//æ ¹æ®é¡µé¢è·å–å¯†ç è¡¨æ ¼æ˜¯å¦ä¸ºç©ºï¼Œåˆ¤æ–­é¡µé¢æ˜¯å¯†ç é—®é¢˜ä¿®æ”¹è¿˜æ˜¯å¯†ç ä¿®æ”¹
             if( !$aData['pw_answer'] || !$aData['pw_question'] ){
-                trigger_error('°²È«ÎÊÌâĞŞ¸ÄÊ§°Ü£¡', E_USER_ERROR);
+                trigger_error('å®‰å…¨é—®é¢˜ä¿®æ”¹å¤±è´¥ï¼', E_USER_ERROR);
                 return false;
             }
             return $this->db->exec("UPDATE sdb_members SET pw_answer = '".$aData['pw_answer']."' ,pw_question = '".$aData['pw_question']."' WHERE member_id = ".intval($nMemberId));
@@ -45,26 +46,26 @@
                         $sSql = $this->db->getUpdateSql($aRs,$aSet);
                                 if(!$sSql || $this->db->exec($sSql)){
                                     $aData = array_merge($aTemp,$aData);
-                                    $this->fireEvent('chgpass',$aData,$nMemberId);        //»áÔ±¸ü¸ÄÃÜÂëÊÂ¼ş
+                                    $this->fireEvent('chgpass',$aData,$nMemberId);        //ä¼šå‘˜æ›´æ”¹å¯†ç äº‹ä»¶
                                     $this->system->setCookie('MEMBER',$this->cookieValue($nMemberId));
-            //                        $message = __('ÃÜÂëĞŞ¸Ä³É¹¦£¡');
+            //                        $message = __('å¯†ç ä¿®æ”¹æˆåŠŸï¼');
                                     return true;
                                 }else{
-                                    trigger_error('ÃÜÂëĞŞ¸ÄÊ§°Ü£¡', E_USER_ERROR);
+                                    trigger_error('å¯†ç ä¿®æ”¹å¤±è´¥ï¼', E_USER_ERROR);
                                     return false;
                                 }
 
                             }else{
-                                trigger_error('ÃÜÂë³¤¶È²»ÄÜ´óÓÚ20', E_USER_ERROR);
+                                trigger_error('å¯†ç é•¿åº¦ä¸èƒ½å¤§äº20', E_USER_ERROR);
                                 return false;
                             }
                         }else{
-                            trigger_error('ÃÜÂë³¤¶È²»ÄÜĞ¡ÓÚ4', E_USER_ERROR);
+                            trigger_error('å¯†ç é•¿åº¦ä¸èƒ½å°äº4', E_USER_ERROR);
                             return false;
                         }
 
                     }else{
-                        trigger_error('Á½´ÎÊäÈëµÄÃÜÂë²»Ò»ÖÂ£¡', E_USER_ERROR);
+                        trigger_error('ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸ä¸€è‡´ï¼', E_USER_ERROR);
                         return false;
                     }
              //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -72,13 +73,13 @@
                }
                 else{
 					//error_log(print_r('##########################',true),3,__FILE__.'.B.log');
-                   trigger_error('ÊäÈëµÄ¾ÉÃÜÂëÓëÔ­ÃÜÂë²»·û£¡', E_USER_ERROR);
+                   trigger_error('è¾“å…¥çš„æ—§å¯†ç ä¸åŸå¯†ç ä¸ç¬¦ï¼', E_USER_ERROR);
                     return false;
                 }
            }
            else{
                 //$passwdLen=strlen($aData['passwd']);
-                if(md5($aData['old_passwd']) == $aTemp['password']){//Ò³Ãæ»ñÈ¡ÃÜÂë¼ÓÃÜÓëÊı¾İ¿âÖĞÌáÈ¡µÄ¼ÓÃÜÃÜÂë×ö±È½Ï£¬¿´ÊÇ·ñÏàµÈ¡£
+                if(md5($aData['old_passwd']) == $aTemp['password']){//é¡µé¢è·å–å¯†ç åŠ å¯†ä¸æ•°æ®åº“ä¸­æå–çš„åŠ å¯†å¯†ç åšæ¯”è¾ƒï¼Œçœ‹æ˜¯å¦ç›¸ç­‰ã€‚
                     if($aData['passwd'] == $aData['passwd_re']){
                         if(isset($aData['passwd']{3})){
                             if(!isset($aData['passwd']{20})){
@@ -87,26 +88,26 @@
                         $sSql = $this->db->getUpdateSql($aRs,$aSet);
                                 if(!$sSql || $this->db->exec($sSql)){
                                     $aData = array_merge($aTemp,$aData);
-                                    $this->fireEvent('chgpass',$aData,$nMemberId);        //»áÔ±¸ü¸ÄÃÜÂëÊÂ¼ş
+                                    $this->fireEvent('chgpass',$aData,$nMemberId);        //ä¼šå‘˜æ›´æ”¹å¯†ç äº‹ä»¶
                                     $this->system->setCookie('MEMBER',$this->cookieValue($nMemberId));
-            //                        $message = __('ÃÜÂëĞŞ¸Ä³É¹¦£¡');
+            //                        $message = __('å¯†ç ä¿®æ”¹æˆåŠŸï¼');
                                     return true;
                                 }else{
-                                    trigger_error('ÃÜÂëĞŞ¸ÄÊ§°Ü£¡', E_USER_ERROR);
+                                    trigger_error('å¯†ç ä¿®æ”¹å¤±è´¥ï¼', E_USER_ERROR);
                                     return false;
                                 }
 
                             }else{
-                                trigger_error('ÃÜÂë³¤¶È²»ÄÜ´óÓÚ20', E_USER_ERROR);
+                                trigger_error('å¯†ç é•¿åº¦ä¸èƒ½å¤§äº20', E_USER_ERROR);
                                 return false;
                             }
                         }else{
-                            trigger_error('ÃÜÂë³¤¶È²»ÄÜĞ¡ÓÚ4', E_USER_ERROR);
+                            trigger_error('å¯†ç é•¿åº¦ä¸èƒ½å°äº4', E_USER_ERROR);
                             return false;
                         }
 
                     }else{
-                        trigger_error('Á½´ÎÊäÈëµÄÃÜÂë²»Ò»ÖÂ£¡', E_USER_ERROR);
+                        trigger_error('ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸ä¸€è‡´ï¼', E_USER_ERROR);
                         return false;
                     }
                 }else{
@@ -114,7 +115,7 @@
 					//$obj=$pObj->function_judge('edituser');
                     //error_log(print_r($obj->edituser($aTemp['uname'],$aData['old_passwd'],$aData['passwd'],$aTemp['email']),true),3,__FILE__.'.B.log');
 				    //error_log(print_r('*************************',true),3,__FILE__.'.B.log');
-                    trigger_error('ÊäÈëµÄ¾ÉÃÜÂëÓëÔ­ÃÜÂë²»·û£¡', E_USER_ERROR);
+                    trigger_error('è¾“å…¥çš„æ—§å¯†ç ä¸åŸå¯†ç ä¸ç¬¦ï¼', E_USER_ERROR);
                     return false;
                 }
             }
