@@ -1,353 +1,278 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-<META NAME="generator" CONTENT="http://txt2tags.sf.net">
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-<LINK REL="stylesheet" TYPE="text/css" HREF="statics/shopexdev.css">
-<TITLE>ShopEx技术支持手册</TITLE>
-</HEAD>
-<BODY>
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem} % needed by strike
+\usepackage[urlcolor=blue,colorlinks=true]{hyperref}
+\usepackage[UTF-8]{inputenc}  % char encoding
+\usepackage{statics/shopexdev.css}  % user defined
 
-<DIV CLASS="header" ID="header">
-<H1>ShopEx技术支持手册</H1>
-<H2>Shop Care Team</H2>
-<H3>Create at 2008</H3>
-</DIV>
+\title{ShopEx技术支持手册}
+\author{Shop Care Team}
+\begin{document}
+\date{Create at 2008}
+\maketitle
+\clearpage
 
-<DIV CLASS="toc" ID="toc">
-  <OL>
-  <LI><A HREF="#toc1">简介</A>
-  <LI><A HREF="#toc2">安装说明</A>
-    <UL>
-    <LI><A HREF="#toc3">2.1. Linux</A>
-      <UL>
-      <LI><A HREF="#toc4">2.1.1. MySQL</A>
-      <LI><A HREF="#toc5">2.1.2. nginx+fastcgi</A>
-      <LI><A HREF="#toc6">2.1.3. apache+mod_php</A>
-      </UL>
-    <LI><A HREF="#toc7">2.2. Windows</A>
-      <UL>
-      <LI><A HREF="#toc8">2.2.1. MySQL</A>
-      <LI><A HREF="#toc9">2.2.2. iis+isapi</A>
-      <LI><A HREF="#toc10">2.2.3. apache+mod_php</A>
-      <LI><A HREF="#toc11">2.2.4. zend optimizer</A>
-      </UL>
-    </UL>
-  <LI><A HREF="#toc12">操作手册</A>
-    <UL>
-    <LI><A HREF="#toc13">3.1. 程序调试</A>
-      <UL>
-      <LI><A HREF="#toc14">3.1.1. 源码分析</A>
-      <LI><A HREF="#toc15">3.1.2. 协议分析</A>
-      </UL>
-    </UL>
-  <LI><A HREF="#toc16">服务手册</A>
-    <UL>
-    <LI><A HREF="#toc17">4.1. 日常操作</A>
-      <UL>
-      <LI><A HREF="#toc18">4.1.1. 迁移操作</A>
-      <LI><A HREF="#toc19">4.1.2. 升级操作</A>
-      <LI><A HREF="#toc20">4.1.3. 安装操作</A>
-      </UL>
-    </UL>
-  <LI><A HREF="#toc21">值班手册</A>
-    <UL>
-    <LI><A HREF="#toc22">5.1. 接听</A>
-    <LI><A HREF="#toc23">5.2. 打出</A>
-    <LI><A HREF="#toc24">5.3. 客户资料查询</A>
-    <LI><A HREF="#toc25">5.4. 方式</A>
-    </UL>
-  <LI><A HREF="#toc26">常问问题</A>
-  <LI><A HREF="#toc27">t2t实例</A>
-    <UL>
-    <LI><A HREF="#toc28">7.1. 表格</A>
-    <LI><A HREF="#toc29">7.2. 项目符号</A>
-    <LI><A HREF="#toc30">7.3. 代码引用</A>
-    </UL>
-  </OL>
+\tableofcontents
+\clearpage
 
-</DIV>
-<DIV CLASS="body" ID="body">
-<A NAME="toc1"></A>
-<H1>1. 简介</H1>
-<P>
+\hypertarget{toc1}{}
+\section{简介}
 ShopEx是使用PHP开发的独立网店平台。系统采用MVC架构，主要应到到以下组件
-</P>
-<UL>
-<LI>adodb
-<LI>smarty
-<LI>snoopy
-</UL>
 
-<HR NOSHADE SIZE=5>
-<A NAME="toc2"></A>
-<H1>2. 安装说明</H1>
-<P>
+\begin{itemize}
+\item adodb
+\item smarty
+\item snoopy
+\end{itemize}
+
+\clearpage
+
+\hypertarget{toc2}{}
+\section{安装说明}
 我们重点说底层环境的安装，我们主要分三大常见操作系统进行说明
-</P>
-<UL>
-<LI>Linux
-<LI>Windows
-<LI>FreeBSD
-</UL>
 
-<A NAME="toc3"></A>
-<H2>2.1. Linux</H2>
-<P>
+\begin{itemize}
+\item Linux
+\item Windows
+\item FreeBSD
+\end{itemize}
+
+\hypertarget{toc3}{}
+\subsection{Linux}
 ShopEx是用php编写的，php运行环境常用的组合有:
-</P>
-<OL>
-<LI>nginx+fastcgi
-<LI>apache+mod_php
-</OL>
 
-<P>
+\begin{enumerate}
+\item nginx+fastcgi
+\item apache+mod\_php
+\end{enumerate}
+
 系统后台代码是使用了Zend
 Gruad加密的，所以除了配置常规的php运行环境之外，还需要额外安装Zend Optimizer进行解密系统方可正常运行。
 ShopEx数据存储采用经典的MySQL，目前也仅支持MySQL。
 为了方便文件管理，我们建议安装一个ftp服务器，我们推荐使用proftpd，它采用和apache风格相近的配置文件，并且可以将ftp帐号存储在MySQL中。
 这样可以方便我们对ftp用户进行统一管理。
 综上所述我们需要完成以下服务器的安装工作
-</P>
-<OL>
-<LI>web服务器（nginx、apache、lighthttpd)
-<LI>php(mod_php、php fastcgi)
-<LI>MySQL
-<LI>Zend Optimizer
-<LI>Proftpd
-</OL>
 
-<P>
-建议安装顺序是：mysql-&gt;web服务器(apache|nginx)-&gt;(mod_php|php fastcgi)-&gt;zend optimizer-&gt;proftpd
-</P>
-<P>
+\begin{enumerate}
+\item web服务器（nginx、apache、lighthttpd)
+\item php(mod\_php、php fastcgi)
+\item MySQL
+\item Zend Optimizer
+\item Proftpd
+\end{enumerate}
+
+建议安装顺序是：mysql-$>$web服务器(apache$|$nginx)-$>$(mod\_php$|$php fastcgi)-$>$zend optimizer-$>$proftpd
+
 在linux中软件的安装主要分两种
-</P>
-<UL>
-<LI>二进制安装文件，例如rmp、deb等
-<LI>源码编译安装
-</UL>
 
-<P>
+\begin{itemize}
+\item 二进制安装文件，例如rmp、deb等
+\item 源码编译安装
+\end{itemize}
+
 二进制安装包是厂商预先编辑好的，我们只要执行安装操作，软件就可以安装到我们系统中。
 二进制安装方式是最快的，特别是配合包管理器，例如rpm包的yum，deb的apt，可以在线下载软件所有相关的组件进行安装，非常的方便。
 由于操作方法很简单我们不对二进制安装方法进行展开。
 从源码安装具有更强的通用性和性能，我们将着重讲从源码编译安装方法。
 以下安装教程中所用到的程序和源码包可以在这里下载： 
-</P>
-<P>
-<A HREF="http://code.google.com/p/lnmpp/downloads/list">http://code.google.com/p/lnmpp/downloads/list</A>
-</P>
-<A NAME="toc4"></A>
-<H3>2.1.1. MySQL</H3>
-<P>
+
+\htmladdnormallink{http://code.google.com/p/lnmpp/downloads/list}{http://code.google.com/p/lnmpp/downloads/list}
+
+\hypertarget{toc4}{}
+\subsubsection{MySQL}
 安装流程
-</P>
-<H4>2.1.1.1. 编译MySQL</H4>
-<P>
-请到<A HREF="http://dev.mysql.com/downloads/">http://dev.mysql.com/downloads/</A>下载MySQL的源码包。
-</P>
-<PRE>
+
+\paragraph{}\textbf{编译MySQL}\\
+
+请到\htmladdnormallink{http://dev.mysql.com/downloads/}{http://dev.mysql.com/downloads/}下载MySQL的源码包。
+
+\begin{verbatim}
 tar zxvf mysql-xxx.tar.gz
-</PRE>
-<P>
+\end{verbatim}
 将源码包解开，然后
-</P>
-<PRE>
+
+\begin{verbatim}
 cd mysql-xxx
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 进入源码目录执行下面的编译配置指令
-</P>
-<PRE>
+
+\begin{verbatim}
 CFLAGS="-O3 -mpentiumpro -mstack-align-double"
 CXX=gcc
 CXXFLAGS="-O3 -mpentiumpro -mstack-align-double -felide-constructors -fno-exceptions -fno-rtti"
-</PRE>
-<P>
+\end{verbatim}
 如果不是intel的pentium处理器请跳过上面的设置，直接用下面的configure命令
-</P>
-<PRE>
-./configure  --prefix=/srv/mysql --with-charset=utf8  --with-collation=utf8_general_ci --enable-thread-safe-client  --with-extra-charsets=gbk,latin1 --with-client-ldflags=-all-static --with-mysqld-ldflags=-all-static --enable-assembler --with-unix-socket-path=/tmp/mysql.sock --sysconfdir=/etc  --disable-shared --without-debug --without-isam --without-innodb --with-pthread
-</PRE>
-<P>
-编译指令说明：
-</P>
-<OL>
-<LI>--without-debug                                                        去除debug模式
-<LI>--with-extra-charsets=gb2312                             添加gb2312中文字符支持
-<LI>--enable-assembler                                                    使用一些字符函数的汇编版本
-<LI>--without-isam                                                            去掉isam表类型支持 现在很少用了 isam表是一种依赖平台的表
-<LI>--without-innodb                                                       去掉innodb表支持 innodb是一种支持事务处理的表,适合企业级应用，对于频繁select操作的web网站来说效率比较低
-<LI>--with-pthread                                                            强制使用pthread库(posix线程库)
-<LI>--enable-thread-safe-client                                    以线程方式编译客户端
-<LI>--with-client-ldflags=-all-static                             以纯静态方式编译客户端
-<LI>--with-mysqld-ldflags=-all-static                         以纯静态方式编译服务端 
-</OL>
 
-<P>
-MySQL5.1的存储引擎做成了插件形式，MySQL5.1版本要用下面的编译指令
-</P>
-<PRE>
+\begin{verbatim}
 ./configure  --prefix=/srv/mysql --with-charset=utf8  --with-collation=utf8_general_ci --enable-thread-safe-client  --with-extra-charsets=gbk,latin1 --with-client-ldflags=-all-static --with-mysqld-ldflags=-all-static --enable-assembler --with-unix-socket-path=/tmp/mysql.sock --sysconfdir=/etc  --disable-shared --without-debug --without-isam --without-innodb --with-pthread
-</PRE>
-<P>
+\end{verbatim}
+编译指令说明：
+
+\begin{enumerate}
+\item --without-debug                                                        去除debug模式
+\item --with-extra-charsets=gb2312                             添加gb2312中文字符支持
+\item --enable-assembler                                                    使用一些字符函数的汇编版本
+\item --without-isam                                                            去掉isam表类型支持 现在很少用了 isam表是一种依赖平台的表
+\item --without-innodb                                                       去掉innodb表支持 innodb是一种支持事务处理的表,适合企业级应用，对于频繁select操作的web网站来说效率比较低
+\item --with-pthread                                                            强制使用pthread库(posix线程库)
+\item --enable-thread-safe-client                                    以线程方式编译客户端
+\item --with-client-ldflags=-all-static                             以纯静态方式编译客户端
+\item --with-mysqld-ldflags=-all-static                         以纯静态方式编译服务端 
+\end{enumerate}
+
+MySQL5.1的存储引擎做成了插件形式，MySQL5.1版本要用下面的编译指令
+
+\begin{verbatim}
+./configure  --prefix=/srv/mysql --with-charset=utf8  --with-collation=utf8_general_ci --enable-thread-safe-client  --with-extra-charsets=gbk,latin1 --with-client-ldflags=-all-static --with-mysqld-ldflags=-all-static --enable-assembler --with-unix-socket-path=/tmp/mysql.sock --sysconfdir=/etc  --disable-shared --without-debug --without-isam --without-innodb --with-pthread
+\end{verbatim}
 编译安装
-</P>
-<PRE>
+
+\begin{verbatim}
 make
 make install
-</PRE>
-<P>
+\end{verbatim}
 MySQL的编译时间会比较长，如果一切顺利，那么编译、安装完毕后就要设置MySQL的启动脚本，在刚才的源码目录执行下面的命令
-</P>
-<PRE>
+
+\begin{verbatim}
 cp support-files/mysql.server /etc/rc.d/init.d/mysqld
 chmod 0700 /etc/rc.d/init.d/mysqld
 chkconfig --add mysqld
 chkconfig --level 345 mysqld on
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 现在还不能启动MySQL，因为我们还没有初始化MySQL，生存mysql库。
-</P>
-<H4>2.1.1.2. 配置MySQL</H4>
-<OL>
-<LI>添加MySQL的运行用户和组
-<PRE>
+
+\paragraph{}\textbf{配置MySQL}\\
+
+\begin{enumerate}
+\item 添加MySQL的运行用户和组
+\begin{verbatim}
 groupadd mysql
 useradd  mysql -g mysql  -s /bin/false
-</PRE>
-<LI>初始化MySQL数据库
-<PRE>
+\end{verbatim}
+\item 初始化MySQL数据库
+\begin{verbatim}
 mkdir /opt/mysqldb
 pushd /srv/mysql
 bin/mysql_install_db --user=mysql --datadir=/opt/mysqldb
 popd
 cp support-files/my-medium.cnf /etc/my.cnf
-</PRE>
+\end{verbatim}
 我们显式的将MySQL数据保存目录设置到/opt/mysqldb目录下，出于磁盘I/O性能的考虑，这个/opt也最好是单独的分区！
-<P></P>
-<LI>修改相关目录权限，好让MySQL能正确读写
-<PRE>
+
+\item 修改相关目录权限，好让MySQL能正确读写
+\begin{verbatim}
 cd /srv
 chmod 0750 mysql -R
 chgrp mysql mysql -R
 chown mysql /opt/mysqldb -R
-</PRE>
-<LI>修改/etc/rc.d/init.d/mysqld中的
-<PRE>
+\end{verbatim}
+\item 修改/etc/rc.d/init.d/mysqld中的
+\begin{verbatim}
 basedir=/srv/mysql
 datadir=/opt/mysqldb
-</PRE>
-<P></P>
-配置完毕后尝试启动一下MySQL
-<PRE>
-service mysqld start
-</PRE>
-一切顺利的话应该可以看到MySQL成功启动的信息。
-</OL>
+\end{verbatim}
 
-<H4>2.1.1.3. 常见问题</H4>
-<PRE>
+配置完毕后尝试启动一下MySQL
+\begin{verbatim}
+service mysqld start
+\end{verbatim}
+一切顺利的话应该可以看到MySQL成功启动的信息。
+\end{enumerate}
+
+\paragraph{}\textbf{常见问题}\\
+
+\begin{verbatim}
 /usr/bin/ld: cannot find -lgcc_s
-</PRE>
-<P>
-首先检查gcc_s库是否存在
-</P>
-<PRE>
+\end{verbatim}
+首先检查gcc\_s库是否存在
+
+\begin{verbatim}
 root [ /data/htdocs/lnmpp/work/mysql ]# whereis libgcc_s.so
 libgcc_s: /usr/lib/libgcc_s.so
 root [ /data/htdocs/lnmpp/work/mysql ]# 
-</PRE>
-<P>
+\end{verbatim}
 库是存在的，并且是在标准目录中
-</P>
-<A NAME="toc5"></A>
-<H3>2.1.2. nginx+fastcgi</H3>
-<P>
+
+\hypertarget{toc5}{}
+\subsubsection{nginx+fastcgi}
 nginx是俄罗斯人Igor Sysoev为Rambler.ru编写的轻量级http服务器。它基于事件驱动，依靠Liunx 2.6内核提供的epoll强大的IO模型，在高并发的情况下仍然能保持良好的响应速度。
-</P>
-<P>
+
 我们将所有的程序安装在/srv目录下，其结构如下：
-</P>
-<PRE>
+
+\begin{verbatim}
 /srv
 |-- mysql
 |-- nginx
 |-- php-fcgi
 `-- proftpd
-</PRE>
-<P>
+\end{verbatim}
 每个程序安装到独立目录方便卸载和升级。
-</P>
-<P>
+
 nginx详细的安装过程如下：
-</P>
-<H4>2.1.2.1. 建立nginx的运行用户和组</H4>
-<PRE>
+
+\paragraph{}\textbf{建立nginx的运行用户和组}\\
+
+\begin{verbatim}
 /usr/sbin/groupadd www -g 48
 /usr/sbin/useradd -u 48 -g www www 
-</PRE>
-<P>
+\end{verbatim}
 如果系统已经存在apache用户，那么可以跳过这一步，直接用apache用户来跑nginx也是不错的注意，要注意将下面配置文件和命令中的www替换为apache就行了。
-</P>
-<H4>2.1.2.2. 建立web文件保存目录</H4>
-<PRE>
+
+\paragraph{}\textbf{建立web文件保存目录}\\
+
+\begin{verbatim}
 mkdir -pv /data/htdocs
 chmod +w /data/htdocs
 chown -R www:www /data/htdocs 
-</PRE>
-<P>
+\end{verbatim}
 为了提高磁盘I/O性能data目录最好在一个独立的分区中，这样比数据和程序混在一个分区的寻址时间稍微短一些。
-</P>
-<H4>2.1.2.3. 建立nginx的log文件保存目录</H4>
-<PRE>
+
+\paragraph{}\textbf{建立nginx的log文件保存目录}\\
+
+\begin{verbatim}
 mkdir -pv /var/log/nginx
 chmod +w /var/log/nginx
 chown -R www:www /var/log/nginx 
-</PRE>
-<P>
+\end{verbatim}
 log的放置目录我们遵循POSIX规范，为了提高磁盘I/O，等调试完毕进入运行状态后可以将nginx的access log关闭掉。
-</P>
-<H4>2.1.2.4. 编译安装PCRE</H4>
-<P>
-下载地址：<A HREF="http://downloads.sourceforge.net/pcre/pcre-7.6.tar.bz2">http://downloads.sourceforge.net/pcre/pcre-7.6.tar.bz2</A>
-</P>
-<PRE>
+
+\paragraph{}\textbf{编译安装PCRE}\\
+
+下载地址：\htmladdnormallink{http://downloads.sourceforge.net/pcre/pcre-7.6.tar.bz2}{http://downloads.sourceforge.net/pcre/pcre-7.6.tar.bz2}
+
+\begin{verbatim}
 tar zxvf pcre-7.6.tar.gz
 cd pcre-7.6/
 ./configure
-make &amp;&amp; make install 
-</PRE>
-<P>
+make && make install 
+\end{verbatim}
 PCRE是Perl Compatible Regular Expression（perl正则表达式兼容库）的缩写，nginx的rewrite功能需要用到正则表达式，所以要安装。
-</P>
-<H4>2.1.2.5. 编译安装nginx</H4>
-<P>
-下载：<A HREF="http://sysoev.ru/nginx/nginx-0.7.60.tar.gz">http://sysoev.ru/nginx/nginx-0.7.60.tar.gz</A>
-</P>
-<PRE>
+
+\paragraph{}\textbf{编译安装nginx}\\
+
+下载：\htmladdnormallink{http://sysoev.ru/nginx/nginx-0.7.60.tar.gz}{http://sysoev.ru/nginx/nginx-0.7.60.tar.gz}
+
+\begin{verbatim}
 wget http://sysoev.ru/nginx/nginx-0.7.60.tar.gz
 tar zxf nginx-0.7.60.tar.gz
 cd nginx-0.7.60/
 ./configure --user=www --group=www --prefix=/srv/nginx --with-http_stub_status_module
-make &amp;&amp; make install 
-</PRE>
-<P>
+make && make install 
+\end{verbatim}
 编译指令中指定了nginx的运行用户和组，还附带上一个查看在线人数状态的模块。
 由于nginx的设计目标是轻量级的http服务器，所以不会设计类似apache那套复杂的动态装载动态库的系统，所以如果需要什么模块必须在编译的时候就指定好，nginx编译完后只会在sbin/nginx一个二进制文件。
-</P>
-<H4>2.1.2.6. 配置nginx</H4>
-<PRE>
+
+\paragraph{}\textbf{配置nginx}\\
+
+\begin{verbatim}
 rm -f /srv/nginx/conf/nginx.conf
 vi /srv/nginx/conf/nginx.conf
-</PRE>
-<P>
+\end{verbatim}
 nginx.conf的内容如下
-</P>
-<PRE>
+
+\begin{verbatim}
 #bascic setting
 user   www www;
 worker_processes 6;
@@ -418,32 +343,28 @@ http
   access_log  /var/log/nginx/access.log  access;
  }
 }
-</PRE>
-<P>
+\end{verbatim}
 参数设置说明：
-</P>
-<OL>
-<LI>user  指定运行用户要和编译时设定的一致
-<LI>worker_processes  设置工作者进程数，一般6个就够了
-<LI>client_max_body_size  允许上传文件大小，至少是2m，否则上传不了模板 
-<LI>keepalive_timeout 90秒的生存周期，低负载，高并发时可以设低一点 
-<LI>server_name  多个站点时，根据域名绑定站点用
-<LI>access_log  试完毕后最好关掉，一般access log没有用，除非做访问统计 
-</OL>
 
-<P>
-如果需要再开一个站点，只要拷贝一份server {}段的内容，改掉server_name的值就行了。
-</P>
-<P>
+\begin{enumerate}
+\item user  指定运行用户要和编译时设定的一致
+\item worker\_processes  设置工作者进程数，一般6个就够了
+\item client\_max\_body\_size  允许上传文件大小，至少是2m，否则上传不了模板 
+\item keepalive\_timeout 90秒的生存周期，低负载，高并发时可以设低一点 
+\item server\_name  多个站点时，根据域名绑定站点用
+\item access\_log  试完毕后最好关掉，一般access log没有用，除非做访问统计 
+\end{enumerate}
+
+如果需要再开一个站点，只要拷贝一份server \{\}段的内容，改掉server\_name的值就行了。
+
 下面设置nginx和PHP FastCGI的连接方式
-</P>
-<PRE>
+
+\begin{verbatim}
 vi /srv/nginx/conf/php_fcgi.conf
-</PRE>
-<P>
-php_fcgi.conf的内容如下：
-</P>
-<PRE>
+\end{verbatim}
+php\_fcgi.conf的内容如下：
+
+\begin{verbatim}
 fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
 fastcgi_param  SERVER_SOFTWARE    nginx;
 #
@@ -467,21 +388,19 @@ fastcgi_param  SERVER_NAME        $server_name;
  
 # PHP only, required if PHP was built with --enable-force-cgi-redirect
 fastcgi_param  REDIRECT_STATUS    200;
-</PRE>
-<P>
+\end{verbatim}
 照搬就行了
-</P>
-<H4>2.1.2.7. 启动脚本</H4>
-<P>
+
+\paragraph{}\textbf{启动脚本}\\
+
 我们建立一个bash脚本，方便我们对nginx进行控制
-</P>
-<PRE>
+
+\begin{verbatim}
 vi /sbin/nginxctl
-</PRE>
-<P>
+\end{verbatim}
 nginxctl的内容如下：
-</P>
-<PRE>
+
+\begin{verbatim}
 #!/bin/sh
 # description: Startup and shutdown script for nginx
 NGINX_DIR=/srv/nginx
@@ -509,131 +428,124 @@ case $1 in
 *)
  echo "usage: `basename $0` {start|reload|stop|list|testconfig}"
 esac 
-</PRE>
-<P></P>
-<P>
-给这个脚本执行权限
-</P>
-<PRE>
- chmod +x /sbin/nginxctl
-</PRE>
-<P></P>
-<P>
-使用方法：
-</P>
-<UL>
-<LI>启动nginx
-<PRE>
-nginxctl start
-</PRE>
-<LI>停止nginx
-<PRE>
-nginxctl stop
-</PRE>
-<LI>重启nginx
-<PRE>
-nginxctl reload
-</PRE>
-<LI>测试nginx配置文件
-<PRE>
-nginxctl testconfig
-</PRE>
-</UL>
+\end{verbatim}
 
-<P>
+给这个脚本执行权限
+
+\begin{verbatim}
+ chmod +x /sbin/nginxctl
+\end{verbatim}
+
+使用方法：
+
+\begin{itemize}
+\item 启动nginx
+\begin{verbatim}
+nginxctl start
+\end{verbatim}
+\item 停止nginx
+\begin{verbatim}
+nginxctl stop
+\end{verbatim}
+\item 重启nginx
+\begin{verbatim}
+nginxctl reload
+\end{verbatim}
+\item 测试nginx配置文件
+\begin{verbatim}
+nginxctl testconfig
+\end{verbatim}
+\end{itemize}
+
 nginx安装完毕后，我们还要安装php fastcgi。
-</P>
-<P>
+
 FastCGI跟老式的CGI方式最大的区别是一个处理请求结束后并不是马上销毁进程，而是缓存起来，如果在生命周期内再遇到同样的请求，调度进程会调用这个缓存进程进行解析，这样一来省去了重复开启进程，销毁进程的资源开销，从而加快脚本的解析速度。
-</P>
-<H4>2.1.2.8. 编译php的准备工作</H4>
-<P>
+
+\paragraph{}\textbf{编译php的准备工作}\\
+
 编译php需要有gd库，zlib库，openssl库的支持，而gd要依赖freetype、jpeg、png库。
 一般发行版如Redhat都会已经安装好了的。少数精简太厉害的vps预装的操作系统不一定会按照有，所以我们先检查我们需要的库
-</P>
-<OL>
-<LI>检查zlib（gd、gzip用）
-<PRE>
+
+\begin{enumerate}
+\item 检查zlib（gd、gzip用）
+\begin{verbatim}
 find /usr -name zlib.h
-</PRE>
-<LI>检查freetype（gd用）
-<PRE>
+\end{verbatim}
+\item 检查freetype（gd用）
+\begin{verbatim}
 find /usr -name freetype.h
-</PRE>
-<LI>检查jpeg头（gd用）
-<PRE>
+\end{verbatim}
+\item 检查jpeg头（gd用）
+\begin{verbatim}
 find /usr -name jpeglib.h
-</PRE>
-<LI>检查png头（gd用）
-<PRE>
+\end{verbatim}
+\item 检查png头（gd用）
+\begin{verbatim}
 find /usr -name png.h
-</PRE>
-<LI>检查openssl头（php用）
-<PRE>
+\end{verbatim}
+\item 检查openssl头（php用）
+\begin{verbatim}
 find /usr/ -name ssl.h
-</PRE>
+\end{verbatim}
 搜索的结果中include前的部分就是我们在编译php是时指定用的，例如
-<PRE>
+\begin{verbatim}
 [root@temp7 webadmin]# find /usr -name png.h
 /usr/include/png.h
-</PRE>
+\end{verbatim}
 我们的编译指令就是--with-png-dir=/usr，如果检测不到，那个就要自己编译安装一下，为了简便起见，我采用POSIX标准，这些库的prefix我们都采用/usr，下面是安装过程，根据实际情况进行安装，一般Redhat Linux的可以直接跳过。
-</OL>
+\end{enumerate}
 
-<OL>
-<LI>zlib
-<PRE>
+\begin{enumerate}
+\item zlib
+\begin{verbatim}
 tar zxvf zlib-1.2.3.tar.gz
 cd zlib-1.2.3
 ./configure --prefix=/usr/
 make
 make install
-</PRE>
-<LI>png
-<PRE>
+\end{verbatim}
+\item png
+\begin{verbatim}
 tar zxvf libpng-1.2.14.tar.gz 
 cd libpng-1.2.14 
 cp scripts/makefile.linux makefile 
 sed -i 's/\/usr\/local/\/usr/' makefile
 make 
 make install
-</PRE>
-<LI>freetype
-<PRE>
+\end{verbatim}
+\item freetype
+\begin{verbatim}
 tar -zvxf freetype-2.1.10.tar.gz 
 cd freetype-2.1.10 
 mkdir -p /usr/local/freetype 
 ./configure --prefix=/usr/
 make
 make install
-</PRE>
-<LI>jpeg
-<PRE>
+\end{verbatim}
+\item jpeg
+\begin{verbatim}
 tar zxvf jpegsrc.v6b.tar.gz 
 ./configure --prefix=/usr 
 make 
 make install 
 make install-lib
-</PRE>
+\end{verbatim}
 make install的时候会报/usr/man1目录不存在，
 ```mkdir -pv /usr/man1
 就行。
-</OL>
+\end{enumerate}
 
-<P>
 从48版本开始不能再关闭xml库，编译xml库需要系统有libxml和libxml2，安装步骤参考：
-</P>
-<P>
-<A HREF="http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html">http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html</A> 
-</P>
-<P>
-<A HREF="http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html">http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html</A>
-</P>
-<H4>2.1.2.9. 编译php fastcgi</H4>
-<P>
+
+\htmladdnormallink{http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html}{http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html} 
+
+\htmladdnormallink{http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html}{http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html}
+
+\paragraph{}\textbf{编译php fastcgi}\\
+
 经过前面的准备工作后，可以下面编译指令编译Fast CGI的PHP
-</P>
-<PRE>
+
+\begin{verbatim}
 wget  http://shopexts.googlecode.com/files/php-5.2.8.tar.bz2
 tar jxvf php-5.2.8.tar.bz2
 wget http://shopexts.googlecode.com/files/php-5.2.8-fpm-0.5.10.diff.gz
@@ -642,49 +554,42 @@ cd php-5.2.8
 './configure' '--prefix=/srv/php-fcgi' '--with-config-file-path=/etc' '--with-mysql=/srv/mysql' '--with-freetype-dir' '--with-jpeg-dir' '--with-png-dir' '--with-zlib' '--with-gd' '--with-libxml-dir' '--disable-debug' '--disable-rpath' '--enable-inline-optimization' '--enable-mbregex' '--enable-fastcgi' '--enable-force-cgi-redirect' '--enable-mbstring' '--with-iconv-dir' '--enable-fpm' 
 make 
 make install
-</PRE>
-<OL>
-<LI>--with-mysql                是安装mysql时的prefix，编译php的mysql客户端需要用到mysql的头和库文件
-<LI>--with-gd                        只从gd的主力程序员给Zend打工后，php就不需要安装专门的gd库了
-</OL>
+\end{verbatim}
+\begin{enumerate}
+\item --with-mysql                是安装mysql时的prefix，编译php的mysql客户端需要用到mysql的头和库文件
+\item --with-gd                        只从gd的主力程序员给Zend打工后，php就不需要安装专门的gd库了
+\end{enumerate}
 
-<P>
 顺利的话应该在30分钟内编译完毕，拷贝一份php.ini到/etc去
-</P>
-<PRE>
+
+\begin{verbatim}
 cp php.ini-dist /etc/php.ini
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。   必须在php.ini指定时区，找到date.timezone将它的值改为 
-</P>
-<PRE>
+
+\begin{verbatim}
 vi /etc/php.ini
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 对下面的配置进行修改
-</P>
-<PRE>
+
+\begin{verbatim}
 date.timezone = PRC
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 将时区设置为中华人民共和国
-</P>
-<P>
+
 修改php-fpm配置文件
-</P>
-<P>
+
 执行下面的命令
-</P>
-<PRE>
+
+\begin{verbatim}
 netstat -tunlp
-</PRE>
-<P>
+\end{verbatim}
 应该该可以看到红色反显那样的结果
-</P>
-<PRE>
+
+\begin{verbatim}
     [root@www Ext]# 
     Active Internet connections (only servers)
     Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
@@ -697,712 +602,660 @@ netstat -tunlp
     tcp        0      0 127.0.0.1:10081             0.0.0.0:*                   LISTEN      5640/perl
     tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      17582/mysqld
     [root@www Ext]#
-</PRE>
-<P>
+\end{verbatim}
 php-cgi进程已经在127.0.0.1的9000端口上监听，可以响应nginx传进来的服务器请求了。
-</P>
-<P>
+
 启动http服务器nginx
-</P>
-<PRE>
+
+\begin{verbatim}
 nginxctl start
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 应该是看到这样的结果
-</P>
-<PRE>
+
+\begin{verbatim}
 Starting nginx...
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 查看一下进程
-</P>
-<PRE>
+
+\begin{verbatim}
 ps -ef | grep nginx
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 应该看到这样的结果
-</P>
-<PRE>
+
+\begin{verbatim}
 root     12444     1  0 21:05 ?        00:00:00 nginx: master process /srv/nginx/sbin/nginx
 www      12445 12444  0 21:05 ?        00:00:00 nginx: worker process
 root     12447 12373  0 21:06 pts/1    00:00:00 grep nginx
-</PRE>
-<P>
+\end{verbatim}
 12444为主控进程，它生成了一个子进程12445作为工作者进程，12445负责响应web请求，并调用10080上监听的php-cgi进程对php脚本进行解析。
-</P>
-<A NAME="toc6"></A>
-<H3>2.1.3. apache+mod_php</H3>
-<P>
+
+\hypertarget{toc6}{}
+\subsubsection{apache+mod\_php}
 apache的php模块，利用apache强大的动态链接库功能，将php动态装载进apache的运行进程中，共享apache进程的上下文，除了使用非线程安全的自写php模板会造成apache进程崩溃外，找不到其他的缺点。
-</P>
-<P>
+
 我们将所有的程序安装在/srv目录下，其结构如下：
-</P>
-<PRE>
+
+\begin{verbatim}
 /srv
 |-- mysql
 |-- apache
 |-- php
 `-- proftpd
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 每个程序安装到独立目录方便卸载,以下是详细过程
-</P>
-<H4>2.1.3.1. 编译apache的运行时apr</H4>
-<P>
+
+\paragraph{}\textbf{编译apache的运行时apr}\\
+
 下载地址：
-</P>
-<P>
-<A HREF="http://apache.mirror.phpchina.com/httpd/httpd-2.2.9.tar.bz2">http://apache.mirror.phpchina.com/httpd/httpd-2.2.9.tar.bz2</A>
-</P>
-<PRE>
+
+\htmladdnormallink{http://apache.mirror.phpchina.com/httpd/httpd-2.2.9.tar.bz2}{http://apache.mirror.phpchina.com/httpd/httpd-2.2.9.tar.bz2}
+
+\begin{verbatim}
 tar jxvf httpd-2.2.9.tar.bz2
 cd httpd-2.2.9
 cd srclib/apr 
 ./configure --prefix=/srv/apache/apr 
 make 
 make install
-</PRE>
-<P></P>
-<H4>2.1.3.2. 编译安装apache运行时工具包</H4>
-<PRE>
+\end{verbatim}
+
+\paragraph{}\textbf{编译安装apache运行时工具包}\\
+
+\begin{verbatim}
 cd ../apr-util
 ./configure --prefix=/svr/apache/apr-util --with-apr=/svr/apache/apr
 make
 make install
-</PRE>
-<P></P>
-<H4>2.1.3.3. 编译安装apache</H4>
-<PRE>
+\end{verbatim}
+
+\paragraph{}\textbf{编译安装apache}\\
+
+\begin{verbatim}
 cd ../
 ./configure --prefix=/srv/apache --with-apr=/svr/apache/apr-httpd --with-apr-util=/svr/apache/apr-util --with-mpm=prefork --enable-so --enable-rewrite=shared --enable-track-vars
 make
 make install
-</PRE>
-<P>
+\end{verbatim}
 编译指令说明
-</P>
-<OL>
-<LI>--with-apr                                指定到apache运行时安装目录
-<LI>--with-apr-util                        指定到apache运行时工具包的安装目录
-<LI>--with-mpm=prefork            apache跑worker模式貌似不稳定，采用稳定的prefork模式
-<LI>--enable-rewrite=shared     将rewrite编译为DSO，跟mod_php一样       
-</OL>
 
-<P>
+\begin{enumerate}
+\item --with-apr                                指定到apache运行时安装目录
+\item --with-apr-util                        指定到apache运行时工具包的安装目录
+\item --with-mpm=prefork            apache跑worker模式貌似不稳定，采用稳定的prefork模式
+\item --enable-rewrite=shared     将rewrite编译为DSO，跟mod\_php一样       
+\end{enumerate}
+
 配置apache启动脚本，拷贝一个apache控制脚本到linux的启动目录
-</P>
-<PRE>
+
+\begin{verbatim}
 cp support/apachectl /etc/rc.d/init.d/httpd
 vi /etc/rc.d/init.d/httpd
-</PRE>
-<P>
+\end{verbatim}
 在httpd文件的第三行，插入以下两句话:
-</P>
-<PRE>
+
+\begin{verbatim}
 #chkconfig: 345 85 15
 #description: Starts and stops the Apache HTTP Server.
-</PRE>
-<P>
+\end{verbatim}
 然后执行下面的命令，让apache随机启动
-</P>
-<PRE>
+
+\begin{verbatim}
 chmod +x /etc/rc.d/init.d/httpd
 chkconfig --add httpd
 chkconfig --level 345 httpd on
 chkconfig --level 0126 httpd off
-</PRE>
-<P>
+\end{verbatim}
 可以尝试执行下面的命令来启动apache
-</P>
-<PRE>
+
+\begin{verbatim}
 service httpd start
-</PRE>
-<P></P>
-<P>
-apache安装完毕后，就可以开始编译apache的php模块mod_php了。
-</P>
-<H4>2.1.3.4. 编译php的准备工作</H4>
-<P>
+\end{verbatim}
+
+apache安装完毕后，就可以开始编译apache的php模块mod\_php了。
+
+\paragraph{}\textbf{编译php的准备工作}\\
+
 编译php需要有gd库，zlib库，openssl库的支持，而gd要依赖freetype、jpeg、png库。
 一般发行版如Redhat都会已经安装好了的。少数精简太厉害的vps预装的操作系统不一定会按照有，所以我们先检查我们需要的库
-</P>
-<OL>
-<LI>检查zlib（gd、gzip用）
-<PRE>
+
+\begin{enumerate}
+\item 检查zlib（gd、gzip用）
+\begin{verbatim}
 find /usr -name zlib.h
-</PRE>
-<LI>检查freetype（gd用）
-<PRE>
+\end{verbatim}
+\item 检查freetype（gd用）
+\begin{verbatim}
 find /usr -name freetype.h
-</PRE>
-<LI>检查jpeg头（gd用）
-<PRE>
+\end{verbatim}
+\item 检查jpeg头（gd用）
+\begin{verbatim}
 find /usr -name jpeglib.h
-</PRE>
-<LI>检查png头（gd用）
-<PRE>
+\end{verbatim}
+\item 检查png头（gd用）
+\begin{verbatim}
 find /usr -name png.h
-</PRE>
-<LI>检查openssl头（php用）
-<PRE>
+\end{verbatim}
+\item 检查openssl头（php用）
+\begin{verbatim}
 find /usr/ -name ssl.h
-</PRE>
+\end{verbatim}
 搜索的结果中include前的部分就是我们在编译php是时指定用的，例如
-<PRE>
+\begin{verbatim}
 [root@temp7 webadmin]# find /usr -name png.h
 /usr/include/png.h
-</PRE>
+\end{verbatim}
 我们的编译指令就是--with-png-dir=/usr，如果检测不到，那个就要自己编译安装一下，为了简便起见，我采用POSIX标准，这些库的prefix我们都采用/usr，下面是安装过程，根据实际情况进行安装，一般Redhat Linux的可以直接跳过。
-</OL>
+\end{enumerate}
 
-<OL>
-<LI>zlib
-<PRE>
+\begin{enumerate}
+\item zlib
+\begin{verbatim}
 tar zxvf zlib-1.2.3.tar.gz
 cd zlib-1.2.3
 ./configure --prefix=/usr/
 make
 make install
-</PRE>
-<LI>png
-<PRE>
+\end{verbatim}
+\item png
+\begin{verbatim}
 tar zxvf libpng-1.2.14.tar.gz 
 cd libpng-1.2.14 
 cp scripts/makefile.linux makefile 
 sed -i 's/\/usr\/local/\/usr/' makefile
 make 
 make install
-</PRE>
-<LI>freetype
-<PRE>
+\end{verbatim}
+\item freetype
+\begin{verbatim}
 tar -zvxf freetype-2.1.10.tar.gz 
 cd freetype-2.1.10 
 mkdir -p /usr/local/freetype 
 ./configure --prefix=/usr/
 make
 make install
-</PRE>
-<LI>jpeg
-<PRE>
+\end{verbatim}
+\item jpeg
+\begin{verbatim}
 tar zxvf jpegsrc.v6b.tar.gz 
 ./configure --prefix=/usr 
 make 
 make install 
 make install-lib
-</PRE>
+\end{verbatim}
 make install的时候会报/usr/man1目录不存在，
 ```mkdir -pv /usr/man1
 就行。
-</OL>
+\end{enumerate}
 
-<P>
 从48版本开始不能再关闭xml库，编译xml库需要系统有libxml和libxml2，安装步骤参考：
-</P>
-<P>
-<A HREF="http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html">http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html</A> 
-</P>
-<P>
-<A HREF="http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html">http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html</A>
-</P>
-<H4>2.1.3.5. 编译mod_php</H4>
-<P>
-经过前面的准备工作后，可以下面编译指令编译mod_php
-</P>
-<PRE>
+
+\htmladdnormallink{http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html}{http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html} 
+
+\htmladdnormallink{http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html}{http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html}
+
+\paragraph{}\textbf{编译mod\_php}\\
+
+经过前面的准备工作后，可以下面编译指令编译mod\_php
+
+\begin{verbatim}
 wget http://cn.php.net/get/php-5.2.6.tar.bz2/from/this/mirror
 tar jxvf php-5.2.6.tar.bz2
 cd php-5.2.6
 './configure' '--with-apxs2=/srv/apache/bin/apxs'  '--with-mysql=/srv/mysql' '--with-zlib-dir' '--with-freetype-dir=/usr' '--with-jpeg-dir=/usr' '--with-png-dir=/usr' '--enable-gd-native-ttf' '--with-gd' '--enable-track-vars' '--enable-ftp'  '--with-iconv'  '--with-openssl' 
 make
 make install
-</PRE>
-<OL>
-<LI>--with-mysql                是安装mysql时的prefix，编译php的mysql客户端需要用到mysql的头和库文件
-<LI>--with-gd                        只从gd的主力程序员给Zend打工后，php就不需要安装专门的gd库了
-<LI>--with-apxs2                apache编译DSO用的脚本程序，apxs2帮我们生成合乎apache要求的Makefile
-</OL>
+\end{verbatim}
+\begin{enumerate}
+\item --with-mysql                是安装mysql时的prefix，编译php的mysql客户端需要用到mysql的头和库文件
+\item --with-gd                        只从gd的主力程序员给Zend打工后，php就不需要安装专门的gd库了
+\item --with-apxs2                apache编译DSO用的脚本程序，apxs2帮我们生成合乎apache要求的Makefile
+\end{enumerate}
 
-<P>
 顺利的话应该在30分钟内编译完毕，拷贝一份php.ini到/etc去
-</P>
-<PRE>
-cp php.ini-dist /etc/php.ini
-</PRE>
-<P>
-php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。   必须在php.ini指定时区，找到date.timezone将它的值改为 
-</P>
-<PRE>
-vi /etc/php.ini
-</PRE>
-<P>
-将时区改一下
-</P>
-<PRE>
-date.timezone = PRC
-</PRE>
-<P>
-将时区设置为中华人民共和国
-</P>
-<H4>2.1.3.6. 配置apache</H4>
-<OL>
-<LI>apache的主配置文件在/srv/apache/conf/httpd.conf,打开apache的配置文件httpd.conf检查一下,如果有下面的语句
-<PRE>
-LoadModule php5_module        modules/libphp5.so
-</PRE>
-这句话是否有了，如果与了说明编译mod_php是成功的，可以继续下面的操作，如果没有则需要检查php编译指令。
-<P></P>
-<LI>设置默认页，加上index.htm和index.php
-<PRE>
-DirectoryIndex index.html index.htm index.php
-</PRE>
-<LI>新添加一种文件类型，在AddType application/x-gzip .gz .tgz后添加一句
-<PRE>
-AddType application/x-httpd-php .php
-</PRE>
-</OL>
 
-<A NAME="toc7"></A>
-<H2>2.2. Windows</H2>
-<A NAME="toc8"></A>
-<H3>2.2.1. MySQL</H3>
-<H4>2.2.1.1. 安装</H4>
-<P>
-MySQL的最低要求是3.2，但是由于多字节字符集的问题，所以强烈建议采用4.1以上的版本。MySQL请在以下地址下载：<A HREF="http://dev.mysql.com/downloads/">http://dev.mysql.com/downloads/</A>
+\begin{verbatim}
+cp php.ini-dist /etc/php.ini
+\end{verbatim}
+php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。   必须在php.ini指定时区，找到date.timezone将它的值改为 
+
+\begin{verbatim}
+vi /etc/php.ini
+\end{verbatim}
+将时区改一下
+
+\begin{verbatim}
+date.timezone = PRC
+\end{verbatim}
+将时区设置为中华人民共和国
+
+\paragraph{}\textbf{配置apache}\\
+
+\begin{enumerate}
+\item apache的主配置文件在/srv/apache/conf/httpd.conf,打开apache的配置文件httpd.conf检查一下,如果有下面的语句
+\begin{verbatim}
+LoadModule php5_module        modules/libphp5.so
+\end{verbatim}
+这句话是否有了，如果与了说明编译mod\_php是成功的，可以继续下面的操作，如果没有则需要检查php编译指令。
+
+\item 设置默认页，加上index.htm和index.php
+\begin{verbatim}
+DirectoryIndex index.html index.htm index.php
+\end{verbatim}
+\item 新添加一种文件类型，在AddType application/x-gzip .gz .tgz后添加一句
+\begin{verbatim}
+AddType application/x-httpd-php .php
+\end{verbatim}
+\end{enumerate}
+
+\hypertarget{toc7}{}
+\subsection{Windows}
+\hypertarget{toc8}{}
+\subsubsection{MySQL}
+\paragraph{}\textbf{安装}\\
+
+MySQL的最低要求是3.2，但是由于多字节字符集的问题，所以强烈建议采用4.1以上的版本。MySQL请在以下地址下载：\htmladdnormallink{http://dev.mysql.com/downloads/}{http://dev.mysql.com/downloads/}
 对与正式商用的安装操作，最好选择“Generally Available (GA) release for production use”，避免一些无法预料的错误。MySQL安装时可以一路回车，安装目录最好还是不要放到系统盘。安装完毕后要对MySQL进行配置，下面是以4.1.22配置做说明
-</P>
-<H4>2.2.1.2. 配置</H4>
-<OL>
-<LI>我们选择Detailed Configuration对MySQL进行详细的配置
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/mysql/10.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>目前还用不到事务性数据库，相比之下myisam引擎比innobd快一些，维护上也较简单，我们选择innodb
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/mysql/11.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>生成环境的话要选"Server Machine"，本地测试的话选"Developer Machine"就行了。
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/mysql/12.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>选择"Manual Selected Default Character Set/Collation",选择utf8作为默认的编码格式。因为ShopEx统一采用UTF-8编码。
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/mysql/13.jpg" BORDER="0" ALT="">
-<P></P>
+
+\paragraph{}\textbf{配置}\\
+
+\begin{enumerate}
+\item 我们选择Detailed Configuration对MySQL进行详细的配置
+
+\includegraphics{img/install/windows/mysql/10.jpg}
+
+\item 目前还用不到事务性数据库，相比之下myisam引擎比innobd快一些，维护上也较简单，我们选择innodb
+
+\includegraphics{img/install/windows/mysql/11.jpg}
+
+\item 生成环境的话要选"Server Machine"，本地测试的话选"Developer Machine"就行了。
+
+\includegraphics{img/install/windows/mysql/12.jpg}
+
+\item 选择"Manual Selected Default Character Set/Collation",选择utf8作为默认的编码格式。因为ShopEx统一采用UTF-8编码。
+
+\includegraphics{img/install/windows/mysql/13.jpg}
+
 再往后就是给MySQL取一个服务名和设置root用户的密码，如果是给用户跑业务的，密码最好取的复杂些，以避免不必要的麻烦。
 如果懒得想密码的话，可以在下面的连接中取
-<P></P>
-<A HREF="http://www.shopex.cn/tools/getpass.php">http://www.shopex.cn/tools/getpass.php</A>
-<P></P>
-当设置完毕后，这个配置引导程序会正式去应用刚才我们选定好设置，并且启动MySQL。
-</OL>
 
-<H4>2.2.1.3. MySQL日常操作</H4>
-<UL>
-<LI>登录数据库
-<P></P>
-    <OL>
-    <LI>在“开始”-&gt;“所有程序”中找到MySQL的选项，点击“MYSQL Command Line Client” 输入安装是设定的root密码即可登陆，如出现
-<PRE>
+\htmladdnormallink{http://www.shopex.cn/tools/getpass.php}{http://www.shopex.cn/tools/getpass.php}
+
+当设置完毕后，这个配置引导程序会正式去应用刚才我们选定好设置，并且启动MySQL。
+\end{enumerate}
+
+\paragraph{}\textbf{MySQL日常操作}\\
+
+\begin{itemize}
+\item 登录数据库
+
+    \begin{enumerate}
+    \item 在“开始”-$>$“所有程序”中找到MySQL的选项，点击“MYSQL Command Line Client” 输入安装是设定的root密码即可登陆，如出现
+\begin{verbatim}
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 85 to server version: 4.1.21-community-nt
     Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
-    mysql&gt;
-</PRE>
+    mysql>
+\end{verbatim}
     这样的提示信息说明正常登陆，我们可以在这个控制台下对MySQL服务器发送SQL查询指令。
-    <LI>或者cd到mysql安装的bin目录执行
-<PRE>
+    \item 或者cd到mysql安装的bin目录执行
+\begin{verbatim}
     mysql -uroot -pxxxxxx
-</PRE>
+\end{verbatim}
     来登陆效果也是一样的-u后面跟要登陆的mysql账户名，-p后面跟这个帐号的密码。
-    <P></P>
-    </OL>
-<LI>修改密码
-    <OL>
-    <LI>在MySQL的控制台输入
-<PRE>
+
+    \end{enumerate}
+\item 修改密码
+    \begin{enumerate}
+    \item 在MySQL的控制台输入
+\begin{verbatim}
 set password for root@localhost = passowrd('xxxxx');
-</PRE>
+\end{verbatim}
     这样的SQL去修改，含义是将本地用户root的密码修改为xxxx
-    <LI>也可以cd到mysql的bin目录，执行
-<PRE>
+    \item 也可以cd到mysql的bin目录，执行
+\begin{verbatim}
 mysqladmin -uroot password ab12
-</PRE>
+\end{verbatim}
     这个命令会将root的密码修改为ab12
-    <P></P>
-    </OL>
-<LI>建立数据库
-<P></P>
+
+    \end{enumerate}
+\item 建立数据库
+
 格式：
-<PRE>
+\begin{verbatim}
 create database 库名;
-</PRE>
+\end{verbatim}
 例如：建立新数据库shopex，在MySQL控制台输入　　
-<PRE>
+\begin{verbatim}
 create database shopex;
-</PRE>
-<P></P>
-<LI>显示数据库
-<P></P>
+\end{verbatim}
+
+\item 显示数据库
+
 格式：
-<PRE>
+\begin{verbatim}
 show databases;
-</PRE>
+\end{verbatim}
 注意是databases而不是database
-<P></P>
-<LI>建立新用户
-<P></P>
+
+\item 建立新用户
+
 格式：
-<PRE>
+\begin{verbatim}
 grant all privileges on 数据库.* to 用户名@登录主机 identified by "密码"；
-</PRE>
-<P></P>
+\end{verbatim}
+
 例如：增加一个用户test密码为1234,让他只可以在localhost上登录，并可以对数据库Shopex进行所有的操作
 localhost指本地主机，即MYSQL数据库所在的那台主机，在MYSQL控制台输入:
-<PRE>
+\begin{verbatim}
 grant all privileges on shopex.* to test@localhost identified by "1234";
-</PRE>
+\end{verbatim}
 通过以上操作，你建立一个新的数据库 shopex，并增加了一个名为test对shopex数据库有所有操作权限。
-</UL>
+\end{itemize}
 
-<A NAME="toc9"></A>
-<H3>2.2.2. iis+isapi</H3>
-<P>
+\hypertarget{toc9}{}
+\subsubsection{iis+isapi}
 此说明php如何和iis连接起来的，适用于IIS6+PHP ISAPI
-</P>
-<P>
-我们假设php已经安装在D:\runevn\php中，并且已经配置好,IIS中的新站点也已经建立好，php将通过dll的方式嵌入到IIS中，php将在IIS的线程中运行，这将拥有最好的速度，php如有问题将会影响到IIS。
-</P>
-<P>
+
+我们假设php已经安装在D:$\backslash$runevn$\backslash$php中，并且已经配置好,IIS中的新站点也已经建立好，php将通过dll的方式嵌入到IIS中，php将在IIS的线程中运行，这将拥有最好的速度，php如有问题将会影响到IIS。
+
 首先要配置好php
-</P>
-<H4>2.2.2.1. 下载PHP</H4>
-<P>
-php版本的最低的要求是4.3，可以在<A HREF="http://www.php.net/downloads.php">http://www.php.net/downloads.php</A>下载最新的php软件。
+
+\paragraph{}\textbf{下载PHP}\\
+
+php版本的最低的要求是4.3，可以在\htmladdnormallink{http://www.php.net/downloads.php}{http://www.php.net/downloads.php}下载最新的php软件。
 选择“Windwos Binaryies”分类下的PHP x.x.x.zip package即可，x.x.x根据不同的版本而变化。
 将下载后的zip包解压，复制到某个目录下,比如E盘根目录，重命名为一个自己喜欢的名字 
-</P>
-<H4>2.2.2.2. 配置PHP</H4>
-<P>
+
+\paragraph{}\textbf{配置PHP}\\
+
 php只是一个脚本解释引擎，不需要做向系统注册表写入什么内容，只要配置正确，能让web服务器（iis或者apahce等）识别即可。
 假设我们第一步php解压放置的目录
-</P>
-<PRE>
+
+\begin{verbatim}
 D:\runenv\php
-</PRE>
-<P>
+\end{verbatim}
 下面是简要的配置过程
-</P>
-<OL>
-<LI>配置环境变量PHPRC
-<P></P>
-目的是让IIS通过ISAPI接口装载php时能找到php的dll文件，以及php解释器能找到它的配置文件php.ini。右击“我的电脑”-“属性”-“高级”-“环境变量” 添加一个名为PHPRC，值为D:\runenv\php的环境变量
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/apache/1.jpg" BORDER="0" ALT="">
-<P></P>
-将PHPRC添加到系统的path中，右击“我的电脑”-“属性”-“高级”-“环境变量” 双击path环境变量名，打开path编辑框，在最末尾添加;%PHPRC%
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/apache/2.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>设置php的配置文件php.ini，
-<P></P>
-将D:\runenv\php目录下的php.ini-dist重命名为php.ini就行了，php相关的功能是通过这个文件定义，包括相关的php扩展。
-为了能让php引擎能正确找到这些扩展，我们用记事本打开这个文件，搜索“extension_dir”关键字。 把
-<PRE>
+
+\begin{enumerate}
+\item 配置环境变量PHPRC
+
+目的是让IIS通过ISAPI接口装载php时能找到php的dll文件，以及php解释器能找到它的配置文件php.ini。右击“我的电脑”-“属性”-“高级”-“环境变量” 添加一个名为PHPRC，值为D:$\backslash$runenv$\backslash$php的环境变量
+
+\includegraphics{img/install/windows/apache/1.jpg}
+
+将PHPRC添加到系统的path中，右击“我的电脑”-“属性”-“高级”-“环境变量” 双击path环境变量名，打开path编辑框，在最末尾添加;\%PHPRC\%
+
+\includegraphics{img/install/windows/apache/2.jpg}
+
+\item 设置php的配置文件php.ini，
+
+将D:$\backslash$runenv$\backslash$php目录下的php.ini-dist重命名为php.ini就行了，php相关的功能是通过这个文件定义，包括相关的php扩展。
+为了能让php引擎能正确找到这些扩展，我们用记事本打开这个文件，搜索“extension\_dir”关键字。 把
+\begin{verbatim}
 extension_dir = ''
-</PRE>
+\end{verbatim}
 修改为
-<PRE>
+\begin{verbatim}
 extension_dir = "D:\runenv\php\ext"
-</PRE>
-上面是说明扩展保存的目录是D:\runenv\php\ext目录下，配置是要根据实际情况修改。下面是要打开ShopEx需要的扩展，和ShopEx正常使用相关的扩展主要是MySQL和GD2，GD2是一个些图像操作C函数集合，这些C函数可供php脚本直接调用，以加快处理速度。修改为
-<PRE>
+\end{verbatim}
+上面是说明扩展保存的目录是D:$\backslash$runenv$\backslash$php$\backslash$ext目录下，配置是要根据实际情况修改。下面是要打开ShopEx需要的扩展，和ShopEx正常使用相关的扩展主要是MySQL和GD2，GD2是一个些图像操作C函数集合，这些C函数可供php脚本直接调用，以加快处理速度。修改为
+\begin{verbatim}
 extension=php_gd2.dll
 extension=php_mysql.dll
-</PRE>
+\end{verbatim}
 如果想使用gmail的smtp功能来发信，还需要打开php的openssl扩展
-<PRE>
+\begin{verbatim}
 extension=php_openssl.dll
-</PRE>
+\end{verbatim}
 只要把配置文件中这些行前面的注释符合";"去掉，重启web服务器就可以加载这些扩展。 
-<P></P>
+
 注：php4系列的MySQL功能是内置在php核心中的，不需要在配置文件中指定。
-<P></P>
+
 设置时区（针对php5）php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。
 必须在php.ini指定时区，找到date.timezone将它的值改为 修改为
-<PRE>
+\begin{verbatim}
 date.timezone = PRC
-</PRE>
-php.5.2.x系列的mysql扩展可能无法加载，既在phpinfo中看不到mysql相关的扩展。只要把D:\runenv\php目录下的
-<PRE>
+\end{verbatim}
+php.5.2.x系列的mysql扩展可能无法加载，既在phpinfo中看不到mysql相关的扩展。只要把D:$\backslash$runenv$\backslash$php目录下的
+\begin{verbatim}
 libmysql.dll
-</PRE>
-和x:\runenv\php\ext
-<PRE>
+\end{verbatim}
+和x:$\backslash$runenv$\backslash$php$\backslash$ext
+\begin{verbatim}
 php_mysql.dll
-</PRE>
+\end{verbatim}
 拷贝到 
-<PRE>
+\begin{verbatim}
 C:\windows\system32
-</PRE>
+\end{verbatim}
 目录下即可
-</OL>
+\end{enumerate}
 
-<P>
 php配置好后，我们下面要将php和iis连起来。
-</P>
-<P>
-如果iis没有安装好，你需要准备一张操作系统的安装盘，到控制面板中的“添加/删除程序”找到windows组件管理中进行添加。
-</P>
-<H4>2.2.2.3. IIS配置</H4>
-<P>
-php将通过dll的方式嵌入到IIS中，php将在IIS的线程中运行，这将拥有最好的速度，php如有问题将会影响到IIS。
-</P>
-<OL>
-<LI>运行窗口运行 %windir%\SYSTEM32\inetsrv\iis.msc 打开iis控制台，如果打不开说明没有装IIS，请在控制面板中安装IIS 
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/iis/3.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>添加php扩展 在打开的iis控制台点击“Web 服务扩展”-“添加一个新的Web服务扩展”然后按附图配置
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/iis/4.jpg" BORDER="0" ALT="">
-<P></P>
-配置完后，确定这个扩展是“允许”的状态!
-<P></P>
-<LI>为网站添加ISAPI筛选器，右击要安装ShopEx软件的网站选择“属性”页，选择“ISAPI筛选器”选项卡，按附图内容配置
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/iis/5.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>在网站属性页中选择“主目录”选项卡，选择web根目录的地址，如附图，一般应该是一个比较难猜测到的目录。
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/iis/6.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>为网站挂接php引擎，在“主目录”选项卡中点击“配置”，按附图配置php解析引擎的位置。
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/iis/7.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>在网站属性页中选择“文档”选项卡，添加index.html、index.htm、index.php三个默认文档。
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/iis/8.jpg" BORDER="0" ALT="">
-</OL>
 
-<A NAME="toc10"></A>
-<H3>2.2.3. apache+mod_php</H3>
-<P>
+如果iis没有安装好，你需要准备一张操作系统的安装盘，到控制面板中的“添加/删除程序”找到windows组件管理中进行添加。
+
+\paragraph{}\textbf{IIS配置}\\
+
+php将通过dll的方式嵌入到IIS中，php将在IIS的线程中运行，这将拥有最好的速度，php如有问题将会影响到IIS。
+
+\begin{enumerate}
+\item 运行窗口运行 \%windir\%$\backslash$SYSTEM32$\backslash$inetsrv$\backslash$iis.msc 打开iis控制台，如果打不开说明没有装IIS，请在控制面板中安装IIS 
+
+\includegraphics{img/install/windows/iis/3.jpg}
+
+\item 添加php扩展 在打开的iis控制台点击“Web 服务扩展”-“添加一个新的Web服务扩展”然后按附图配置
+
+\includegraphics{img/install/windows/iis/4.jpg}
+
+配置完后，确定这个扩展是“允许”的状态!
+
+\item 为网站添加ISAPI筛选器，右击要安装ShopEx软件的网站选择“属性”页，选择“ISAPI筛选器”选项卡，按附图内容配置
+
+\includegraphics{img/install/windows/iis/5.jpg}
+
+\item 在网站属性页中选择“主目录”选项卡，选择web根目录的地址，如附图，一般应该是一个比较难猜测到的目录。
+
+\includegraphics{img/install/windows/iis/6.jpg}
+
+\item 为网站挂接php引擎，在“主目录”选项卡中点击“配置”，按附图配置php解析引擎的位置。
+
+\includegraphics{img/install/windows/iis/7.jpg}
+
+\item 在网站属性页中选择“文档”选项卡，添加index.html、index.htm、index.php三个默认文档。
+
+\includegraphics{img/install/windows/iis/8.jpg}
+\end{enumerate}
+
+\hypertarget{toc10}{}
+\subsubsection{apache+mod\_php}
 Windows下的apache运行php效能还是比微软原装的IIS效率高，也相对安全些，可以避免IIS中复杂的权限配置。
-</P>
-<P>
+
 下面是安装流程
-</P>
-<P>
+
 首先要配置好php
-</P>
-<H4>2.2.3.1. 下载PHP</H4>
-<P>
-php版本的最低的要求是4.3，可以在<A HREF="http://www.php.net/downloads.php">http://www.php.net/downloads.php</A>下载最新的php软件。
+
+\paragraph{}\textbf{下载PHP}\\
+
+php版本的最低的要求是4.3，可以在\htmladdnormallink{http://www.php.net/downloads.php}{http://www.php.net/downloads.php}下载最新的php软件。
 选择“Windwos Binaryies”分类下的PHP x.x.x.zip package即可，x.x.x根据不同的版本而变化。
 将下载后的zip包解压，复制到某个目录下,比如E盘根目录，重命名为一个自己喜欢的名字 
-</P>
-<H4>2.2.3.2. 配置PHP</H4>
-<P>
+
+\paragraph{}\textbf{配置PHP}\\
+
 php只是一个脚本解释引擎，不需要做向系统注册表写入什么内容，只要配置正确，能让web服务器（iis或者apahce等）识别即可。
 假设我们第一步php解压放置的目录
-</P>
-<PRE>
+
+\begin{verbatim}
 D:\runenv\php
-</PRE>
-<P>
+\end{verbatim}
 下面是简要的配置过程
-</P>
-<OL>
-<LI>配置环境变量PHPRC
-<P></P>
-目的是让IIS通过ISAPI接口装载php时能找到php的dll文件，以及php解释器能找到它的配置文件php.ini。右击“我的电脑”-“属性”-“高级”-“环境变量” 添加一个名为PHPRC，值为D:\runenv\php的环境变量
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/apache/1.jpg" BORDER="0" ALT="">
-<P></P>
-将PHPRC添加到系统的path中，右击“我的电脑”-“属性”-“高级”-“环境变量” 双击path环境变量名，打开path编辑框，在最末尾添加;%PHPRC%
-<P></P>
-<IMG ALIGN="middle" SRC="img/install/windows/apache/2.jpg" BORDER="0" ALT="">
-<P></P>
-<LI>设置php的配置文件php.ini，
-<P></P>
-将D:\runenv\php目录下的php.ini-dist重命名为php.ini就行了，php相关的功能是通过这个文件定义，包括相关的php扩展。
-为了能让php引擎能正确找到这些扩展，我们用记事本打开这个文件，搜索“extension_dir”关键字。 把
-<PRE>
+
+\begin{enumerate}
+\item 配置环境变量PHPRC
+
+目的是让IIS通过ISAPI接口装载php时能找到php的dll文件，以及php解释器能找到它的配置文件php.ini。右击“我的电脑”-“属性”-“高级”-“环境变量” 添加一个名为PHPRC，值为D:$\backslash$runenv$\backslash$php的环境变量
+
+\includegraphics{img/install/windows/apache/1.jpg}
+
+将PHPRC添加到系统的path中，右击“我的电脑”-“属性”-“高级”-“环境变量” 双击path环境变量名，打开path编辑框，在最末尾添加;\%PHPRC\%
+
+\includegraphics{img/install/windows/apache/2.jpg}
+
+\item 设置php的配置文件php.ini，
+
+将D:$\backslash$runenv$\backslash$php目录下的php.ini-dist重命名为php.ini就行了，php相关的功能是通过这个文件定义，包括相关的php扩展。
+为了能让php引擎能正确找到这些扩展，我们用记事本打开这个文件，搜索“extension\_dir”关键字。 把
+\begin{verbatim}
 extension_dir = ''
-</PRE>
+\end{verbatim}
 修改为
-<PRE>
+\begin{verbatim}
 extension_dir = "D:\runenv\php\ext"
-</PRE>
-上面是说明扩展保存的目录是D:\runenv\php\ext目录下，配置是要根据实际情况修改。下面是要打开ShopEx需要的扩展，和ShopEx正常使用相关的扩展主要是MySQL和GD2，GD2是一个些图像操作C函数集合，这些C函数可供php脚本直接调用，以加快处理速度。修改为
-<PRE>
+\end{verbatim}
+上面是说明扩展保存的目录是D:$\backslash$runenv$\backslash$php$\backslash$ext目录下，配置是要根据实际情况修改。下面是要打开ShopEx需要的扩展，和ShopEx正常使用相关的扩展主要是MySQL和GD2，GD2是一个些图像操作C函数集合，这些C函数可供php脚本直接调用，以加快处理速度。修改为
+\begin{verbatim}
 extension=php_gd2.dll
 extension=php_mysql.dll
-</PRE>
+\end{verbatim}
 如果想使用gmail的smtp功能来发信，还需要打开php的openssl扩展
-<PRE>
+\begin{verbatim}
 extension=php_openssl.dll
-</PRE>
+\end{verbatim}
 只要把配置文件中这些行前面的注释符合";"去掉，重启web服务器就可以加载这些扩展。 
-<P></P>
+
 注：php4系列的MySQL功能是内置在php核心中的，不需要在配置文件中指定。
-<P></P>
+
 设置时区（针对php5）php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。
 必须在php.ini指定时区，找到date.timezone将它的值改为 修改为
-<PRE>
+\begin{verbatim}
 date.timezone = PRC
-</PRE>
-php.5.2.x系列的mysql扩展可能无法加载，既在phpinfo中看不到mysql相关的扩展。只要把D:\runenv\php目录下的
-<PRE>
+\end{verbatim}
+php.5.2.x系列的mysql扩展可能无法加载，既在phpinfo中看不到mysql相关的扩展。只要把D:$\backslash$runenv$\backslash$php目录下的
+\begin{verbatim}
 libmysql.dll
-</PRE>
-和x:\runenv\php\ext
-<PRE>
+\end{verbatim}
+和x:$\backslash$runenv$\backslash$php$\backslash$ext
+\begin{verbatim}
 php_mysql.dll
-</PRE>
+\end{verbatim}
 拷贝到 
-<PRE>
+\begin{verbatim}
 C:\windows\system32
-</PRE>
+\end{verbatim}
 目录下即可
-</OL>
+\end{enumerate}
 
-<H4>2.2.3.3. 安装apache</H4>
-<P>
+\paragraph{}\textbf{安装apache}\\
+
 Apache的版本要求1.3以上。由于2.2版本有专门为windows平台做了一系列优化，推荐安装apache2.2系列！下载地址是
-</P>
-<P>
-<A HREF="http://httpd.apache.org/download.cgi">http://httpd.apache.org/download.cgi</A>
-</P>
-<P>
-一般是要选择“Win32 Binary without crypto(no mod_ssl)(MSI Installer)……”那个版本
-</P>
-<P>
-安装时只要修改安装目录为D:\runenv\apache就行了，安装是注意80端口不要被其他的程序特别是迅雷霸占了 
-</P>
-<H4>2.2.3.4. 配置apache</H4>
-<P>
-Apache的配置文件httpd.conf，这个文件一般保存在apache安装目录的conf目录下（D:\runenv\apache\conf)。php将通过dll的方式嵌入到Apache中，php将在Apache的线程中运行，这将拥有最好的速度，php如有问题将会影响到apache。它通过两句话描述它和php引擎的关系
-</P>
-<PRE>
+
+\htmladdnormallink{http://httpd.apache.org/download.cgi}{http://httpd.apache.org/download.cgi}
+
+一般是要选择“Win32 Binary without crypto(no mod\_ssl)(MSI Installer)……”那个版本
+
+安装时只要修改安装目录为D:$\backslash$runenv$\backslash$apache就行了，安装是注意80端口不要被其他的程序特别是迅雷霸占了 
+
+\paragraph{}\textbf{配置apache}\\
+
+Apache的配置文件httpd.conf，这个文件一般保存在apache安装目录的conf目录下（D:$\backslash$runenv$\backslash$apache$\backslash$conf)。php将通过dll的方式嵌入到Apache中，php将在Apache的线程中运行，这将拥有最好的速度，php如有问题将会影响到apache。它通过两句话描述它和php引擎的关系
+
+\begin{verbatim}
 AddType application/x-httpd-php .php
-</PRE>
-<P>
+\end{verbatim}
 这句话是给apache增加一个文件类型叫php，但是谁累处理新增加文件类型php呢？就通过下面一句话 
-</P>
-<PRE>
+
+\begin{verbatim}
 LoadModule php5_module "D:/runenv/php/php5apache2_2.dll"
-</PRE>
-<P>
-让apache启动的时候载入D:\php目录下的php引擎接口php5apache2_2.dll，以便apache能调用php引擎去处理php脚本。
-需要注意的是Apache只能识别linux的目录分隔符"/"，不能使用windows的目录分隔符"\"。 
+\end{verbatim}
+让apache启动的时候载入D:$\backslash$php目录下的php引擎接口php5apache2\_2.dll，以便apache能调用php引擎去处理php脚本。
+需要注意的是Apache只能识别linux的目录分隔符"/"，不能使用windows的目录分隔符"$\backslash$"。 
 只要httpd.conf中有以上两句话的描述，apache就和php引擎正确连接了，保存好httpd.conf，重启apache即可！
-</P>
-<A NAME="toc11"></A>
-<H3>2.2.4. zend optimizer</H3>
-<P>
+
+\hypertarget{toc11}{}
+\subsubsection{zend optimizer}
 Zend Optimizer最低要求是2.5.7
-</P>
-<P>
+
 如果php的版本是5.2.x的，必须安装Zend Optimizer 3.2以上的版本，Zend Optimizer可以在下面的地址下载
-</P>
-<P>
-<A HREF="http://www.zend.com/en/products/guard/downloads">http://www.zend.com/en/products/guard/downloads</A>
-</P>
-<P>
+
+\htmladdnormallink{http://www.zend.com/en/products/guard/downloads}{http://www.zend.com/en/products/guard/downloads}
+
 与普通的windows软件的安装差不多，唯一要注意的是，在安装Zend Optimizer时它会要求你指定php.ini的保存目录，因为它要在php.ini中写入这样的字段
-</P>
-<PRE>
+
+\begin{verbatim}
 [Zend]
 zend_extension_manager.optimizer_ts="D:\runenv\Zend\lib\Optimizer-3.2.0"
 zend_extension_ts="D:\runenv\Zend\lib\ZendExtensionManager.dll"
-</PRE>
-<P>
+\end{verbatim}
 通过以上的描述将Zend Optimizer和php引擎关联起来，所以安装Zend Optimizer的一个要点就是要指定正确的php.ini文件。正确安装Zend Optimizer的话在用phpinfo()查看php信息的话应该如下图所示：  
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/install/windows/zend/9.jpg" BORDER="0" ALT="">
-</P>
-<P>
+
+\includegraphics{img/install/windows/zend/9.jpg}
+
 其中的“Configuration File (php.ini) Path ”根据每个人php的安装路径不同而不同。
-</P>
-<HR NOSHADE SIZE=5>
-<A NAME="toc12"></A>
-<H1>3. 操作手册</H1>
-<P>
+
+\clearpage
+
+\hypertarget{toc12}{}
+\section{操作手册}
 重点说后台操作的一些要点
-</P>
-<A NAME="toc13"></A>
-<H2>3.1. 程序调试</H2>
-<A NAME="toc14"></A>
-<H3>3.1.1. 源码分析</H3>
-<P>
+
+\hypertarget{toc13}{}
+\subsection{程序调试}
+\hypertarget{toc14}{}
+\subsubsection{源码分析}
 RTFSC是linux创始人LINUS TORVALDS在一个邮件列表对提问者的答复：
-</P>
-<P>
-<A HREF="http://groups.google.com/group/comp.os.minix/browse_thread/thread/f905198547837a4a?q=rtfsc+torvalds&amp;pli=1">http://groups.google.com/group/comp.os.minix/browse_thread/thread/f905198547837a4a?q=rtfsc+torvalds&amp;pli=1</A>
-</P>
-<P>
+
+\htmladdnormallink{http://groups.google.com/group/comp.os.minix/browse\_thread/thread/f905198547837a4a?q=rtfsc+torvalds\&pli=1}{http://groups.google.com/group/comp.os.minix/browse\_thread/thread/f905198547837a4a?q=rtfsc+torvalds\&pli=1}
+
 原意是：仔细阅读源代码后再向写代码的人提问题，否则无法有效的进行沟通。
-</P>
-<P>
+
 如何阅读代码
-</P>
-<H4>3.1.1.1. 了解系统架构</H4>
-<P>
+
+\paragraph{}\textbf{了解系统架构}\\
+
 对于web程序的分析主要有两点
-</P>
-<OL>
-<LI>文件组织形式，具体下来就是程序采用何种框架，当代流行的网站架构都是MVC架构，从V开始到M结束
-<LI>数据表， 源代码是算法，数据表就是数据，数据表里的数据是反向跟踪的开始
-</OL>
 
-<H4>3.1.1.2. 跟踪调试</H4>
-<P>
+\begin{enumerate}
+\item 文件组织形式，具体下来就是程序采用何种框架，当代流行的网站架构都是MVC架构，从V开始到M结束
+\item 数据表， 源代码是算法，数据表就是数据，数据表里的数据是反向跟踪的开始
+\end{enumerate}
+
+\paragraph{}\textbf{跟踪调试}\\
+
 从那里开始，到那里结束，从开始到结束有几个路径，分支点变量状态监视，进去的是什么，出来的应该是什么。
-</P>
-<P>
-不管面向对象还是面向过程，最小的功能体都是函数（方法）。我们大部分的跟踪调试都是在函数（方法）中进行的，一般跟踪的内容有：
-</P>
-<UL>
-<LI>传入参数
-<LI>返回值
-</UL>
 
-<P>
+不管面向对象还是面向过程，最小的功能体都是函数（方法）。我们大部分的跟踪调试都是在函数（方法）中进行的，一般跟踪的内容有：
+
+\begin{itemize}
+\item 传入参数
+\item 返回值
+\end{itemize}
+
 先检查函数的传入值是否正常，如果正常，就要看返回值是否正常，否则返回函数调用的地方向前跟踪。
-</P>
-<P>
+
 变量值跟踪方法
-</P>
-<P>
-PHP脚本的调试一般要靠不停的echo要监视的变量，看其是否符合我们的预期，一直echo到不符合预期的地方，就是问题的所在。但是现在ajax用的比较多，echo的内容不一定能回显，所以我们一般用error_log这样的函数来讲变量结果记录到文件中，例如在test.php中加入这么条语句
-</P>
-<PRE>
+
+PHP脚本的调试一般要靠不停的echo要监视的变量，看其是否符合我们的预期，一直echo到不符合预期的地方，就是问题的所在。但是现在ajax用的比较多，echo的内容不一定能回显，所以我们一般用error\_log这样的函数来讲变量结果记录到文件中，例如在test.php中加入这么条语句
+
+\begin{verbatim}
 error_log($var,3,__FILE__.".var.log");
-</PRE>
-<P>
-这个语句可以把$var变量记录到文件test.php.var.log这个文件中，如果$var是数值，对象，布尔值的情况下，我们还需要var_export函数去将它导出
-</P>
-<PRE>
+\end{verbatim}
+这个语句可以把\$var变量记录到文件test.php.var.log这个文件中，如果\$var是数值，对象，布尔值的情况下，我们还需要var\_export函数去将它导出
+
+\begin{verbatim}
 error_log(var_export($aArr,true),3,__FILE__.".aArr.log");
-</PRE>
-<P>
-var_export的第二个参数为true表示将结果做为函数返回值返回，而不是想echo结构那样直接向标准输出输出。
-</P>
-<P>
+\end{verbatim}
+var\_export的第二个参数为true表示将结果做为函数返回值返回，而不是想echo结构那样直接向标准输出输出。
+
 传入参数跟方法
-</P>
-<P>
+
 PHP有提供这么一个产生来获取参数传入的值：
-</P>
-<PRE>
+
+\begin{verbatim}
 func_get_args
 
 (PHP 4, PHP 5)
@@ -1412,12 +1265,11 @@ Description
 array func_get_args ( void )
 
 Returns an array in which each element is a copy of the corresponding member of the current user-defined function's argument list. func_get_args() will generate a warning if called from  outside of a function definition. This function cannot be used directly as a function parameter. Instead, its result may be assigned to a variable, which can then be passed to the function. 
-</PRE>
-<P></P>
-<P>
+\end{verbatim}
+
 我们看一个具体的实例
-</P>
-<PRE>
+
+\begin{verbatim}
 function chgArea($areaid, $totalmoney,$postcode,$consumepoint, $totalCouponsDiscount,$taxratio=0)
 {
     error_log(var_export(func_get_args(),true),3,__FILE__.".args.log"); 
@@ -1431,240 +1283,208 @@ function chgArea($areaid, $totalmoney,$postcode,$consumepoint, $totalCouponsDisc
         ………………
 
 }
-</PRE>
-<P>
+\end{verbatim}
 这个函数是47系列中订单填写页中选择配送地区后触发的php函数，它将返回一个标准ajax的xml文件给浏览器做无刷变更页面的配送方式。因此直接诶echo变量是导致页面出错（非法xml返回）
-</P>
-<PRE>
+
+\begin{verbatim}
 error_log(var_export(func_get_args(),true),3,__FILE__.".args.log"); 
-</PRE>
-<P>
-这句话会把chgArea函数传入的变量写入到TPL_ONESTEPCHECKOUT.php.args.log文件中
-</P>
-<P>
+\end{verbatim}
+这句话会把chgArea函数传入的变量写入到TPL\_ONESTEPCHECKOUT.php.args.log文件中
+
 c. 单步调试
-</P>
-<P>
+
 所谓变态是指在每一个执行语句后放上一个die语句，逐步把它们注释，一直die的的值不能正常显示
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/operation/debug/1.png" BORDER="0" ALT="">
-</P>
-<P>
+
+\includegraphics{img/operation/debug/1.png}
+
 每句后面都放一个die当然比较傻，可以用二分法快速定位，先放函数最后，然后放中间，然后放中间的中间……直到找到造成错误的页面为止
-</P>
-<H4>3.1.1.3. 关键字搜索</H4>
-<P>
+
+\paragraph{}\textbf{关键字搜索}\\
+
 搜索大法是根据用错误提示、页面文字等作为关键词到源码目录中搜索，直接定位到抛出错误的语句。
-</P>
-<P>
+
 常见编辑器目录搜索方法：
-</P>
-<P>
+
 a. EditPlus
-</P>
-<P>
+
 1. "Search"-"Find in Files"
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/operation/debug/2.png" BORDER="0" ALT="">
-</P>
-<P>
+
+\includegraphics{img/operation/debug/2.png}
+
 2. 在弹出的对话框中定位好要搜索目录的起始目录，勾选上“Include subfolders"
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/operation/debug/3.png" BORDER="0" ALT="">
-</P>
-<P>
+
+\includegraphics{img/operation/debug/3.png}
+
 Find what:     关键词
 File type:       常用的有*.*所有类型的文件，*.php所有的php文件，*.html所有的html文件
-</P>
-<P>
+
 b. UltraEdit32
-</P>
-<P>
+
 c. Dreamweaver
-</P>
-<H4>3.1.1.4. 常见问题</H4>
-<P>
+
+\paragraph{}\textbf{常见问题}\\
+
 1. Nesting level too deep - recursive dependency
-</P>
-<P>
-一般是在var_export某个对象的时候报的错误，目前不知道具体的原因，一般认为是和php的环境有关系，一般的操作步骤
-</P>
-<P>
+
+一般是在var\_export某个对象的时候报的错误，目前不知道具体的原因，一般认为是和php的环境有关系，一般的操作步骤
+
 1. 更好core目录
-</P>
-<P>
+
 2. 用源码版本替换有问题的对象
-</P>
-<A NAME="toc15"></A>
-<H3>3.1.2. 协议分析</H3>
-<P>
+
+\hypertarget{toc15}{}
+\subsubsection{协议分析}
 web是基于http协议，所以我们主要对http协议进行分析。在windows环境中我们可以借助一个叫fiddler的工具拦截http报文
-</P>
-<P>
+
 fiddler是一个http请求代理，运行它后，他可以代理全部的http请求，这样就可以抓取到由本机发送到全部http请求了，这个功能对ajax为主的程序来说有重要的意义。
-</P>
-<P>
-他的官网是：<A HREF="http://www.fiddler2.com/fiddler2/">http://www.fiddler2.com/fiddler2/</A>
-</P>
-<P>
+
+他的官网是：\htmladdnormallink{http://www.fiddler2.com/fiddler2/}{http://www.fiddler2.com/fiddler2/}
+
 上面有个视频，需要深入研究的自己去看一下。我们一般只应用到很简单的应用：抓取网店ajax请求中提交数据和返回结果
-</P>
-<P>
+
 从这里下载：
-</P>
-<P>
-<A HREF="http://shopexts.googlecode.com/files/Fiddler.zip">http://shopexts.googlecode.com/files/Fiddler.zip</A>
-</P>
-<P>
+
+\htmladdnormallink{http://shopexts.googlecode.com/files/Fiddler.zip}{http://shopexts.googlecode.com/files/Fiddler.zip}
+
 下载后，直接解压，然后双击目录里的Fiddler.exe就可以运行，启动界面是这样的
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/operation/debug/fildder/2.png" BORDER="0" ALT="">
-</P>
-<P>
+
+\includegraphics{img/operation/debug/fildder/2.png}
+
 左边是http请求，右边上部分是请求的数据，下部是返回的数据。一般我们需要关注的点有
-</P>
-<OL>
-<LI>左边http请求的Result，也就是http返回码，一般需要关注200，304，404，500
-<LI>右边上半部分的请求的RAW数据
-<LI>右边下半部分的返回的RAW数据
-</OL>
 
-<P>
+\begin{enumerate}
+\item 左边http请求的Result，也就是http返回码，一般需要关注200，304，404，500
+\item 右边上半部分的请求的RAW数据
+\item 右边下半部分的返回的RAW数据
+\end{enumerate}
+
 双击左边的项目，可以在右边打开相应的请求情况
-</P>
-<P>
+
 我们以48前台购买按钮的动作做一个分析实例
-</P>
-<OL>
-<LI>打开一个远程的shopex网店系统，进入到商品详细页，把鼠标放在“加入购物车”按钮上
-<P></P>
-<IMG ALIGN="middle" SRC="img/operation/debug/fildder/3.png" BORDER="0" ALT="">
-<P></P>
+
+\begin{enumerate}
+\item 打开一个远程的shopex网店系统，进入到商品详细页，把鼠标放在“加入购物车”按钮上
+
+\includegraphics{img/operation/debug/fildder/3.png}
+
 我们注意到这个按钮的请求是cart-addGoodsToCart.html,在点击“加入购物车"按钮后，我们可以看到左边栏已经出现cart-addGoodsToCart.html的请求，我们双击它就可以得到fiddler截获的数据
-<P></P>
-<IMG ALIGN="middle" SRC="img/operation/debug/fildder/4.png" BORDER="0" ALT="">
-<P></P>
+
+\includegraphics{img/operation/debug/fildder/4.png}
+
 我们从右边的窗口中可以依次点击上下两栏的RAW按钮后可以得到最原始的http请求数据
-</OL>
+\end{enumerate}
 
-<OL>
-<LI>我们知道数据是用post方式提交的
-<LI>处理这个数据的地址是/zzz/?cart-addGoodsToCart.html 
-<LI>提交的数据是goods[product_id]=256&amp;goods[num]=1&amp;goods[goods_id]=75&amp;goods[pmt_id]=
-<LI>返回的内容是空，但是设置了两个cookie值
-</OL>
+\begin{enumerate}
+\item 我们知道数据是用post方式提交的
+\item 处理这个数据的地址是/zzz/?cart-addGoodsToCart.html 
+\item 提交的数据是goods[product\_id]=256\&goods[num]=1\&goods[goods\_id]=75\&goods[pmt\_id]=
+\item 返回的内容是空，但是设置了两个cookie值
+\end{enumerate}
 
-<HR NOSHADE SIZE=5>
-<A NAME="toc16"></A>
-<H1>4. 服务手册</H1>
-<P>
+\clearpage
+
+\hypertarget{toc16}{}
+\section{服务手册}
 对用户实施服务的时候注意事项
-</P>
-<A NAME="toc17"></A>
-<H2>4.1. 日常操作</H2>
-<A NAME="toc18"></A>
-<H3>4.1.1. 迁移操作</H3>
-<P>
+
+\hypertarget{toc17}{}
+\subsection{日常操作}
+\hypertarget{toc18}{}
+\subsubsection{迁移操作}
 迁移操作指的是将当前空间A上的程序，搬到新的空间B上，大致的流程如下
-</P>
-<OL>
-<LI>迁移前准备工作，需要准备好A、B空间上的ftp、mysql、域名解析等帐号信息
-<LI>关闭空间A上的程序，防止迁移期间产生新的数据
-<LI>将空间A上的文件和数据库文件都搬迁到空间B上
-<LI>将数据文件导入B空间的数据库，并且修改软件程序的MySQL连接信息
-<LI>将域名解析到空间B上，并在空间B上绑定好域名，由于域名解析生效需要2～48个小时，这一步也可以提前操作
-<LI>开启程序，检查系统是否正常，数据是否一致
-</OL>
 
-<P>
+\begin{enumerate}
+\item 迁移前准备工作，需要准备好A、B空间上的ftp、mysql、域名解析等帐号信息
+\item 关闭空间A上的程序，防止迁移期间产生新的数据
+\item 将空间A上的文件和数据库文件都搬迁到空间B上
+\item 将数据文件导入B空间的数据库，并且修改软件程序的MySQL连接信息
+\item 将域名解析到空间B上，并在空间B上绑定好域名，由于域名解析生效需要2～48个小时，这一步也可以提前操作
+\item 开启程序，检查系统是否正常，数据是否一致
+\end{enumerate}
+
 首先确保新空间的数据库版本不要低于老数据库版本，最好是版本一致。以免发生乱码的问题。
-</P>
-<P>
+
 转移目标
-</P>
-<UL>
-<LI>MySQL数据库文件
-<LI>全部文件
-</UL>
 
-<OL>
-<LI>ftp
-<LI>scp
-<LI>wget
-</OL>
+\begin{itemize}
+\item MySQL数据库文件
+\item 全部文件
+\end{itemize}
 
-<H4>4.1.1.1. 迁移方法</H4>
-<UL>
-<LI>使用迁移脚本
-<P></P>
+\begin{enumerate}
+\item ftp
+\item scp
+\item wget
+\end{enumerate}
+
+\paragraph{}\textbf{迁移方法}\\
+
+\begin{itemize}
+\item 使用迁移脚本
+
 使用mig.php做整体迁移，mig.php的使用说明请看 ShopEx专用迁移程序说明
-</UL>
+\end{itemize}
 
-<UL>
-<LI>常规FTP迁移
-<P></P>
- <OL>
- <LI>在新空间安装好和当前ShopEx版本一致的系统，并加载和当前系统一致的模版，新空间的“我的模版”中的情况要和老模版的一样
- <LI>在老空间上传一个系统维护通告保存为index.htm放在根目录，以免产生新的数据造成不必要的麻烦
- <LI>登录老系统后台备份数据库
- <LI>下载databack目录中备份好的数据库文件，上传到新空间databack目录中
- <LI>登录新空间后台执行恢复数据库操作，完毕后，检查商品是否正确，模版是否启用
- <LI>如果没有问题，转移旧空间的/syssite/home目录到新空间/syssite/home目录
- </OL>
-</UL>
+\begin{itemize}
+\item 常规FTP迁移
 
-<UL>
-<LI>文件打包后迁移
-<P></P>
- <OL>
- <LI>在旧空间用phpmyadmin导出数据库文件
- <LI>在新空间用phpmyadmin导入旧空间的导出文件
- <LI>转移旧空间所有文件到新空间，建议由旧空间商打包，下载，上传，然后让新空间商帮解包打包传输快些
- <LI>修改新空间上的/include/mall_config.php里的数据库帐号信息和新空间的数据库帐号对应
- </OL>
-</UL>
+ \begin{enumerate}
+ \item 在新空间安装好和当前ShopEx版本一致的系统，并加载和当前系统一致的模版，新空间的“我的模版”中的情况要和老模版的一样
+ \item 在老空间上传一个系统维护通告保存为index.htm放在根目录，以免产生新的数据造成不必要的麻烦
+ \item 登录老系统后台备份数据库
+ \item 下载databack目录中备份好的数据库文件，上传到新空间databack目录中
+ \item 登录新空间后台执行恢复数据库操作，完毕后，检查商品是否正确，模版是否启用
+ \item 如果没有问题，转移旧空间的/syssite/home目录到新空间/syssite/home目录
+ \end{enumerate}
+\end{itemize}
 
-<UL>
-<LI>在B服务器上下载A迁移
-<P></P>
- <OL>
- <LI>先用br离线备份好网站数据库
- <LI>用flashfxp登陆网站，右击任意目录，选择“复制”菜单，将标准FTP协议URL复制到剪贴板
- <LI>在目标服务器上用 wget -mbq xxxx 命令直接将源网站上的文件拉下来，xxx是第二步骤获取到的FTP协议URL
- <P></P>
-   用wget做整站迁移的的说明看 <A HREF="http://www.zzzforever.com/post/120">这里</A>,下面是一个样例：
-<PRE>
+\begin{itemize}
+\item 文件打包后迁移
+
+ \begin{enumerate}
+ \item 在旧空间用phpmyadmin导出数据库文件
+ \item 在新空间用phpmyadmin导入旧空间的导出文件
+ \item 转移旧空间所有文件到新空间，建议由旧空间商打包，下载，上传，然后让新空间商帮解包打包传输快些
+ \item 修改新空间上的/include/mall\_config.php里的数据库帐号信息和新空间的数据库帐号对应
+ \end{enumerate}
+\end{itemize}
+
+\begin{itemize}
+\item 在B服务器上下载A迁移
+
+ \begin{enumerate}
+ \item 先用br离线备份好网站数据库
+ \item 用flashfxp登陆网站，右击任意目录，选择“复制”菜单，将标准FTP协议URL复制到剪贴板
+ \item 在目标服务器上用 wget -mbq xxxx 命令直接将源网站上的文件拉下来，xxx是第二步骤获取到的FTP协议URL
+
+   用wget做整站迁移的的说明看 \htmladdnormallink{这里}{http://www.zzzforever.com/post/120},下面是一个样例：
+\begin{verbatim}
    wget -mbq  wget -mbq ftp://ooo:xxx@ftp.xxx.com/www/ | echo 'job was done at' $(date)| mail -s 'transfer finished' xuni@shopex.cn 
-</PRE>
+\end{verbatim}
    命令解释：
- <P></P>
-    <UL>
-    <LI>-m    镜像
-    <LI>-b    后台运行
-    <LI>-q    不回显
-    <P></P>
-    </UL>
- <LI>整理好文件，改好新的数据库配置文件
- <LI>用br恢复第一步备份好的数据库文件
- </OL>
-</UL>
 
-<P>
-文件搬完后发一封邮件到<A HREF="mailto:xuni@shopex.cn">xuni@shopex.cn</A>
-</P>
-<UL>
-<LI>在A服务器上上传B迁移
-<P></P>
- <OL>
- <LI>先用br离线备份好网站数据库
- <LI>用下面的ftp脚本递归上传文件到空间B
-<PRE>
+    \begin{itemize}
+    \item -m    镜像
+    \item -b    后台运行
+    \item -q    不回显
+
+    \end{itemize}
+ \item 整理好文件，改好新的数据库配置文件
+ \item 用br恢复第一步备份好的数据库文件
+ \end{enumerate}
+\end{itemize}
+
+文件搬完后发一封邮件到\htmladdnormallink{xuni@shopex.cn}{mailto:xuni@shopex.cn}
+
+\begin{itemize}
+\item 在A服务器上上传B迁移
+
+ \begin{enumerate}
+ \item 先用br离线备份好网站数据库
+ \item 用下面的ftp脚本递归上传文件到空间B
+\begin{verbatim}
 #!/bin/sh
-ftp -i -in &lt;&lt;!
+ftp -i -in <<!
 open www.xxx.com
 user user password
  
@@ -1673,388 +1493,325 @@ lcd /local/dir
 mput *
 bye
 !
-</PRE>
+\end{verbatim}
   脚本说明：
-  <UL>
-  <LI>要将<A HREF="http://www.xxx.com">www.xxx.com</A>换成B的ftp地址
-  <LI>要将user password换成B的用户名和密码
-  <LI>/remote/dir要改成B上存放html文件的目录，例如cpanel上典型的是/public_html
-  <LI>/local/dir要改成A上的目录，一般是当前目录.
-  </UL>
- <LI>整理好文件，改好新的数据库配置文件
- <LI>用br恢复第一步备份好的数据库文件
- </OL>
-</UL>
+  \begin{itemize}
+  \item 要将\htmladdnormallink{www.xxx.com}{www.xxx.com}换成B的ftp地址
+  \item 要将user password换成B的用户名和密码
+  \item /remote/dir要改成B上存放html文件的目录，例如cpanel上典型的是/public\_html
+  \item /local/dir要改成A上的目录，一般是当前目录.
+  \end{itemize}
+ \item 整理好文件，改好新的数据库配置文件
+ \item 用br恢复第一步备份好的数据库文件
+ \end{enumerate}
+\end{itemize}
 
-<H4>4.1.1.2. 小技巧</H4>
-<UL>
-<LI>修改本机host文件
-<P></P>
+\paragraph{}\textbf{小技巧}\\
+
+\begin{itemize}
+\item 修改本机host文件
+
 这个办法应用场景一般有两个：
-<P></P>
- <OL>
- <LI>文件和数据库转移到新空间后，dns解析未生效，域名需要过一段时间才能指向新的空间，无法在新空间上操作
- <LI>域名解析到了新空间，突然发现还需要访问老空间去核对数据
- </OL>
-</UL>
 
-<P>
+ \begin{enumerate}
+ \item 文件和数据库转移到新空间后，dns解析未生效，域名需要过一段时间才能指向新的空间，无法在新空间上操作
+ \item 域名解析到了新空间，突然发现还需要访问老空间去核对数据
+ \end{enumerate}
+\end{itemize}
+
 电脑去访问网站的时候，解析域名的步骤是先查本机的hosts文件里是否有解析记录，如果没有在去TCP/IP设置里的主DNS服务器查询，主的查不到，就去副DNS服务器查
-</P>
-<P>
-这种情况下我们可以修改我们计算机上的hosts文件将域名强制解析为我们设定的值。例如我们要将<A HREF="http://www.xxx.com">www.xxx.com</A>解析的ip强制设置为222.92.116.92，其操作方法如下：
-</P>
- <OL>
- <LI>在桌面，“开始”-&gt;“运行”处输入
-<PRE>
+
+这种情况下我们可以修改我们计算机上的hosts文件将域名强制解析为我们设定的值。例如我们要将\htmladdnormallink{www.xxx.com}{www.xxx.com}解析的ip强制设置为222.92.116.92，其操作方法如下：
+
+ \begin{enumerate}
+ \item 在桌面，“开始”-$>$“运行”处输入
+\begin{verbatim}
 notepad %windir%\system32\drivers\etc\hosts
-</PRE>
+\end{verbatim}
 然后点击“确定”按钮，或者直接按回车键
- <P></P>
- <LI>如果没有意外，那么系统将会打开的hosts文件,这个文件格式为
-<PRE>
+
+ \item 如果没有意外，那么系统将会打开的hosts文件,这个文件格式为
+\begin{verbatim}
 ip 空格 域名
-</PRE>
+\end{verbatim}
 域名可以写多个，用空格隔开即可，表示这几个域名都指向同一个ip
- <P></P>
- <LI>保存后，某些杀毒软件会告警，选择允许即可
- </OL>
 
-<P>
+ \item 保存后，某些杀毒软件会告警，选择允许即可
+ \end{enumerate}
+
 我们可以验证一下我们的效果：
-</P>
-<P>
-打开一个cmd窗口，输入ping <A HREF="http://www.xxx.com">www.xxx.com</A>
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/service/dailyop/mig/4.png" BORDER="0" ALT="">
-</P>
-<P>
-可以看到我们已经将<A HREF="http://www.xxx.com">www.xxx.com</A>解析的ip强制设置为222.92.116.92了，即使<A HREF="http://www.xxx.com">www.xxx.com</A>不存在。
-</P>
-<P>
-其实<A HREF="http://www.xxx.com">www.xxx.com</A>可以是任意你想的字符，电脑仅仅做简单的key=&gt;value的操作
-</P>
-<P>
+
+打开一个cmd窗口，输入ping \htmladdnormallink{www.xxx.com}{www.xxx.com}
+
+\includegraphics{img/service/dailyop/mig/4.png}
+
+可以看到我们已经将\htmladdnormallink{www.xxx.com}{www.xxx.com}解析的ip强制设置为222.92.116.92了，即使\htmladdnormallink{www.xxx.com}{www.xxx.com}不存在。
+
+其实\htmladdnormallink{www.xxx.com}{www.xxx.com}可以是任意你想的字符，电脑仅仅做简单的key=$>$value的操作
+
 当然这样的设置只是本机有效，其他互联网用户还是以DNS服务器解析的为主
-</P>
-<A NAME="toc19"></A>
-<H3>4.1.2. 升级操作</H3>
-<P>
+
+\hypertarget{toc19}{}
+\subsubsection{升级操作}
 升级工作需要考虑以下的事情
-</P>
-<OL>
-<LI>数据完整
-<LI>升级失败还原
-</OL>
 
-<P>
+\begin{enumerate}
+\item 数据完整
+\item 升级失败还原
+\end{enumerate}
+
 一般流程可以归纳如下
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/service/dailyop/upgrade/1.png" BORDER="0" ALT="">
-</P>
-<P>
-下面对流程做详细的解释：
-</P>
-<H4>4.1.2.1. 确认</H4>
-<P>
-以下几点必须要通过电话等手段传递给用户
-</P>
-<OL>
-<LI>定制修改过的内容将无法正常使用，需要做特别的修改后方可使用
-<LI>模板也可能不正常，需要重新修改
-<LI>升级预计要0.5 ～ 3个小时不等的时间
-<LI>升级期间需要关闭网店
-</OL>
 
-<P>
+\includegraphics{img/service/dailyop/upgrade/1.png}
+
+下面对流程做详细的解释：
+
+\paragraph{}\textbf{确认}\\
+
+以下几点必须要通过电话等手段传递给用户
+
+\begin{enumerate}
+\item 定制修改过的内容将无法正常使用，需要做特别的修改后方可使用
+\item 模板也可能不正常，需要重新修改
+\item 升级预计要0.5 ～ 3个小时不等的时间
+\item 升级期间需要关闭网店
+\end{enumerate}
+
 helpdesk中的回复邮件模板中有很多现成的，可以直接套用发给用户
 必须用户确认同意后才能进入下一个操作
-</P>
-<H4>4.1.2.2. 记录当前版本信息</H4>
-<P>
+
+\paragraph{}\textbf{记录当前版本信息}\\
+
 方便升级失败后回档，如果升级失败需要向研发部门求助也需要提供升级前的版本信息
-</P>
-<H4>4.1.2.3. 备份</H4>
-<OL>
-<LI>数据库
-<LI>系统文件（core/plugis/themes/shpadmin等)
-</OL>
 
-<P>
+\paragraph{}\textbf{备份}\\
+
+\begin{enumerate}
+\item 数据库
+\item 系统文件（core/plugis/themes/shpadmin等)
+\end{enumerate}
+
 重点客户请通知系统管理部做在服务器上做全备
-</P>
-<H4>4.1.2.4. 升级</H4>
-<P>
+
+\paragraph{}\textbf{升级}\\
+
 要通知用户关闭网店，升级文件上传加速方法请参考安装手册。
-</P>
-<H4>4.1.2.5. 验证</H4>
-<OL>
-<LI>打开网店
-<LI>前台下订单
-</OL>
 
-<A NAME="toc20"></A>
-<H3>4.1.3. 安装操作</H3>
-<P>
+\paragraph{}\textbf{验证}\\
+
+\begin{enumerate}
+\item 打开网店
+\item 前台下订单
+\end{enumerate}
+
+\hypertarget{toc20}{}
+\subsubsection{安装操作}
 在安装ShopEx之前需要解决以下几个问题
-</P>
-<OL>
-<LI>空间是否支持php？
-<LI>php是否安装了zend optimizer？
-<LI>空间是否有mysql？
-<LI>如何将安装文件传到空间上？
-</OL>
 
-<P>
+\begin{enumerate}
+\item 空间是否支持php？
+\item php是否安装了zend optimizer？
+\item 空间是否有mysql？
+\item 如何将安装文件传到空间上？
+\end{enumerate}
+
 一般会分两种情况
-</P>
-<UL>
-<LI>租用的空间
-<LI>有自己的服务器
-</UL>
 
-<P>
+\begin{itemize}
+\item 租用的空间
+\item 有自己的服务器
+\end{itemize}
+
 租用的空间一般都已经很好的解决以上四个问题。
-</P>
-<P>
+
 自己独立的服务器则需要根据安装教程将所需要的服务软件和组件都安装好。
-</P>
-<H4>4.1.3.1. 租用空间</H4>
-<P>
+
+\paragraph{}\textbf{租用空间}\\
+
 需要准备好以下材料
-</P>
-<OL>
-<LI>ftp地址,一般是你开通空间时候注册的域名
-<LI>ftp用户名
-<LI>ftp密码
-<LI>mysql连接地址，一般是localhost或则127.0.0.1
-<LI>mysql数据库名
-<LI>mysql用户名
-<LI>mysql密码
-</OL>
 
-<P>
+\begin{enumerate}
+\item ftp地址,一般是你开通空间时候注册的域名
+\item ftp用户名
+\item ftp密码
+\item mysql连接地址，一般是localhost或则127.0.0.1
+\item mysql数据库名
+\item mysql用户名
+\item mysql密码
+\end{enumerate}
+
 这些信息都可以在空间的控制台上自己添加，修改。
-</P>
-<P>
-常见的空间管理程序有：
-</P>
-<OL>
-<LI>prima，在国内很常见，shopex绿色保障体系中主机部分也是采用prima的控制台
-<LI>cpanel，国外linux主机几乎都是cpanel
-</OL>
 
-<P>
+常见的空间管理程序有：
+
+\begin{enumerate}
+\item prima，在国内很常见，shopex绿色保障体系中主机部分也是采用prima的控制台
+\item cpanel，国外linux主机几乎都是cpanel
+\end{enumerate}
+
 在你能执行安装之前，必须要做好域名解析和绑定操作。域名解析如果没有生效可以参考迁移手册中的小技巧，在本机上做域名静态解析。
 域名绑定操作则需要参考具体的空间管理程序教程。
-</P>
-<H4>4.1.3.2. 自备服务器</H4>
-<P>
-服务器一般都是托管在机房，按操作系统区分，常见的有两种
-</P>
-<OL>
-<LI>Windows  2003
-<LI>Redhat Enterprise Linux 5
-</OL>
 
-<P>
+\paragraph{}\textbf{自备服务器}\\
+
+服务器一般都是托管在机房，按操作系统区分，常见的有两种
+
+\begin{enumerate}
+\item Windows  2003
+\item Redhat Enterprise Linux 5
+\end{enumerate}
+
 windows系列常见的远程管理方式有
-</P>
-<OL>
-<LI>远程桌面，这个是系统自己带的，nt系统都会带有，包括windows xp，我们可以在“开始”-“”运行“中输入mstsc命令调出来
+
+\begin{enumerate}
+\item 远程桌面，这个是系统自己带的，nt系统都会带有，包括windows xp，我们可以在“开始”-“”运行“中输入mstsc命令调出来
   用远程服务器的管理员帐号即可登录。可以选择共享本地磁盘，这样连接完成后，本地的磁盘可以在服务器上直接访问
   像操作本地文件对文件进行管理。
-<LI>pcanywhere，赛门铁克老牌的管理软件，需要服务器安装服务器端，在客户机安装客户端才能进行访问。本身支持文件上传/下载操作
-</OL>
+\item pcanywhere，赛门铁克老牌的管理软件，需要服务器安装服务器端，在客户机安装客户端才能进行访问。本身支持文件上传/下载操作
+\end{enumerate}
 
-<P>
 linux管理方式主要是通过ssh，文件传递要靠scp
-</P>
-<P>
+
 另外一个往服务器传递文件的技巧是可以从服务器上直接下载所需要的文件，例如你可以将需要传送的文件上传到一个空间上。
 我们假设这个文件的访问地址是
-</P>
-<PRE>
+
+\begin{verbatim}
 http://www.xxx.com/mysql.zip
-</PRE>
-<P>
+\end{verbatim}
 那么，我们在服务器上可以直接下载这个文件。由于是服务器间的对传，可以达到很高的传送速度。
 自备服务同样需要做好域名解析和绑定操作，绑定操作请参考安装手册。
-</P>
-<P>
+
 在一切准备妥当后，我们建议的安装顺序如下：
-</P>
-<P>
-开通好数据库 -&gt; 上传空间检查程序 -&gt; 上传安装文件 -&gt; 安装
-</P>
-<P>
+
+开通好数据库 -$>$ 上传空间检查程序 -$>$ 上传安装文件 -$>$ 安装
+
 为了稳妥起见，我们是建议在安装ShopEx之前先检测一下空间是否满足要求的。
-检查程序请另存<A HREF="http://shopexts.googlecode.com/svn/trunk/test/svinfo.php">这个文件</A>，然后上传到空间上，从浏览器浏览从文件即可看到详细的检测报告。
-</P>
-<HR NOSHADE SIZE=5>
-<A NAME="toc21"></A>
-<H1>5. 值班手册</H1>
-<P>
+检查程序请另存\htmladdnormallink{这个文件}{http://shopexts.googlecode.com/svn/trunk/test/svinfo.php}，然后上传到空间上，从浏览器浏览从文件即可看到详细的检测报告。
+
+\clearpage
+
+\hypertarget{toc21}{}
+\section{值班手册}
 为了更好的为付费用户提供不间断的服务。公司决定建立每周7天，每天8小时的技术支持服务，每天从9:30到18:30的服务机制。技术支持需要做好以下方面的工作
-</P>
-<OL>
-<LI>用户电话接听
-<LI>用户工单处理
-<LI>异常情况的向上汇报
-</OL>
 
-<A NAME="toc22"></A>
-<H2>5.1. 接听</H2>
-<P>
+\begin{enumerate}
+\item 用户电话接听
+\item 用户工单处理
+\item 异常情况的向上汇报
+\end{enumerate}
+
+\hypertarget{toc22}{}
+\subsection{接听}
 公司对外的服务电话统一为
-</P>
-<PRE>
-021-31266583
-</PRE>
-<P></P>
-<P>
-对内我们会根据值班人员的不同而绑定到不同的手机或者公司内部的分机号。号码绑定操作需要登录一号通后台进行管理
-</P>
-<TABLE BORDER="1">
-<TR>
-<TH>项目</TH>
-<TH>内容</TH>
-</TR>
-<TR>
-<TD>地址</TD>
-<TD><A HREF="http://222.44.63.226">http://222.44.63.226</A> or <A HREF="http://www.reedoo.cn/">http://www.reedoo.cn/</A></TD>
-</TR>
-<TR>
-<TD>号码</TD>
-<TD>31266583</TD>
-</TR>
-<TR>
-<TD>密码</TD>
-<TD>19822478</TD>
-</TR>
-</TABLE>
 
-<P>
+\begin{verbatim}
+021-31266583
+\end{verbatim}
+
+对内我们会根据值班人员的不同而绑定到不同的手机或者公司内部的分机号。号码绑定操作需要登录一号通后台进行管理
+
+\begin{center}\begin{tabular}{|l|l|}
+\hline \textbf{项目} & \textbf{内容} \\
+\hline 地址 & \htmladdnormallink{http://222.44.63.226}{http://222.44.63.226} or \htmladdnormallink{http://www.reedoo.cn/}{http://www.reedoo.cn/} \\
+\hline 号码 & 31266583 \\
+\hline 密码 & 19822478 \\
+\hline \end{tabular}\end{center}
+
 具体的操作菜单请看下图
-</P>
-<P>
-<IMG ALIGN="middle" SRC="img/7x8/1.png" BORDER="0" ALT="">
-</P>
-<P>
+
+\includegraphics{img/7x8/1.png}
+
 目前每周五由操作专员（韩婕）统一代理大家设置，所以一般不需要上去设置
-</P>
-<A NAME="toc23"></A>
-<H2>5.2. 打出</H2>
-<P>
+
+\hypertarget{toc23}{}
+\subsection{打出}
 如果需要拨打客户电话，可以隐藏自己的手机号码，先用手机播打51082009再按语音提示进行操作即可。
 这个时候只产生市话费，即使客户是外地。这个时候系统自动以一号通号码对外拨出。
-</P>
-<A NAME="toc24"></A>
-<H2>5.3. 客户资料查询</H2>
-<P>
+
+\hypertarget{toc24}{}
+\subsection{客户资料查询}
 客户资料可以登录商派的客户中心后台进行查询，登录资料
-</P>
-<TABLE BORDER="1">
-<TR>
-<TH>项目</TH>
-<TH>内容</TH>
-</TR>
-<TR>
-<TD>地址</TD>
-<TD><A HREF="http://www.shopex.cn/lic/admin.php">http://www.shopex.cn/lic/admin.php</A></TD>
-</TR>
-<TR>
-<TD>用户名</TD>
-<TD>ts</TD>
-</TR>
-<TR>
-<TD>密码</TD>
-<TD>mtg05qe5</TD>
-</TR>
-</TABLE>
 
-<P>
-如何在客户中心后台查阅用户资料请查阅 <A HREF="http://docs.google.com/a/shopcare.net/Doc?docid=0AW8vwBIHy_YwZGhidjJ4ZGJfODJmOHN6aDd2cg&amp;hl=zh_CN">客户中心的操作手册</A>
-</P>
-<P>
+\begin{center}\begin{tabular}{|l|l|}
+\hline \textbf{项目} & \textbf{内容} \\
+\hline 地址 & \htmladdnormallink{http://www.shopex.cn/lic/admin.php}{http://www.shopex.cn/lic/admin.php} \\
+\hline 用户名 & ts \\
+\hline 密码 & mtg05qe5 \\
+\hline \end{tabular}\end{center}
+
+如何在客户中心后台查阅用户资料请查阅 \htmladdnormallink{客户中心的操作手册}{http://docs.google.com/a/shopcare.net/Doc?docid=0AW8vwBIHy\_YwZGhidjJ4ZGJfODJmOHN6aDd2cg\&hl=zh\_CN}
+
 周末值班无法直接修改工单所有者，请按以下步骤领取派工单
-</P>
-<OL>
-<LI>点开新到工单，打开新工单详细页面
-<LI>点击工单详细页面右上角的“承担派工单”按钮（附图）
-</OL>
 
-<P>
-<IMG ALIGN="middle" SRC="img/7x8/2.png" BORDER="0" ALT="">
-</P>
-<P>
+\begin{enumerate}
+\item 点开新到工单，打开新工单详细页面
+\item 点击工单详细页面右上角的“承担派工单”按钮（附图）
+\end{enumerate}
+
+\includegraphics{img/7x8/2.png}
+
 一天一个人
-</P>
-<A NAME="toc25"></A>
-<H2>5.4. 方式</H2>
-<P>
+
+\hypertarget{toc25}{}
+\subsection{方式}
 按调休，下一个星期选一天
 按加班，每天300乘上当天的工单完成率
-</P>
-<HR NOSHADE SIZE=5>
-<A NAME="toc26"></A>
-<H1>6. 常问问题</H1>
-<UL>
-<LI>你是傻逼吗？
-<P></P>
+
+\clearpage
+
+\hypertarget{toc26}{}
+\section{常问问题}
+\begin{itemize}
+\item 你是傻逼吗？
+
 我不是傻逼
-<P></P>
-<LI>你觉得我是傻逼吗？
-<P></P>
+
+\item 你觉得我是傻逼吗？
+
 我觉得你挺像
-</UL>
+\end{itemize}
 
-<HR NOSHADE SIZE=1>
-<P></P>
-<A NAME="toc27"></A>
-<H1>7. t2t实例</H1>
-<A NAME="toc28"></A>
-<H2>7.1. 表格</H2>
-<TABLE BORDER="1">
-<TR>
-<TH>测试</TH>
-<TH>测试</TH>
-</TR>
-<TR>
-<TD>测试</TD>
-<TD>测试</TD>
-</TR>
-</TABLE>
 
-<A NAME="toc29"></A>
-<H2>7.2. 项目符号</H2>
-<UL>
-<LI>测试
-</UL>
+\hrulefill{}
 
-<OL>
-<LI>测试
-</OL>
 
-<A NAME="toc30"></A>
-<H2>7.3. 代码引用</H2>
-<PRE>
-&lt;?php
+
+\hypertarget{toc27}{}
+\section{t2t实例}
+\hypertarget{toc28}{}
+\subsection{表格}
+\begin{center}\begin{tabular}{|l|l|}
+\hline \textbf{测试} & \textbf{测试} \\
+\hline 测试 & 测试 \\
+\hline \end{tabular}\end{center}
+
+\hypertarget{toc29}{}
+\subsection{项目符号}
+\begin{itemize}
+\item 测试
+\end{itemize}
+
+\begin{enumerate}
+\item 测试
+\end{enumerate}
+
+\hypertarget{toc30}{}
+\subsection{代码引用}
+\begin{verbatim}
+<?php
 
     echo "fuck you";
 
-?&gt;
-</PRE>
-<P></P>
-<HR NOSHADE SIZE=1>
-<P></P>
-<P>
-last modify 2009-11-10 20:34:50 Tuesday
-</P>
-</DIV>
+?>
+\end{verbatim}
 
-<!-- html code generated by txt2tags 2.5 (http://txt2tags.sf.net) -->
-<!-- cmdline: txt2tags index.t2t -->
-</BODY></HTML>
+
+\hrulefill{}
+
+
+last modify 2009-11-10 20:34:50 Tuesday
+
+
+% LaTeX2e code generated by txt2tags 2.5 (http://txt2tags.sf.net)
+% cmdline: txt2tags -t tex index.t2t
+\end{document}

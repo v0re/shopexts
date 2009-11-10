@@ -1,0 +1,128 @@
+
+
+
+
+RTFSC是linux创始人LINUS TORVALDS在一个邮件列表对提问者的答复：
+
+http://groups.google.com/group/comp.os.minix/browse_thread/thread/f905198547837a4a?q=rtfsc+torvalds&pli=1
+
+原意是：仔细阅读源代码后再向写代码的人提问题，否则无法有效的进行沟通。
+
+如何阅读代码
+
+==== 了解系统架构 ====
+
+对于web程序的分析主要有两点
+
++ 文件组织形式，具体下来就是程序采用何种框架，当代流行的网站架构都是MVC架构，从V开始到M结束
++ 数据表， 源代码是算法，数据表就是数据，数据表里的数据是反向跟踪的开始
+
+
+==== 跟踪调试 ====
+
+从那里开始，到那里结束，从开始到结束有几个路径，分支点变量状态监视，进去的是什么，出来的应该是什么。
+
+
+不管面向对象还是面向过程，最小的功能体都是函数（方法）。我们大部分的跟踪调试都是在函数（方法）中进行的，一般跟踪的内容有：
+
+- 传入参数
+- 返回值
+
+
+先检查函数的传入值是否正常，如果正常，就要看返回值是否正常，否则返回函数调用的地方向前跟踪。
+
+变量值跟踪方法
+
+PHP脚本的调试一般要靠不停的echo要监视的变量，看其是否符合我们的预期，一直echo到不符合预期的地方，就是问题的所在。但是现在ajax用的比较多，echo的内容不一定能回显，所以我们一般用error_log这样的函数来讲变量结果记录到文件中，例如在test.php中加入这么条语句
+```
+error_log($var,3,__FILE__.".var.log");
+```
+这个语句可以把$var变量记录到文件test.php.var.log这个文件中，如果$var是数值，对象，布尔值的情况下，我们还需要var_export函数去将它导出
+```
+error_log(var_export($aArr,true),3,__FILE__.".aArr.log");
+```
+var_export的第二个参数为true表示将结果做为函数返回值返回，而不是想echo结构那样直接向标准输出输出。
+
+传入参数跟方法
+
+PHP有提供这么一个产生来获取参数传入的值：
+```
+func_get_args
+
+(PHP 4, PHP 5)
+func_get_args --  Returns an array comprising a function's argument list
+Description
+
+array func_get_args ( void )
+
+Returns an array in which each element is a copy of the corresponding member of the current user-defined function's argument list. func_get_args() will generate a warning if called from  outside of a function definition. This function cannot be used directly as a function parameter. Instead, its result may be assigned to a variable, which can then be passed to the function. 
+```
+
+我们看一个具体的实例
+
+```
+function chgArea($areaid, $totalmoney,$postcode,$consumepoint, $totalCouponsDiscount,$taxratio=0)
+{
+    error_log(var_export(func_get_args(),true),3,__FILE__.".args.log"); 
+    global $INC_SHOPID;
+    global $INC_SHOPDIR;
+    global $PROG_TAGS;
+    global $ShopCurrency;
+    global $nowrate;
+
+        ………………
+        ………………
+
+}
+```
+这个函数是47系列中订单填写页中选择配送地区后触发的php函数，它将返回一个标准ajax的xml文件给浏览器做无刷变更页面的配送方式。因此直接诶echo变量是导致页面出错（非法xml返回）
+```
+error_log(var_export(func_get_args(),true),3,__FILE__.".args.log"); 
+```
+这句话会把chgArea函数传入的变量写入到TPL_ONESTEPCHECKOUT.php.args.log文件中
+
+c. 单步调试
+
+所谓变态是指在每一个执行语句后放上一个die语句，逐步把它们注释，一直die的的值不能正常显示
+
+[img/operation/debug/1.png]
+
+每句后面都放一个die当然比较傻，可以用二分法快速定位，先放函数最后，然后放中间，然后放中间的中间……直到找到造成错误的页面为止
+
+
+==== 关键字搜索 ====
+
+搜索大法是根据用错误提示、页面文字等作为关键词到源码目录中搜索，直接定位到抛出错误的语句。
+
+常见编辑器目录搜索方法：
+
+a. EditPlus
+
+1. "Search"-"Find in Files"
+
+[img/operation/debug/2.png]
+
+2. 在弹出的对话框中定位好要搜索目录的起始目录，勾选上“Include subfolders"
+
+
+[img/operation/debug/3.png]
+
+
+Find what:     关键词
+File type:       常用的有*.*所有类型的文件，*.php所有的php文件，*.html所有的html文件
+
+b. UltraEdit32
+
+c. Dreamweaver
+
+
+==== 常见问题 ====
+
+1. Nesting level too deep - recursive dependency
+
+一般是在var_export某个对象的时候报的错误，目前不知道具体的原因，一般认为是和php的环境有关系，一般的操作步骤
+
+1. 更好core目录
+
+2. 用源码版本替换有问题的对象
+

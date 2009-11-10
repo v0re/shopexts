@@ -10,3 +10,13 @@ Shop Care Team
 =操作手册=
 
 重点说后台操作的一些要点
+
+== 程序调试 ==
+
+=== 源码分析 ===
+
+%! include: content/operation/debug/rtfsc.t2t
+
+=== 协议分析 ===
+
+%! include: content/operation/debug/protocol.t2t

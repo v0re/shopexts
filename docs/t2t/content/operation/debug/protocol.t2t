@@ -1,0 +1,10 @@
+
+
+
+
+web是基于http协议，所以我们主要对http协议进行分析。在windows环境中我们可以借助一个叫fiddler的工具拦截http报文
+
+%! include: content/operation/debug/fiddler.t2t
+
+
+
