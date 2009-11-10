@@ -9,10 +9,15 @@ Create at 2008
 
 
 %! include: content/introduce/index.t2t
+============================================
 %! include: content/install/index.t2t
+============================================
 %! include: content/operation/index.t2t
+============================================
 %! include: content/service/index.t2t
+============================================
 %! include: content/7x8/index.t2t
+============================================
 %! include: content/faq/index.t2t
 
 ---------------------------------------------------
