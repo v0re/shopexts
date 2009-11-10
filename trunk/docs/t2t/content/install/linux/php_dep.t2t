@@ -1,0 +1,81 @@
+
+
+编译php需要有gd库，zlib库，openssl库的支持，而gd要依赖freetype、jpeg、png库。
+一般发行版如Redhat都会已经安装好了的。少数精简太厉害的vps预装的操作系统不一定会按照有，所以我们先检查我们需要的库
+ 
++ 检查zlib（gd、gzip用）
+```
+find /usr -name zlib.h
+```
++ 检查freetype（gd用）
+```
+find /usr -name freetype.h
+```
++ 检查jpeg头（gd用）
+```
+find /usr -name jpeglib.h
+```
++ 检查png头（gd用）
+```
+find /usr -name png.h
+```
++ 检查openssl头（php用）
+```
+find /usr/ -name ssl.h
+```
+搜索的结果中include前的部分就是我们在编译php是时指定用的，例如
+```
+[root@temp7 webadmin]# find /usr -name png.h
+/usr/include/png.h
+```
+我们的编译指令就是--with-png-dir=/usr，如果检测不到，那个就要自己编译安装一下，为了简便起见，我采用POSIX标准，这些库的prefix我们都采用/usr，下面是安装过程，根据实际情况进行安装，一般Redhat Linux的可以直接跳过。
+ 
+
+ 
++ zlib
+```
+tar zxvf zlib-1.2.3.tar.gz
+cd zlib-1.2.3
+./configure --prefix=/usr/
+make
+make install
+```
++ png
+```
+tar zxvf libpng-1.2.14.tar.gz 
+cd libpng-1.2.14 
+cp scripts/makefile.linux makefile 
+sed -i 's/\/usr\/local/\/usr/' makefile
+make 
+make install
+```
++ freetype
+```
+tar -zvxf freetype-2.1.10.tar.gz 
+cd freetype-2.1.10 
+mkdir -p /usr/local/freetype 
+./configure --prefix=/usr/
+make
+make install
+```
++ jpeg
+```
+tar zxvf jpegsrc.v6b.tar.gz 
+./configure --prefix=/usr 
+make 
+make install 
+make install-lib
+```
+make install的时候会报/usr/man1目录不存在，
+```mkdir -pv /usr/man1
+就行。
+
+
+从48版本开始不能再关闭xml库，编译xml库需要系统有libxml和libxml2，安装步骤参考：
+
+http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html 
+
+http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html
+
+
+

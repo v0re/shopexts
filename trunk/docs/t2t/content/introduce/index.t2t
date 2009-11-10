@@ -1,0 +1,18 @@
+ShopEX技术支持手册
+Shop Care Team
+最新更新时间：%%date(%Y-%m-%d)
+
+%! Target   : html
+%! Style    : fancy.css
+%! Encoding : UTF-8
+%! Options  : --toc --enum-title
+
+=简介=
+
+ShopEx是使用PHP开发的独立网店平台。系统采用MVC架构，主要应到到以下组件
+
+- adodb
+- smarty
+- snoopy
+
+

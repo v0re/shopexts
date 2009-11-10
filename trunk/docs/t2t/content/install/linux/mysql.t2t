@@ -1,0 +1,100 @@
+
+安装流程
+
+==== 编译MySQL ====
+ 
+请到http://dev.mysql.com/downloads/下载MySQL的源码包。
+```
+tar zxvf mysql-xxx.tar.gz
+```
+将源码包解开，然后
+``` cd mysql-xxx
+ 
+进入源码目录执行下面的编译配置指令
+```
+CFLAGS="-O3 -mpentiumpro -mstack-align-double"
+CXX=gcc
+CXXFLAGS="-O3 -mpentiumpro -mstack-align-double -felide-constructors -fno-exceptions -fno-rtti"
+```
+如果不是intel的pentium处理器请跳过上面的设置，直接用下面的configure命令
+```
+./configure  --prefix=/srv/mysql --with-charset=utf8  --with-collation=utf8_general_ci --enable-thread-safe-client  --with-extra-charsets=gbk,latin1 --with-client-ldflags=-all-static --with-mysqld-ldflags=-all-static --enable-assembler --with-unix-socket-path=/tmp/mysql.sock --sysconfdir=/etc  --disable-shared --without-debug --without-isam --without-innodb --with-pthread
+```
+编译指令说明：
++ --without-debug                                                        去除debug模式
++ --with-extra-charsets=gb2312                             添加gb2312中文字符支持
++ --enable-assembler                                                    使用一些字符函数的汇编版本
++ --without-isam                                                            去掉isam表类型支持 现在很少用了 isam表是一种依赖平台的表
++ --without-innodb                                                       去掉innodb表支持 innodb是一种支持事务处理的表,适合企业级应用，对于频繁select操作的web网站来说效率比较低
++ --with-pthread                                                            强制使用pthread库(posix线程库)
++ --enable-thread-safe-client                                    以线程方式编译客户端
++ --with-client-ldflags=-all-static                             以纯静态方式编译客户端
++ --with-mysqld-ldflags=-all-static                         以纯静态方式编译服务端 
+
+
+MySQL5.1的存储引擎做成了插件形式，MySQL5.1版本要用下面的编译指令
+```
+./configure  --prefix=/srv/mysql --with-charset=utf8  --with-collation=utf8_general_ci --enable-thread-safe-client  --with-extra-charsets=gbk,latin1 --with-client-ldflags=-all-static --with-mysqld-ldflags=-all-static --enable-assembler --with-unix-socket-path=/tmp/mysql.sock --sysconfdir=/etc  --disable-shared --without-debug --without-isam --without-innodb --with-pthread
+```
+编译安装
+```
+make
+make install
+```
+MySQL的编译时间会比较长，如果一切顺利，那么编译、安装完毕后就要设置MySQL的启动脚本，在刚才的源码目录执行下面的命令
+```
+cp support-files/mysql.server /etc/rc.d/init.d/mysqld
+chmod 0700 /etc/rc.d/init.d/mysqld
+chkconfig --add mysqld
+chkconfig --level 345 mysqld on
+```
+
+现在还不能启动MySQL，因为我们还没有初始化MySQL，生存mysql库。
+ 
+==== 配置MySQL ====
+ 
++ 添加MySQL的运行用户和组
+```
+groupadd mysql
+useradd  mysql -g mysql  -s /bin/false
+``` 
++ 初始化MySQL数据库
+```
+mkdir /opt/mysqldb
+pushd /srv/mysql
+bin/mysql_install_db --user=mysql --datadir=/opt/mysqldb
+popd
+cp support-files/my-medium.cnf /etc/my.cnf
+```
+我们显式的将MySQL数据保存目录设置到/opt/mysqldb目录下，出于磁盘I/O性能的考虑，这个/opt也最好是单独的分区！
+ 
++ 修改相关目录权限，好让MySQL能正确读写
+```
+cd /srv
+chmod 0750 mysql -R
+chgrp mysql mysql -R
+chown mysql /opt/mysqldb -R
+``` 
++ 修改/etc/rc.d/init.d/mysqld中的
+```
+basedir=/srv/mysql
+datadir=/opt/mysqldb
+```
+
+配置完毕后尝试启动一下MySQL
+``` service mysqld start
+一切顺利的话应该可以看到MySQL成功启动的信息。
+
+
+==== 常见问题 ====
+```
+/usr/bin/ld: cannot find -lgcc_s
+```
+首先检查gcc_s库是否存在
+```
+root [ /data/htdocs/lnmpp/work/mysql ]# whereis libgcc_s.so
+libgcc_s: /usr/lib/libgcc_s.so
+root [ /data/htdocs/lnmpp/work/mysql ]# 
+```
+库是存在的，并且是在标准目录中
+

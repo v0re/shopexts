@@ -1,0 +1,76 @@
+
+nginx安装完毕后，我们还要安装php fastcgi。
+
+FastCGI跟老式的CGI方式最大的区别是一个处理请求结束后并不是马上销毁进程，而是缓存起来，如果在生命周期内再遇到同样的请求，调度进程会调用这个缓存进程进行解析，这样一来省去了重复开启进程，销毁进程的资源开销，从而加快脚本的解析速度。
+
+==== 编译php的准备工作  ====
+
+%! include: content/install/linux/php_dep.t2t
+ 
+==== 编译php fastcgi ====
+经过前面的准备工作后，可以下面编译指令编译Fast CGI的PHP
+```
+wget  http://shopexts.googlecode.com/files/php-5.2.8.tar.bz2
+tar jxvf php-5.2.8.tar.bz2
+wget http://shopexts.googlecode.com/files/php-5.2.8-fpm-0.5.10.diff.gz
+gzip -cd php-5.2.8-fpm-0.5.10.diff.gz | patch -d php-5.2.8 -p1
+cd php-5.2.8
+'./configure' '--prefix=/srv/php-fcgi' '--with-config-file-path=/etc' '--with-mysql=/srv/mysql' '--with-freetype-dir' '--with-jpeg-dir' '--with-png-dir' '--with-zlib' '--with-gd' '--with-libxml-dir' '--disable-debug' '--disable-rpath' '--enable-inline-optimization' '--enable-mbregex' '--enable-fastcgi' '--enable-force-cgi-redirect' '--enable-mbstring' '--with-iconv-dir' '--enable-fpm' 
+make 
+make install
+```
++ --with-mysql                是安装mysql时的prefix，编译php的mysql客户端需要用到mysql的头和库文件
++ --with-gd                        只从gd的主力程序员给Zend打工后，php就不需要安装专门的gd库了
+
+
+顺利的话应该在30分钟内编译完毕，拷贝一份php.ini到/etc去
+``` cp php.ini-dist /etc/php.ini
+ 
+php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。   必须在php.ini指定时区，找到date.timezone将它的值改为 
+
+``` vi /etc/php.ini
+ 
+对下面的配置进行修改
+``` date.timezone = PRC
+
+将时区设置为中华人民共和国
+ 
+修改php-fpm配置文件
+
+
+执行下面的命令
+``` netstat -tunlp
+应该该可以看到红色反显那样的结果
+```
+    [root@www Ext]# 
+    Active Internet connections (only servers)
+    Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
+    tcp        0      0 0.0.0.0:110                 0.0.0.0:*                   LISTEN      23923/couriertcpd
+    tcp        0      0 0.0.0.0:80                  0.0.0.0:*                   LISTEN      21582/nginx
+    tcp        0      0 0.0.0.0:21                  0.0.0.0:*                   LISTEN      18358/proftpd: (acc
+    tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      14290/sshd
+    tcp        0      0 0.0.0.0:25                  0.0.0.0:*                   LISTEN      23746/master
+    tcp        0      0 127.0.0.1:9000            0.0.0.0:*                   LISTEN      5602/php-cgi
+    tcp        0      0 127.0.0.1:10081             0.0.0.0:*                   LISTEN      5640/perl
+    tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      17582/mysqld
+    [root@www Ext]#
+``` 
+php-cgi进程已经在127.0.0.1的9000端口上监听，可以响应nginx传进来的服务器请求了。
+ 
+启动http服务器nginx
+``` nginxctl start
+
+应该是看到这样的结果
+``` Starting nginx...
+
+查看一下进程
+``` ps -ef | grep nginx
+
+应该看到这样的结果
+```
+root     12444     1  0 21:05 ?        00:00:00 nginx: master process /srv/nginx/sbin/nginx
+www      12445 12444  0 21:05 ?        00:00:00 nginx: worker process
+root     12447 12373  0 21:06 pts/1    00:00:00 grep nginx
+```
+12444为主控进程，它生成了一个子进程12445作为工作者进程，12445负责响应web请求，并调用10080上监听的php-cgi进程对php脚本进行解析。
+ 
