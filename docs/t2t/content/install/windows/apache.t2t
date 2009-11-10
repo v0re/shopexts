@@ -1,0 +1,38 @@
+
+
+
+ 
+Windows下的apache运行php效能还是比微软原装的IIS效率高，也相对安全些，可以避免IIS中复杂的权限配置。
+
+下面是安装流程
+
+%! include: content/install/windows/mod_php.t2t
+
+
+==== 安装apache ====
+
+
+Apache的版本要求1.3以上。由于2.2版本有专门为windows平台做了一系列优化，推荐安装apache2.2系列！下载地址是
+
+http://httpd.apache.org/download.cgi
+
+一般是要选择“Win32 Binary without crypto(no mod_ssl)(MSI Installer)……”那个版本
+
+安装时只要修改安装目录为D:\runenv\apache就行了，安装是注意80端口不要被其他的程序特别是迅雷霸占了 
+
+
+==== 配置apache ====
+
+
+Apache的配置文件httpd.conf，这个文件一般保存在apache安装目录的conf目录下（D:\runenv\apache\conf)。php将通过dll的方式嵌入到Apache中，php将在Apache的线程中运行，这将拥有最好的速度，php如有问题将会影响到apache。它通过两句话描述它和php引擎的关系
+```
+AddType application/x-httpd-php .php
+```
+这句话是给apache增加一个文件类型叫php，但是谁累处理新增加文件类型php呢？就通过下面一句话 
+```
+LoadModule php5_module "D:/runenv/php/php5apache2_2.dll"
+```
+让apache启动的时候载入D:\php目录下的php引擎接口php5apache2_2.dll，以便apache能调用php引擎去处理php脚本。
+需要注意的是Apache只能识别linux的目录分隔符"/"，不能使用windows的目录分隔符"\"。 
+只要httpd.conf中有以上两句话的描述，apache就和php引擎正确连接了，保存好httpd.conf，重启apache即可！
+

@@ -1,0 +1,46 @@
+ShopEx技术支持手册
+Shop Care Team
+Create at 2008
+
+%! Target   : html
+%! Style    : statics/shopexdev.css
+%! Encoding : UTF-8
+%! Options  : --toc --enum-title --css-sugar
+
+
+%! include: content/introduce/index.t2t
+%! include: content/install/index.t2t
+%! include: content/operation/index.t2t
+%! include: content/service/index.t2t
+%! include: content/7x8/index.t2t
+%! include: content/faq/index.t2t
+
+---------------------------------------------------
+
+= t2t实例 =
+
+== 表格 ==
+
+|| 测试 | 测试 |
+| 测试 | 测试 |
+
+
+== 项目符号 ==
+- 测试
++ 测试
+ 
+
+== 代码引用 ==
+
+```
+<?php
+
+    echo "fuck you";
+
+?>
+```
+
+
+-------------------------------
+
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
