@@ -1,0 +1,23 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=ststm.chm
+Contents file=ststm.hhc
+Default topic=html\index.html
+Display compile progress=Yes
+Language=0x804 Chinese (PRC)
+
+
+[FILES]
+html\toc4.html
+html\toc5.html
+html\toc6.html
+html\toc8.html
+html\toc9.html
+html\toc10.html
+html\toc11.html
+html\toc14.html
+html\toc15.html
+html\toc18.html
+html\toc19.html
+html\toc20.html
+html\index.html

@@ -5,13 +5,23 @@ define('T2TFILE', 'index.html');
 define('PRJNAME', 'ststm');
 
 
+#
+$hhc = new hhc;
+$hhc->setT2tFile(T2TFILE);
+$hhc->setProjectName(PRJNAME);
+$hhc->setHhcFile();
+$hhc->output();
+#
 $hhp = new hhp;
 $hhp->setT2tFile(T2TFILE);
 $hhp->setProjectName(PRJNAME);
 $hhp->setChmFile();
-$hhp->setHhcFile();
 $hhp->setHhpFile();
+$hhp->setHhcFile();
 $hhp->output();
+
+
+
 
 
 class hhp{
@@ -20,6 +30,8 @@ class hhp{
 	var $_chmfile;
 	var $_hhcfile;
 	var $_hhpfile;
+
+	var $_filelist;
 
 	var $_conf;
 	
@@ -36,12 +48,23 @@ class hhp{
 		$this->_chmfile = $this->_projectname.".chm";
 	}
 
+	function setHhpFile(){
+		$this->_hhpfile = $this->_projectname.".hhp";
+	}
+
+		
 	function setHhcFile(){
 		$this->_hhcfile = $this->_projectname.".hhc";
 	}
 
-	function setHhpFile(){
-		$this->_hhpfile = $this->_projectname.".hhp";
+	function _getFileList(){
+		$this->_filelist = '';
+		$d = dir("html");
+		while (false !== ($entry = $d->read())) {
+			if($entry == '.' || $entry == '..') continue;
+			$this->_filelist .= 'html\\'.$entry."\r\n";
+		}
+		$d->close();
 	}
 
 	function _make(){
@@ -62,19 +85,12 @@ EOF;
 	}
 
 	function _wfile(){
-		if(file_exists($this->_hhpfile)){
-			unlink($this->_hhpfile);
-		}
 		return file_put_contents($this->_hhpfile,$this->_conf);
 	}
 
 	function output(){
-		#
-		$hhc = new hhc;
-		$hhc->setT2tFile($this->_t2tfile);
-		$hhc->setOutFileName($this->_hhcfile);
-		$hhc->output();
-		#
+
+		$this->_getFileList();
 		$this->_make();
 		$this->_wfile();
 
@@ -92,9 +108,13 @@ class hhc{
 	function setT2tFile($name){
 		$this->_t2tfile = $name;
 	}
+
+	function setProjectName($name){
+		$this->_projectname = $name;
+	}
 	
-	function setOutFileName($name){
-		$this->_hhcfile = $name;
+	function setHhcFile(){
+		$this->_hhcfile = $this->_projectname.".hhc";
 	}
 	
 	function _getContentTree(){
@@ -159,7 +179,6 @@ class hhc{
 <HTML>
 <HEAD>
 <meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 <!-- Sitemap 1.0 -->
 </HEAD><BODY>
 <OBJECT type="text/site properties">
@@ -192,10 +211,13 @@ EOF;
 					if(is_array($pages)){
 						$this->_html .= "<UL>";		
 						foreach($pages as $page){
+							$toc = $toc = substr($page['attri'],1);
 							$this->_html .= "<LI> <OBJECT type=\"text/sitemap\">
 									<param name=\"Name\" value=\"".$page['value']."\">
-									<param name=\"Local\" value=\"html\\".$page['attri'].".html\">
+									<param name=\"Local\" value=\"html\\".$toc.".html\">
 								</OBJECT>";
+
+								$this->_makePage($toc);
 						}
 						$this->_html .= "</UL>";
 					}
@@ -206,10 +228,53 @@ EOF;
 		$this->_html .= "</UL>";
 	}
 
-	function _wfile(){
-		if(file_exists($this->_hhcfile)){
-			unlink($this->_hhcfile);
+
+
+	function _makePage($toc){		
+		if(!file_exists('html')){
+			mkdir('html');
 		}
+		$content  = $this->_getT2tHeader();
+		$content .= $this->_getPageByToc($toc);
+		$content .= $this->_getT2tFooter();
+		$filename = "html\\".$toc.".html";
+		file_put_contents($filename,$content);
+
+		return true;
+	}
+
+	function _getPageByToc($toc){
+		$nexttoc = $this->_getNextToc($toc);
+		$pattern = '/<A NAME="'.$toc.'"><\/A>([\s\S]+)<A NAME="'.$nexttoc.'">/';
+		$content = file_get_contents($this->_t2tfile);
+		if(preg_match($pattern,$content,$match)){
+			return $match[1];
+		}
+
+		return false;
+	}
+
+	function _getNextToc($toc){
+		if(preg_match('/(.+)(\d)/',$toc,$match)){
+			return $match[1].(intval($match[2]) + 1);
+		}
+
+		return false;
+	}
+
+	function _getT2tHeader(){
+		$content = file_get_contents($this->_t2tfile);
+		if(preg_match('/[\s\S]+<BODY>/',$content,$match)){
+			return $match[0];
+		}
+	}
+
+	function _getT2tFooter(){
+		return "</BODY></HTML>";
+	}
+
+	function _wfile(){
+		$this->_html = iconv('UTF-8','GBK',$this->_html);
 		return file_put_contents($this->_hhcfile,$this->_html);
 	}
 
