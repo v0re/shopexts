@@ -1,0 +1,130 @@
+<DIV CLASS="body" ID="body"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="statics/shopexdev.css">
+<TITLE>ShopEx技术支持手册</TITLE>
+</HEAD>
+<BODY>
+<H3>2.2.2. iis+isapi</H3>
+<P>
+此说明php如何和iis连接起来的，适用于IIS6+PHP ISAPI
+</P>
+<P>
+我们假设php已经安装在D:\runevn\php中，并且已经配置好,IIS中的新站点也已经建立好，php将通过dll的方式嵌入到IIS中，php将在IIS的线程中运行，这将拥有最好的速度，php如有问题将会影响到IIS。
+</P>
+<P>
+首先要配置好php
+</P>
+<H4>2.2.2.1. 下载PHP</H4>
+<P>
+php版本的最低的要求是4.3，可以在<A HREF="http://www.php.net/downloads.php">http://www.php.net/downloads.php</A>下载最新的php软件。
+选择“Windwos Binaryies”分类下的PHP x.x.x.zip package即可，x.x.x根据不同的版本而变化。
+将下载后的zip包解压，复制到某个目录下,比如E盘根目录，重命名为一个自己喜欢的名字 
+</P>
+<H4>2.2.2.2. 配置PHP</H4>
+<P>
+php只是一个脚本解释引擎，不需要做向系统注册表写入什么内容，只要配置正确，能让web服务器（iis或者apahce等）识别即可。
+假设我们第一步php解压放置的目录
+</P>
+<PRE>
+D:\runenv\php
+</PRE>
+<P>
+下面是简要的配置过程
+</P>
+<OL>
+<LI>配置环境变量PHPRC
+<P></P>
+目的是让IIS通过ISAPI接口装载php时能找到php的dll文件，以及php解释器能找到它的配置文件php.ini。右击“我的电脑”-“属性”-“高级”-“环境变量” 添加一个名为PHPRC，值为D:\runenv\php的环境变量
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/apache/1.jpg" BORDER="0" ALT="">
+<P></P>
+将PHPRC添加到系统的path中，右击“我的电脑”-“属性”-“高级”-“环境变量” 双击path环境变量名，打开path编辑框，在最末尾添加;%PHPRC%
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/apache/2.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>设置php的配置文件php.ini，
+<P></P>
+将D:\runenv\php目录下的php.ini-dist重命名为php.ini就行了，php相关的功能是通过这个文件定义，包括相关的php扩展。
+为了能让php引擎能正确找到这些扩展，我们用记事本打开这个文件，搜索“extension_dir”关键字。 把
+<PRE>
+extension_dir = ''
+</PRE>
+修改为
+<PRE>
+extension_dir = "D:\runenv\php\ext"
+</PRE>
+上面是说明扩展保存的目录是D:\runenv\php\ext目录下，配置是要根据实际情况修改。下面是要打开ShopEx需要的扩展，和ShopEx正常使用相关的扩展主要是MySQL和GD2，GD2是一个些图像操作C函数集合，这些C函数可供php脚本直接调用，以加快处理速度。修改为
+<PRE>
+extension=php_gd2.dll
+extension=php_mysql.dll
+</PRE>
+如果想使用gmail的smtp功能来发信，还需要打开php的openssl扩展
+<PRE>
+extension=php_openssl.dll
+</PRE>
+只要把配置文件中这些行前面的注释符合";"去掉，重启web服务器就可以加载这些扩展。 
+<P></P>
+注：php4系列的MySQL功能是内置在php核心中的，不需要在配置文件中指定。
+<P></P>
+设置时区（针对php5）php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。
+必须在php.ini指定时区，找到date.timezone将它的值改为 修改为
+<PRE>
+date.timezone = PRC
+</PRE>
+php.5.2.x系列的mysql扩展可能无法加载，既在phpinfo中看不到mysql相关的扩展。只要把D:\runenv\php目录下的
+<PRE>
+libmysql.dll
+</PRE>
+和x:\runenv\php\ext
+<PRE>
+php_mysql.dll
+</PRE>
+拷贝到 
+<PRE>
+C:\windows\system32
+</PRE>
+目录下即可
+</OL>
+
+<P>
+php配置好后，我们下面要将php和iis连起来。
+</P>
+<P>
+如果iis没有安装好，你需要准备一张操作系统的安装盘，到控制面板中的“添加/删除程序”找到windows组件管理中进行添加。
+</P>
+<H4>2.2.2.3. IIS配置</H4>
+<P>
+php将通过dll的方式嵌入到IIS中，php将在IIS的线程中运行，这将拥有最好的速度，php如有问题将会影响到IIS。
+</P>
+<OL>
+<LI>运行窗口运行 %windir%\SYSTEM32\inetsrv\iis.msc 打开iis控制台，如果打不开说明没有装IIS，请在控制面板中安装IIS 
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/iis/3.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>添加php扩展 在打开的iis控制台点击“Web 服务扩展”-“添加一个新的Web服务扩展”然后按附图配置
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/iis/4.jpg" BORDER="0" ALT="">
+<P></P>
+配置完后，确定这个扩展是“允许”的状态!
+<P></P>
+<LI>为网站添加ISAPI筛选器，右击要安装ShopEx软件的网站选择“属性”页，选择“ISAPI筛选器”选项卡，按附图内容配置
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/iis/5.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>在网站属性页中选择“主目录”选项卡，选择web根目录的地址，如附图，一般应该是一个比较难猜测到的目录。
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/iis/6.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>为网站挂接php引擎，在“主目录”选项卡中点击“配置”，按附图配置php解析引擎的位置。
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/iis/7.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>在网站属性页中选择“文档”选项卡，添加index.html、index.htm、index.php三个默认文档。
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/iis/8.jpg" BORDER="0" ALT="">
+</OL>
+
+</DIV></BODY></HTML>

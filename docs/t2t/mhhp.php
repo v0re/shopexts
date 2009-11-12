@@ -7,61 +7,55 @@ define('PRJNAME', 'ststm');
 
 
 
-//#
-//$t2t = new t2t;
-//$t2t->setT2tFile(T2TFILE)
-//#
-//$hhc = new hhc;
-//$hhc->setT2tFile(T2TFILE);
-//$hhc->setProjectName(PRJNAME);
-//$hhc->setHhcFile();
-//$hhc->output();
-//#
-//$hhp = new hhp;
-//$hhp->setT2tFile(T2TFILE);
-//$hhp->setProjectName(PRJNAME);
-//$hhp->setChmFile();
-//$hhp->setHhpFile();
-//$hhp->setHhcFile();
-//$hhp->output();
 
-class chm{
-	var $t2tfile;
-	var $contenttree;
-	var $chmfile;
-	var $hhcfile;
-	var $hhpfile;
-	var $htmlfile;
-
-	var $_projectname;
-
-	function chm($projectname='manual'){
-		$this->__projectname = $projectname;
-		$this->chmfile = $this->_projectname.".chm";
-		$this->hhpfile = $this->_projectname.".hhp";
-		$this->hhcfile = $this->_projectname.".hhc";
-		$this->htmlfile = 'html';
-	}
-
-	function setT2tFile($name){
-		$this->t2tfile = $name;
-	}
-}
+#
+$hhc = new hhc;
+$hhc->setT2tFile(T2TFILE);
+$hhc->setProjectName(PRJNAME);
+$hhc->setHhcFile();
+$hhc->output();
+#
+$hhp = new hhp;
+$hhp->setT2tFile(T2TFILE);
+$hhp->setProjectName(PRJNAME);
+$hhp->setChmFile();
+$hhp->setHhpFile();
+$hhp->setHhcFile();
+$hhp->output();
 
 
-
-class hhp extends chm{
+class hhp{
 
 	var $_filelist;
 	var $_conf;
+
+	function setT2tFile($name){
+		$this->_t2tfile = $name;
+	}
+	
+	function setProjectName($name){
+		$this->_projectname = $name;
+	}
+
+	function setChmFile(){
+		$this->_chmfile = $this->_projectname.".chm";
+	}
+	
+	function setHhpFile(){
+		$this->_hhpfile = $this->_projectname.".hhp";
+	}
+	
+	function setHhcFile(){
+		$this->_hhcfile = $this->_projectname.".hhc";
+	}
 	
 
 	function _getFileList(){
 		$this->_filelist = '';
-		$d = dir($this->htmlfile);
+		$d = dir('html');
 		while (false !== ($entry = $d->read())) {
 			if($entry == '.' || $entry == '..') continue;
-			$this->_filelist .= $this->htmlfile.'\\'.$entry."\r\n";
+			$this->_filelist .= 'html\\'.$entry."\r\n";
 		}
 		$d->close();
 	}
@@ -70,9 +64,9 @@ class hhp extends chm{
 		$this->_conf = <<<EOF
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file={$this->chmfile}
-Contents file={$this->hhcfile}
-Default topic={$this->htmlfile}\index.html
+Compiled file={$this->_chmfile}
+Contents file={$this->_hhcfile}
+Default topic=html\index.html
 Display compile progress=Yes
 Language=0x804 Chinese (PRC)
 
@@ -84,7 +78,7 @@ EOF;
 	}
 
 	function _wfile(){
-		return file_put_contents($this->hhpfile,$this->_conf);
+		return file_put_contents($this->_hhpfile,$this->_conf);
 	}
 
 	function output(){
@@ -97,14 +91,28 @@ EOF;
 	}
 }
 
-class hhc extends chm{
+class hhc{
 
 	var $_html;
+	var $_t2tfile;
+	var $_projectname;
+	var $_hhcfile;
 
+	function setT2tFile($name){
+		$this->_t2tfile = $name;
+	}
+
+	function setProjectName($name){
+		$this->_projectname = $name;
+	}
+
+	function setHhcFile(){
+		$this->_hhcfile = $this->_projectname.".hhc";
+	}
 	
 	function _getContentTree(){
 		$doc = new DOMDocument("1.0","UTF-8");
-		$doc->loadHTMLFile($this->t2tfile);
+		$doc->loadHTMLFile($this->_t2tfile);
 		$xp = new DOMXPath($doc);
 		$xpathString = "//html/body/*[@class='toc']/ol/li/a";
 		$nodes = $xp->query($xpathString);
@@ -153,7 +161,7 @@ class hhc extends chm{
 			}
 		}
 
-		$this->contenttree = $topics;
+		$this->_ct = $topics;
 
 		return true;
 	}
@@ -182,16 +190,23 @@ EOF;
 	function _makeContent(){
 		$this->_html .= "<UL>";
 		foreach($this->_ct as $topic){
+			$toc = substr($topic['attri'],1);
 			$this->_html .= "<LI> <OBJECT type=\"text/sitemap\">
-			<param name=\"Name\" value=\"".$topic['value']."\">
+				<param name=\"Name\" value=\"".$topic['value']."\">
+				<param name=\"Local\" value=\"html\\".$toc.".html\">
 			</OBJECT>";
+			$this->_makePage($toc);
 			$subjects = $topic['children'];
 			if(is_array($subjects)){
 				$this->_html .= "<UL>";		
 				foreach($subjects as $subject){
+					$toc = substr($subject['attri'],1);
 					$this->_html .= "<LI> <OBJECT type=\"text/sitemap\">
-					<param name=\"Name\" value=\"".$subject['value']."\">
+						<param name=\"Name\" value=\"".$subject['value']."\">
+						<param name=\"Local\" value=\"html\\".$toc.".html\">
 					</OBJECT>";
+					$this->_makePage($toc);
+					#生成三级
 					$pages = $subject['children'];
 					if(is_array($pages)){
 						$this->_html .= "<UL>";		
@@ -202,7 +217,7 @@ EOF;
 									<param name=\"Local\" value=\"html\\".$toc.".html\">
 								</OBJECT>";
 
-								//$this->_makePage($toc);
+								$this->_makePage($toc);
 						}
 						$this->_html .= "</UL>";
 					}
@@ -216,13 +231,13 @@ EOF;
 
 
 	function _makePage($toc){		
-		if(!file_exists($this->htmlfile)){
-			mkdir($this->htmlfile);
+		if(!file_exists('html')){
+			mkdir('html');
 		}
 		$content  = $this->_getT2tHeader();
 		$content .= $this->_getPageByToc($toc);
 		$content .= $this->_getT2tFooter();
-		$filename = $this->htmlfile."\\".$toc.".html";
+		$filename = "html\\".$toc.".html";
 		file_put_contents($filename,$content);
 
 		return true;
@@ -231,7 +246,7 @@ EOF;
 	function _getPageByToc($toc){
 		$nexttoc = $this->_getNextToc($toc);
 		$pattern = '/<A NAME="'.$toc.'"><\/A>([\s\S]+)<A NAME="'.$nexttoc.'">/';
-		$content = file_get_contents($this->t2tfile);
+		$content = file_get_contents($this->_t2tfile);
 		if(preg_match($pattern,$content,$match)){
 			return $match[1];
 		}
@@ -250,12 +265,26 @@ EOF;
 	function _getT2tHeader(){
 		$content = file_get_contents($this->_t2tfile);
 		if(preg_match('/[\s\S]+<BODY>/',$content,$match)){
-			return $match[0];
+			return '<DIV CLASS="body" ID="body">'.$match[0];
 		}
 	}
 
 	function _getT2tFooter(){
-		return "</BODY></HTML>";
+		return "</DIV></BODY></HTML>";
+	}
+
+	function _makeIndex(){
+		$content = file_get_contents($this->_t2tfile);
+		if(preg_match('/<DIV CLASS="header" ID="header">\s+(.*\s+){4}/',$content,$match)){
+			$body = $match[0];
+			$header = $this->_getT2tHeader();
+			$footer = $this->_getT2tFooter();
+			$content = $header.$body.$footer;
+			file_put_contents('html\\index.html',$content);
+		}
+
+		return false;
+
 	}
 
 	function _wfile(){
@@ -268,62 +297,10 @@ EOF;
 		$this->_makeHeader();
 		$this->_makeContent();
 		$this->_makeFooter();
+		$this->_makeIndex();
 		$this->_wfile();
 
 		return true;
-	}
-
-}
-
-class t2t{
-
-	var $_t2tfile;
-	
-	function setT2tFile($name){
-		$this->_t2tfile = $name;
-	}
-
-	function _makePage($toc){		
-		if(!file_exists('html')){
-			mkdir('html');
-		}
-		$content  = $this->_getT2tHeader();
-		$content .= $this->_getPageByToc($toc);
-		$content .= $this->_getT2tFooter();
-		$filename = "html\\".$toc.".html";
-		file_put_contents($filename,$content);
-
-		return true;
-	}
-	
-	function _getPageByToc($toc){
-		$nexttoc = $this->_getNextToc($toc);
-		$pattern = '/<A NAME="'.$toc.'"><\/A>([\s\S]+)<A NAME="'.$nexttoc.'">/';
-		$content = file_get_contents($this->_t2tfile);
-		if(preg_match($pattern,$content,$match)){
-			return $match[1];
-		}
-
-		return false;
-	}
-
-	function _getNextToc($toc){
-		if(preg_match('/(.+)(\d)/',$toc,$match)){
-			return $match[1].(intval($match[2]) + 1);
-		}
-
-		return false;
-	}
-
-	function _getT2tHeader(){
-		$content = file_get_contents($this->_t2tfile);
-		if(preg_match('/[\s\S]+<BODY>/',$content,$match)){
-			return $match[0];
-		}
-	}
-
-	function _getT2tFooter(){
-		return "</BODY></HTML>";
 	}
 
 }
