@@ -1,0 +1,478 @@
+<DIV CLASS="body" ID="body"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="statics/shopexdev.css">
+<TITLE>ShopEx技术支持手册</TITLE>
+</HEAD>
+<BODY>
+<H3>2.1.2. nginx+fastcgi</H3>
+<P>
+nginx是俄罗斯人Igor Sysoev为Rambler.ru编写的轻量级http服务器。它基于事件驱动，依靠Liunx 2.6内核提供的epoll强大的IO模型，在高并发的情况下仍然能保持良好的响应速度。
+</P>
+<P>
+我们将所有的程序安装在/srv目录下，其结构如下：
+</P>
+<PRE>
+/srv
+|-- mysql
+|-- nginx
+|-- php-fcgi
+`-- proftpd
+</PRE>
+<P>
+每个程序安装到独立目录方便卸载和升级。
+</P>
+<P>
+nginx详细的安装过程如下：
+</P>
+<H4>2.1.2.1. 建立nginx的运行用户和组</H4>
+<PRE>
+/usr/sbin/groupadd www -g 48
+/usr/sbin/useradd -u 48 -g www www 
+</PRE>
+<P>
+如果系统已经存在apache用户，那么可以跳过这一步，直接用apache用户来跑nginx也是不错的注意，要注意将下面配置文件和命令中的www替换为apache就行了。
+</P>
+<H4>2.1.2.2. 建立web文件保存目录</H4>
+<PRE>
+mkdir -pv /data/htdocs
+chmod +w /data/htdocs
+chown -R www:www /data/htdocs 
+</PRE>
+<P>
+为了提高磁盘I/O性能data目录最好在一个独立的分区中，这样比数据和程序混在一个分区的寻址时间稍微短一些。
+</P>
+<H4>2.1.2.3. 建立nginx的log文件保存目录</H4>
+<PRE>
+mkdir -pv /var/log/nginx
+chmod +w /var/log/nginx
+chown -R www:www /var/log/nginx 
+</PRE>
+<P>
+log的放置目录我们遵循POSIX规范，为了提高磁盘I/O，等调试完毕进入运行状态后可以将nginx的access log关闭掉。
+</P>
+<H4>2.1.2.4. 编译安装PCRE</H4>
+<P>
+下载地址：<A HREF="http://downloads.sourceforge.net/pcre/pcre-7.6.tar.bz2">http://downloads.sourceforge.net/pcre/pcre-7.6.tar.bz2</A>
+</P>
+<PRE>
+tar zxvf pcre-7.6.tar.gz
+cd pcre-7.6/
+./configure
+make &amp;&amp; make install 
+</PRE>
+<P>
+PCRE是Perl Compatible Regular Expression（perl正则表达式兼容库）的缩写，nginx的rewrite功能需要用到正则表达式，所以要安装。
+</P>
+<H4>2.1.2.5. 编译安装nginx</H4>
+<P>
+下载：<A HREF="http://sysoev.ru/nginx/nginx-0.7.60.tar.gz">http://sysoev.ru/nginx/nginx-0.7.60.tar.gz</A>
+</P>
+<PRE>
+wget http://sysoev.ru/nginx/nginx-0.7.60.tar.gz
+tar zxf nginx-0.7.60.tar.gz
+cd nginx-0.7.60/
+./configure --user=www --group=www --prefix=/srv/nginx --with-http_stub_status_module
+make &amp;&amp; make install 
+</PRE>
+<P>
+编译指令中指定了nginx的运行用户和组，还附带上一个查看在线人数状态的模块。
+由于nginx的设计目标是轻量级的http服务器，所以不会设计类似apache那套复杂的动态装载动态库的系统，所以如果需要什么模块必须在编译的时候就指定好，nginx编译完后只会在sbin/nginx一个二进制文件。
+</P>
+<H4>2.1.2.6. 配置nginx</H4>
+<PRE>
+rm -f /srv/nginx/conf/nginx.conf
+vi /srv/nginx/conf/nginx.conf
+</PRE>
+<P>
+nginx.conf的内容如下
+</P>
+<PRE>
+#bascic setting
+user   www www;
+worker_processes 6;
+worker_rlimit_nofile 51200;
+#error file position and log level[ debug | info | notice | warn | error | crit ]
+error_log  /data/logs/nginx/error.log  crit;
+#
+events 
+{
+ use   epoll;
+ worker_connections 51200;
+}
+#
+http 
+{
+ include    mime.types;
+ default_type   application/octet-stream;
+ server_names_hash_bucket_size 128;
+ client_max_body_size  16m;
+ #ShopEx Cookie compatible
+ client_header_buffer_size 128k;
+ large_client_header_buffers 4 64k;
+ #open send file to NIC directly
+ sendfile   on;
+ tcp_nopush   on;
+ tcp_nodelay   on;
+ #process life time(s)
+ keepalive_timeout  90;
+ #fastcgi expire time control
+ fastcgi_connect_timeout 60;
+ fastcgi_send_timeout 180;
+ fastcgi_read_timeout 180;
+ fastcgi_buffer_size 128k;
+ fastcgi_buffers 4 128k;
+ fastcgi_busy_buffers_size 128k;
+ fastcgi_temp_file_write_size 128k;
+ fastcgi_temp_path /dev/shm;
+ #zip compress setting
+ gzip    on;
+ gzip_min_length   1k;
+ gzip_buffers   4 8k;
+ gzip_http_version  1.1;
+ gzip_types   text/plain application/x-javascript text/css  application/xml;
+ gzip_disable "MSIE [1-6]\."; #log format
+ log_format  access '$remote_addr - $remote_user [$time_local] "$request" '
+    '$status $body_bytes_sent "$http_referer" '
+     '"$http_user_agent" $http_x_forwarded_for';
+ #host setting
+ server
+ {
+  listen 80;
+  server_name foobar.com www.foobar.com;
+  index index.html index.htm index.php;
+  root /data/htdocs;
+  #ShopEx 4.8 rewrite rule
+  if (!-e $request_filename) 
+  {
+   rewrite ^/(.*)$ /index.php?$1;
+  }
+  #PHP FastCGI link configure
+  location ~ .*\.php?$
+  {
+   include  php_fcgi.conf;      
+   fastcgi_pass 127.0.0.1:9000;
+   fastcgi_index index.php;
+  }
+  #access_log setting,replace access; to off; turn off log operation.
+  access_log  /var/log/nginx/access.log  access;
+ }
+}
+</PRE>
+<P>
+参数设置说明：
+</P>
+<OL>
+<LI>user  指定运行用户要和编译时设定的一致
+<LI>worker_processes  设置工作者进程数，一般6个就够了
+<LI>client_max_body_size  允许上传文件大小，至少是2m，否则上传不了模板 
+<LI>keepalive_timeout 90秒的生存周期，低负载，高并发时可以设低一点 
+<LI>server_name  多个站点时，根据域名绑定站点用
+<LI>access_log  试完毕后最好关掉，一般access log没有用，除非做访问统计 
+</OL>
+
+<P>
+如果需要再开一个站点，只要拷贝一份server {}段的内容，改掉server_name的值就行了。
+</P>
+<P>
+下面设置nginx和PHP FastCGI的连接方式
+</P>
+<PRE>
+vi /srv/nginx/conf/php_fcgi.conf
+</PRE>
+<P>
+php_fcgi.conf的内容如下：
+</P>
+<PRE>
+fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
+fastcgi_param  SERVER_SOFTWARE    nginx;
+#
+fastcgi_param  QUERY_STRING       $query_string;
+fastcgi_param  REQUEST_METHOD     $request_method;
+fastcgi_param  CONTENT_TYPE       $content_type;
+fastcgi_param  CONTENT_LENGTH     $content_length;
+# 
+fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
+fastcgi_param  REQUEST_URI        $request_uri;
+fastcgi_param  DOCUMENT_URI       $document_uri;
+fastcgi_param  DOCUMENT_ROOT      $document_root;
+fastcgi_param  SERVER_PROTOCOL    $server_protocol;
+# 
+fastcgi_param  REMOTE_ADDR        $remote_addr;
+fastcgi_param  REMOTE_PORT        $remote_port;
+fastcgi_param  SERVER_ADDR        $server_addr;
+fastcgi_param  SERVER_PORT        $server_port;
+fastcgi_param  SERVER_NAME        $server_name;
+ 
+# PHP only, required if PHP was built with --enable-force-cgi-redirect
+fastcgi_param  REDIRECT_STATUS    200;
+</PRE>
+<P>
+照搬就行了
+</P>
+<H4>2.1.2.7. 启动脚本</H4>
+<P>
+我们建立一个bash脚本，方便我们对nginx进行控制
+</P>
+<PRE>
+vi /sbin/nginxctl
+</PRE>
+<P>
+nginxctl的内容如下：
+</P>
+<PRE>
+#!/bin/sh
+# description: Startup and shutdown script for nginx
+NGINX_DIR=/srv/nginx
+export NGINX_DIR
+case $1 in
+'start' )
+ echo "Starting nginx..."
+ ulimit -SHn 51200
+ $NGINX_DIR/sbin/nginx
+;;
+'reload' )
+ echo "Reload nginx configuration..."
+ kill -HUP `cat $NGINX_DIR/logs/nginx.pid`
+;;
+'stop' )
+ echo "Stopping nginx..."
+ kill -15 `cat $NGINX_DIR/logs/nginx.pid`
+;;
+'list' )
+ ps aux | egrep '(PID|nginx)'
+;;
+'testconfig' )
+ $NGINX_DIR/sbin/nginx -t
+;;
+*)
+ echo "usage: `basename $0` {start|reload|stop|list|testconfig}"
+esac 
+</PRE>
+<P></P>
+<P>
+给这个脚本执行权限
+</P>
+<PRE>
+ chmod +x /sbin/nginxctl
+</PRE>
+<P></P>
+<P>
+使用方法：
+</P>
+<UL>
+<LI>启动nginx
+<PRE>
+nginxctl start
+</PRE>
+<LI>停止nginx
+<PRE>
+nginxctl stop
+</PRE>
+<LI>重启nginx
+<PRE>
+nginxctl reload
+</PRE>
+<LI>测试nginx配置文件
+<PRE>
+nginxctl testconfig
+</PRE>
+</UL>
+
+<P>
+nginx安装完毕后，我们还要安装php fastcgi。
+</P>
+<P>
+FastCGI跟老式的CGI方式最大的区别是一个处理请求结束后并不是马上销毁进程，而是缓存起来，如果在生命周期内再遇到同样的请求，调度进程会调用这个缓存进程进行解析，这样一来省去了重复开启进程，销毁进程的资源开销，从而加快脚本的解析速度。
+</P>
+<H4>2.1.2.8. 编译php的准备工作</H4>
+<P>
+编译php需要有gd库，zlib库，openssl库的支持，而gd要依赖freetype、jpeg、png库。
+一般发行版如Redhat都会已经安装好了的。少数精简太厉害的vps预装的操作系统不一定会按照有，所以我们先检查我们需要的库
+</P>
+<OL>
+<LI>检查zlib（gd、gzip用）
+<PRE>
+find /usr -name zlib.h
+</PRE>
+<LI>检查freetype（gd用）
+<PRE>
+find /usr -name freetype.h
+</PRE>
+<LI>检查jpeg头（gd用）
+<PRE>
+find /usr -name jpeglib.h
+</PRE>
+<LI>检查png头（gd用）
+<PRE>
+find /usr -name png.h
+</PRE>
+<LI>检查openssl头（php用）
+<PRE>
+find /usr/ -name ssl.h
+</PRE>
+搜索的结果中include前的部分就是我们在编译php是时指定用的，例如
+<PRE>
+[root@temp7 webadmin]# find /usr -name png.h
+/usr/include/png.h
+</PRE>
+我们的编译指令就是--with-png-dir=/usr，如果检测不到，那个就要自己编译安装一下，为了简便起见，我采用POSIX标准，这些库的prefix我们都采用/usr，下面是安装过程，根据实际情况进行安装，一般Redhat Linux的可以直接跳过。
+</OL>
+
+<OL>
+<LI>zlib
+<PRE>
+tar zxvf zlib-1.2.3.tar.gz
+cd zlib-1.2.3
+./configure --prefix=/usr/
+make
+make install
+</PRE>
+<LI>png
+<PRE>
+tar zxvf libpng-1.2.14.tar.gz 
+cd libpng-1.2.14 
+cp scripts/makefile.linux makefile 
+sed -i 's/\/usr\/local/\/usr/' makefile
+make 
+make install
+</PRE>
+<LI>freetype
+<PRE>
+tar -zvxf freetype-2.1.10.tar.gz 
+cd freetype-2.1.10 
+mkdir -p /usr/local/freetype 
+./configure --prefix=/usr/
+make
+make install
+</PRE>
+<LI>jpeg
+<PRE>
+tar zxvf jpegsrc.v6b.tar.gz 
+./configure --prefix=/usr 
+make 
+make install 
+make install-lib
+</PRE>
+make install的时候会报/usr/man1目录不存在，
+```mkdir -pv /usr/man1
+就行。
+</OL>
+
+<P>
+从48版本开始不能再关闭xml库，编译xml库需要系统有libxml和libxml2，安装步骤参考：
+</P>
+<P>
+<A HREF="http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html">http://www.linuxfromscratch.org/blfs/view/6.2.0/general/libxml.html</A> 
+</P>
+<P>
+<A HREF="http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html">http://www.linuxfromscratch.org/blfs/view/svn/general/libxml2.html</A>
+</P>
+<H4>2.1.2.9. 编译php fastcgi</H4>
+<P>
+经过前面的准备工作后，可以下面编译指令编译Fast CGI的PHP
+</P>
+<PRE>
+wget  http://shopexts.googlecode.com/files/php-5.2.8.tar.bz2
+tar jxvf php-5.2.8.tar.bz2
+wget http://shopexts.googlecode.com/files/php-5.2.8-fpm-0.5.10.diff.gz
+gzip -cd php-5.2.8-fpm-0.5.10.diff.gz | patch -d php-5.2.8 -p1
+cd php-5.2.8
+'./configure' '--prefix=/srv/php-fcgi' '--with-config-file-path=/etc' '--with-mysql=/srv/mysql' '--with-freetype-dir' '--with-jpeg-dir' '--with-png-dir' '--with-zlib' '--with-gd' '--with-libxml-dir' '--disable-debug' '--disable-rpath' '--enable-inline-optimization' '--enable-mbregex' '--enable-fastcgi' '--enable-force-cgi-redirect' '--enable-mbstring' '--with-iconv-dir' '--enable-fpm' 
+make 
+make install
+</PRE>
+<OL>
+<LI>--with-mysql                是安装mysql时的prefix，编译php的mysql客户端需要用到mysql的头和库文件
+<LI>--with-gd                        只从gd的主力程序员给Zend打工后，php就不需要安装专门的gd库了
+</OL>
+
+<P>
+顺利的话应该在30分钟内编译完毕，拷贝一份php.ini到/etc去
+</P>
+<PRE>
+cp php.ini-dist /etc/php.ini
+</PRE>
+<P></P>
+<P>
+php5以前是直接读取服务器时间的，只要服务器时间正确，那边php脚本里的时间就正确，但是php5以后搞出了一个时区的概念。   必须在php.ini指定时区，找到date.timezone将它的值改为 
+</P>
+<PRE>
+vi /etc/php.ini
+</PRE>
+<P></P>
+<P>
+对下面的配置进行修改
+</P>
+<PRE>
+date.timezone = PRC
+</PRE>
+<P></P>
+<P>
+将时区设置为中华人民共和国
+</P>
+<P>
+修改php-fpm配置文件
+</P>
+<P>
+执行下面的命令
+</P>
+<PRE>
+netstat -tunlp
+</PRE>
+<P>
+应该该可以看到红色反显那样的结果
+</P>
+<PRE>
+    [root@www Ext]# 
+    Active Internet connections (only servers)
+    Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
+    tcp        0      0 0.0.0.0:110                 0.0.0.0:*                   LISTEN      23923/couriertcpd
+    tcp        0      0 0.0.0.0:80                  0.0.0.0:*                   LISTEN      21582/nginx
+    tcp        0      0 0.0.0.0:21                  0.0.0.0:*                   LISTEN      18358/proftpd: (acc
+    tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      14290/sshd
+    tcp        0      0 0.0.0.0:25                  0.0.0.0:*                   LISTEN      23746/master
+    tcp        0      0 127.0.0.1:9000            0.0.0.0:*                   LISTEN      5602/php-cgi
+    tcp        0      0 127.0.0.1:10081             0.0.0.0:*                   LISTEN      5640/perl
+    tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      17582/mysqld
+    [root@www Ext]#
+</PRE>
+<P>
+php-cgi进程已经在127.0.0.1的9000端口上监听，可以响应nginx传进来的服务器请求了。
+</P>
+<P>
+启动http服务器nginx
+</P>
+<PRE>
+nginxctl start
+</PRE>
+<P></P>
+<P>
+应该是看到这样的结果
+</P>
+<PRE>
+Starting nginx...
+</PRE>
+<P></P>
+<P>
+查看一下进程
+</P>
+<PRE>
+ps -ef | grep nginx
+</PRE>
+<P></P>
+<P>
+应该看到这样的结果
+</P>
+<PRE>
+root     12444     1  0 21:05 ?        00:00:00 nginx: master process /srv/nginx/sbin/nginx
+www      12445 12444  0 21:05 ?        00:00:00 nginx: worker process
+root     12447 12373  0 21:06 pts/1    00:00:00 grep nginx
+</PRE>
+<P>
+12444为主控进程，它生成了一个子进程12445作为工作者进程，12445负责响应web请求，并调用10080上监听的php-cgi进程对php脚本进行解析。
+</P>
+</DIV></BODY></HTML>

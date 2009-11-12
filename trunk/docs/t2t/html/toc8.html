@@ -1,0 +1,110 @@
+<DIV CLASS="body" ID="body"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="statics/shopexdev.css">
+<TITLE>ShopEx技术支持手册</TITLE>
+</HEAD>
+<BODY>
+<H3>2.2.1. MySQL</H3>
+<H4>2.2.1.1. 安装</H4>
+<P>
+MySQL的最低要求是3.2，但是由于多字节字符集的问题，所以强烈建议采用4.1以上的版本。MySQL请在以下地址下载：<A HREF="http://dev.mysql.com/downloads/">http://dev.mysql.com/downloads/</A>
+对与正式商用的安装操作，最好选择“Generally Available (GA) release for production use”，避免一些无法预料的错误。MySQL安装时可以一路回车，安装目录最好还是不要放到系统盘。安装完毕后要对MySQL进行配置，下面是以4.1.22配置做说明
+</P>
+<H4>2.2.1.2. 配置</H4>
+<OL>
+<LI>我们选择Detailed Configuration对MySQL进行详细的配置
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/mysql/10.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>目前还用不到事务性数据库，相比之下myisam引擎比innobd快一些，维护上也较简单，我们选择innodb
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/mysql/11.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>生成环境的话要选"Server Machine"，本地测试的话选"Developer Machine"就行了。
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/mysql/12.jpg" BORDER="0" ALT="">
+<P></P>
+<LI>选择"Manual Selected Default Character Set/Collation",选择utf8作为默认的编码格式。因为ShopEx统一采用UTF-8编码。
+<P></P>
+<IMG ALIGN="middle" SRC="img/install/windows/mysql/13.jpg" BORDER="0" ALT="">
+<P></P>
+再往后就是给MySQL取一个服务名和设置root用户的密码，如果是给用户跑业务的，密码最好取的复杂些，以避免不必要的麻烦。
+如果懒得想密码的话，可以在下面的连接中取
+<P></P>
+<A HREF="http://www.shopex.cn/tools/getpass.php">http://www.shopex.cn/tools/getpass.php</A>
+<P></P>
+当设置完毕后，这个配置引导程序会正式去应用刚才我们选定好设置，并且启动MySQL。
+</OL>
+
+<H4>2.2.1.3. MySQL日常操作</H4>
+<UL>
+<LI>登录数据库
+<P></P>
+    <OL>
+    <LI>在“开始”-&gt;“所有程序”中找到MySQL的选项，点击“MYSQL Command Line Client” 输入安装是设定的root密码即可登陆，如出现
+<PRE>
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 85 to server version: 4.1.21-community-nt
+    Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+    mysql&gt;
+</PRE>
+    这样的提示信息说明正常登陆，我们可以在这个控制台下对MySQL服务器发送SQL查询指令。
+    <LI>或者cd到mysql安装的bin目录执行
+<PRE>
+    mysql -uroot -pxxxxxx
+</PRE>
+    来登陆效果也是一样的-u后面跟要登陆的mysql账户名，-p后面跟这个帐号的密码。
+    <P></P>
+    </OL>
+<LI>修改密码
+    <OL>
+    <LI>在MySQL的控制台输入
+<PRE>
+set password for root@localhost = passowrd('xxxxx');
+</PRE>
+    这样的SQL去修改，含义是将本地用户root的密码修改为xxxx
+    <LI>也可以cd到mysql的bin目录，执行
+<PRE>
+mysqladmin -uroot password ab12
+</PRE>
+    这个命令会将root的密码修改为ab12
+    <P></P>
+    </OL>
+<LI>建立数据库
+<P></P>
+格式：
+<PRE>
+create database 库名;
+</PRE>
+例如：建立新数据库shopex，在MySQL控制台输入　　
+<PRE>
+create database shopex;
+</PRE>
+<P></P>
+<LI>显示数据库
+<P></P>
+格式：
+<PRE>
+show databases;
+</PRE>
+注意是databases而不是database
+<P></P>
+<LI>建立新用户
+<P></P>
+格式：
+<PRE>
+grant all privileges on 数据库.* to 用户名@登录主机 identified by "密码"；
+</PRE>
+<P></P>
+例如：增加一个用户test密码为1234,让他只可以在localhost上登录，并可以对数据库Shopex进行所有的操作
+localhost指本地主机，即MYSQL数据库所在的那台主机，在MYSQL控制台输入:
+<PRE>
+grant all privileges on shopex.* to test@localhost identified by "1234";
+</PRE>
+通过以上操作，你建立一个新的数据库 shopex，并增加了一个名为test对shopex数据库有所有操作权限。
+</UL>
+
+</DIV></BODY></HTML>

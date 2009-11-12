@@ -1,0 +1,38 @@
+<DIV CLASS="body" ID="body"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="statics/shopexdev.css">
+<TITLE>ShopEx技术支持手册</TITLE>
+</HEAD>
+<BODY>
+<H3>2.2.4. zend optimizer</H3>
+<P>
+Zend Optimizer最低要求是2.5.7
+</P>
+<P>
+如果php的版本是5.2.x的，必须安装Zend Optimizer 3.2以上的版本，Zend Optimizer可以在下面的地址下载
+</P>
+<P>
+<A HREF="http://www.zend.com/en/products/guard/downloads">http://www.zend.com/en/products/guard/downloads</A>
+</P>
+<P>
+与普通的windows软件的安装差不多，唯一要注意的是，在安装Zend Optimizer时它会要求你指定php.ini的保存目录，因为它要在php.ini中写入这样的字段
+</P>
+<PRE>
+[Zend]
+zend_extension_manager.optimizer_ts="D:\runenv\Zend\lib\Optimizer-3.2.0"
+zend_extension_ts="D:\runenv\Zend\lib\ZendExtensionManager.dll"
+</PRE>
+<P>
+通过以上的描述将Zend Optimizer和php引擎关联起来，所以安装Zend Optimizer的一个要点就是要指定正确的php.ini文件。正确安装Zend Optimizer的话在用phpinfo()查看php信息的话应该如下图所示：  
+</P>
+<P>
+<IMG ALIGN="middle" SRC="img/install/windows/zend/9.jpg" BORDER="0" ALT="">
+</P>
+<P>
+其中的“Configuration File (php.ini) Path ”根据每个人php的安装路径不同而不同。
+</P>
+<HR NOSHADE SIZE=5>
+</DIV></BODY></HTML>

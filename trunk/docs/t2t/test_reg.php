@@ -20,9 +20,11 @@
 
 $str = file_get_contents('index.html');
 
-preg_match('/[\s\S]+<BODY>/',$str,$match);
+//preg_match('/[\s\S]+<BODY>/',$str,$match);
+preg_match('/<DIV CLASS="header" ID="header">\s+(.*\s+){4}/',$str,$match);
+			
 //
-var_export($match);
+var_export($match[0]);
 
 		
 

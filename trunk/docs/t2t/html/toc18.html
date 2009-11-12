@@ -1,0 +1,181 @@
+<DIV CLASS="body" ID="body"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="http://txt2tags.sf.net">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="statics/shopexdev.css">
+<TITLE>ShopEx技术支持手册</TITLE>
+</HEAD>
+<BODY>
+<H3>4.1.1. 迁移操作</H3>
+<P>
+迁移操作指的是将当前空间A上的程序，搬到新的空间B上，大致的流程如下
+</P>
+<OL>
+<LI>迁移前准备工作，需要准备好A、B空间上的ftp、mysql、域名解析等帐号信息
+<LI>关闭空间A上的程序，防止迁移期间产生新的数据
+<LI>将空间A上的文件和数据库文件都搬迁到空间B上
+<LI>将数据文件导入B空间的数据库，并且修改软件程序的MySQL连接信息
+<LI>将域名解析到空间B上，并在空间B上绑定好域名，由于域名解析生效需要2～48个小时，这一步也可以提前操作
+<LI>开启程序，检查系统是否正常，数据是否一致
+</OL>
+
+<P>
+首先确保新空间的数据库版本不要低于老数据库版本，最好是版本一致。以免发生乱码的问题。
+</P>
+<P>
+转移目标
+</P>
+<UL>
+<LI>MySQL数据库文件
+<LI>全部文件
+</UL>
+
+<OL>
+<LI>ftp
+<LI>scp
+<LI>wget
+</OL>
+
+<H4>4.1.1.1. 迁移方法</H4>
+<UL>
+<LI>使用迁移脚本
+<P></P>
+使用mig.php做整体迁移，mig.php的使用说明请看 ShopEx专用迁移程序说明
+</UL>
+
+<UL>
+<LI>常规FTP迁移
+<P></P>
+ <OL>
+ <LI>在新空间安装好和当前ShopEx版本一致的系统，并加载和当前系统一致的模版，新空间的“我的模版”中的情况要和老模版的一样
+ <LI>在老空间上传一个系统维护通告保存为index.htm放在根目录，以免产生新的数据造成不必要的麻烦
+ <LI>登录老系统后台备份数据库
+ <LI>下载databack目录中备份好的数据库文件，上传到新空间databack目录中
+ <LI>登录新空间后台执行恢复数据库操作，完毕后，检查商品是否正确，模版是否启用
+ <LI>如果没有问题，转移旧空间的/syssite/home目录到新空间/syssite/home目录
+ </OL>
+</UL>
+
+<UL>
+<LI>文件打包后迁移
+<P></P>
+ <OL>
+ <LI>在旧空间用phpmyadmin导出数据库文件
+ <LI>在新空间用phpmyadmin导入旧空间的导出文件
+ <LI>转移旧空间所有文件到新空间，建议由旧空间商打包，下载，上传，然后让新空间商帮解包打包传输快些
+ <LI>修改新空间上的/include/mall_config.php里的数据库帐号信息和新空间的数据库帐号对应
+ </OL>
+</UL>
+
+<UL>
+<LI>在B服务器上下载A迁移
+<P></P>
+ <OL>
+ <LI>先用br离线备份好网站数据库
+ <LI>用flashfxp登陆网站，右击任意目录，选择“复制”菜单，将标准FTP协议URL复制到剪贴板
+ <LI>在目标服务器上用 wget -mbq xxxx 命令直接将源网站上的文件拉下来，xxx是第二步骤获取到的FTP协议URL
+ <P></P>
+   用wget做整站迁移的的说明看 <A HREF="http://www.zzzforever.com/post/120">这里</A>,下面是一个样例：
+<PRE>
+   wget -mbq  wget -mbq ftp://ooo:xxx@ftp.xxx.com/www/ | echo 'job was done at' $(date)| mail -s 'transfer finished' xuni@shopex.cn 
+</PRE>
+   命令解释：
+ <P></P>
+    <UL>
+    <LI>-m    镜像
+    <LI>-b    后台运行
+    <LI>-q    不回显
+    <P></P>
+    </UL>
+ <LI>整理好文件，改好新的数据库配置文件
+ <LI>用br恢复第一步备份好的数据库文件
+ </OL>
+</UL>
+
+<P>
+文件搬完后发一封邮件到<A HREF="mailto:xuni@shopex.cn">xuni@shopex.cn</A>
+</P>
+<UL>
+<LI>在A服务器上上传B迁移
+<P></P>
+ <OL>
+ <LI>先用br离线备份好网站数据库
+ <LI>用下面的ftp脚本递归上传文件到空间B
+<PRE>
+#!/bin/sh
+ftp -i -in &lt;&lt;!
+open www.xxx.com
+user user password
+ 
+cd /remote/dir
+lcd /local/dir
+mput *
+bye
+!
+</PRE>
+  脚本说明：
+  <UL>
+  <LI>要将<A HREF="http://www.xxx.com">www.xxx.com</A>换成B的ftp地址
+  <LI>要将user password换成B的用户名和密码
+  <LI>/remote/dir要改成B上存放html文件的目录，例如cpanel上典型的是/public_html
+  <LI>/local/dir要改成A上的目录，一般是当前目录.
+  </UL>
+ <LI>整理好文件，改好新的数据库配置文件
+ <LI>用br恢复第一步备份好的数据库文件
+ </OL>
+</UL>
+
+<H4>4.1.1.2. 小技巧</H4>
+<UL>
+<LI>修改本机host文件
+<P></P>
+这个办法应用场景一般有两个：
+<P></P>
+ <OL>
+ <LI>文件和数据库转移到新空间后，dns解析未生效，域名需要过一段时间才能指向新的空间，无法在新空间上操作
+ <LI>域名解析到了新空间，突然发现还需要访问老空间去核对数据
+ </OL>
+</UL>
+
+<P>
+电脑去访问网站的时候，解析域名的步骤是先查本机的hosts文件里是否有解析记录，如果没有在去TCP/IP设置里的主DNS服务器查询，主的查不到，就去副DNS服务器查
+</P>
+<P>
+这种情况下我们可以修改我们计算机上的hosts文件将域名强制解析为我们设定的值。例如我们要将<A HREF="http://www.xxx.com">www.xxx.com</A>解析的ip强制设置为222.92.116.92，其操作方法如下：
+</P>
+ <OL>
+ <LI>在桌面，“开始”-&gt;“运行”处输入
+<PRE>
+notepad %windir%\system32\drivers\etc\hosts
+</PRE>
+然后点击“确定”按钮，或者直接按回车键
+ <P></P>
+ <LI>如果没有意外，那么系统将会打开的hosts文件,这个文件格式为
+<PRE>
+ip 空格 域名
+</PRE>
+域名可以写多个，用空格隔开即可，表示这几个域名都指向同一个ip
+ <P></P>
+ <LI>保存后，某些杀毒软件会告警，选择允许即可
+ </OL>
+
+<P>
+我们可以验证一下我们的效果：
+</P>
+<P>
+打开一个cmd窗口，输入ping <A HREF="http://www.xxx.com">www.xxx.com</A>
+</P>
+<P>
+<IMG ALIGN="middle" SRC="img/service/dailyop/mig/4.png" BORDER="0" ALT="">
+</P>
+<P>
+可以看到我们已经将<A HREF="http://www.xxx.com">www.xxx.com</A>解析的ip强制设置为222.92.116.92了，即使<A HREF="http://www.xxx.com">www.xxx.com</A>不存在。
+</P>
+<P>
+其实<A HREF="http://www.xxx.com">www.xxx.com</A>可以是任意你想的字符，电脑仅仅做简单的key=&gt;value的操作
+</P>
+<P>
+当然这样的设置只是本机有效，其他互联网用户还是以DNS服务器解析的为主
+</P>
+</DIV></BODY></HTML>
