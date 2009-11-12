@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="Window Styles" value="0x800025">
+</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="简介">
+			</OBJECT><LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="安装说明">
+			</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="2.1. Linux">
+					</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="2.1.1. MySQL">
+									<param name="Local" value="html\toc4.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="2.1.2. nginx+fastcgi">
+									<param name="Local" value="html\toc5.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="2.1.3. apache+mod_php">
+									<param name="Local" value="html\toc6.html">
+								</OBJECT></UL><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="2.2. Windows">
+					</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="2.2.1. MySQL">
+									<param name="Local" value="html\toc8.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="2.2.2. iis+isapi">
+									<param name="Local" value="html\toc9.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="2.2.3. apache+mod_php">
+									<param name="Local" value="html\toc10.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="2.2.4. zend optimizer">
+									<param name="Local" value="html\toc11.html">
+								</OBJECT></UL></UL><LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="操作手册">
+			</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="3.1. 程序调试">
+					</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="3.1.1. 源码分析">
+									<param name="Local" value="html\toc14.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="3.1.2. 协议分析">
+									<param name="Local" value="html\toc15.html">
+								</OBJECT></UL></UL><LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="服务手册">
+			</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="4.1. 日常操作">
+					</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="4.1.1. 迁移操作">
+									<param name="Local" value="html\toc18.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="4.1.2. 升级操作">
+									<param name="Local" value="html\toc19.html">
+								</OBJECT><LI> <OBJECT type="text/sitemap">
+									<param name="Name" value="4.1.3. 安装操作">
+									<param name="Local" value="html\toc20.html">
+								</OBJECT></UL></UL><LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="值班手册">
+			</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="5.1. 接听">
+					</OBJECT><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="5.2. 打出">
+					</OBJECT><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="5.3. 客户资料查询">
+					</OBJECT><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="5.4. 方式">
+					</OBJECT></UL><LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="常问问题">
+			</OBJECT><LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="t2t实例">
+			</OBJECT><UL><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="7.1. 表格">
+					</OBJECT><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="7.2. 项目符号">
+					</OBJECT><LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="7.3. 代码引用">
+					</OBJECT></UL></UL>
+</BODY></HTML>
