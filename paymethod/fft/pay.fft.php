@@ -34,7 +34,7 @@ class pay_fft extends paymentPlugin{
 		$aREQ['TOTROW'] = '0';
 		$aREQ['RTNURL'] = $this->callbackUrl;
 		#
-		$message = $this->getMessage($aREQ);			
+		$message = $this->getMessage($aREQ);	
 		#商户MAC
 		$aREQ["SIGN"] = $this->getMAC($message,$merkey);
 
@@ -42,23 +42,32 @@ class pay_fft extends paymentPlugin{
     }
 
     function callback($in,&$paymentId,&$money,&$message,&$tradeno){		
-		//error_log(var_export($in,true),3,dirname(__FILE__)."/../in.log");
+		error_log(var_export($in,true),3,dirname(__FILE__)."/../in.log");
 		$paymentId = substr($in['orderID'],14);			
 		/*
-		*商户代号+订单号+订单金额+订单币种+网银流水号+支付状态编号
+		*VERSION+TXCODE+TXSUBCODE+MERCHANTID+TRANSDATE+TRANSTIME+TRANSFLW+
+		*ORDERID+CURCODE+AMOUNT+FFTFLOW+FFTDATE+STATUS+ANSWERCODE+
+		*“8sfft008wang8w8ch8”
 		*/
-		$aMess['merchantID'] = $in['merchantID'];
-		$aMess['orderID'] = $in['orderID'];
-		$aMess['orderAmount'] = $in['orderAmount'];
-		$aMess['orderCurrencyCode'] = $in['orderCurrencyCode'];
-		$aMess['netBankTraceNo'] = $in['netBankTraceNo'];
-		$aMess['payStatus'] = $in['payStatus'];
+		$aMess['VERSION'] = $in['VERSION'];
+		$aMess['TXCODE'] = $in['TXCODE'];
+		$aMess['TXSUBCODE'] = $in['TXSUBCODE'];
+		$aMess['MERCHANTID'] = $in['MERCHANTID'];
+		$aMess['TRANSDATE'] = $in['TRANSDATE'];
+		$aMess['TRANSFLW'] = $in['TRANSFLW'];
+		$aMess['ORDERID'] = $in['ORDERID'];
+		$aMess['CURCODE'] = $in['CURCODE'];
+		$aMess['AMOUNT'] = $in['AMOUNT'];
+		$aMess['FFTFLOW'] = $in['FFTFLOW'];
+		$aMess['FFTDATE'] = $in['FFTDATE'];
+		$aMess['STATUS'] = $in['STATUS'];
+		$aMess['ANSWERCODE'] = $in['ANSWERCODE'];
 		#
 		$signstr = $this->getMessage($aMess);		
-		$merkey = $this->getConf($paymentId, 'merkey');
+		$fftkey = $this->getConf($paymentId, 'fftkey');
 		//error_log($merkey,3,dirname(__FILE__)."/../merkey.log");
-		$localmac = $this->getMAC($signstr,$merkey);
-		$bankmac = $in['mac']; 
+		$localmac = $this->getMAC($signstr,$fftkey);
+		$bankmac = $in['SIGN']; 
 		#
         if ($bankmac == $localmac){
 			$paystatus = intval($in['payStatus']);
@@ -82,12 +91,17 @@ class pay_fft extends paymentPlugin{
 				'merid'=>array(
 					'label'=>'商户号',
 					'type'=>'string',
-					'helpMsg'=>'由兴业银行分配的商户号'
+					'helpMsg'=>'付费通分配'
 				),
 				'merkey'=>array(
-					'label'=>'密钥',
+					'label'=>'商户密钥',
 					'type'=>'string',
-					'helpMsg'=>'由兴业银行分配的密钥'
+					'helpMsg'=>'付费通分配'
+				), 
+				'fftkey'=>array(
+					'label'=>'付费通密钥',
+					'type'=>'string',
+					'helpMsg'=>'付费通分配'
 				), 
 			);
     }
@@ -96,8 +110,8 @@ class pay_fft extends paymentPlugin{
 			//商户编号+订单号+订单生成日期+订单金额+商户通知类型+订单币种+订单返回的URL+支付方式
 			$message = '';
 			if(is_array($aArr)){
-				unset($aREQ['TOTROW']);
-				unset($aREQ['RTNURL']);
+				unset($aArr['TOTROW']);
+				unset($aArr['RTNURL']);
 				foreach($aArr as $v){
 					$message .= $v;
 				}
@@ -110,6 +124,7 @@ class pay_fft extends paymentPlugin{
 		function getMAC($message,$merkey){
 
 			$message .= $merkey;
+
 			$mac = md5($message);
 
 			return $mac;
