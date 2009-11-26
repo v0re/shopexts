@@ -71,7 +71,7 @@ class doComms implements Runnable {
 	}
 
 	private String sign(String message) {
-		System.out.println("working on: " + message);
+		//System.out.println("working on: " + message);
 		String signMsg = "";
 		try
 		{
