@@ -2,11 +2,11 @@
 <BOCOMB2C>	
 	<ApiURL>https://ebanktest.95559.com.cn/corporbank/NsTrans</ApiURL>
 	<OrderURL>https://pbanktest.95559.com.cn/netpay/MerPayB2C</OrderURL>
-	<EnableLog>true</EnableLog>
-	<LogPath>/data/htdocs/bocomm/java/log</LogPath>
-	<SettlementFilePath>/data/htdocs/bocomm/java/settlement</SettlementFilePath>
-	<MerchantCertFile>/data/htdocs/bocomm/java/cert/301310063009501.PFX</MerchantCertFile>
+	<EnableLog>false</EnableLog>
+	<LogPath>D:\Server\docroot\bocom\ini</LogPath>
+	<SettlementFilePath>D:\Server\docroot\bocom\ini</SettlementFilePath>
+	<MerchantCertFile>D:\Server\docroot\bocom\ini/301310063009501.PFX</MerchantCertFile>
 	<MerchantCertPassword>12345678</MerchantCertPassword>
-	<RootCertFile>/data/htdocs/bocomm/java/cert/test_root.cer</RootCertFile>
+	<RootCertFile>D:\Server\docroot\bocom\ini/test_root.cer</RootCertFile>
 
 </BOCOMB2C>
