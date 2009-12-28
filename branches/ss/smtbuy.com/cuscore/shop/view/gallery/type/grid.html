@@ -1,0 +1,45 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <{if count($products) > 0}>
+  <tr valign="top"> <{foreach from=$products item=product name=goods}>
+    <td  id="pdt-<{$product.goods_id}>" product="<{$product.goods_id}>" width="25%">
+   
+   <div class="items-gallery<{$mask_webslice}>">
+    <div class="goodpic" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:<{$env.thumbnail_pic_width}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>
+     text-align:center;vertical-align: middle;margin:0px auto;'>
+    <a target="_blank" href="<{link ctl="product" act="index" arg0=$product.goods_id}>" style=" margin:0 auto;overflow:hidden;<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> height:<{$env.thumbnail_pic_height}>px;<{/if}>" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:<{$env.thumbnail_pic_width}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>
+     overflow:hidden;text-align:center;vertical-align: middle;margin:0px auto; line-height:<{$env.thumbnail_pic_height}>px;'>
+    <img src="<{$product.thumbnail_pic|gimage:'thumbnail'}>" alt="<{$product.name|escape:html}>" />
+    </a></div>
+      <div class="goodinfo">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="entry-content">
+          <tr>
+            <td colspan="2"><h6 style="text-align:center"><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name|escape:html}>" class="entry-title"><{$product.name|escape:"html"}></a></h6></td>
+          </tr>
+          <tr>
+            <td><{if $product.mktprice && $setting.mktprice}>&nbsp;<{else}>&nbsp;<{/if}></td>
+            <td><ul class="button">
+                <li class="btncmp"><a href="#" onClick="try{show_compare.add_comare_goods('<{$product.goods_id}>','<{$product.image_default|gimage:'thumbnail'}>','<{$product.name|escape:'quotes'}>','<{$product.type_id}>');}catch(e){form.submit();};return false;" class="btncmp" title="商品对比"><{t}>商品对比<{/t}></a></li>
+                <li><a class="viewpic" href="<{link ctl=product act=viewpic arg0=$product.goods_id arg1=def}>" target="_blank"><{t}>查看图片<{/t}></a></li>
+                <{goodsmenu product=$product setting=$setting}>
+              </ul></td>
+          </tr>
+        </table>
+      </div>
+    </div>  
+      
+      </td>
+    <{if !($smarty.foreach.goods.iteration%4)}> </tr>
+  <{if !$smarty.foreach.goods.last}>
+  <tr valign="top"> <{/if}>
+    
+    <{elseif $smarty.foreach.goods.last}>
+    <td colspan="<{math equation='4 - y' y=$smarty.foreach.goods.iteration%4}>">&nbsp;</td>
+  </tr>
+  <{/if}>
+  <{/foreach}>
+  
+  
+  
+  
+  <{/if}>
+</table>

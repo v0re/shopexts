@@ -1,0 +1,1 @@
+.btn-ask{background:url(btn-ask.gif);}

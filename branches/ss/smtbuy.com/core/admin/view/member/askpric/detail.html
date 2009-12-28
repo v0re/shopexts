@@ -1,0 +1,37 @@
+<div class="ActionBar" ask_id="<{$asks.ask_id}>">
+<strong>报价状态操作:</strong>
+
+<input type="button" value="报价" <{if $asks.ask_status==1}> disabled="disabled"<{/if}> onclick="AskMgr.act.run('toShow', this, 1)" />
+
+<input type="button" value="取消" <{if $asks.ask_status==0}> disabled="disabled"<{/if}> onclick="AskMgr.act.run('toShow', this, 0)" />
+</div>
+<table style="width:600px;">
+	<tr>
+		<td width="180px">
+			<div style="text-align:center;width:150px;height:150px;overflow:hidden">
+			<a href="<{$url}>" target="_blank"><img src="<{$goods.thumbnail_pic|gimage:'thumbnail'}>" /></a>
+			</div>
+		</td>
+		<td width="200px">
+			<strong>商品信息 (<{if $is_pub}><{t}>已发布<{/t}><{else}><{t}>未发布<{/t}><{/if}>)：</strong>
+			<div>销售价：<{$goods.price}></div>
+			<div>会员价：<{$mprice}></div>
+		</td>
+		<td width="200px">
+			<strong>会员信息：</strong>
+			<div>用户名：<{$members.uname}></div>
+			<div>会员等级：<{$members.lv_name}></div>
+		</td>
+	</tr>
+</table>
+<script>
+var openHandler={};
+AskMgr = {act:{
+	run:function(method,el, val){
+		var ask_id=$(el).getParent('div[ask_id]').get('ask_id');
+		AskMgr.currentInfo = el.getParent('.infoContent');
+		$(el).setProperty('disabled','disabled');
+		W.page('index.php?ctl=member/askpric&act='+method+'&p[0]='+ask_id,{method:'post',data:{_o:'_',status:val}},el);
+	}
+}};
+</script>

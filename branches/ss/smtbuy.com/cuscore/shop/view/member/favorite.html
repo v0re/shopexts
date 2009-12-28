@@ -1,0 +1,26 @@
+<h1 class="title"><{t}>我的收藏<{/t}></h1>
+<div class="GoodsSearchWrap" id="mbc-my-fav"> <{foreach from=$favorite item=good key=key}>
+  <div class="items-list" product="<{$good.goods_id}>" id="goods_<{$good.goods_id}>">
+    <table width="80%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="goodpic" width="<{$env.thumbnail_pic_width}>"><a style="display:block;<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:<{$env.thumbnail_pic_width}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>" href="<{link ctl="product" act="index" arg0=$good.goods_id}>" title="<{$good.name}>"><img src="<{$good.thumbnail|gimage:'thumbnail'}>"  alt="<{$good.name}>"/></a></td>
+        <td class="goodinfo" width="60%"><h6><a href="<{link ctl="product" act="index" arg0=$good.goods_id}>" title="<{$good.name}>"><{$good.name}></a></h6>
+          <{$good.brief}> </td>
+        <td style=" white-space:nowrap;"><a class="lnk" href="#" onClick="try{show_compare.add_comare_goods('<{$good.goods_id}>','<{$good.image_default|gimage:'thumbnail'}>','<{$good.name}>','<{$good.type_id}>');}catch(e){form.submit();};return false;" title="商品对比"><{t}>商品对比<{/t}></a><br />
+          <a class="lnk"  onClick="doDelFav('<{$good.goods_id}>')"><{t}>删除<{/t}></a>
+		  
+		  </td>
+		  
+      </tr>
+    </table>
+  </div>
+  <{/foreach}> </div>
+<{pager data=$pager}>
+<script>
+  function doDelFav(gid){
+    new Ajax('index.php?member-'+ gid +'-ajaxDelFav.html',{method:'post',update:'',data:'t='+new Date().getTime()}).request();
+    $('goods_'+gid).style.display='none';
+    var cls = gStore.remove('FAV',gid);
+	return false;
+  }
+</script>

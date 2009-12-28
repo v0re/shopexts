@@ -1,0 +1,43 @@
+<div class="ItemsWarp items-text clearfix">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="liststyle ">
+<colgroup class=" textleft"></colgroup>
+<colgroup class="span-3 ColColorGray textright"></colgroup>
+<colgroup class="span-2 ColColorGray textcenter"></colgroup>
+<colgroup class="span-2 ColColorGray textcenter"></colgroup>
+<colgroup class="span-2 ColColorGray textcenter"></colgroup>
+<{if count($products) > 0}>
+<thead>
+  <th><{t}>商品名称<{/t}></th>
+  <th><{t}>查看大图<{/t}></th>
+    <th><{t}>商品对比<{/t}></th>
+    <th><{t}>操作<{/t}></th>
+</thead>
+<tbody>
+<{foreach from=$products item=product}>
+  <tr product="<{$product.goods_id}>" valign="top" class="<{$mask_webslice}>" id="pdt-<{$product.goods_id}>">
+  <td class="textcenter"><a target="_blank" href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name|escape:html}>" class="entry-title"><{$product.name|escape:"html"}><span style="display:none"><img src="<{$product.thumbnail_pic|gimage:'thumbnail'}>"></span></a></td>
+    <td class="textcenter"><a  href="<{link ctl=product act=viewpic arg0=$product.goods_id arg1=def}>" target="_blank" title="查看图片"><{t}>查看大图<{/t}></a></td>
+    <td class="textcenter"><a href="#" onClick="try{show_compare.add_comare_goods('<{$product.goods_id}>','<{$product.image_default|gimage:'thumbnail'}>','<{$product.name|escape:'quotes'}>','<{$product.type_id}>');}catch(e){form.submit();};return false;" class="btncmp" title="商品对比"><{t}>商品对比<{/t}></a></td>
+  <td class="textbutton textcenter">
+
+    <{goodsmenu product=$product setting=$setting}>
+         
+     </td>
+  </tr>
+<{/foreach}>
+</tbody>
+<{/if}>
+</table>
+</div>
+
+<script>
+$ES('.pic a').addEvents({
+
+'mouseover':function(e){
+        this.getElement('span').setStyle('display','block');
+      },
+'mouseout':function(e){
+        this.getElement('span').setStyle('display','none');
+      }
+})
+</script>
