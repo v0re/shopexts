@@ -1,0 +1,33 @@
+<script>
+var simpleEncoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+ 
+function simpleEncode(valueArray,maxValue) {
+
+var chartData = ['s:'];
+  for (var i = 0; i < valueArray.length; i++) {
+    var currentValue = valueArray[i];
+    if (!isNaN(currentValue) && currentValue >= 0) {
+    chartData.push(simpleEncoding.charAt(Math.round((simpleEncoding.length-1) * currentValue / maxValue)));
+    }
+      else {
+      chartData.push('_');
+      }
+  }
+return chartData.join('');
+}
+
+
+var valueArray = new Array(0,1,4,4,6,11,14,17,23,28,33,36,43,59,65);
+var maxValue = 70; 
+var dstr = simpleEncode(valueArray,maxValue);
+
+</script>
+
+<img src="http://chart.apis.google.com/chart?
+chtt=JavaEye%20Cities&
+cht=p3&
+chs=700x350&
+chd=t:23.8471,13.3918,6.8786,5.9093,4.7626,3.0700,2.899,2.7535,1.8240,1.7013&
+chl=Beijing|Shanghai|Guangzhou|Shenzhen|Hangzhou|Chengdu|Nanjing|Wuhan|Xian|Changsha&
+chco=0000FF50"
+/>  
