@@ -1,6 +1,6 @@
 <?php
 
-set_time_limit();
+set_time_limit(0);
 $datafile = 'simplehash.hdb';
 				
 require('simplehash.php');
@@ -8,11 +8,9 @@ require('simplehash.php');
 $hs = new simplehash;
 $hs->workat($datafile);
 
-$key = '12345678901234567890123456789012';
-
 $begin_time = microtime_float();
 
-for($i=0;$i<362272;$i++){
+for($i=0;$i<100;$i++){
 	$log = genItem();
 	$key = genkey($log);
 	$hs->set($key,$log);
