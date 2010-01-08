@@ -60,7 +60,10 @@ if(!class_exists('simplehash')){
             $size = strlen($data);
             $dataoffset = $this->alloc($size);
             fseek($this->hs,$dataoffset);
+			flock($this->hs,LOCK_EX);
             fputs($this->hs,$data);
+			flock($this->hs,LOCK_UN);
+			#ftruncate($this->hs,$len + $dataoffset);
 
             //get subhome
             fseek($this->hs,$base = hexdec(substr($key,0,3))*4+$this->beginOffset);
@@ -70,15 +73,22 @@ if(!class_exists('simplehash')){
             //getsize
             $offset = $this->alloc($this->hdsize);
             fseek($this->hs,$offset);
+			flock($this->hs,LOCK_EX);
             fputs($this->hs,$str = pack('V1V1V1V1H*',0,$subhome,$dataoffset,$size,$key));
+			flock($this->hs,LOCK_UN);
 
             if($subhome>0){
                 fseek($this->hs,$subhome);
-                fputs($this->hs,pack('V',$offset));
-            }else{
+                flock($this->hs,LOCK_EX);
+				fputs($this->hs,pack('V',$offset));
+				flock($this->hs,LOCK_UN);
+			}else{
                 fseek($this->hs,$base);
+				flock($this->hs,LOCK_EX);
                 fputs($this->hs,pack('V',$offset));
-            }
+				flock($this->hs,LOCK_UN);
+				
+            }		
 
         }
 
@@ -102,12 +112,8 @@ if(!class_exists('simplehash')){
         function alloc($size){
             fseek($this->hs,0,SEEK_END);
             $offset = ftell($this->hs);
-            if($this->maxSize < $offset+$size){
-                echo 'max';
-                exit;
-            }else{
-                return $offset;
-            }
+            return $offset;
+            
         }
 
         function dump(){
