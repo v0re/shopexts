@@ -15,15 +15,16 @@ closedir($dh);
 
 require "sestore.php";
 
-
 $sdb = new sestore;
+
+echo "test add table\n";
 
 $table = array(
 	'log'=>array(
-		array('id',INT),
-		array('type',CHAR),
-		array('user',CHAR),
-		array('source',CHAR),
+		array('id',INT,PRIMARY),
+		array('type',CHAR,INDEX),
+		array('user',CHAR,INDEX),
+		array('source',CHAR,INDEX),
 		array('event',TEXT),
 	),
 );
@@ -32,27 +33,55 @@ if(!$sdb->hastable('log')){
 	$sdb->newtable($table);
 }
 
-echo "test writing\n";
+$table = array(
+	'user'=>array(
+		array('id',INT,PRIMARY),
+		array('name',CHAR,INDEX),
+		array('password',CHAR,INDEX),
+		array('gander',CHAR,INDEX),
+		array('desc',TEXT),
+	),
+);
 
-for($i=1;$i<=100000;$i++){
-	$log = array(
-	'id'=>$i,
-	'type'=>'sys',
-	'user'=>'kickout',
-	'source'=>'127.0.0.1',
-	'event'=>'what a fucking day',
+if(!$sdb->hastable('user')){
+	$sdb->newtable($table);
+}
+
+#测试一个表存在的情况，应该返回一个false
+
+var_export($sdb->newtable($table));
+
+echo "\ntest writing\n";
+
+#数据必须是数组，并且要求字段名做键名，数据的单元的位置没有要求，'id'=>1这样单元放数组最后也没有关系
+$length = 10000;
+for($i=1;$i<=$length;$i++){
+	$entry = array(
+		'type'=>'sys',
+		'user'=>'index.php',
+		'source'=>'127.0.0.1',
+		'event'=>'可是在我心里头忍不住爱上她的体贴温柔',
+		'id'=>$i,
 	);
-	
-	#$sdb->store($log);
-}
 
-echo "test reading\n";
-
-for($i=1;$i<=100;$i+=10){
-	$data = $sdb->fetch($i);
-	var_export($data);
-	echo "\n";
+	#表名，数据
+	$sdb->store('log',$entry);
 }
 
 
-echo "<hr>do to here!";
+echo "\ntest reading\n";
+
+for($i=1;$i<=10;$i++){
+	$id =rand(1,$length);
+	echo "we are going to fetch $id\n";
+	$ret = $sdb->fetch($id);
+	if($ret['id'] != $id){
+		echo "test fail:\n";
+		var_export($ret);
+		exit();
+	}
+	echo "ok \n";
+}
+
+echo "\ndone";
+
