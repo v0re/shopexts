@@ -6,7 +6,7 @@
  * @license MIT
  */
 if(!defined('SECACHE_SIZE')){
-    define('SECACHE_SIZE','512M');
+    define('SECACHE_SIZE','10M');
 }
 class secache{
 
@@ -311,37 +311,7 @@ class secache{
     function _format($truncate=false){
         if($this->lock(true,true)){
 
-            if($truncate){
-                $this->_seek(0);
-                ftruncate($this->_rs,$this->idx_node_base);
-            }
-
-            $this->max_size = $this->_parse_str_size(SECACHE_SIZE,15728640); //default:15m
-            $this->_puts($this->header_padding,pack('V1a*',$this->max_size,$this->ver));
-
-            ksort($this->_bsize_list);
-            $ds_offset = $this->data_base_pos;
-            $i=0;
-            foreach($this->_bsize_list as $size=>$count){
-
-                //将预分配的空间注册到free链表里
-                $count *= min(3,floor($this->max_size/10485760));
-                $next_free_node = 0;
-                for($j=0;$j<$count;$j++){
-                    $this->_puts($ds_offset,pack('V',$next_free_node));
-                    $next_free_node = $ds_offset;
-                    $ds_offset+=intval($size);
-                }
-
-                $code = pack(str_repeat('V1',count($this->schema_struct)),$size,$next_free_node,0,0,0,0);
-
-                $this->_puts(60+$i*$this->schema_item_size,$code);
-                $i++;
-            }
-            $this->_set_dcur_pos($ds_offset);
-
-            $this->_puts($this->idx_base_pos,str_repeat("\0",262144));
-            $this->_puts($this->idx_seq_pos,pack('V',1));
+            
             $this->unlock();
             return true;
         }else{
