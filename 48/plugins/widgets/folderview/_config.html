@@ -1,34 +1,23 @@
-<div id="ad">
+<div>
 <div class="tableform">
 <div style="margin: -5px 0pt 0pt;" class="division widgetconfig">
+<{if $data.files }>
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
-  <tbody><tr>
-    <th>广告尺寸：</th>
-    <td>宽
-  <input type="text" name="ad_pic_width" value="<{$setting.ad_pic_width}>" style="width:40px">px 高<input type="text" name="ad_pic_height" style="width:40px" value="<{$setting.ad_pic_height}>">px
-	</td>
-  </tr>
-  <tr>
-    <th>图片：</th>
-    <td>  <input type="text" name="ad_pic" id="ad_pic" value="<{$setting.ad_pic}>"  class="_x_ipt" vtype="required"> <span class='sysiconBtn addorder' onclick="addPic()">添加图片</span>
-</td>
-  </tr>
-  <tr>
-    <th>图片链接：</th>
-    <td><input type="text" name="ad_pic_link" value="<{$setting.ad_pic_link}>"></td>
-  </tr>
-</tbody></table>
+	<tr>
+		<th >序号</th><th>文件名</th><th>显示文件名</th>
+	</tr>
+    <tbody>
+        <{foreach from=$data.files item=item  key=key}>
+        <tr>
+        <td width="5%"><{$key}></td>
+        <td width="40%"><{$item.name}></td>
+        <td width="55%"><input type="text" size=60 name="alias[<{$item.name}>]" value="<{$item.alias}>"></td>
+        </tr>
+        <{/foreach}>
+	</tbody>
+</table>
+<{/if}>
 </div>
 </div>
 </div>
-<script>
-		function addPic(){
-			return new Dialog('index.php?ctl=editor&act=image&p[0]=0',{title:'插入<img>',onShow:function(){
-			var dialog=this;
-			this.dialog.store('callback',function(src){
-              $('ad_pic').value=src;
-              dialog.close();
-           });
-        }});
-		}
-</script>
+ 
