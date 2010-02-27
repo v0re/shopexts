@@ -1,22 +1,12 @@
 <div>
 <div class="tableform">
 <div style="margin: -5px 0pt 0pt;" class="division widgetconfig">
-<{if $data.files }>
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
-	<tr>
-		<th >序号</th><th>文件名</th><th>显示文件名</th>
-	</tr>
-    <tbody>
-        <{foreach from=$data.files item=item  key=key}>
-        <tr>
-        <td width="5%"><{$key}></td>
-        <td width="40%"><{$item.name}></td>
-        <td width="55%"><input type="text" size=60 name="alias[<{$item.name}>]" value="<{$item.alias}>"></td>
-        </tr>
-        <{/foreach}>
-	</tbody>
+  <tr>
+    <th>通知内容</th>
+    <td ><textarea rows="7" cols="30" name="content"><{$setting.content|escape:"html"}></textarea></td>
+    </tr>
 </table>
-<{/if}>
 </div>
 </div>
 </div>
