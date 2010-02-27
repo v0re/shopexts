@@ -1,7 +1,20 @@
-<div class="AdvBanner">
-<{if $data.ad_pic}>
-<a href="<{$data.ad_pic_link}>" target="_blank">
-	<img src='<{$data.ad_pic}>' style="<{if $data.ad_pic_width}>width:<{$data.ad_pic_width}>px;<{/if}><{if $data.ad_pic_height}>height:<{$data.ad_pic_height}>px;<{/if}>"/>
-</a>
+<style type=text/css>
+.fv table{
+	border-collapse:collapse;   
+}
+.fv td{
+	background:#ffc;
+	border:solid 1px #f90;
+	height:22px;
+}
+</style>
+<div class="fv">
+<{if $data.files}>
+	<table>
+	<tr><td>序号</td><td>文件名</td><td>更新时间</td></tr>
+	<{foreach from=$data.files item=item key=key}>
+		<tr><td><{$key}></td><td><a href=<{$item.url}>><{$item.alias}></a></td><td><{$item.lastmodify}></td></tr>
+	<{/foreach}>
+	</table>
 <{/if}>
 </div>
