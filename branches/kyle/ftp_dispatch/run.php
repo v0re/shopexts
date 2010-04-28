@@ -9,7 +9,7 @@ foreach($a_conf as $site_name=>$conf){
 	$instance->set_url($url);
 	$instance->run();
 	echo $footer = str_repeat('-',10)."End";
-	echo str_repeat('-',strlen($header)-strlen($footer))."\n";
+	echo str_repeat('-',strlen($header)-strlen($footer))."\n\n";
 }
 
 class ftp_dispatch{
@@ -22,8 +22,9 @@ class ftp_dispatch{
 		self::$url = $url;
 		self::$deport = "deport";
 		#wput命令会自动判断要上传的文件是否发生了变动
-		self::$uploader = "bin\wput.exe -B ";
+		self::$uploader = "..\bin\wput.exe -B ";
 		set_time_limit(0);
+		chdir(self::$deport);
 	}
 	
 	function set_url($url){		
@@ -34,9 +35,8 @@ class ftp_dispatch{
 		self::dispatch();
 	}
 	
-	function dispatch(){
-		chdir(self::$deport);
-		$cmd = "..\\".self::$uploader." . ".self::$url;
+	function dispatch(){		
+		$cmd = self::$uploader." . ".self::$url;
 		system($cmd);
 	}	
 }
