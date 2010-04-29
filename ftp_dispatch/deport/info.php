@@ -12,17 +12,26 @@ if($path_info = svinfo::get_path_info()){
 
 
 class tester{
+	static $result = array();
+	
+	function __destruct(){
+		echo "<table border=1>";
+		echo "<tr><td>Item</td><td>Expected</td><td>Result</td><td>Test</td></tr>";
+		if(count(self::$result))
+			foreach(self::$result as $name=>$item){
+				$test = $item['expected'] == $item['result'] ? 'pass' : 'fail';
+				echo "<tr><td>".$name."</td><td>".$item['expected']."</td><td>".$item['result']."</td><td>".$test."</td></tr>";
+			}
+		echo "</table>";
+	}
     
     function test_path_info(){
         $url  = $_SERVER['HTTP_HOST'].'/'.$_SERVER['PHP_SELF'];
         $path = '/test/path/info'; 
         $url = $url.$path;
         $ret = $this->http_get($url);
-        if($ret == $path){
-            echo 'pass';
-        }else{
-            echo 'fail';
-        }
+        self::$result['test_path_info']['expected'] = $path;
+        self::$result['test_path_info']['result'] = $ret;
     }
     
     function http_get($url){
