@@ -1,7 +1,0 @@
-#!/bin/sh
-
-CLASSPATH=.:/usr/local/java/jdk1.6.0_10/lib/tools.jar:/usr/local/java/jdk1.6.0_10/lib/crypt.jar:/usr/local/java/jdk1.6.0_10/lib/cmbjava.zip
-JAVA_HOME=/usr/local/java/jdk1.6.0_10
-PATH=/usr/local/java/apache-ant-1.6.5/bin:/usr/local/java/jdk1.6.0_10/bin:/usr/local/java/apache-ant-1.6.5/bin:/usr/local/java/jdk1.6.0_10/bin:/usr/local/java/apache-ant-1.6.5/bin:/usr/local/java/jdk1.6.0_10/bin:/usr/local/java/apache-ant-1.6.5/bin:/usr/local/java/jdk1.6.0_10/bin:/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/root/bin:/root/bin:/root/bin
-
-/bin/java -classpath .:lib/bocommapi1.2.1.jar:lib/bocomm-netsign1.8.jar:lib/ISFJ_v2_0_119_2_BAISC_JDK14.jar  bocomm_sign $1 $2
