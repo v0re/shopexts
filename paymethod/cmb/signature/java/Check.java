@@ -4,14 +4,9 @@ class Check
 	{
 		try{
 			String str = args[0];
-			cmb.netpayment.Security p = new cmb.netpayment.Security("./public.key");
-		//	System.out.println(str);
+			String certfile = args[1];
+			cmb.netpayment.Security p = new cmb.netpayment.Security(certfile);
 			byte[] sig = str.getBytes();
-			for(int i = 0 ; i < sig.length ; i++)
-			{
-//				System.out.println(sig[i]);
-			}
-			//System.out.println(sig);
 			System.out.println(p.checkInfoFromBank(sig));
 		}catch(Exception e)
 		{
