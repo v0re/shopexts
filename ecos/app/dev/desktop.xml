@@ -1,0 +1,7 @@
+<desktop>
+
+	<workground controller="shell">
+		<name>命令行模拟器</name>
+	</workground>
+
+</desktop>
