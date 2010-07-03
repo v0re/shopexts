@@ -12,6 +12,6 @@ $mend = $modulus_16->toString();
 
 echo "now we going to eccrypt $text \n";
 $encrypted = rsa_encrypt($text, $public, $mend, $keylength);
-#echo bin2hex($encrypted); //这里也可以用Base64，QQ就是Base64
+echo bin2hex($encrypted); 
 echo "\n";
 
