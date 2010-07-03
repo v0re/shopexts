@@ -10,8 +10,9 @@ $keylength = 1024;
 $modulus_16 = new Math_BigInteger($modulus,16);
 $mend = $modulus_16->toString();
 
-echo "now we going to eccrypt $text \n";
+echo "now we are going to eccrypt ' $text '\n";
 $encrypted = rsa_encrypt($text, $public, $mend, $keylength);
 echo bin2hex($encrypted); 
 echo "\n";
-
+echo "now wo are going to decrypt it";
+$decrypted = rsa_decrypt();
