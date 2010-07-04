@@ -1,16 +1,17 @@
 <?php
 
+$m = 244;
 $p = 47;
 $q = 59;
+#start calculating
 $n = $p * $q; #modulus
 $t = ($p - 1) * ($q -1 );
 $e = 63; #public key
-#find the private key $d ,we use Euclidean algorithm to make it see detail in 
+#find the private key $d ,we use Euclidean algorithm to make it. see detail in 
 #http://blog.csdn.net/xuanshayuan/archive/2008/03/14/2181807.aspx
 for($d=2;$d<$t;$d++){
 	if (bcmod($d  * $e, $t) == 1) break;
 }
-$m = 244;
 print "modulus n = $n\n";
 print "public key e = $e\n";
 print "private key d = $d\n";
