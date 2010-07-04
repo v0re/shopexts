@@ -121,7 +121,9 @@ $rsa_obj->setParams($params);
 
 $text = '1234567890';
 $enc_text = $rsa_obj->encrypt($text);
+var_dump($enc_text);
 $text1 = $rsa_obj->decrypt($enc_text);
+var_dump($text1);
 
 if ($text != $text1) {
     $errors[] = "error in encrypting/decrypting functions";
