@@ -27,6 +27,70 @@
 #include "ext/standard/info.h"
 #include "php_datasafe.h"
 
+/* PHP Includes */
+#include "ext/standard/file.h"
+#include "ext/standard/info.h"
+#include "ext/standard/php_fopen_wrappers.h"
+#include "ext/standard/md5.h"
+#include "ext/standard/base64.h"
+
+/* OpenSSL includes */
+#include <openssl/evp.h>
+#include <openssl/x509.h>
+#include <openssl/x509v3.h>
+#include <openssl/crypto.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
+#include <openssl/conf.h>
+#include <openssl/rand.h>
+#include <openssl/ssl.h>
+#include <openssl/pkcs12.h>
+
+/* Common */
+#include <time.h>
+#ifdef NETWARE
+#define timezone _timezone  /* timezone is called _timezone in LibC */
+#endif
+
+#define DEFAULT_KEY_LENGTH  512
+#define MIN_KEY_LENGTH      384
+
+#define OPENSSL_ALGO_SHA1   1
+#define OPENSSL_ALGO_MD5    2
+#define OPENSSL_ALGO_MD4    3
+#ifdef HAVE_OPENSSL_MD2_H
+#define OPENSSL_ALGO_MD2    4
+#endif
+#define OPENSSL_ALGO_DSS1   5
+
+#define DEBUG_SMIME 0
+
+/* FIXME: Use the openssl constants instead of
+ * enum. It is now impossible to match real values
+ * against php constants. Also sorry to break the
+ * enum principles here, BC...
+ */
+enum php_openssl_key_type {
+    OPENSSL_KEYTYPE_RSA,
+    OPENSSL_KEYTYPE_DSA,
+    OPENSSL_KEYTYPE_DH,
+    OPENSSL_KEYTYPE_DEFAULT = OPENSSL_KEYTYPE_RSA,
+#ifdef EVP_PKEY_EC
+    OPENSSL_KEYTYPE_EC = OPENSSL_KEYTYPE_DH +1
+#endif
+};
+
+enum php_openssl_cipher_type {
+    PHP_OPENSSL_CIPHER_RC2_40,
+    PHP_OPENSSL_CIPHER_RC2_128,
+    PHP_OPENSSL_CIPHER_RC2_64,
+    PHP_OPENSSL_CIPHER_DES,
+    PHP_OPENSSL_CIPHER_3DES,
+
+    PHP_OPENSSL_CIPHER_DEFAULT = PHP_OPENSSL_CIPHER_RC2_40
+};
+
+
 /* If you declare any globals in php_datasafe.h uncomment this:
 ZEND_DECLARE_MODULE_GLOBALS(datasafe)
 */
