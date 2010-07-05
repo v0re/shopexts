@@ -177,6 +177,9 @@ PHP_FUNCTION(shopex_data_encrypt)
 		return;
 	}
 	
+	php_printf("%s","in there");
+
+
 	RETURN_STRING(arg, arg_len);
 }
 
