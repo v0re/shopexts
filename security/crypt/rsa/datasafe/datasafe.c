@@ -177,10 +177,9 @@ PHP_FUNCTION(shopex_data_encrypt)
 		return;
 	}
 	
-	php_printf("%s","in there");
+	strg = php_base64_encode(arg,arg_len,&len);
 
-
-	RETURN_STRING(arg, arg_len);
+	RETURN_STRING(strg, len);
 }
 
 PHP_FUNCTION(shopex_data_decrypt)
@@ -193,7 +192,9 @@ PHP_FUNCTION(shopex_data_decrypt)
 		return;
 	}
 	
-	RETURN_STRING(arg, arg_len);
+	strg = php_base64_decode(arg,arg_len,&len);
+
+	RETURN_STRING(strg, len);
 }
 
 /* }}} */
