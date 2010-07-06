@@ -243,7 +243,7 @@ PHP_FUNCTION(shopex_data_encrypt)
     char * data;
     int data_len;
 
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "szZ|l", &data, &data_len, &crypted, &key, &padding) == FAILURE)
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "szZ", &data, &data_len, &crypted, &key) == FAILURE)
         return;
 
     pkey = php_openssl_evp_from_zval(key, 1, NULL, 0, &keyresource TSRMLS_CC);
@@ -283,7 +283,7 @@ PHP_FUNCTION(shopex_data_encrypt)
         efree(cryptedbuf);
     }   
 
-	RETURN_STRING(strg, len);
+	/*RETURN_STRING(strg, len);*/
 }
 
 PHP_FUNCTION(shopex_data_decrypt)
