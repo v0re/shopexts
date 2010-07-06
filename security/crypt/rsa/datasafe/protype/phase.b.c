@@ -14,6 +14,7 @@
 #define nn  "6D482F87C9151DA203A2785CE57DD4547AB5F5B79842519DB0A5A8A6C6A2E613734346713B08EC0297797466660859A2F6F92D96E5B1031EDF54FBD4A46606321EC15B9A90FC32E42970752041DAE30252916DDC21BB18B85B6CF5F8316207A0566F8262BABE02D301C8EE3707BCC22861B6947552A59FF139716DA8B9859571"
 #define ee "10001"
 #define dd "6C027AA7D440C0870EDC97E60914B2B5C48AEF8F4437D7FEE946F247D3EFD142CC1B641629E9098B0E3786AA66923E35E9B02235105441E75388E556281E8663DC7D52A0767DA462B0A7EE4AC8D7CB2DF74D007CE490D91418E37A0E31CD8136A1E091375DBFCD33F369C601897ECF01DA089D4235D8006878B06A5ED86304B9"
+#define SetKey
  
 uchar rconv(uchar a) 
 {
@@ -63,6 +64,7 @@ int main()
      unsigned char *e,*d,*n;
      int ret,flen;
      RSA *rsa;      
+     /*
      BIGNUM *bnn, *bne, *bnd;
       rsa= RSA_new();
       bnn = BN_new();
@@ -71,9 +73,13 @@ int main()
       BN_hex2bn(&bnn, nn);
       BN_hex2bn(&bne, ee);
       BN_hex2bn(&bnd, dd);
-       rsa->n= bnn;
+      rsa->n= bnn;
       rsa->e= bne;
       rsa->d= bnd;
+      */
+		rsa->n = BN_bin2bn(nn,sizeof(nn),rsa->nn);
+		rsa->e = BN_bin2bn(ee,sizeof(ee),rsa->ee);
+      
  RSA_print_fp(stdout,rsa,11);
  if((e=malloc(MAX))==NULL)
    {
