@@ -1,3 +1,6 @@
+/*
+*gcc openssl_rsa.c -o openssl_rsa -lcrypto
+*/
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include<openssl/evp.h>
@@ -23,12 +26,7 @@ void  main(){
 	char encData[512];
 	char decData[512];
 	OpenSSL_add_all_ciphers();
-	len=EVP_PKEY_encrypt(
-		(unsigned char *)encData,
-		(const unsigned char *)plainText,
-		sizeof(plainText),
-		pkey1
-	);
+	len=EVP_PKEY_encrypt((unsigned char *)encData,(const unsigned char *)plainText,sizeof(plainText),	pkey1);
 	if(len==-1){
 		printf("EVP_PKEY_encrypt failed\n");
 		exit(-1);
