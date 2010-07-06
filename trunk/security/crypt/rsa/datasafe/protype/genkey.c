@@ -1,9 +1,9 @@
 /*
 Simple RSA Key generator. Saves keys in PEM format.
 Coded by Paolo Ardoino - <paolo.ardoino@gmail.com>
-Compile: gcc -lssl keygen.c -o keygen
+Compile: gcc -lssl genkey.c -o genkey
 Usage: ./keygen <numbits>
-Ex. ./keygen 1024
+Ex. ./genkey 1024
 */
 
 #include <stdio.h>
