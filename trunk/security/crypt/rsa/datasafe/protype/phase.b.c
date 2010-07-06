@@ -2,8 +2,13 @@
 * gcc -lcrypto phase.b.c -o phase.b
 */
 
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
+#include <openssl/rsa.h>
 #define MAX 1024
 #define uchar unsigned char
 #define nn  "6D482F87C9151DA203A2785CE57DD4547AB5F5B79842519DB0A5A8A6C6A2E613734346713B08EC0297797466660859A2F6F92D96E5B1031EDF54FBD4A46606321EC15B9A90FC32E42970752041DAE30252916DDC21BB18B85B6CF5F8316207A0566F8262BABE02D301C8EE3707BCC22861B6947552A59FF139716DA8B9859571"
