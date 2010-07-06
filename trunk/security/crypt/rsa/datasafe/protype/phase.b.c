@@ -54,7 +54,7 @@ void print(uchar *str,int len)
  int i;
  for(i=0;i<len;i++)
   printf("%02x ",str[i]);
- printf("\\n");
+ printf("\n");
 }
 int main()
 {
@@ -115,7 +115,7 @@ int main()
    RSA_print_fp(stdout,rsa,11);
    if(ret!=1)
    {
-         printf("RSA_generate_key_ex err!\\n");
+         printf("RSA_generate_key_ex err!\n");
          return -1;
    }
 */
@@ -138,41 +138,41 @@ int main()
  chartohex("b4bce427be03e66a735a589ab04c52c4d6f1e115",40,data);
 
  /*==================== encrypt =====================*/ 
- printf("Begin encrypt...\\n");
+ printf("Begin encrypt...\n");
  flen = RSA_size(rsa);
  ret = RSA_public_encrypt(flen, data, ciphertext, rsa, RSA_NO_PADDING);
  if (ret < 0)
      {
-         printf("Encrypt failed!\\n");
+         printf("Encrypt failed!\n");
          exit(1);
      }
-        printf("Size:%d\\n", ret);
-     printf("data:\\n");
+        printf("Size:%d\n", ret);
+     printf("data:\n");
  print(data,20);
- printf("\\n");
-     printf("CipherText(Hex):\\n");
+ printf("\n");
+     printf("CipherText(Hex):\n");
  print(ciphertext,ret);
-        printf("\\n");
+        printf("\n");
 
  /*==================== decrypt =====================*/
- printf("Begin decrypt...\\n");
+ printf("Begin decrypt...\n");
       ret = RSA_private_decrypt(flen, ciphertext, cleartext, rsa, RSA_NO_PADDING);
      if (ret < 0)
      {
-         printf("Decrypt failed!\\n");
+         printf("Decrypt failed!\n");
          exit(1);
      }
-         printf("Size:%d\\n", ret);
-     printf("ClearText:\\n");
+         printf("Size:%d\n", ret);
+     printf("ClearText:\n");
  print(cleartext,20);
- printf("\\n");
+ printf("\n");
  /*==================== verify =====================*/
  if(memcmp(data,cleartext,20))
    {
-         printf("err!\\n");
+         printf("err!\n");
          return -1;
    }
-   printf("test ok!\\n");
+   printf("test ok!\n");
  return 0;
 }
  
