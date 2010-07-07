@@ -51,8 +51,13 @@ main(){
 	char *text = "ken";
 	char buf[1024],*p;
 	char de_buf[1024],*de_p;
-	int len,de_len;
+	int i,len,de_len;
 	
+	for(i=0;i<strlen(text);i++){
+		printf("%2x",text[i]);
+	}
+	printf("\n");
+		
 	p = buf;
 	base64_encode(text,strlen(text),p,&len);
 	printf("%d,%s\n",len,buf);
