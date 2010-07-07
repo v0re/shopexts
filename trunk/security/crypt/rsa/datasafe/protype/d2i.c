@@ -41,7 +41,7 @@ main(){
 	unsigned char buf[2048],*p;
 	
 	p=buf;
-	base64_decode(pem_key_str,(long)strlen(pem_key_str),p);
+	base64_decode(pem_key_str,strlen(pem_key_str),&p);
 	
 	/*
 	p=buf;
