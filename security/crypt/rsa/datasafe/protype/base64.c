@@ -11,6 +11,7 @@ void base64_encode(unsigned char *input, int length,char *output, int *output_le
 	BIO *bmem, *b64;
 	BUF_MEM *bptr;
 	char *buff;	
+	
 	b64 = BIO_new(BIO_f_base64());
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 	bmem = BIO_new(BIO_s_mem());
@@ -38,8 +39,10 @@ void  base64_decode(unsigned char *input, int length,char *output, int *output_l
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 	bmem = BIO_new_mem_buf(input, length);
 	bmem = BIO_push(b64, bmem);
-	len = BIO_read(bmem, output, max_len);
-
+	
+	buffer = (char *)malloc(max_len);
+	len = BIO_read(bmem, buffer, max_len);
+	memcpy(output,buffer,len);
 	*output_len = len;
 	
 	BIO_free_all(bmem);
