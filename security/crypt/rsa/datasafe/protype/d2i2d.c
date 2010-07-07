@@ -28,9 +28,12 @@ int main(int argc, char *argv[])
  		fprintf(stderr,"Error: Problems while generating RSA Key.\nRetry.\n");
  		exit(-1);
  	}
+ 	RSA_print_fp(stdout,rsa,11);
  	
+ 	/*
  	ret = i2d_RSAPublicKey(key,&buf);
 
 	printf("%d",ret);
+	*/
  	return 0;
 }
