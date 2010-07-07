@@ -53,10 +53,10 @@ RSA* readpemkeys(int type)
   return key;
 }
 
-RSA *shopex_gen_public_key(){
+EVP_PKEY  *shopex_gen_public_key(){
 	char *pubkey = "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALagXIxAJkQ7XDnBsWlIXVc8/mrKYN87D2yOdZq9j7B8b1IZEXnobrn9\nnR9NdxSmEfQkYXG3TaTjD5k2BErEOicY7TvoXk3ReQmYv7Milz8mz/f+/eqQq/gK\nKi6VY17lyyF4ZAPcAusdcXYPRWoUerC6KiC33r+9W90eCX0HVrDHAgED\n-----END RSA PUBLIC KEY-----";
 	
-	RSA *pubkey_rsa;
+	EVP_PKEY *pubkey_rsa;
 	BIO  *in;
 	
 	in = BIO_new_mem_buf(pubkey, strlen(pubkey));	
@@ -66,13 +66,16 @@ RSA *shopex_gen_public_key(){
 }
 
 void test_shopex_gen_public_key(){
-	RSA *pubkey_rsa;
+	EVP_PKEY *pubkey_rsa;
 	int ks;
+	RSA *rsa;
 	
 	pubkey_rsa = shopex_gen_public_key();
-	ks = RSA_size(pubkey_rsa);
+	
+	rsa = pubkey_rsa->pkey.rsa;
+	ks = RSA_size(rsa);
 	printf("%d",ks);
-	RSA_print_fp(stdout,pubkey_rsa,11);
+	RSA_print_fp(stdout,rsa,11);
 }
 
 RSA *shopex_gen_private_key(){
