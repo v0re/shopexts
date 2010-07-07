@@ -40,9 +40,8 @@ void  base64_decode(unsigned char *input, int length,char *output, int *output_l
 	bmem = BIO_new_mem_buf(input, length);
 	bmem = BIO_push(b64, bmem);
 	
-	buffer = (char *)malloc(max_len);
-	len = BIO_read(bmem, buffer, max_len);
-	memcpy(output,buffer,len);
+	len = BIO_read(bmem, output, max_len);
+	output[len] = 0;
 	*output_len = len;
 	
 	BIO_free_all(bmem);
