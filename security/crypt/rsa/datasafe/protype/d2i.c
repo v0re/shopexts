@@ -20,10 +20,10 @@ void  base64_decode(unsigned char *input, int length,char **output, int *output_
 	
 	b64 = BIO_new(BIO_f_base64());
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
-	bmem = BIO_new_mem_buf((char *)input, length);
+	bmem = BIO_new_mem_buf(input, length);
 	bmem = BIO_push(b64, bmem);
-	len = BIO_read(bmem, buffer, length);
-	
+	len = BIO_read(bmem, buffer, max_len);
+	printf("%d",len);
 	memcpy(output, buffer, len);
 	output_len = len;
 	
