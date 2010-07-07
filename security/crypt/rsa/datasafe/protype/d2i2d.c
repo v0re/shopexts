@@ -28,12 +28,13 @@ int main(int argc, char *argv[])
  		fprintf(stderr,"Error: Problems while generating RSA Key.\nRetry.\n");
  		exit(-1);
  	}
- 	RSA_print_fp(stdout,rsa,11);
+ 	//RSA_print_fp(stdout,key,11);
+ 
+	buf = (unsigned char *)malloc(2048 * sizeof(unsigned char));
  	
- 	/*
  	ret = i2d_RSAPublicKey(key,&buf);
 
-	printf("%d",ret);
-	*/
+	printf("%s",buf);
+
  	return 0;
 }

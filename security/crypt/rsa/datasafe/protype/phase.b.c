@@ -60,11 +60,11 @@ void print(uchar *str,int len)
 int main()
 {
 /*================== make a RSA structure （no p,q） ==================*/
-     unsigned char *cleartext,*data,*ciphertext;
+/*     unsigned char *cleartext,*data,*ciphertext;
      unsigned char *e,*d,*n;
      int ret,flen;
      RSA *rsa;      
-     /*
+     
      BIGNUM *bnn, *bne, *bnd;
       rsa= RSA_new();
       bnn = BN_new();
@@ -76,7 +76,7 @@ int main()
       rsa->n= bnn;
       rsa->e= bne;
       rsa->d= bnd;
-      */
+      
 		rsa->n = BN_bin2bn(nn,sizeof(nn),rsa->nn);
 		rsa->e = BN_bin2bn(ee,sizeof(ee),rsa->ee);
       
@@ -96,16 +96,16 @@ int main()
          printf("Not enough memory to allocate buffer5");
          exit(1);
    }
- 
+ */
 
 /*================== gen key （method 1） ==================*/
-/*
+
      unsigned char *cleartext,*data,*ciphertext;
      int flen,ret;
      RSA *rsa;
  int bits=1024; 
  rsa=RSA_generate_key(bits,65537,NULL,NULL);
-*/
+
 
 /*================== gen key（method 2） ==================*/
 /*
