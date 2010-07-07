@@ -8,6 +8,49 @@
 #include <string.h>
 #include <openssl/bio.h>
 
+#define SECFILE "sec.pem"
+#define PUBFILE "pub.pem"
+
+
+RSA* readpemkeys(int type)
+{
+  FILE *fp;
+  RSA *key=NULL;
+
+  if(type == READPUB) {
+    if((fp = fopen(PUBFILE,"r")) == NULL) {
+      fprintf(stderr,"Error: Public Key file doesn't exists.\n");
+      exit(EXIT_FAILURE);
+    }
+    if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
+      fprintf(stderr,"Error: problems while reading Public Key.\n");
+      exit(EXIT_FAILURE);
+    }
+    fclose(fp);
+    return key;
+  }
+  if(type == READSEC) {
+    if((fp = fopen(SECFILE,"r")) == NULL) {
+      fprintf(stderr,"Error: Private Key file doesn't exists.\n");
+      exit(EXIT_FAILURE);
+    }
+    if((key = PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL)) == NULL) {
+      fprintf(stderr,"Error: problmes while reading Private Key.\n");
+      exit(EXIT_FAILURE);
+    }
+    fclose(fp);
+    if(RSA_check_key(key) == -1) {
+      fprintf(stderr,"Error: Problems while reading RSA Private Key in '%s' file.\n",SECFILE);
+      exit(EXIT_FAILURE);
+    } else if(RSA_check_key(key) == 0) {
+      fprintf(stderr,"Error: Bad RSA Private Key readed in '%s' file.\n",SECFILE);
+      exit(EXIT_FAILURE);
+    }
+    else
+      return key;
+  }
+  return key;
+}
 
 main(){
 	
@@ -22,12 +65,17 @@ main(){
 	char  *passphrase = "";
 	int ks=0;
 	
+	pubkey_rsa = readpemkeys(READPUB);
+		ks = RSA_size(pubkey_rsa);
+	printf("%d",ks);
+	
 	//printf("%s",pubkey);
-
+/*
 	in = BIO_new_mem_buf(pubkey, strlen(pubkey));	
 	pubkey_rsa = PEM_read_bio_PUBKEY(in, NULL,NULL, NULL);
 	//BIO_free(in);
 	
+	/*
 	ks = RSA_size(pubkey_rsa);
 	printf("%d",ks);
 	/*
