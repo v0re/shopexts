@@ -53,6 +53,18 @@ RSA* readpemkeys(int type)
   return key;
 }
 
+RSA *gen_public_key(){
+	char *pubkey = "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALagXIxAJkQ7XDnBsWlIXVc8/mrKYN87D2yOdZq9j7B8b1IZEXnobrn9\nnR9NdxSmEfQkYXG3TaTjD5k2BErEOicY7TvoXk3ReQmYv7Milz8mz/f+/eqQq/gK\nKi6VY17lyyF4ZAPcAusdcXYPRWoUerC6KiC33r+9W90eCX0HVrDHAgED\n-----END RSA PUBLIC KEY-----";
+	
+	RSA *pubkey_rsa;
+	BIO  *in;
+	
+	in = BIO_new_mem_buf(pubkey, strlen(pubkey));	
+	pubkey_rsa = PEM_read_bio_PUBKEY(in, NULL,NULL, NULL);
+	
+	return pubkey_rsa;		
+}
+
 main(){
 	
 	char *message = "hi ken";
@@ -67,9 +79,14 @@ main(){
 	int ks=0;
 	
 	pubkey_rsa = readpemkeys(READPUB);
-		ks = RSA_size(pubkey_rsa);
+	ks = RSA_size(pubkey_rsa);
 	printf("%d",ks);
-	 RSA_print_fp(stdout,pubkey_rsa,11);
+	
+	/*
+	pubkey_rsa = readpemkeys(READPUB);
+	ks = RSA_size(pubkey_rsa);
+	printf("%d",ks);
+	RSA_print_fp(stdout,pubkey_rsa,11);
 	
 	//printf("%s",pubkey);
 /*
