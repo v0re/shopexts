@@ -69,6 +69,7 @@ main(){
 	pubkey_rsa = readpemkeys(READPUB);
 		ks = RSA_size(pubkey_rsa);
 	printf("%d",ks);
+	 RSA_print_fp(stdout,pubkey_rsa,11);
 	
 	//printf("%s",pubkey);
 /*
