@@ -42,7 +42,7 @@ main(){
 	RSA_free(rsa);
 	
 	p=buf;	
-	printf("%s",base64_encode(p));
+	printf("%s",base64_encode(p,len));
 	printf("\n");
 }
 
