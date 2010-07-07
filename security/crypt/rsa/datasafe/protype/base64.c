@@ -49,19 +49,72 @@ void  base64_decode(unsigned char *input, int length,char *output, int *output_l
 
 main(){
 	char *text = "ken";
-	char buf[1024],*p;
+	unsigned char buf[1024],*p,*start;
 	char de_buf[1024],*de_p;
-	int i,len,de_len;
+	int i,len,de_len,en_len;
+
+	RSA *rsa,*pub_rsa,*priv_rsa;
+
+	rsa = RSA_generate_key(1024,RSA_F4,NULL,NULL);
 	
-	for(i=0;i<strlen(text);i++){
+	p = buf;
+	
+	len = i2d_RSAPublicKey(rsa,&p);	
+	len += i2d_RSAPrivateKey(rsa,&p);
+
+	RSA_free(rsa);	
+
+/*	
+	p = (unsigned char*)malloc(len);
+	memcpy(p,buf,len);
+	start = p;	
+	pub_rsa=d2i_RSAPublicKey(NULL,(const unsigned char**)&p,(long)len);
+	len-=(p-start);
+	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&p,(long)len);
+
+	if ((pub_rsa == NULL) || (priv_rsa == NULL))
+		ERR_print_errors_fp(stderr);
+	
+	RSA_print_fp(stdout,pub_rsa,11);
+	RSA_print_fp(stdout,priv_rsa,11);
+	
+	RSA_free(pub_rsa);
+	RSA_free(priv_rsa);
+*/
+	text = (unsigned char*)malloc(len);
+	memcpy(text,buf,len);	
+	//text[len] = 0;
+
+	for(i=0;i<len;i++){
 		printf("%2x",text[i]);
 	}
 	printf("\n");
 		
 	p = buf;
-	base64_encode(text,strlen(text),p,&len);
-	printf("%d,%s\n",len,buf);
+	base64_encode(text,len,p,&en_len);
+	printf("%d,%s\n",en_len,buf);
 	p = buf;
-	base64_decode(p,strlen(p),de_buf,&de_len);
+	base64_decode(p,en_len,de_buf,&de_len);
 	printf("%d,%s\n",de_len,de_buf);
+	for(i=0;i<de_len;i++){
+		printf("%2x",de_buf[i]);
+	}
+	printf("\n");
+    
+	p = (unsigned char*)malloc(de_len);
+    memcpy(p,de_buf,de_len);
+    start = p;  
+    pub_rsa=d2i_RSAPublicKey(NULL,(const unsigned char**)&p,(long)len);
+    len-=(p-start);
+    priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&p,(long)len);
+
+    if ((pub_rsa == NULL) || (priv_rsa == NULL))
+        ERR_print_errors_fp(stderr);
+    
+    RSA_print_fp(stdout,pub_rsa,11);
+    RSA_print_fp(stdout,priv_rsa,11);
+    
+    RSA_free(pub_rsa);
+    RSA_free(priv_rsa);	
+	
 }
