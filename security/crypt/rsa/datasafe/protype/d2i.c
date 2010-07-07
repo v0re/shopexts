@@ -7,35 +7,40 @@
 #include <openssl/buffer.h>
 
 
-char * base64_decode(unsigned char *input, int length)
+void  base64_decode(unsigned char *input, int length,char **output, int *output_len)
 {
-  BIO *b64, *bmem;
-
-  char *buffer = (char *)malloc(length);
-  memset(buffer, 0, length);
-
-  b64 = BIO_new(BIO_f_base64());
-  bmem = BIO_new_mem_buf(input, length);
-  bmem = BIO_push(b64, bmem);
-
-  BIO_read(bmem, buffer, length);
-
-  BIO_free_all(bmem);
-
-  return buffer;
+	BIO *b64, *bmem;
+	
+	char *buffer;
+	int max_len = (length * 6 + 7) / 8;
+	int len;
+	
+	buffer = (char *)malloc(max_len);
+	memset(buffer, 0, max_len);
+	
+	b64 = BIO_new(BIO_f_base64());
+	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+	bmem = BIO_new_mem_buf((char *)input, length);
+	bmem = BIO_push(b64, bmem);
+	len = BIO_read(bmem, buffer, length);
+	
+	memcpy(output, buffer, len);
+	output_len = len;
+	
+	BIO_free_all(bmem);
+	
 }
 
 main(){
 	
-	unsigned char pem_key_str[] = "MIGJAoGBAMMaorVRYpg6ZjzPFglnyoinCRFXytjk429mnriwgu8p7Kfr/YYVtdRR65xxqYUvwIGdO9VTukIfQgaT3TIYN6QQGhD+sOJwdz8+jm40LVKMPTA+dsoN+C4WVotlC7wwVJlL3MBIpnZmEZSwc5kN54s9dwlir7HwHS1GGanEHWrNAgMBAAEwggJdAgEAAoGBAMMaorVRYpg6ZjzPFglnyoinCRFXytjk429mnriwgu8p7Kfr/YYVtdRR65xxqYUvwIGdO9VTukIfQgaT3TIYN6QQGhD+sOJwdz8+jm40LVKMPTA+dsoN+C4WVotlC7wwVJlL3MBIpnZmEZSwc5kN54s9dwlir7HwHS1GGanEHWrNAgMBAAECgYBiKe6fp/khepCiG9eMl+oxY0mOrktjYZaFIG7Pog/e4Ysu2e/PHPFFiIoxRobyehoznLbUGLJoPm3r/U2XvNORGNuhI9Vf28m810r6+US4c7LHH8gu+zHZTk77480fpbjEo0hCIuez4iPtKpf7GRiaZ5pjXROtzRuWm3V7G3FAgQJBAPKKmLonUPoNSCEDM+uJ5xz+e3NxlUfpIwEANv5BuupmyKvTJ2FrfG6ZSpKBkql8U94/pq8H+O+4aHTHYX/uEH0CQQDN7ivck9mIGk4PjhkhfwaQvlW+3iYa6NOWViROnt/KIDrFHCQ4sDO60kaubzGQyGpgt2LEnlZZlnFxaHdubqSRAkEAm/Ts4f53/mHd+IRTtWgWOTmV7hSiNfw+at1Vf0aKx0DSVlJPZ0AzYfal0fEJenwcfbOWHcRVmOeOG1E9a4KMDQJABFE//injX6Udidny0O721kYHSi8iIWJMPVSlAjj2fChc0xEZ+U5IZ1xNOw79vQlWoZx2p6SiLtKmojgMePY84QJBAOhHyWKKR21TZdtv5P4kXNbo1OjnCfTN/l1mTePSUhdJxRBtxfVMYw684IOBVistUuq2sOJt3hV9vbpJgphyOgs=";
+	unsigned char pem_key_str[] = "MIGJAoGBALXlmXKlo4sdoz8qeBPmLou247lwEHgdmNkPSNN78phIy8Ke4jo5+UIYkE0/9epKwqG3wEYKyVywmA3VqWDmXJYW6BOhEtCFFz0QmAnfw99+xXIcKxOUcsAahJFCRI6/eT1J3Z/66QmXm4XAYloLKNXC9Tmyn+chqi1uNtfANroRAgMBAAEwggJcAgEAAoGBALXlmXKlo4sdoz8qeBPmLou247lwEHgdmNkPSNN78phIy8Ke4jo5+UIYkE0/9epKwqG3wEYKyVywmA3VqWDmXJYW6BOhEtCFFz0QmAnfw99+xXIcKxOUcsAahJFCRI6/eT1J3Z/66QmXm4XAYloLKNXC9Tmyn+chqi1uNtfANroRAgMBAAECgYEAl+K0kysEuPFykxgfVF5sl3WMChgtaF8udnFw2kcxdz+yBT0uonguTqa8OAUkjxMGGouZHeN76M386fBzktpIjBMJKKa1GnAC3Zqph1DJVymUVIC2zKPqbGHceUgIkZ7fz66x+J8KHTOwvKo5HpljCv/pPq+UziFLwfWqLjp8cAECQQDZRZd4QgXACgq8MMUm+dXCKan6NGZxWdLnhpcXsIqqACYfkstZnBUDmiOHRNkCD3ooFxjFhoaRMiu5buviKNtRAkEA1lHMyllKljWIRGPQ8HkqJrCPp5vJD8Dig2TXby/OFVqiS+kBy9uYsYFanLYY5B3FprYXYQ9u3obZTNWs3FbCwQJAMBMS6dwJ860FJRDRfsdHAfhAEQmpJSmP3gTMx8QbWnQ/+zp63jAIAk0H0XVtYuRTzi0WIRacDeKBBD3D2b3akQJAfP5sH79/3qcN+ET2wKkJylLDFY+n7cYi1VrkwnXxDUc0zGzynUBPh4bXn/ob/j7W3WnprLPhh2rCJSuhi0gWgQJANTKCrgVdm87QaQlkeunRoJR/1eDpyVU4b/+ODgTNCpTVWBmwEM7F4Q44zJ5xZkJozSTX1oC4/meL/hm1b98rNQ=";
 	
 	RSA *pub_rsa,*priv_rsa;
 	unsigned char buf[2048],*p;
-	int len;
+	int len = 0;
 	
-	printf("%d",strlen(pem_key_str);
-	//p=buf;
-	//len = base64_decode(pem_key_str,strlen(pem_key_str),&p);
+	p=buf;
+	base64_decode(pem_key_str,strlen(pem_key_str),&p,&len);
 	
 	//printf("%d",len);
 	/*
