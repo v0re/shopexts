@@ -10,14 +10,14 @@
 
 
 main(){
-	char *pubkey = "
+	char pubkey[1024] = "
 -----BEGIN RSA PUBLIC KEY-----
 MIGHAoGBALagXIxAJkQ7XDnBsWlIXVc8/mrKYN87D2yOdZq9j7B8b1IZEXnobrn9
 nR9NdxSmEfQkYXG3TaTjD5k2BErEOicY7TvoXk3ReQmYv7Milz8mz/f+/eqQq/gK
 Ki6VY17lyyF4ZAPcAusdcXYPRWoUerC6KiC33r+9W90eCX0HVrDHAgED
 -----END RSA PUBLIC KEY-----" ;
 
-	char *prikey  = "-----BEGIN RSA PRIVATE KEY-----
+	char prikey[1024]  = "-----BEGIN RSA PRIVATE KEY-----
 MIICWwIBAAKBgQC2oFyMQCZEO1w5wbFpSF1XPP5qymDfOw9sjnWavY+wfG9SGRF5
 6G65/Z0fTXcUphH0JGFxt02k4w+ZNgRKxDonGO076F5N0XkJmL+zIpc/Js/3/v3q
 kKv4CioulWNe5csheGQD3ALrHXF2D0VqFHqwuiogt96/vVvdHgl9B1awxwIBAwKB
