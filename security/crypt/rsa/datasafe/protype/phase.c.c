@@ -53,7 +53,7 @@ RSA* readpemkeys(int type)
   return key;
 }
 
-RSA *gen_public_key(){
+RSA *shopex_gen_public_key(){
 	char *pubkey = "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALagXIxAJkQ7XDnBsWlIXVc8/mrKYN87D2yOdZq9j7B8b1IZEXnobrn9\nnR9NdxSmEfQkYXG3TaTjD5k2BErEOicY7TvoXk3ReQmYv7Milz8mz/f+/eqQq/gK\nKi6VY17lyyF4ZAPcAusdcXYPRWoUerC6KiC33r+9W90eCX0HVrDHAgED\n-----END RSA PUBLIC KEY-----";
 	
 	RSA *pubkey_rsa;
@@ -61,27 +61,41 @@ RSA *gen_public_key(){
 	
 	in = BIO_new_mem_buf(pubkey, strlen(pubkey));	
 	pubkey_rsa = PEM_read_bio_PUBKEY(in, NULL,NULL, NULL);
-	
+	//BIO_free(in);
 	return pubkey_rsa;		
+}
+
+void test_shopex_gen_public_key(){
+	RSA *pubkey_rsa;
+	int ks;
+	
+	pubkey_rsa = shopex_gen_public_key();
+	ks = RSA_size(pubkey_rsa);
+	printf("%d",ks);
+	RSA_print_fp(stdout,pubkey_rsa,11);
+}
+
+RSA *shopex_gen_private_key(){
+	
+	char *prikey = "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALagXIxAJkQ7XDnBsWlIXVc8/mrKYN87D2yOdZq9j7B8b1IZEXnobrn9\nnR9NdxSmEfQkYXG3TaTjD5k2BErEOicY7TvoXk3ReQmYv7Milz8mz/f+/eqQq/gK\nKi6VY17lyyF4ZAPcAusdcXYPRWoUerC6KiC33r+9W90eCX0HVrDHAgED\n-----END RSA PUBLIC KEY-----";
+	
+	RSA *prikey_rsa;
+	BIO  *in;
+	char  *passphrase = "";
+	
+	
+	in = BIO_new_mem_buf(prikey, strlen(prikey));	
+	prikey_rsa = PEM_read_bio_PrivateKey(in, NULL,NULL, passphrase);
+	//BIO_free(in);
+	return prikey_rsa;
 }
 
 main(){
 	
 	char *message = "hi ken";
 	
-	char *pubkey = "-----BEGIN RSA PUBLIC KEY-----MIGHAoGBALagXIxAJkQ7XDnBsWlIXVc8/mrKYN87D2yOdZq9j7B8b1IZEXnobrn9nR9NdxSmEfQkYXG3TaTjD5k2BErEOicY7TvoXk3ReQmYv7Milz8mz/f+/eqQq/gKKi6VY17lyyF4ZAPcAusdcXYPRWoUerC6KiC33r+9W90eCX0HVrDHAgED-----END RSA PUBLIC KEY-----" ;
-
-	char *prikey  = "-----BEGIN RSA PRIVATE KEY-----MIICWwIBAAKBgQC2oFyMQCZEO1w5wbFpSF1XPP5qymDfOw9sjnWavY+wfG9SGRF56G65/Z0fTXcUphH0JGFxt02k4w+ZNgRKxDonGO076F5N0XkJmL+zIpc/Js/3/v3qkKv4CioulWNe5csheGQD3ALrHXF2D0VqFHqwuiogt96/vVvdHgl9B1awxwIBAwKBgHnAPbLVbtgnktEry5uFk499/vHcQJTSCkhe+RHTtSBS9OFmC6aa9Hv+aL+I+g3EC/gYQPZ6M8NCCmYkAtyC0W5FIjA+KB2NCEOgOw5BeiLMsqGOUHxi1HaJ2NvhSX4h8y/xARPLiVqfrhDSOgxVfFQ4Y6WEu796/hwpqJcbbitLAkEA5ZwZORyM+1h+EBmzkFpHcVaqu7Z1DpzC11xQ362UUsrPxcsH0w1+7lGbqkYU/RiE+g4nz8gVpSCmPfnnWsS6DwJBAMud2lIFlIKUJhhNajAFw4JtWu3Ouu3Qg2QIk+PHjWATickXXlenZD+awSmoQpcnrWuGgKD9Ct++DKGSswNstckCQQCZErt7aF385algESJgPC+g5HHSeaNfEyyPkuCVHmLh3IqD3K/iCP9Ji70cLriouwNRXsU1MA5uFcQpUUTnLdFfAkEAh76RjAO4Vw1uut5Gyq6CVvOR898nSTWs7VsNQoUI6rexMLo+5RpC1RHWG8WBuhpznQRVwKix6n6zFmHMrPMj2wJAKxAfmh6q64AaTJeeACAo1+gj0kiQlj4Jq2mMKZbBuw0mpH59lifH3Q9br9NlWt39pEA+JpSQIYxNlGXD8Glzdw==-----END RSA PRIVATE KEY-----";
+	test_shopex_gen_public_key();
 	
-	BIO  *in;
-	RSA  *pubkey_rsa,*prikey_rsa;
-	char  *passphrase = "";
-	int ks=0;
-	
-	pubkey_rsa = readpemkeys(READPUB);
-	ks = RSA_size(pubkey_rsa);
-	printf("%d",ks);
-	RSA_print_fp(stdout,pubkey_rsa,11);
 	/*
 	pubkey_rsa = readpemkeys(READPUB);
 	ks = RSA_size(pubkey_rsa);
