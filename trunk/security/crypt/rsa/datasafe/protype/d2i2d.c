@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	RSA *key;
  	int keylen=1024;
  	int ret;
- 	char *buf;
+ 	unsigned char *buf;
 
  	if((key = RSA_generate_key(keylen,3,NULL,NULL)) == NULL)
  	{
