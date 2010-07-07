@@ -10,7 +10,8 @@
 
 #define SECFILE "sec.pem"
 #define PUBFILE "pub.pem"
-
+#define READPUB 0
+#define READSEC 1
 
 RSA* readpemkeys(int type)
 {
