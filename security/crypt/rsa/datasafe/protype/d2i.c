@@ -23,11 +23,8 @@ unsigned char  rconv(unsigned char a) {
 	}
 }
 
-void chartohex(unsigned char *a,int len,unsigned char *b)   
-{
- int i;
-       
-       
+void stringtohex(unsigned char *a,int len,unsigned char *b) {
+ int i;       
  for(i=0;i<len/2;i++) 
   b[i]=((rconv(a[2*i])<<4)|(rconv(a[2*i+1])));  
   if(len%2)
