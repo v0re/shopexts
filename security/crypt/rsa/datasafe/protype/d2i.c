@@ -7,30 +7,22 @@
 #include <openssl/buffer.h>
 
 
-int base64_decode(const unsigned char *input, int length, char **outbuf) {
-	BIO *bio, *b64, *bmem, *decoder;
-	char inbuf[512];
-	int inlen, readlen = -1;
-	BUF_MEM *bptr;
-	char * buffer;
-	
-	bmem = BIO_new_mem_buf(input, length);
-	b64 = BIO_new(BIO_f_base64());
-	
-	decoder = BIO_push(b64, bmem);
-	
-	BIO_flush(decoder);
-	BIO_get_mem_ptr(decoder, &bptr);
-	
-	if (buffer = (char *)malloc(length)) {
-		readlen = BIO_read(decoder, buffer, length);
-		buffer[readlen] = 0;
-	}
-	
-	BIO_free_all(decoder);
-	
-	*outbuf = buffer;
-	return readlen;
+char * base64_decode(unsigned char *input, int length)
+{
+  BIO *b64, *bmem;
+
+  char *buffer = (char *)malloc(length);
+  memset(buffer, 0, length);
+
+  b64 = BIO_new(BIO_f_base64());
+  bmem = BIO_new_mem_buf(input, length);
+  bmem = BIO_push(b64, bmem);
+
+  BIO_read(bmem, buffer, length);
+
+  BIO_free_all(bmem);
+
+  return buffer;
 }
 
 main(){
