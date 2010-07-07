@@ -39,10 +39,12 @@ main(){
 	
 	RSA *pub_rsa,*priv_rsa;
 	unsigned char buf[2048],*p;
+	int len;
 	
 	p=buf;
-	base64_decode(pem_key_str,strlen(pem_key_str),&p);
+	len = base64_decode(pem_key_str,strlen(pem_key_str),&p);
 	
+	printf("%d",len);
 	/*
 	p=buf;
 	pub_rsa=d2i_RSAPublicKey(NULL,&p,(long)len);
