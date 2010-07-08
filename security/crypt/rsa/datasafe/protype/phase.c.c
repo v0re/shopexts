@@ -7,6 +7,28 @@
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 
+void base64_encode(unsigned char *input, int length,char *output, int *output_len){
+	BIO *bmem, *b64;
+	BUF_MEM *bptr;
+	char *buff;	
+	
+	b64 = BIO_new(BIO_f_base64());
+	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+	bmem = BIO_new(BIO_s_mem());
+	b64 = BIO_push(b64, bmem);
+	BIO_write(b64, input, length);
+	BIO_flush(b64);
+	BIO_get_mem_ptr(b64, &bptr);
+	
+	//buff = (char *)malloc(bptr->length);
+	memcpy(output, bptr->data, bptr->length);
+	output[bptr->length] = 0;
+	
+	*output_len = bptr->length;
+		
+	BIO_free_all(b64);
+}
+
 void  base64_decode(unsigned char *input, int length,char *output, int *output_len){
 	BIO *b64, *bmem;
 	char *buffer;
@@ -43,6 +65,22 @@ void get_shopex_key(RSA **pubkey,RSA **privkey){
     
 }
 
+void shopex_rsa_encrypt(char *input,char *output){
+	RSA *pub_rsa,*priv_rsa;
+	char *ciphertext,*p;
+	int ret,input_len,en_len;
+	
+	input_len = strlen(input);
+	get_shopex_key(&pub_rsa,&priv_rsa);
+	//input_len must lower then RSA_size(pub_rsa) - 11
+	ciphertext = (char *)malloc(RSA_size(pub_rsa));
+	ret = RSA_public_encrypt(input_len, input, ciphertext, pub_rsa, RSA_PKCS1_PADDING);
+	p = (char *)malloc( (input_len * 6 + 7) / 8);
+	base64_encode(ciphertext,ret,p,&en_len);
+	memcpy(output,p,en_len);
+		
+}
+
 void test_get_shopex_key(){
 	RSA *pub_rsa,*priv_rsa;
 	
@@ -68,19 +106,14 @@ main(){
 
 	int ret;
 	//test_get_shopex_key();
-	//strlen(message) must lower then RSA_size(pub_rsa) - 11
-	get_shopex_key(&pub_rsa,&priv_rsa);
-	ciphertext = (char *)malloc(RSA_size(pub_rsa));
 	
-	printf("encrypt data is: %s\n",message);
-
-	ret = RSA_public_encrypt(strlen(message), message, ciphertext, pub_rsa, RSA_PKCS1_PADDING);
-	
-	printf("encrypted data size %d\n",ret);
-	
+	printf("encrypt data  : %s\n",message);
+	shopex_rsa_encrypt(message,buf);
+	printf("encrypted data :  %s\n",buf);
+/*	
 	cleartext = buf;
 	ret = RSA_private_decrypt(ret, ciphertext, cleartext, priv_rsa, RSA_PKCS1_PADDING);
 	buf[ret] = 0;
 	printf("decrypted data is %s\n",buf);
-	
+*/	
 }
