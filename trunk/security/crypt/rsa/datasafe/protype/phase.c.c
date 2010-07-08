@@ -67,7 +67,7 @@ void get_shopex_key(RSA **pubkey,RSA **privkey){
 
 void shopex_rsa_encrypt(char *input,char *output){
 	RSA *pub_rsa,*priv_rsa;
-	char *ciphertext,*p;
+	char buf[2048],*ciphertext,*p;
 	int ret,input_len,en_len;
 	
 	input_len = strlen(input);
@@ -75,9 +75,10 @@ void shopex_rsa_encrypt(char *input,char *output){
 	//input_len must lower then RSA_size(pub_rsa) - 11
 	ciphertext = (char *)malloc(RSA_size(pub_rsa));
 	ret = RSA_public_encrypt(input_len, input, ciphertext, pub_rsa, RSA_PKCS1_PADDING);
-	p = (char *)malloc( (input_len * 6 + 7) / 8);
+	
+	p = buf;
 	base64_encode(ciphertext,ret,p,&en_len);
-	memcpy(output,p,en_len);
+	memcpy(output,buf,en_len);
 		
 }
 
