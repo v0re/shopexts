@@ -78,6 +78,7 @@ void shopex_rsa_encrypt(char *input,char *output){
 	
 	p = buf;
 	base64_encode(ciphertext,ret,p,&en_len);
+	buf[en_len] = 0;
 	memcpy(output,buf,en_len);
 		
 }
@@ -120,7 +121,7 @@ main(){
 	
 	char *message = "hi ken";
 	RSA *pub_rsa,*priv_rsa;
-	char buf[2048],*ciphertext,*cleartext;
+	char buf[2048],de_buf[2048],*ciphertext,*cleartext;
 
 	int ret;
 	//test_get_shopex_key();
@@ -128,10 +129,8 @@ main(){
 	printf("encrypt data  : %s\n",message);
 	shopex_rsa_encrypt(message,buf);
 	printf("encrypted data :  %s\n",buf);
-/*	
-	cleartext = buf;
-	ret = RSA_private_decrypt(ret, ciphertext, cleartext, priv_rsa, RSA_PKCS1_PADDING);
-	buf[ret] = 0;
-	printf("decrypted data is %s\n",buf);
-*/	
+	
+	shopex_rsa_decrypt(buf,de_buf);
+	printf("decrypted data is %s\n",de_buf);
+	
 }
