@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <openssl/rsa.h>
 #include <openssl/sha.h>
 #include <openssl/hmac.h>
@@ -32,7 +33,7 @@ main(){
 	
 	RSA *rsa;
 	int i,len,en_len;
-	unsigned char buf[2048],*p,key_p;
+	unsigned char buf[2048],*p,*key_p;
 
 	rsa=RSA_generate_key(1024,RSA_F4,NULL,NULL);
 
