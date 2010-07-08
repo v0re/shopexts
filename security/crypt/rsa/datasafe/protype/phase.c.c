@@ -82,6 +82,23 @@ void shopex_rsa_encrypt(char *input,char *output){
 		
 }
 
+void shopex_rsa_decrypt(char *input,char *output){
+	RSA *pub_rsa,*priv_rsa;
+	char buf[2048],*cleartext,*p;
+	int ret,input_len,de_len;
+	
+	input_len = strlen(input);
+	base64_decode(input,input_len,buf,&de_len);
+	get_shopex_key(&pub_rsa,&priv_rsa);
+	p= cleartext = (char *)malloc(RSA_size(priv_rsa));
+	ret = RSA_private_decrypt(de_len, buf, cleartext, priv_rsa, RSA_PKCS1_PADDING);
+	cleartext[ret] = 0;
+	
+	memcpy(output,p,ret);
+		
+}
+
+
 void test_get_shopex_key(){
 	RSA *pub_rsa,*priv_rsa;
 	
