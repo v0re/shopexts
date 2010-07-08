@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <openssl/rsa.h>
 #include <openssl/sha.h>
 #include <openssl/hmac.h>
@@ -7,50 +8,48 @@
 #include <openssl/buffer.h>
 
 
-void  base64_decode(unsigned char *input, int length,char *output, int *output_len)
-{
+void  base64_decode(unsigned char *input, int length,char *output, int *output_len){
 	BIO *b64, *bmem;
-	
 	char *buffer;
 	int max_len = (length * 6 + 7) / 8;
 	int len;
-	
-	buffer = (char *)malloc(max_len);
-	memset(buffer, 0, max_len);
-	
+		
 	b64 = BIO_new(BIO_f_base64());
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 	bmem = BIO_new_mem_buf(input, length);
 	bmem = BIO_push(b64, bmem);
-	len = BIO_read(bmem, buffer, max_len);
 	
-	memcpy(output, buffer, len);
+	len = BIO_read(bmem, output, max_len);
+	output[len] = 0;
 	*output_len = len;
 	
 	BIO_free_all(bmem);
-	
 }
 
 main(){
 	
-	unsigned char *pem_key_str = "MIGJAoGBALXlmXKlo4sdoz8qeBPmLou247lwEHgdmNkPSNN78phIy8Ke4jo5+UIYkE0/9epKwqG3wEYKyVywmA3VqWDmXJYW6BOhEtCFFz0QmAnfw99+xXIcKxOUcsAahJFCRI6/eT1J3Z/66QmXm4XAYloLKNXC9Tmyn+chqi1uNtfANroRAgMBAAEwggJcAgEAAoGBALXlmXKlo4sdoz8qeBPmLou247lwEHgdmNkPSNN78phIy8Ke4jo5+UIYkE0/9epKwqG3wEYKyVywmA3VqWDmXJYW6BOhEtCFFz0QmAnfw99+xXIcKxOUcsAahJFCRI6/eT1J3Z/66QmXm4XAYloLKNXC9Tmyn+chqi1uNtfANroRAgMBAAECgYEAl+K0kysEuPFykxgfVF5sl3WMChgtaF8udnFw2kcxdz+yBT0uonguTqa8OAUkjxMGGouZHeN76M386fBzktpIjBMJKKa1GnAC3Zqph1DJVymUVIC2zKPqbGHceUgIkZ7fz66x+J8KHTOwvKo5HpljCv/pPq+UziFLwfWqLjp8cAECQQDZRZd4QgXACgq8MMUm+dXCKan6NGZxWdLnhpcXsIqqACYfkstZnBUDmiOHRNkCD3ooFxjFhoaRMiu5buviKNtRAkEA1lHMyllKljWIRGPQ8HkqJrCPp5vJD8Dig2TXby/OFVqiS+kBy9uYsYFanLYY5B3FprYXYQ9u3obZTNWs3FbCwQJAMBMS6dwJ860FJRDRfsdHAfhAEQmpJSmP3gTMx8QbWnQ/+zp63jAIAk0H0XVtYuRTzi0WIRacDeKBBD3D2b3akQJAfP5sH79/3qcN+ET2wKkJylLDFY+n7cYi1VrkwnXxDUc0zGzynUBPh4bXn/ob/j7W3WnprLPhh2rCJSuhi0gWgQJANTKCrgVdm87QaQlkeunRoJR/1eDpyVU4b/+ODgTNCpTVWBmwEM7F4Q44zJ5xZkJozSTX1oC4/meL/hm1b98rNQ=";
+	unsigned char *pem_key_str = "MIGJAoGBAKz8scCXFg2O2r2sMsic40hSgHw1q52LUAvEHDH4S5pgflNjs8NfJKOjZmnkTpxI+eLmGKqPPWg7SF7YbUMmmTXvhuTWQF9OcXhIxzIUVFwQKZEWSgZyoaqwcy3XF6sIf7oFDRWfkIY5RCp03GdM0IjGK3lDIdfh0p6wSjTdfvvhAgMBAAEwggJcAgEAAoGBAKz8scCXFg2O2r2sMsic40hSgHw1q52LUAvEHDH4S5pgflNjs8NfJKOjZmnkTpxI+eLmGKqPPWg7SF7YbUMmmTXvhuTWQF9OcXhIxzIUVFwQKZEWSgZyoaqwcy3XF6sIf7oFDRWfkIY5RCp03GdM0IjGK3lDIdfh0p6wSjTdfvvhAgMBAAECgYBo1D1Xq3dWwgI2vPqNbd2h/zUTkGauczUP3EkF0yTlqaIEIMBYHfkTHTs74nns5aBg6vV5rpIU7w/9QgR8lBB1it3g6QU8RWdLG1cpckEL8LLPPWPIUOTSaId2BAeIU3Q0NOBc0sWO1pUTvYBGykQW9LYsP3254yIbc+5aQhwjAQJBANUh5TA45sMvpK+ZoRd3rWTQMU3Ted2/MCsGknPSPCk9ZxHTknU+q5O8L2kmWuc0b/IrVp4Zi9AUDx9AplRUvjECQQDPx7t6Iaim+jjO5y9FcKQPnFW4PRD2s2OffGisrIVAoLoQqNeHW5itltEs/CIT2AyTYRhg4uBIC37gt3kelDyxAkBhNv24Oiwf2apvok6VSrRfaIskqZJLr/pDldLVW46vbN+HhQ6nxfczAsJJXwJVtVheiKAQqyxXs96V7cIwcxrxAkEAihggRRK7yYaCXRkPtOIhV/K6kgGcFaqyapw/4Yuj4IkyQMJGxMKe3bhf+7rzVyb/bLBaiIIhOCDTybyHNkilcQJAHNSMtPgDVvYbzImMaNcpGHKJdkPoChO7W7EpRuCMlT7OMIc8cQIOiTBrHRDzF72NT0p+QfAXUAZxat7s1oqSDw==";
 	
 	RSA *pub_rsa,*priv_rsa;
-	unsigned char buf[2048],*p;
-	int len = 0;
+	unsigned char de_buf[2048],*p,*start;
+	int de_len;
 	
-	p=buf;
-	base64_decode(pem_key_str,strlen(pem_key_str),&p,&len);
+	p=de_buf;
+	base64_decode(pem_key_str,strlen(pem_key_str),de_buf,&de_len);
 	
-	
-	p = buf;
-	pub_rsa = d2i_RSAPublicKey(NULL,&p,(long)len);
-	len -= (p-buf);
-	priv_rsa=d2i_RSAPrivateKey(NULL,&p,(long)len);
+	p = (unsigned char*)malloc(de_len);
+    memcpy(p,de_buf,de_len);
+    start = p;  
+    pub_rsa=d2i_RSAPublicKey(NULL,(const unsigned char**)&p,(long)de_len);
+    de_len-=(p-start);
+    priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&p,(long)de_len);
 
 	if ((pub_rsa == NULL) || (priv_rsa == NULL))
 		ERR_print_errors_fp(stderr);
 
+    RSA_print_fp(stdout,pub_rsa,11);
+    RSA_print_fp(stdout,priv_rsa,11);
+    
 	RSA_free(pub_rsa);
 	RSA_free(priv_rsa);
 	
