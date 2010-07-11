@@ -3,6 +3,9 @@
 
 	list($keylength, $modulus, $public, $private) = read_ssl_key("rsa-example-key");
 
+	var_dump($keylength,$modulus,$public,$private);
+	die();
+	
 	$encrypted = rsa_encrypt("Hello world", $public, $modulus, $keylength);
 	$decrypted = rsa_decrypt($encrypted, $private, $modulus, $keylength);
 	
