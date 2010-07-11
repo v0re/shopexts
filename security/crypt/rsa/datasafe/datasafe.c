@@ -175,15 +175,16 @@ PHP_FUNCTION(shopex_data_encrypt)
 {
 	char *arg = NULL;
 	int arg_len, len;
-	char *strg;
+	char buf[2048];
+
 
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"s", &arg, &arg_len) == FAILURE){
 		return;
 	}
 	
-
-
-	RETURN_STRING(arg, arg_len);
+	shopex_rsa_encrypt(arg,buf);
+	
+	RETURN_STRING(buf, strlen(buf));
 }
 
 PHP_FUNCTION(shopex_data_decrypt)
