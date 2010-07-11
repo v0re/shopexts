@@ -199,7 +199,7 @@ PHP_FUNCTION(shopex_data_decrypt)
 	
 	shopex_rsa_decrypt(arg,buf);
     
-	RETURN_STRING(arg, strlen(buf));
+	RETURN_STRING(buf, strlen(buf));
 }
 
 /* }}} */
