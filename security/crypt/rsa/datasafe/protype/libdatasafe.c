@@ -1,5 +1,5 @@
 /*
-gcc libdatasafe.c  -fPIC -shared -o libdatasafe.so
+gcc -lssl libdatasafe.c  -fPIC -shared -o libdatasafe.so
 
 Written by Ken Xu (Kyle<xuqinyong@gmail.com>)
 Copyright (C) 2010, ShopEx. 
