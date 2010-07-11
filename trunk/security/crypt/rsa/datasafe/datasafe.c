@@ -181,9 +181,9 @@ PHP_FUNCTION(shopex_data_encrypt)
 		return;
 	}
 	
-	strg = php_base64_ebcode(arg,arg_len,&len);
 
-	RETURN_STRING(strg, len);
+
+	RETURN_STRING(arg, arg_len);
 }
 
 PHP_FUNCTION(shopex_data_decrypt)
@@ -196,9 +196,8 @@ PHP_FUNCTION(shopex_data_decrypt)
 		return;
 	}
 	
-	strg = php_base64_decode(arg,arg_len,&len);
 
-	RETURN_STRING(strg, len);
+	RETURN_STRING(arg, arg_len);
 }
 
 /* }}} */
