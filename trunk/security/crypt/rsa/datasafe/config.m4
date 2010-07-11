@@ -5,8 +5,8 @@ PHP_ARG_ENABLE(datasafe, whether to enable datasafe support,
 [  --enable-datasafe           Enable datasafe support])
 
 if test "$PHP_DATASAFE" != "no"; then
-    $INCLUDE_DIR=/usr/include
-    $LIB_DIR=/usr/lib
+    INCLUDE_DIR=/usr/include
+    LIB_DIR=/usr/lib
     
     PHP_ADD_INCLUDE($INCLUDE_DIR)
     
