@@ -107,4 +107,4 @@ fastcgi_param  REDIRECT_STATUS    200;
 
 需要注意的是
 
-a. fastcgi_param SCRIPT_NAME $script_name; 在下面不要有重复，否则就被覆盖为错误的值了
+a. fastcgi_param SCRIPT_NAME  的设置在下面不能再有重复，否则就被覆盖为错误的值了
