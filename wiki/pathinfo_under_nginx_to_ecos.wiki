@@ -27,7 +27,7 @@ server
     server_name  192.168.6.141;
     index index.html index.htm index.php;
     root  /srv/http;
-    autoindex on;
+    autoindex off;
 
     location ~ .*\.php.*
     {
