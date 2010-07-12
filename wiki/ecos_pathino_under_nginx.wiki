@@ -57,16 +57,16 @@ server
 }}}
 
 这个地方有一个地方需要注意，就是对php文件的捕获必须是这样的形式
-
+{{{
 location ~ .*\.php.*
+}}}
 
 以往的
-
+{{{
 location ~ .*\.php$
+}}}
 
-/index.php/shopadmin/xxxx/yyyy
-
-这样的请求将不会进入php fastcgi处理器。
+形如/index.php/shopadmin/xxxx/yyyy这样的请求将不会进入php fastcgi处理器。
 
 ===2）php fastcgi配置文件（php_fcgi.conf）===
 
