@@ -111,14 +111,18 @@ a. fastcgi_param SCRIPT_NAME  的设置在下面不能再有重复，否则就�
 
 ===Q&A===
 
-# 如何测试我的设置是正确的？
+*1)如何测试我的设置是正确的？*
 
-请用下面的文件，放到根目录进行测试，形如
+请用下面的文件
+
+http://code.google.com/p/shopexts/source/browse/trunk/ecos/svinfo.php
+
+放到根目录进行测试，形如
 
 http://www.xxx.com/svinfo.php/test
 
 正常情况下，应该能看到这样的输出：
 
-# 为什么我带上pathinfo后是返回404
+*2)为什么我带上pathinfo后是返回404*
 
 nginx爆过pathinfo解析错误的漏洞，一般的解决方案是在php.ini中将{{{cgi.fix_pathinfo}}}设置为0，这样的话，phpinfo就不能用了，所以必须把{{{cgi.fix_pathinfo}}}设置为1，服务器安全性，请用“可写目录，不可执行php”的原则去防范。
