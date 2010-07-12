@@ -93,6 +93,7 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char *output){
 	char *ciphertext_p,*ciphertext;
 	char *rsa_input;
 	char *b64_buf_p,*b64_buf;
+	char *input_p;
 	
 	input_len = strlen(input);
 	rsa_len = RSA_size(pub_rsa);
@@ -161,7 +162,7 @@ void shopex_conf_rsa_encrypt(char *input,char *output ){
 
 void shopex_conf_rsa_decrypt(char *input,char *output){
 	RSA *priv_rsa;
-	pub_rsa = get_shopex_private_key();
+	priv_rsa = get_shopex_private_key();
 	shopex_rsa_decrypt(priv_rsa,input,output);	
 }
 
