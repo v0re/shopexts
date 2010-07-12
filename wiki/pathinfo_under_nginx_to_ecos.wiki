@@ -31,7 +31,7 @@ server
 
     location ~ .*\.php.*
     {
-      include php_fcgi.conf;
+      include ecos_php_fcgi.conf;
     }
 
     location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
@@ -66,7 +66,7 @@ location ~ .*\.php$
 
 形如/index.php/shopadmin/xxxx/yyyy这样的请求将不会进入php fastcgi处理器。
 
-===2）php fastcgi配置文件（php_fcgi.conf）===
+===2）php fastcgi配置文件（ecos_php_fcgi.conf）===
 
 
 {{{
