@@ -22,4 +22,4 @@ main(){
 	shopex_conf_rsa_decrypt(en_buf,de_buf);
 	printf("decrypted data is : %s\n",de_buf);
 	
-}f
+}
