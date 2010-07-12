@@ -1,0 +1,110 @@
+ECOS采用pathinfo做资源定位，所以要求$_SERVER环境变量中必须要有PATHINFO或则ORGI_PATHINFO
+
+一般在apache或者iis下都没有什么问题，但是在nginx下需要对配置文件做一些设置才可以
+
+这些设置主要是在php fast cgi的配置文件中，设置代码为
+
+{{{
+set $path_info "";
+set $real_script_name $fastcgi_script_name;
+ if ($fastcgi_script_name ~ "^(.+?.php)(/.+)$") {
+                set $script_name $1;
+                        set $path_info $2;
+ }
+fastcgi_param SCRIPT_NAME $script_name;
+fastcgi_param PATH_INFO $path_info;
+}}}
+
+
+下面提供一个真实的样例：
+
+===1)主配置文件===
+
+{{{
+server
+{
+    listen       80;
+    server_name  192.168.6.141;
+    index index.html index.htm index.php;
+    root  /srv/http;
+    autoindex on;
+
+    location ~ .*\.php.*
+    {
+      include php_fcgi.conf;
+    }
+
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+      expires      30d;
+    }
+
+    location ~ .*\.(js|css)?$
+    {
+      expires      1h;
+    }
+
+    access_log off;
+    location /nginx_status {
+        stub_status on;
+        access_log   off;
+        #allow SOME.IP.ADD.RESS;
+        #deny all;
+   }
+}
+}}}
+
+这个地方有一个地方需要注意，就是对php文件的捕获必须是这样的形式
+{{{
+location ~ .*\.php.*
+}}}
+
+以往的
+{{{
+location ~ .*\.php$
+}}}
+
+形如/index.php/shopadmin/xxxx/yyyy这样的请求将不会进入php fastcgi处理器。
+
+===2）php fastcgi配置文件（php_fcgi.conf）===
+
+
+{{{
+fastcgi_pass  127.0.0.1:9000;
+set $path_info "";
+set $real_script_name $fastcgi_script_name;
+if ($fastcgi_script_name ~ "^(.+?.php)(/.+)$") {
+   set $script_name $1;
+   set $path_info $2;
+}
+fastcgi_param SCRIPT_NAME $script_name;
+fastcgi_param PATH_INFO $path_info;
+
+
+fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
+fastcgi_param  SERVER_SOFTWARE    nginx;
+
+fastcgi_param  QUERY_STRING       $query_string;
+fastcgi_param  REQUEST_METHOD     $request_method;
+fastcgi_param  CONTENT_TYPE       $content_type;
+fastcgi_param  CONTENT_LENGTH     $content_length;
+
+fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+fastcgi_param  REQUEST_URI        $request_uri;
+fastcgi_param  DOCUMENT_URI       $document_uri;
+fastcgi_param  DOCUMENT_ROOT      $document_root;
+fastcgi_param  SERVER_PROTOCOL    $server_protocol;
+
+fastcgi_param  REMOTE_ADDR        $remote_addr;
+fastcgi_param  REMOTE_PORT        $remote_port;
+fastcgi_param  SERVER_ADDR        $server_addr;
+fastcgi_param  SERVER_PORT        $server_port;
+fastcgi_param  SERVER_NAME        $server_name;
+
+# PHP only, required if PHP was built with --enable-force-cgi-redirect
+fastcgi_param  REDIRECT_STATUS    200;
+}}}
+
+需要注意的是
+
+a. fastcgi_param SCRIPT_NAME $script_name; 在下面不要有重复，否则就被覆盖为错误的值了
