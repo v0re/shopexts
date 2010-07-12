@@ -1,4 +1,4 @@
-ECOS采用pathinfo做资源定位，所以要求$_SERVER环境变量中必须要有PATHINFO或则ORGI_PATHINFO
+ECOS采用pathinfo做资源定位，所以要求{{{$_SERVER}}}环境变量中必须要有PATHINFO或则ORGI_PATHINFO
 
 一般在apache或者iis下都没有什么问题，但是在nginx下需要对配置文件做一些设置才可以
 
