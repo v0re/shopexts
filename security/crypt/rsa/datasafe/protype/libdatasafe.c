@@ -136,41 +136,49 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char *output){
 	char *cleartext_p,*cleartext;
 	char *rsa_input;
 	char *de_buf_p,*de_buf;
+	char *rsa_input,*rsa_input_p;
+	char *output_buf;
+	
+	ret_len = ret_len_total = 0;
 	
 	input_len = strlen(input);
 	de_buf_p = de_buf = (char *)malloc(input_len);
 	base64_decode(input,input_len,de_buf,&de_len);	
 	rsa_ret_buf_p = rsa_ret_buf = (char *)malloc(input_len);
 	cleartext_p = cleartext = (char *)malloc(RSA_size(priv_rsa));
+	rsa_input_p = rsa_input = (char *)malloc(110);
 	do{
-		chunk_len = de_len > 1000 ? 1000 : de_len;
+		chunk_len = de_len > 110 ? 110 : de_len;
 		memcpy(rsa_input,de_buf,chunk_len);
 		ret_len = RSA_private_decrypt(chunk_len, rsa_input, cleartext, priv_rsa, RSA_PKCS1_PADDING);
 		memcpy(rsa_ret_buf,cleartext_p,ret_len);
 		ret_len_total += ret_len;
 		rsa_ret_buf += ret_len;
 		cleartext = cleartext_p;
-		de_buf = de_buf + 1000;		
+		rsa_input = rsa_input_p;
+		de_buf = de_buf + 110;		
 	}while(de_buf - de_buf_p < de_len);	
-	output = (char *)malloc(ret_len_total);	
-	memcpy(output,rsa_ret_buf_p,ret_len_total);
-	output[ret_len_total] = 0;
+	output_buf = (char *)malloc(ret_len_total);	
+	memcpy(output_buf,rsa_ret_buf_p,ret_len_total);
+	output_buf[ret_len_total] = 0;
+	
+	*output = output_buf;
 	
 	free(de_buf_p);
 	free(rsa_ret_buf_p);
 	free(cleartext_p);
 }
 
-void shopex_conf_rsa_encrypt(char *input,char *output ){
+void shopex_conf_rsa_encrypt(char *input,char **output ){
 	RSA *pub_rsa;
 	pub_rsa = get_shopex_public_key();
-	shopex_rsa_encrypt(pub_rsa,input,&output);	
+	shopex_rsa_encrypt(pub_rsa,input,output);	
 }
 
-void shopex_conf_rsa_decrypt(char *input,char *output){
+void shopex_conf_rsa_decrypt(char *input,char **output){
 	RSA *priv_rsa;
 	priv_rsa = get_shopex_private_key();
-//	shopex_rsa_decrypt(priv_rsa,input,output);	
+	shopex_rsa_decrypt(priv_rsa,input,output);	
 }
 
 void shopex_data_rsa_encrypt(char *input,char *output){
