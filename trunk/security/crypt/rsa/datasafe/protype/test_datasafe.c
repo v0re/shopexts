@@ -16,10 +16,10 @@ main(){
 	char *en_buf,*de_buf;
 	
 	printf("encrypt data  : %s\n",message);
-	shopex_conf_rsa_encrypt(message,en_buf);
+	shopex_conf_rsa_encrypt(message,&en_buf);
 	printf("encrypted data :  %s\n",en_buf);
 	
-	shopex_conf_rsa_decrypt(en_buf,de_buf);
+	shopex_conf_rsa_decrypt(en_buf,&de_buf);
 	printf("decrypted data is : %s\n",de_buf);
 	
 }
