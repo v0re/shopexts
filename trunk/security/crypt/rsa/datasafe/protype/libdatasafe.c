@@ -281,7 +281,7 @@ void test_shopex_data_rsa_encrypt(){
     char *output = NULL;
     
     input = "hello world!";
-    shopex_data_rsa_encrypt(pub_keyfile_path,input,output);
+    shopex_data_rsa_encrypt(pub_keyfile_path,input,&output);
 }
 	 
 
