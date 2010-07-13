@@ -31,6 +31,16 @@ DLLENTRY void shopex_conf_rsa_decrypt(
 	char **output
 );
 
+DLLENTRY void shopex_data_rsa_encrypt(
+	char *input,
+	char **output
+);
+
+DLLENTRY void shopex_data_rsa_decrypt(
+	char *input,
+	char **output
+);
+
 
 #ifdef  __cplusplus
 }
