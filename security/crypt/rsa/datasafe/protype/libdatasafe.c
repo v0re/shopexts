@@ -8,6 +8,7 @@ All rights reserved.
 #include <stdio.h>
 #include <string.h>
 #include <openssl/rsa.h>
+#include <openssl/pem.h>
 #include <openssl/sha.h>
 #include <openssl/hmac.h>
 #include <openssl/evp.h>
