@@ -32,11 +32,13 @@ DLLENTRY void shopex_conf_rsa_decrypt(
 );
 
 DLLENTRY void shopex_data_rsa_encrypt(
+    char *keyfile_path,
 	char *input,
 	char **output
 );
 
 DLLENTRY void test_get_shopex_key(
+    char *keyfile_path,
 	char *input,
 	char **output
 );
