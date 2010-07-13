@@ -24,9 +24,9 @@ main(){
 	printf("decrypted data is : %s\n",de_buf);
 	*/
 	
-	//test_get_user_key();
+	test_get_user_key();
 	//test_get_shopex_key();
 	
-	test_shopex_data_rsa_encrypt();
+	//test_shopex_data_rsa_encrypt();
 	
 }
