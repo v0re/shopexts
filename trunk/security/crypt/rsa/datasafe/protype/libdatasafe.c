@@ -259,8 +259,10 @@ void test_get_shopex_key(){
 void test_get_user_key(){
 	 RSA *pub_rsa,*priv_rsa;
 	 
-	 pub_rsa = get_user_public_key("/etc/shopex/skomart.com/pub.pem");
-	 priv_rsa = get_user_private_key("/etc/shopex/skomart.com/pub.pem");
+	 char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
+	 char *priv_keyfile_path = "/etc/shopex/skomart.com/pub.pem";
+	 pub_rsa = get_user_public_key(pub_keyfile_path);
+	 priv_rsa = get_user_private_key(priv_keyfile_path);
 	 
     if ((pub_rsa == NULL) || (priv_rsa == NULL))
         ERR_print_errors_fp(stderr);
