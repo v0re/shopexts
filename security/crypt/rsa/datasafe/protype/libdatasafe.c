@@ -256,5 +256,23 @@ void test_get_shopex_key(){
     RSA_free(priv_rsa);
 }
 
+void test_get_user_key(){
+	 RSA *pub_rsa,*priv_rsa;
+	 
+	 pub_rsa = get_user_public_key("/etc/shopex/skomart.com/pub.pem");
+	 priv_rsa = get_user_private_key("/etc/shopex/skomart.com/pub.pem");
+	 
+    if ((pub_rsa == NULL) || (priv_rsa == NULL))
+        ERR_print_errors_fp(stderr);
+    
+    RSA_print_fp(stdout,pub_rsa,11);
+    RSA_print_fp(stdout,priv_rsa,11);
+    
+    RSA_free(pub_rsa);
+    RSA_free(priv_rsa);
+}
+	 
+
+
 
 
