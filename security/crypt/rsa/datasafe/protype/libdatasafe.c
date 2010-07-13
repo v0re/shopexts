@@ -80,12 +80,14 @@ void get_shopex_key(RSA **pubkey,RSA **privkey){
 RSA *get_shopex_public_key(){
 	RSA *pub_rsa,*priv_rsa;
 	get_shopex_key(&pub_rsa,&priv_rsa);
+	RSA_free(priv_rsa);
 	return pub_rsa;
 }
 
 RSA *get_shopex_private_key(){
 	RSA *pub_rsa,*priv_rsa;
 	get_shopex_key(&pub_rsa,&priv_rsa);
+	RSA_free(pub_rsa);
 	return priv_rsa;
 }
 
@@ -131,6 +133,7 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char **output){
 	free(b64_buf_p);
 	free(ciphertext_p);
 	free(rsa_ret_buf_p);
+	RSA_free(pub_rsa);
 }
 
 void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
@@ -169,6 +172,7 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
 	free(de_buf_p);
 	free(rsa_ret_buf_p);
 	free(cleartext_p);
+	RSA_free(priv_rsa);
 }
 
 void shopex_conf_rsa_encrypt(char *input,char **output ){
