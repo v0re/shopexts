@@ -1,6 +1,6 @@
 /*
-gcc -lssl libdatasafe.c  -fPIC -shared -o libdatasafe.so
-
+gcc -lssl libdatasafe.c  -fPIC -shared -o libdatasafe.so &&
+cp libdatasafe.so /usr/lib
 Written by Ken Xu (Kyle<xuqinyong@gmail.com>)
 Copyright (C) 2010, ShopEx. 
 All rights reserved.
@@ -261,7 +261,7 @@ void test_get_user_key(){
 	 RSA *pub_rsa,*priv_rsa;
 	 
 	 char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
-	 char *priv_keyfile_path = "/etc/shopex/skomart.com/pub.pem";
+	 char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
 	 pub_rsa = get_user_public_key(pub_keyfile_path);
 	 priv_rsa = get_user_private_key(priv_keyfile_path);
 	 
