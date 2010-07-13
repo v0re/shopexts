@@ -135,7 +135,7 @@ RSA *get_user_private_key(char *keyfile_path){
 
 
 void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int *output_len){    
-    int input_len,ks,chunk_len,rsa_ret_buf_len,ret_len,ret_len_total,en_len;
+    int ks,chunk_len,rsa_ret_buf_len,ret_len,ret_len_total,en_len;
     char *rsa_ret_buf_p,*rsa_ret_buf;
     char *plain_p,*plain;
     char *cipher_p,*cipher;
@@ -187,7 +187,7 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int
 }
 
 void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,int *output_len){
-    int input_len,de_len,ks,ret_len,ret_len_total;
+    int de_len,ks,ret_len,ret_len_total;
     char *rsa_ret_buf_p,*rsa_ret_buf;
     char *cipher_p,*cipher;
     char *de_buf_p,*de_buf;
