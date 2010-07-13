@@ -43,13 +43,13 @@ DLLENTRY void test_get_shopex_key(
 	char **output
 );
 
-DLLENTRY void test_get_user_key(
-    void
+DLLENTRY void test_get_shopex_key(
+
 );
 
 
 DLLENTRY void test_get_user_key(
-    void
+
 );
 
 #ifdef  __cplusplus
