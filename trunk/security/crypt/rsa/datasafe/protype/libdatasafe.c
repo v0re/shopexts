@@ -254,7 +254,7 @@ void shopex_data_rsa_encrypt(char *keyfile_path,char *input,int input_len,char *
 void shopex_data_rsa_decrypt(char *keyfile_path,char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
     priv_rsa = get_user_private_key(keyfile_path);
-    shopex_rsa_decrypt(priv_rsa,input,output);    
+    shopex_rsa_decrypt(priv_rsa,input,input_len,output,output_len);    
 }
 
 
