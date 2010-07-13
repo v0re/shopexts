@@ -25,7 +25,7 @@ DLLENTRY void shopex_conf_rsa_encrypt(
 	char *input,
 	int input_len,
 	char **output,
-	int *output_len,
+	int *output_len
 );
 
 DLLENTRY void shopex_conf_rsa_decrypt(
