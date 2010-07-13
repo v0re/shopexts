@@ -274,6 +274,15 @@ void test_get_user_key(){
     RSA_free(pub_rsa);
     RSA_free(priv_rsa);
 }
+
+void test_shopex_data_rsa_encrypt(){
+    char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
+    char *input = NULL;
+    char *output = NULL;
+    
+    input = "hello world!";
+    shopex_data_rsa_encrypt(pub_keyfile_path,input,output);
+}
 	 
 
 
