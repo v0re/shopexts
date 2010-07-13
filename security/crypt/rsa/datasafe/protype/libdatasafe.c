@@ -33,7 +33,7 @@ void base64_encode(unsigned char *input, int length,char *output, int *output_le
     
     //buff = (char *)malloc(bptr->length);
     memcpy(output, bptr->data, bptr->length);
-    output[bptr->length] = 0;
+    output[bptr->length] = '\0';
     
     *output_len = bptr->length;
         
@@ -53,7 +53,7 @@ void  base64_decode(unsigned char *input, int length,char *output, int *output_l
     bmem = BIO_push(b64, bmem);
     
     len = BIO_read(bmem, output, max_len);
-    output[len] = 0;
+    output[len] = '\0';
     *output_len = len;
     
     BIO_free_all(b64);
@@ -134,7 +134,7 @@ RSA *get_user_private_key(char *keyfile_path){
 }
 
 
-void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char **output){    
+void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int *output_len){    
     int input_len,ks,chunk_len,rsa_ret_buf_len,ret_len,ret_len_total,en_len;
     char *rsa_ret_buf_p,*rsa_ret_buf;
     char *plain_p,*plain;
@@ -146,7 +146,9 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char **output){
     ret_len = ret_len_total = 0;
 
     input_p = input;
-    input_len = strlen(input);
+    if(input_len == NULL){
+        input_len = strlen(input);
+    }
     ks = RSA_size(pub_rsa);
     chunk_len = input_len > (ks - 11) ? ks - 11 : input_len;
     rsa_ret_buf_len = ( ( input_len / chunk_len + 1) * ks );
@@ -172,10 +174,11 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char **output){
     base64_encode(rsa_ret_buf_p,ret_len_total,b64_buf,&en_len);
     output_buf = (char *)malloc(en_len);
     memcpy(output_buf,b64_buf_p,en_len);
-    output_buf[en_len] = 0;
+    output_buf[en_len] = '\0';
     
     *output = output_buf; 
-
+    *output_len = en_len;
+    
     free(b64_buf_p);
     free(cipher_p);
     free(plain_p);
@@ -183,7 +186,7 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char **output){
     RSA_free(pub_rsa);
 }
 
-void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
+void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,int *output_len){
     int input_len,de_len,ks,ret_len,ret_len_total;
     char *rsa_ret_buf_p,*rsa_ret_buf;
     char *cipher_p,*cipher;
@@ -193,8 +196,9 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
     
     ret_len = ret_len_total = 0;
     
-    input_len = strlen(input);
-    
+    if(input_len == NULL){
+        input_len = strlen(input);
+    }    
     de_buf_p = de_buf = (char *)malloc(input_len * sizeof(char));
     base64_decode(input,input_len,de_buf,&de_len);    
     de_buf = de_buf_p;
@@ -217,9 +221,10 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
     
     output_buf = (char *)malloc(ret_len_total * sizeof(char));    
     memcpy(output_buf,rsa_ret_buf_p,ret_len_total);
-    output_buf[ret_len_total] = 0;
+    output_buf[ret_len_total] = '\0';
     
     *output = output_buf;
+    *output_len = ret_len_total;
     
     free(de_buf_p);
     free(rsa_ret_buf_p);
@@ -228,25 +233,25 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
     RSA_free(priv_rsa);
 }
 
-void shopex_conf_rsa_encrypt(char *input,char **output ){
+void shopex_conf_rsa_encrypt(char *input,int input_len,char **output,int *output_len){
     RSA *pub_rsa;
     pub_rsa = get_shopex_public_key();
-    shopex_rsa_encrypt(pub_rsa,input,output);    
+    shopex_rsa_encrypt(pub_rsa,input,input_len,output,output_len);    
 }
 
-void shopex_conf_rsa_decrypt(char *input,char **output){
+void shopex_conf_rsa_decrypt(char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
     priv_rsa = get_shopex_private_key();
-    shopex_rsa_decrypt(priv_rsa,input,output);    
+    shopex_rsa_decrypt(priv_rsa,input,input_len,output,output_len);    
 }
 
-void shopex_data_rsa_encrypt(char *keyfile_path,char *input,char * *output){
+void shopex_data_rsa_encrypt(char *keyfile_path,char *input,int input_len,char * *output,int *output_len){
     RSA *pub_rsa;
     pub_rsa = get_user_public_key(keyfile_path);
-    shopex_rsa_encrypt(pub_rsa,input,output);    
+    shopex_rsa_encrypt(pub_rsa,input,input_len,output,output_len);    
 }
 
-void shopex_data_rsa_decrypt(char *keyfile_path,char *input,char **output){
+void shopex_data_rsa_decrypt(char *keyfile_path,char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
     priv_rsa = get_user_private_key(keyfile_path);
     shopex_rsa_decrypt(priv_rsa,input,output);    
@@ -291,16 +296,19 @@ void test_shopex_data_rsa_encrypt(){
     char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
     char *input = NULL;
     char *output = NULL;
+    int output_len;
     
     input = "hello world!";
-    shopex_data_rsa_encrypt(pub_keyfile_path,input,&output);
+    shopex_data_rsa_encrypt(pub_keyfile_path,input,strlen(input),&output,&output_len);
+    output[output_len] = '\0';
     printf("%s\n",output);
     
     input = NULL;
-    shopex_data_rsa_decrypt(priv_keyfile_path,output,&input);
+    shopex_data_rsa_decrypt(priv_keyfile_path,output,strlen(output),&input,&output_len);
     printf("%s\n",input);
     
     free(output);
+    free(input);
 }
 	 
 
