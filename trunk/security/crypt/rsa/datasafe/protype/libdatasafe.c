@@ -146,7 +146,7 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int
     ret_len = ret_len_total = 0;
 
     input_p = input;
-    if(input_len == NULL){
+    if((int)input_len < 0 ){
         input_len = strlen(input);
     }
     ks = RSA_size(pub_rsa);
@@ -196,7 +196,7 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     
     ret_len = ret_len_total = 0;
     
-    if(input_len == NULL){
+    if((int)input_len < 0 ){
         input_len = strlen(input);
     }    
     de_buf_p = de_buf = (char *)malloc(input_len * sizeof(char));
