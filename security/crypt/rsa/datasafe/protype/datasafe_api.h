@@ -52,6 +52,10 @@ DLLENTRY void test_get_user_key(
 
 );
 
+DLLENTRY void test_shopex_data_rsa_encrypt(
+
+);
+
 #ifdef  __cplusplus
 }
 #endif
