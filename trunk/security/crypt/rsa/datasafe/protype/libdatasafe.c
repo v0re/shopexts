@@ -277,12 +277,18 @@ void test_get_user_key(){
 
 void test_shopex_data_rsa_encrypt(){
     char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
+    char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
     char *input = NULL;
     char *output = NULL;
     
     input = "hello world!";
     shopex_data_rsa_encrypt(pub_keyfile_path,input,&output);
-    printf("%s",output);
+    printf("%s\n",output);
+    
+    input = NULL;
+    shopex_data_rsa_decrypt(priv_keyfile_path,output,&input);
+    printf("%s\n",input);
+    
     free(output);
 }
 	 
