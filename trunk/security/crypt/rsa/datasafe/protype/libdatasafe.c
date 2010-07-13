@@ -135,36 +135,40 @@ RSA *get_user_private_key(char *keyfile_path){
 
 
 void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char **output){    
-    int input_len,rsa_len,buf_num,chunk_len,ret_len,ret_len_total,en_len;
+    int input_len,ks,chunk_len,rsa_ret_buf_len,ret_len,ret_len_total,en_len;
     char *rsa_ret_buf_p,*rsa_ret_buf;
-    char *ciphertext_p,*ciphertext;
-    char *rsa_input,*rsa_input_p;
+    char *plain_p,*plain;
+    char *cipher_p,*cipher;
     char *b64_buf_p,*b64_buf;
     char *input_p;
     char *output_buf;
 
     ret_len = ret_len_total = 0;
 
-    input_len = strlen(input);
-    rsa_len = RSA_size(pub_rsa);
-    buf_num = input_len / rsa_len + 1;
     input_p = input;
-    rsa_ret_buf_p = rsa_ret_buf = (char *)malloc(rsa_len * buf_num);
-    ciphertext_p = ciphertext = (char * )malloc(RSA_size(pub_rsa));
-    rsa_input_p = rsa_input = (char *)malloc(110);
-    do{            
-            chunk_len = input_len > 110 ? 110 : input_len;
-            memcpy(rsa_input,input,chunk_len);
-            //input_len must lower then RSA_size(pub_rsa) - 11            
-            ret_len = RSA_public_encrypt(chunk_len, rsa_input, ciphertext, pub_rsa, RSA_PKCS1_PADDING);
-            memcpy(rsa_ret_buf,ciphertext_p,ret_len);
-            ret_len_total += ret_len;
-            rsa_ret_buf += ret_len;
-            ciphertext = ciphertext_p;
-            rsa_input = rsa_input_p;
-            input = input + 110;
-    }while(input - input_p < input_len );
-    b64_buf_p = b64_buf = (char *)malloc( ret_len_total * 1.5 );
+    input_len = strlen(input);
+    ks = RSA_size(pub_rsa);
+    chunk_len = input_len > (ks - 11) ? ks - 11 : input_len;
+    rsa_ret_buf_len = ( ( input_len / chunk_len + 1) * ks );
+    rsa_ret_buf_p = rsa_ret_buf = (char *)malloc(rsa_ret_buf_len * sizeof(char));
+    memset(rsa_ret_buf_p,'\0', rsa_ret_buf_len + 1);
+    plain_p = plain = (char *)malloc(ks * sizeof(char));
+    cipher_p = cipher = (char *)malloc(ks * sizeof(char));
+    
+    while(input - input_p < input_len) {
+        memset(plain,'\0',ks + 1);
+        memset(cipher, '\0', ks + 1);
+        memcpy(plain, input, chunk_len);
+        ret_len = RSA_public_encrypt(chunk_len, plain, cipher, pub_rsa, RSA_PKCS1_PADDING);
+        memcpy(rsa_ret_buf,cipher,ret_len);
+        plain = plain_p;
+        cipher = cipher_p;
+        ret_len_total += ret_len;
+        input += chunk_len;
+        rsa_ret_buf += ret_len;
+    }
+    
+    b64_buf_p = b64_buf = (char *)malloc(ret_len_total * 1.5 );
     base64_encode(rsa_ret_buf_p,ret_len_total,b64_buf,&en_len);
     output_buf = (char *)malloc(en_len);
     memcpy(output_buf,b64_buf_p,en_len);
@@ -173,39 +177,45 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,char **output){
     *output = output_buf; 
 
     free(b64_buf_p);
-    free(ciphertext_p);
+    free(cipher_p);
+    free(plain_p);
     free(rsa_ret_buf_p);
     RSA_free(pub_rsa);
 }
 
 void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
-    int input_len,de_len,chunk_len,ret_len,ret_len_total;
+    int input_len,de_len,ks,ret_len,ret_len_total;
     char *rsa_ret_buf_p,*rsa_ret_buf;
-    char *cleartext_p,*cleartext;
+    char *cipher_p,*cipher;
     char *de_buf_p,*de_buf;
-    char *rsa_input,*rsa_input_p;
+    char *plain_p,*plain;
     char *output_buf;
     
     ret_len = ret_len_total = 0;
     
     input_len = strlen(input);
-    de_buf_p = de_buf = (char *)malloc(input_len);
+    
+    de_buf_p = de_buf = (char *)malloc(input_len * sizeof(char));
     base64_decode(input,input_len,de_buf,&de_len);    
-    rsa_ret_buf_p = rsa_ret_buf = (char *)malloc(input_len);
-    cleartext_p = cleartext = (char *)malloc(RSA_size(priv_rsa));
-    rsa_input_p = rsa_input = (char *)malloc(110);
-    do{
-        chunk_len = de_len > 110 ? 110 : de_len;
-        memcpy(rsa_input,de_buf,chunk_len);
-        ret_len = RSA_private_decrypt(chunk_len, rsa_input, cleartext, priv_rsa, RSA_PKCS1_PADDING);
-        memcpy(rsa_ret_buf,cleartext_p,ret_len);
+    de_buf = de_buf_p;
+    
+    ks = RSA_size(priv_rsa);
+    cipher_p = cipher = (char*)malloc(ks * sizeof(char));
+    plain_p = plain = (char*)malloc(ks * sizeof(char));
+    while(de_buf - de_buf_p < de_len) {
+        memset(cipher, '\0', ks);
+        memset(plain, '\0', ks);
+        memcpy(cipher,de_buf,ks);
+        ret_len = RSA_private_decrypt(ks, cipher, plain, priv_rsa, RSA_PKCS1_PADDING);
+        memcpy(rsa_ret_buf,plain,ret_len);
         ret_len_total += ret_len;
         rsa_ret_buf += ret_len;
-        cleartext = cleartext_p;
-        rsa_input = rsa_input_p;
-        de_buf = de_buf + 110;        
-    }while(de_buf - de_buf_p < de_len);    
-    output_buf = (char *)malloc(ret_len_total);    
+        cipher = cipher_p;
+        plain = plain_p;
+        de_buf += ks;    
+    }    
+    
+    output_buf = (char *)malloc(ret_len_total * sizeof(char));    
     memcpy(output_buf,rsa_ret_buf_p,ret_len_total);
     output_buf[ret_len_total] = 0;
     
@@ -213,7 +223,8 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,char **output){
     
     free(de_buf_p);
     free(rsa_ret_buf_p);
-    free(cleartext_p);
+    free(cipher_p);
+    free(plain_p);
     RSA_free(priv_rsa);
 }
 
