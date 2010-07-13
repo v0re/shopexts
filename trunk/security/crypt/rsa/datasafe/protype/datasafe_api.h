@@ -23,24 +23,32 @@ extern "C" {
 
 DLLENTRY void shopex_conf_rsa_encrypt(
 	char *input,
+	int input_len,
 	char **output
+	int *output_len,
 );
 
 DLLENTRY void shopex_conf_rsa_decrypt(
 	char *input,
-	char **output
+	int input_len,
+	char **output,
+	int *output_len
 );
 
 DLLENTRY void shopex_data_rsa_encrypt(
     char *keyfile_path,
 	char *input,
-	char **output
+	int input_len,
+	char **output,
+	int *output_len
 );
 
 DLLENTRY void shopex_data_rsa_decrypt(
     char *keyfile_path,
 	char *input,
+	int input_len,
 	char **output
+	int *output_len
 );
 
 DLLENTRY void test_get_shopex_key(
