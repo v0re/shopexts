@@ -72,6 +72,10 @@ DLLENTRY void test_shopex_data_rsa_encrypt(
 
 );
 
+DLLENTRY void test_shopex_data_rsa_decrypt(
+
+);
+
 #ifdef  __cplusplus
 }
 #endif
