@@ -25,8 +25,8 @@
 #include "php.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
-#include "protype/php_datasafe.h"
-
+#include "php_datasafe.h"
+#include "protype/datasafe_api.h"
 
 
 
