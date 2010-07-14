@@ -190,7 +190,7 @@ PHP_FUNCTION(shopex_data_encrypt)
 	
 	keyfile_path = "/etc/shopex/skomart.com/pub.pem";
 	shopex_data_rsa_encrypt(keyfile_path,arg,arg_len,&output,&output_len);
-	ret = estrdup(output,output_len);
+	ret = estrndup(output,output_len);
 	free(output);
 	RETURN_STRING(ret,strlen(ret));
 }
