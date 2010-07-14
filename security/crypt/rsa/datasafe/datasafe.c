@@ -148,7 +148,7 @@ PHP_MINFO_FUNCTION(datasafe)
 }
 /* }}} */
 
-void function shopex_print_array(zval *z_array){
+void  shopex_print_array(zval *z_array){
 	int count, i;
 	zval **z_item;
 	count = zend_hash_num_elements(Z_ARRVAL_P(z_array));
