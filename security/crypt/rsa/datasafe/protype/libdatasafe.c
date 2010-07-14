@@ -317,24 +317,16 @@ void test_get_user_private_key(){
 
 void test_shopex_data_rsa_encrypt(){
     char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
-    char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
     char *input = NULL;
     char *output = NULL;
-    int output_len;
+    int output_len;    
     
-    /*
     input = "hello world!";
+    
     shopex_data_rsa_encrypt(pub_keyfile_path,input,strlen(input),&output,&output_len);
     output[output_len] = '\0';
     printf("%s\n",output);
-    */
-    
-    input = "M/ydV2FbdjwcbRCwBRHzao2JluMiyNqqVTW4lBuUuz9Uha9bi93KQJPSRAxzCI+n9Ab88goYlCZ1SAPQPe+mV/lUIM55qQkDpqdTOknDcea+N0H/15wLolUSXIlzp/88/tQwPt9+lcb9ctnW47rbeDsZrBFV/5WoWkqPV2m/bWE=";
-    shopex_data_rsa_decrypt(priv_keyfile_path,input,strlen(input),&output,&output_len);
-    printf("%s\n",output);
-    
-   // free(output);
-//    free(input);
+
 }
 	 
 
