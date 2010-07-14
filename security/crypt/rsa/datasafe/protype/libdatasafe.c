@@ -291,6 +291,30 @@ void test_get_user_key(){
     RSA_free(priv_rsa);
 }
 
+void test_get_user_public_key(){
+	 RSA *pub_rsa;
+	 
+	 char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
+	 pub_rsa = get_user_public_key(pub_keyfile_path);
+	 
+	RSA_print_fp(stdout,pub_rsa,11);
+	
+	RSA_free(pub_rsa);
+}
+
+void test_get_user_private_key(){
+	RSA *priv_rsa;
+	 
+
+	 char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
+
+	 priv_rsa = get_user_private_key(priv_keyfile_path);
+	 
+    RSA_print_fp(stdout,priv_rsa,11);
+    
+    RSA_free(priv_rsa);
+}
+
 void test_shopex_data_rsa_encrypt(){
     char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
     char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";

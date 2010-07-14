@@ -55,6 +55,14 @@ DLLENTRY void test_get_shopex_key(
 
 );
 
+DLLENTRY void test_get_user_public_key(
+
+);
+
+DLLENTRY void test_get_user_private_key(
+
+);
+
 
 DLLENTRY void test_get_user_key(
 
