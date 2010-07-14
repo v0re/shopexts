@@ -197,17 +197,26 @@ PHP_FUNCTION(shopex_data_encrypt)
 
 PHP_FUNCTION(shopex_data_decrypt)
 {
-	char *arg = NULL;
-	int arg_len, len;
-    char buf[2048];
+	char *config_filepath = NULL;
+    int config_filepath_len;
+    char *arg = NULL;
+	int arg_len;
 
-	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"s", &arg, &arg_len) == FAILURE){
+    char *keyfile_path;
+    char *output;
+    int output_len;
+    
+    char * ret;
+
+	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
 		return;
 	}
 	
-	shopex_rsa_decrypt(arg,buf);
-    
-	RETURN_STRING(buf, strlen(buf));
+	keyfile_path = "/etc/shopex/skomart.com/sec.pem";
+	shopex_data_rsa_decrypt(keyfile_path,arg,arg_len,&output,&output_len);
+	ret = estrndup(output,output_len);
+	free(output);
+	RETURN_STRING(ret,strlen(ret));
 }
 
 /* }}} */
