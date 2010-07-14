@@ -181,6 +181,8 @@ PHP_FUNCTION(shopex_data_encrypt)
     char *keyfile_path;
     char *output;
     int output_len;
+    
+    char * ret;
 
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
 		return;
@@ -188,8 +190,9 @@ PHP_FUNCTION(shopex_data_encrypt)
 	
 	keyfile_path = "/etc/shopex/skomart.com/pub.pem";
 	shopex_data_rsa_encrypt(keyfile_path,arg,arg_len,&output,&output_len);
-		
-	RETURN_STRING(output, output_len);
+	ret = estrdup(output,output_len);
+	free(output);
+	RETURN_STRING(ret,strlen(ret));
 }
 
 PHP_FUNCTION(shopex_data_decrypt)
