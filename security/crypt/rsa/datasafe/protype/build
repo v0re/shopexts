@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#svn update
+svn update
 gcc  -g -lssl libdatasafe.c  -fPIC -shared -o libdatasafe.so 
 cp libdatasafe.so /usr/lib
 gcc  -g -ldatasafe -L/usr/lib test_datasafe.c -o test_datasafe 
