@@ -203,6 +203,8 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     base64_decode(input,input_len,de_buf,&de_len);    
     de_buf = de_buf_p;
     
+    rsa_ret_buf_p = rsa_ret_buf = (char *)malloc(input_len * sizeof(char));
+    
     ks = RSA_size(priv_rsa);
     cipher_p = cipher = (char*)malloc(ks * sizeof(char));
     plain_p = plain = (char*)malloc(ks * sizeof(char));
