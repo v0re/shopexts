@@ -335,6 +335,7 @@ void test_shopex_data_rsa_decrypt(){
     char *priv_keyfile_path  = "/etc/shopex/skomart.com/sec.pem";
     char *input = NULL;
     char *output = NULL;
+    int output_len;
     
     input = "KTmCZFBep8qJnIZeo0hSq1Owc/QRWu66EZXb+gPj5fCrh1Vgpj1u+nWJb8aQpy4EOxNu1r7kuibF3OIekLjvrspnd1kD3mMUYuoDOXbp5rIv+EtDieRKbJqeDmfD8GrEGHwrHlec/gnLqhyN1cWXFDD1x7xSULMPLmTzbnbTWk4=";
     
