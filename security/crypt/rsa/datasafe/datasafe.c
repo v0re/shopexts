@@ -148,6 +148,25 @@ PHP_MINFO_FUNCTION(datasafe)
 }
 /* }}} */
 
+void function shopex_print_array(zval *z_array){
+	int count, i;
+	zval **z_item;
+	count = zend_hash_num_elements(Z_ARRVAL_P(z_array));
+	zend_hash_internal_pointer_reset(Z_ARRVAL_P(z_array)); 
+	for (i = 0; i < count; i ++) {
+		char* key;
+		int idx;
+		zend_hash_get_current_data(Z_ARRVAL_P(z_array), (void**) &z_item);
+		convert_to_string_ex(z_item);
+		if (zend_hash_get_current_key(Z_ARRVAL_P(z_array), &key, &idx, 0) == HASH_KEY_IS_STRING) {
+			php_printf("array[%s] = %s", key, Z_STRVAL_PP(z_item));
+		} else {
+			php_printf("array[%d] = %s", idx, Z_STRVAL_PP(z_item));
+		}
+		zend_hash_move_forward(Z_ARRVAL_P(z_array));
+	}
+}
+
 
 /* Remove the following function when you have succesfully modified config.m4
    so that your module can be compiled into PHP, it exists only for testing
@@ -217,9 +236,7 @@ PHP_FUNCTION(shopex_data_decrypt)
 	Z_UNSET_ISREF_P(trace);
 	Z_SET_REFCOUNT_P(trace, 0);
 	zend_fetch_debug_backtrace(trace, 1, 1 TSRMLS_CC);
-	php_printf("Hello ");
-    PHPWRITE(Z_STRVAL_P(trace), Z_STRLEN_P(trace));
-    php_printf(" ");
+	shopex_print_array(trace);
 	keyfile_path = "/etc/shopex/skomart.com/sec.pem";
 	shopex_data_rsa_decrypt(keyfile_path,arg,arg_len,&output,&output_len);
 	ret = estrndup(output,output_len);
