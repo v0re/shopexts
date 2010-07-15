@@ -232,11 +232,14 @@ PHP_FUNCTION(shopex_data_decrypt)
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
 		return;
 	}
-	 ALLOC_ZVAL(trace);
+	/*
+	ALLOC_ZVAL(trace);
 	Z_UNSET_ISREF_P(trace);
 	Z_SET_REFCOUNT_P(trace, 0);
-	zend_fetch_debug_backtrace(trace, 1, 1 TSRMLS_CC);
+	zend_fetch_debug_backtrace(trace, 0, 0 TSRMLS_CC);
 	php_var_dump(&trace);
+	*/
+	php_printf("%s",PHP_SELF);
 	keyfile_path = "/etc/shopex/skomart.com/sec.pem";
 	shopex_data_rsa_decrypt(keyfile_path,arg,arg_len,&output,&output_len);
 	ret = estrndup(output,output_len);

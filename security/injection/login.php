@@ -16,7 +16,7 @@ if($_POST || $_GET){
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		
-		$sql = "select * from injection_login where username={$username} and password={$password}";
+		$sql = "select * from injection_login where username='{$username}' and password='{$password}'";
 		$rs = mysql_query($sql) or die(mysql_error());
 		if ( $row = mysql_fetch_array($rs,MYSQL_ASSOC) ){
 			echo "<font color=green>welcome<b><a href=?action=show&id={$row[id]} target=_blank> $row[username] </a> </b></font><hr/>";
