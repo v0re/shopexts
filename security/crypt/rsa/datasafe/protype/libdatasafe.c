@@ -441,7 +441,7 @@ void test_shopex_read_allowfile_in_file(){
 	output_p = output;
 	pos_start = pos_end = output;
 	len = strlen(output);
-	while((pos_end - output_p) < len){
+	while((pos_end - output_p) < len && strlen(output) > 0){
 		pos_end = strstr(output,"\n");
 		if(i > 1){
 			buf_len = pos_end - output;
