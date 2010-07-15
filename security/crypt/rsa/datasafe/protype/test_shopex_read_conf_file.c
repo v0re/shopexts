@@ -14,5 +14,5 @@ All rights reserved.
 main(){	
 	
 	test_shopex_read_conf_file();
-	
+	test_shopex_read_pubkey_pos_file();
 }
