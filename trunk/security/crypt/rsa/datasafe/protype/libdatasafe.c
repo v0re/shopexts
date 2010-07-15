@@ -415,7 +415,7 @@ void test_shopex_read_privkeypos_in_file(){
 			break;
 		}
 		pos_start = pos_end + 1;
-		output = pos_pos_start;
+		output = pos_start;
 		i++;
 	}
 	len = pos_end - pos_start;
