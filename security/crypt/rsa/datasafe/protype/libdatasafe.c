@@ -400,14 +400,14 @@ void test_shopex_read_pubkeypos_in_file(){
 
 void test_shopex_read_privkeypos_in_file(){
 	char *filename;
-	char *output;
+	char *output,*output_p;
 	int len;
 	char *pos_start,*pos_end,*pub_buf;
 	int i = 0;
 	
 	filename = "/etc/shopex/skomart.com/setting.conf";
 	shopex_read_conf_file(filename,&output,&len);
-	
+	output_p = output;
 	pos_start = pos_end = output;
 	while((pos_end - pos_start) < len){
 		pos_end = strstr(output,"\n");
@@ -422,7 +422,7 @@ void test_shopex_read_privkeypos_in_file(){
 	pub_buf = (char *)malloc(len);
 	memcpy(pub_buf,pos_start,len);
 	printf("%s",pub_buf);	
-	free(output);
+	free(output_p);
 	free(pub_buf);
 }
 
