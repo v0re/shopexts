@@ -443,14 +443,13 @@ void test_shopex_read_allowfile_in_file(){
 	len = strlen(output);
 	while((pos_end - output_p) < len){
 		pos_end = strstr(output,"\n");
-		if(i < 1){
-			continue;
+		if(i > 1){
+			buf_len = pos_end - output;
+			buf = (char *)malloc(buf_len);
+			memcpy(buf,output,buf_len);
+			printf("%s",buf);
+			free(buf);
 		}
-		buf_len = pos_end - output;
-		buf = (char *)malloc(buf_len);
-		memcpy(buf,output,buf_len);
-		printf("%s",buf);
-		free(buf);
 		output = pos_end + 1;
 		i++;
 	}
