@@ -383,7 +383,7 @@ void test_shopex_read_pubkey_pos_file(){
 	char *filename;
 	char *output;
 	int len;
-	char *pos_start,*pos_end,pub_buf;
+	char *pos_start,*pos_end,*pub_buf;
 	
 	filename = "/etc/shopex/skomart.com/setting.conf";
 	shopex_read_conf_file(filename,&output,&len);
