@@ -434,10 +434,13 @@ void test_shopex_read_allowfile_in_file(){
 	int i = 0;
 	char *buf;
 	
+	len = buf_len = 0;
+	
 	filename = "/etc/shopex/skomart.com/setting.conf";
 	shopex_read_conf_file(filename,&output,&len);
 	output_p = output;
 	pos_start = pos_end = output;
+	len = strlen(output);
 	while((pos_end - output_p) < len){
 		pos_end = strstr(output,"\n");
 		if(i < 1){
