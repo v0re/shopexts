@@ -13,6 +13,6 @@ All rights reserved.
 
 main(){	
 	
-	test_shopex_read_public_in_file();
+	test_shopex_read_conf_file();
 	
 }
