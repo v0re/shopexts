@@ -279,6 +279,25 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
 	 fclose(fp);
 }
 
+void shopex_read_public_in_file(char *filename,char **output){
+	FILE * fp;
+	 int len;
+	 char buffer[255];
+	 
+	 fp = fopen(filename, "r");
+	 if (fp == NULL) {
+		syslog(LOG_USER|LOG_INFO, "read shopex config file failure");
+		exit(EXIT_FAILURE);
+	 }
+	
+	len = fgets(buffer,sizeof(buffer),fp);
+	buffer[len] = '\0';
+	*output = buffer;
+	 
+	 fclose(fp);
+	
+}
+
 
 void test_get_shopex_key(){
     RSA *pub_rsa,*priv_rsa;
@@ -373,8 +392,20 @@ void test_shopex_read_conf_file(){
 	filename = "/etc/shopex/skomart.com/setting.conf";
 	shopex_read_conf_file(filename,&output,&len);
 	printf("%s",output);
+	
+	free(output);
 }
 
-
+void test_shopex_read_public_in_file(){
+	char *filename;
+	char *output;
+	int len;
+	
+	filename = "/etc/shopex/skomart.com/setting.conf";
+	shopex_read_conf_file(filename,&output);
+	printf("%s",output);
+	
+	free(output);
+}
 
 
