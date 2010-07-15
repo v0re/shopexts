@@ -409,7 +409,7 @@ void test_shopex_read_privkeypos_in_file(){
 	shopex_read_conf_file(filename,&output,&len);
 	
 	pos_start = pos_end = output;
-	while((pos_end - pos_start) < strlen(output)){
+	while((pos_end - pos_start) < len){
 		pos_end = strstr(output,"\n");
 		if(i == 1){
 			break;
