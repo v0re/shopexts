@@ -350,9 +350,9 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 			memset(buf,'\0',buf_len + 1);
 			memcpy(buf,output,buf_len);
 			buf[buf_len] = '\0';
-			cln_pos = strstr(buf,':');
+			cln_pos = strstr(buf,":");
 			memcpy(allowfile,buf,(cln_pos - buf));
-			memcpy(allowfile_md5,cln_pos+1,(buf_len - cln_pos);
+			memcpy(allowfile_md5,(cln_pos+1),(strlen(buf) - cln_pos);
 			if ( strcmp(allowfile,filename) == 0 ){
 				return 1;
 			}
