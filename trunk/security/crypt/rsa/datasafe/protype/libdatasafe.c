@@ -446,6 +446,7 @@ void test_shopex_read_allowfile_in_file(){
 		if(i > 1){
 			buf_len = pos_end - output;
 			buf = (char *)malloc(buf_len);
+			memset(buf,'\0',buf_len + 1);
 			memcpy(buf,output,buf_len);
 			printf("%s",buf);
 			free(buf);
