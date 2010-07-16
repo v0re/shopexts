@@ -464,7 +464,7 @@ void test_shopex_read_pubkeypos_in_file(){
 	
 	filename = "/etc/shopex/skomart.com/setting.conf";
 	shopex_read_pubkeypos_in_file(filename,&output);
-	printf("%s",output);
+	printf("%s\n",output);
 }
 
 void test_shopex_read_privkeypos_in_file(){
@@ -473,7 +473,7 @@ void test_shopex_read_privkeypos_in_file(){
 	
 	filename = "/etc/shopex/skomart.com/setting.conf";
 	shopex_read_privkeypos_in_file(filename,&output);
-	printf("%d",output);
+	printf("%s\n",output);
 	
 }
 
@@ -486,7 +486,7 @@ void test_shopex_is_file_in_allowlist(){
 	filename = "/srv/http/security/crypt/rsa/datasafe/test.php";
 	
 	ret = shopex_is_file_in_allowlist(config_filename,filename);	
-	printf("%d",ret);
+	printf("%d\n",ret);
 }
 
 
