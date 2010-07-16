@@ -352,7 +352,7 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 			buf[buf_len] = '\0';
 			cln_pos = strstr(buf,":");
 			buf_len = cln_pos - buf;
-			allowfile = (char *)malloc(buf_len)
+			allowfile = (char *)malloc(buf_len);
 			memcpy(allowfile,buf,buf_len);
 			buf_len = strlen(cln_pos+1);
 			allowfile_md5 = (char *)malloc(buf_len);
