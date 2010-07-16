@@ -201,16 +201,20 @@ PHP_FUNCTION(shopex_data_encrypt)
     char *output;
     int output_len;
     
-    char * ret;
+    char * ret;    
+    char *pubkeypos;
 
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
 		return;
 	}
-	
-	keyfile_path = "/etc/shopex/skomart.com/pub.pem";
-	shopex_data_rsa_encrypt(keyfile_path,arg,arg_len,&output,&output_len);
+	shopex_read_pubkeypos_in_file(config_filepath,&pubkeypos);
+	shopex_data_rsa_encrypt(pubkeypos,arg,arg_len,&output,&output_len);
 	ret = estrndup(output,output_len);
+	
+	free(pubkeypos);
+	pubkeypos = NULL;
 	free(output);
+	output = NULL;
 	RETURN_STRING(ret,strlen(ret));
 }
 
@@ -226,25 +230,25 @@ PHP_FUNCTION(shopex_data_decrypt)
     int output_len;
     
     char * ret;
+    char *privkeypos;
     
-    zval *trace;
+    zend_execute_data *zed;
+
+
 
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
 		return;
 	}
-	/*
-	ALLOC_ZVAL(trace);
-	Z_UNSET_ISREF_P(trace);
-	Z_SET_REFCOUNT_P(trace, 0);
-	zend_fetch_debug_backtrace(trace, 0, 0 TSRMLS_CC);
-	php_var_dump(&trace);
-	*/
-	php_printf("%s",PHP_SELF);
-	keyfile_path = "/etc/shopex/skomart.com/sec.pem";
-	shopex_data_rsa_decrypt(keyfile_path,arg,arg_len,&output,&output_len);
-	ret = estrndup(output,output_len);
-	free(output);
-	RETURN_STRING(ret,strlen(ret));
+		
+	zed = EG(current_execute_data);
+	if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename)){
+		shopex_read_privkeypos_in_file(config_filepath,&privkeypos);	
+		shopex_data_rsa_decrypt(privkeypos,arg,arg_len,&output,&output_len);
+		ret = estrndup(output,output_len);
+		free(output);
+		RETURN_STRING(ret,strlen(ret));
+	}
+	
 }
 
 /* }}} */
