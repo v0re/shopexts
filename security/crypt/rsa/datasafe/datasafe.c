@@ -229,7 +229,7 @@ PHP_FUNCTION(shopex_data_decrypt)
 		free(output);
 		RETURN_STRING(ret,strlen(ret));
 	}
-	
+	RETURN_STRING(arg,arg_len);
 }
 
 /* }}} */
