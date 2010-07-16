@@ -279,6 +279,85 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
 	 fclose(fp);
 }
 
+void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
+	char *output;
+	int len;
+	char *pos_start,*pos_end,*pub_buf;
+	
+	shopex_read_conf_file(config_filename,&output,&len);
+	
+	pos_start = output;
+	pos_end = strstr(output,"\n");
+	len = pos_end - pos_start;
+	pub_buf = (char *)malloc(len);
+	memcpy(pub_buf,pos_start,len);
+	
+	*file_pos = pub_buf;
+	
+	free(output);
+}
+
+void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
+	char *output,*output_p;
+	int len;
+	char *pos_start,*pos_end,*pub_buf;
+	int i = 0;
+	
+	shopex_read_conf_file(config_filename,&output,&len);
+	output_p = output;
+	pos_start = pos_end = output;
+	while((pos_end - pos_start) < len){
+		pos_end = strstr(output,"\n");
+		if(i == 1){
+			break;
+		}
+		pos_start = pos_end + 1;
+		output = pos_start;
+		i++;
+	}
+	len = pos_end - pos_start;
+	pub_buf = (char *)malloc(len);
+	memcpy(pub_buf,pos_start,len);
+	
+	*file_pos = pub_buf;
+		
+	free(output_p);
+
+}
+
+int shopex_is_file_in_allowlist(char *config_filename,char *filename){
+	char *output,*output_p;
+	int len,buf_len;
+	char *pos_start,*pos_end;
+	int i = 0;
+	char *buf;
+	
+	len = buf_len = 0;
+	
+	shopex_read_conf_file(config_filename,&output,&len);
+	output_p = output;
+	pos_start = pos_end = output;
+	len = strlen(output);
+	while((pos_end - output_p) < len && strlen(output) > 0){
+		pos_end = strstr(output,"\n");
+		if(i > 1){
+			buf_len = pos_end - output;
+			buf = (char *)malloc(buf_len);
+			memset(buf,'\0',buf_len + 1);
+			memcpy(buf,output,buf_len);
+			if ( strcmp(buf,filename) == 0 ){
+				return 1;
+			}
+			free(buf);
+		}
+		output = pos_end + 1;
+		i++;
+	}
+
+	free(output_p);
+	
+	return 0;
+}
 
 
 
@@ -382,79 +461,34 @@ void test_shopex_read_conf_file(){
 void test_shopex_read_pubkeypos_in_file(){
 	char *filename;
 	char *output;
-	int len;
-	char *pos_start,*pos_end,*pub_buf;
 	
 	filename = "/etc/shopex/skomart.com/setting.conf";
-	shopex_read_conf_file(filename,&output,&len);
-	
-	pos_start = output;
-	pos_end = strstr(output,"\n");
-	len = pos_end - pos_start;
-	pub_buf = (char *)malloc(len);
-	memcpy(pub_buf,pos_start,len);
-	printf("%s",pub_buf);	
-	free(output);
-	free(pub_buf);
+	shopex_read_pubkeypos_in_file(filename,&output);
+	printf("%s",output);
 }
 
 void test_shopex_read_privkeypos_in_file(){
 	char *filename;
-	char *output,*output_p;
-	int len;
-	char *pos_start,*pos_end,*pub_buf;
-	int i = 0;
+	char *output;
 	
 	filename = "/etc/shopex/skomart.com/setting.conf";
-	shopex_read_conf_file(filename,&output,&len);
-	output_p = output;
-	pos_start = pos_end = output;
-	while((pos_end - pos_start) < len){
-		pos_end = strstr(output,"\n");
-		if(i == 1){
-			break;
-		}
-		pos_start = pos_end + 1;
-		output = pos_start;
-		i++;
-	}
-	len = pos_end - pos_start;
-	pub_buf = (char *)malloc(len);
-	memcpy(pub_buf,pos_start,len);
-	printf("%s",pub_buf);	
-	free(output_p);
-	free(pub_buf);
+	shopex_read_privkeypos_in_file(filename,&output);
+	printf("%d",output);
+	
 }
 
 void test_shopex_read_allowfile_in_file(){
 	char *filename;
-	char *output,*output_p;
-	int len,buf_len;
-	char *pos_start,*pos_end;
-	int i = 0;
-	char *buf;
+	char *config_filename;
+	int ret;
 	
-	len = buf_len = 0;
+	config_filename = "/etc/shopex/skomart.com/setting.conf";
+	filename = "/srv/http/security/crypt/rsa/datasafe/test.php";
 	
-	filename = "/etc/shopex/skomart.com/setting.conf";
-	shopex_read_conf_file(filename,&output,&len);
-	output_p = output;
-	pos_start = pos_end = output;
-	len = strlen(output);
-	while((pos_end - output_p) < len && strlen(output) > 0){
-		pos_end = strstr(output,"\n");
-		if(i > 1){
-			buf_len = pos_end - output;
-			buf = (char *)malloc(buf_len);
-			memset(buf,'\0',buf_len + 1);
-			memcpy(buf,output,buf_len);
-			printf("%s",buf);
-			free(buf);
-		}
-		output = pos_end + 1;
-		i++;
-	}
-
+	ret = shopex_is_file_in_allowlist(config_filename,filename);
+	
+	printf("%d",ret);
+	
 	free(output_p);
 }
 
