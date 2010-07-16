@@ -330,8 +330,11 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 	char *output,*output_p;
 	int len,buf_len;
 	char *pos_start,*pos_end;
+	char *cln_pos;
 	int i = 0;
 	char *buf;
+	char *allowfile;
+	char *allowfile_md5;
 	
 	len = buf_len = 0;
 	
@@ -347,10 +350,19 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 			memset(buf,'\0',buf_len + 1);
 			memcpy(buf,output,buf_len);
 			buf[buf_len] = '\0';
-			if ( strcmp(buf,filename) == 0 ){
+			cln_pos = strstr(buf,':');
+			memcpy(allowfile,buf,(cln_pos - buf));
+			memcpy(allowfile_md5,cln_pos+1,(buf_len - cln_pos);
+			if ( strcmp(allowfile,filename) == 0 ){
 				return 1;
 			}
+			
 			free(buf);
+			buf = NULL;
+			free(allowfile);
+			allowfile = NULL;
+			free(allowfile_md5);
+			allowfile_md5 = NULL;
 		}
 		output = pos_end + 1;
 		i++;
