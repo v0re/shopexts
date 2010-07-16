@@ -477,7 +477,7 @@ void test_shopex_read_privkeypos_in_file(){
 	
 }
 
-void test_shopex_read_allowfile_in_file(){
+void test_shopex_is_file_in_allowlist(){
 	char *filename;
 	char *config_filename;
 	int ret;
@@ -485,11 +485,8 @@ void test_shopex_read_allowfile_in_file(){
 	config_filename = "/etc/shopex/skomart.com/setting.conf";
 	filename = "/srv/http/security/crypt/rsa/datasafe/test.php";
 	
-	ret = shopex_is_file_in_allowlist(config_filename,filename);
-	
+	ret = shopex_is_file_in_allowlist(config_filename,filename);	
 	printf("%d",ret);
-	
-	free(output_p);
 }
 
 

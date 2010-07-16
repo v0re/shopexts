@@ -16,5 +16,5 @@ main(){
 	test_shopex_read_conf_file();
 	test_shopex_read_pubkeypos_in_file();
 	test_shopex_read_privkeypos_in_file();
-	test_shopex_read_allowfile_in_file();
+	test_shopex_is_file_in_allowlist();
 }
