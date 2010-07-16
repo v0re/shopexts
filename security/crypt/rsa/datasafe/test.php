@@ -8,7 +8,7 @@ $text = 'hi man';
 $encrypt_text = null;
 $encrypt_text = shopex_data_encrypt($config,$text);
 var_dump($encrypt_text);
-
+/*
 $decrypt_text = shopex_data_decrypt($config,$encrypt_text);
 var_dump($decrypt_text);
 
