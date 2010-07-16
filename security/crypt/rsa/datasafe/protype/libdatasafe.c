@@ -53,7 +53,7 @@ void  base64_decode(unsigned char *input, int length,char *output, int *output_l
     bmem = BIO_push(b64, bmem);
     
     len = BIO_read(bmem, output, max_len);
-    output[len] = '\0';
+
     *output_len = len;
     
     BIO_free_all(b64);
