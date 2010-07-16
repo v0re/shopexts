@@ -272,6 +272,7 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
 	 len = ftell(fp);
 	 fseek(fp, 0L, SEEK_SET);
 	 buffer = (char *)malloc(len);
+	 memset(buffer,'\0',len);
 	 fread( buffer, 1, len, fp );
 	 *output = buffer;
 	 *output_len = len;
