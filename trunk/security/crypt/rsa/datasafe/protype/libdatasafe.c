@@ -351,12 +351,12 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 			memcpy(buf,output,buf_len);
 			buf[buf_len] = '\0';
 			cln_pos = strstr(buf,":");
-			buf_len = cln_pos - buf;
-			allowfile = (char *)malloc(buf_len);
-			memcpy(allowfile,buf,buf_len);
-			buf_len = strlen(cln_pos+1);
-			allowfile_md5 = (char *)malloc(buf_len);
-			memcpy(allowfile_md5,cln_pos+1,buf_len);
+			len = cln_pos - buf;
+			allowfile = (char *)malloc(len);
+			memcpy(allowfile,buf,len);
+			len = buf_len - strlen(cln_pos+1);
+			allowfile_md5 = (char *)malloc(len);
+			memcpy(allowfile_md5,cln_pos+1,len);
 			if ( strcmp(allowfile,filename) == 0 ){
 				return 1;
 			}
