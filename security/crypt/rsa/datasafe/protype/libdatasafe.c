@@ -14,6 +14,7 @@ All rights reserved.
 #include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
+#include <openssl/md5.h>
 #include <syslog.h>
 
 #include "datasafe_api.h"
@@ -326,6 +327,33 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
 
 }
 
+int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
+	FILE * fp;
+	int len;
+	unsigned char * buffer = NULL;
+	unsigned char md[33] = {'\0'};
+	
+	fp = fopen(allowfile, "r");
+	if (fp == NULL) {
+		syslog(LOG_USER|LOG_INFO, "read php file  failure");
+		exit(EXIT_FAILURE);
+	}
+	fseek(fp, 0L, SEEK_END);
+	len = ftell(fp);
+	fseek(fp, 0L, SEEK_SET);
+	buffer = (char *)malloc(len);
+	fread( buffer, 1, len, fp );
+	buffer[len] = '\0';
+	fclose(fp);
+		
+	 MD5(buffer,len,md);
+	 allowfile_md5 = (unsigned char *)allowfile_md5;
+	 if(strcmp(allowfile_md5,md) == 0 ){
+	 	return 1;
+	 }
+	 return 0;
+}
+
 int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 	char *output,*output_p;
 	int len,buf_len;
@@ -357,7 +385,7 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 			len = buf_len - strlen(cln_pos+1);
 			allowfile_md5 = (char *)malloc(len);
 			memcpy(allowfile_md5,cln_pos+1,len);
-			if ( strcmp(allowfile,filename) == 0 ){
+			if ( strcmp(allowfile,filename) == 0  && shopex_checkfile_md5(allowfile,allowfile_md5) == 0 ){
 				return 1;
 			}
 			
