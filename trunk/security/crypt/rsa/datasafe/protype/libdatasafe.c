@@ -292,7 +292,7 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
 	len = pos_end - pos_start;
 	pub_buf = (char *)malloc(len);
 	memcpy(pub_buf,pos_start,len);
-	
+	pub_buf[len] = '\0';
 	*file_pos = pub_buf;
 	
 	free(output);
@@ -319,7 +319,7 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
 	len = pos_end - pos_start;
 	pub_buf = (char *)malloc(len);
 	memcpy(pub_buf,pos_start,len);
-	
+	pub_buf[len] = '\0';
 	*file_pos = pub_buf;
 		
 	free(output_p);
@@ -346,6 +346,7 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 			buf = (char *)malloc(buf_len);
 			memset(buf,'\0',buf_len + 1);
 			memcpy(buf,output,buf_len);
+			buf[buf_len] = '\0';
 			if ( strcmp(buf,filename) == 0 ){
 				return 1;
 			}
