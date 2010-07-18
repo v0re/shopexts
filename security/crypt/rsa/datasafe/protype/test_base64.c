@@ -10,6 +10,8 @@ All rights reserved.
 #include <stdlib.h>
 #include <string.h>
 #include "datasafe_api.h"
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
 
 main(){
     char *str = "hello world";
@@ -19,6 +21,9 @@ main(){
     unsigned char  *key_buf;
     int i=0;
     unsigned char *start,*p;
+    RSA *pubkey,*privkey;
+    int de_len;
+    
     
     en_buf = (char *)malloc(strlen(str) * 1.5);
     base64_encode(str,strlen(str),en_buf,&len);
