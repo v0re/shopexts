@@ -354,9 +354,9 @@ int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
     }
     allowfile_md5 = (unsigned char *)allowfile_md5;
     if(strcmp(allowfile_md5,buf) == 0 ){
-        return 1;
+        return 0;
     }
-    return 0;
+    return -1;
 }
 
 int shopex_is_file_in_allowlist(char *config_filename,char *filename){
@@ -391,7 +391,7 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
             allowfile_md5 = (char *)malloc(len);
             memcpy(allowfile_md5,cln_pos+1,len);
             if ( strcmp(allowfile,filename) == 0  && shopex_checkfile_md5(allowfile,allowfile_md5) == 0 ){
-                return 1;
+                return 0;
             }
             
             free(buf);
@@ -407,7 +407,7 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 
     free(output_p);
     
-    return 0;
+    return -1;
 }
 
 
@@ -544,4 +544,4 @@ void test_shopex_is_file_in_allowlist(){
     printf("%d\n",ret);
 }
 
-
+void 
