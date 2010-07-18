@@ -22,7 +22,7 @@ main(){
 	FILE *fp;
 	int i;
 	
-	shopex_read_conf_file(filename,&config_content,&config_content_len);
+	shopex_read_conf_file(source_filename,&config_content,&config_content_len);
 	shopex_conf_rsa_encrypt(config_content,config_content_len,&en_content,&en_content_len);
 	
 
