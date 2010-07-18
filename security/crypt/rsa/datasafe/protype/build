@@ -6,3 +6,4 @@ cp libdatasafe.so /usr/lib
 gcc  -g -ldatasafe -L/usr/lib test_datasafe.c -o test_datasafe 
 gcc  -g -ldatasafe -L/usr/lib test_shopex_data_encrypt.c -o test_shopex_data_encrypt
 gcc  -g -ldatasafe -L/usr/lib test_shopex_data_decrypt.c -o test_shopex_data_decrypt
+gcc  -g -ldatasafe -L/usr/lib test_shopex_read_conf_file.c -o test_shopex_read_conf_file
