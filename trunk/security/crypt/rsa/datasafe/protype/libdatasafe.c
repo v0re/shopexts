@@ -261,148 +261,152 @@ void shopex_data_rsa_decrypt(char *keyfile_path,char *input,int input_len,char *
 }
 
 void shopex_read_conf_file(char *filename,char **output,int *output_len){
-	 FILE * fp;
-	 int len;
-	 char * buffer = NULL;
-	 fp = fopen(filename, "r");
-	 if (fp == NULL) {
-		syslog(LOG_USER|LOG_INFO, "read shopex config file failure");
-		exit(EXIT_FAILURE);
-	 }
-	 fseek(fp, 0L, SEEK_END);
-	 len = ftell(fp);
-	 fseek(fp, 0L, SEEK_SET);
-	 buffer = (char *)malloc(len);
-	 fread( buffer, 1, len, fp );
-	 buffer[len] = '\0';
-	 *output = buffer;
-	 *output_len = len;
-	 
-	 fclose(fp);
+     FILE * fp;
+     int len;
+     char * buffer = NULL;
+     fp = fopen(filename, "r");
+     if (fp == NULL) {
+        syslog(LOG_USER|LOG_INFO, "read shopex config file failure");
+        exit(EXIT_FAILURE);
+     }
+     fseek(fp, 0L, SEEK_END);
+     len = ftell(fp);
+     fseek(fp, 0L, SEEK_SET);
+     buffer = (char *)malloc(len);
+     fread( buffer, 1, len, fp );
+     buffer[len] = '\0';
+     *output = buffer;
+     *output_len = len;
+     
+     fclose(fp);
 }
 
 void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
-	char *output;
-	int len;
-	char *pos_start,*pos_end,*pub_buf;
-	
-	shopex_read_conf_file(config_filename,&output,&len);
-	
-	pos_start = output;
-	pos_end = strstr(output,"\n");
-	len = pos_end - pos_start;
-	pub_buf = (char *)malloc(len);
-	memcpy(pub_buf,pos_start,len);
-	pub_buf[len] = '\0';
-	*file_pos = pub_buf;
-	
-	free(output);
+    char *output;
+    int len;
+    char *pos_start,*pos_end,*pub_buf;
+    
+    shopex_read_conf_file(config_filename,&output,&len);
+    
+    pos_start = output;
+    pos_end = strstr(output,"\n");
+    len = pos_end - pos_start;
+    pub_buf = (char *)malloc(len);
+    memcpy(pub_buf,pos_start,len);
+    pub_buf[len] = '\0';
+    *file_pos = pub_buf;
+    
+    free(output);
 }
 
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
-	char *output,*output_p;
-	int len;
-	char *pos_start,*pos_end,*pub_buf;
-	int i = 0;
-	
-	shopex_read_conf_file(config_filename,&output,&len);
-	output_p = output;
-	pos_start = pos_end = output;
-	while((pos_end - pos_start) < len){
-		pos_end = strstr(output,"\n");
-		if(i == 1){
-			break;
-		}
-		pos_start = pos_end + 1;
-		output = pos_start;
-		i++;
-	}
-	len = pos_end - pos_start;
-	pub_buf = (char *)malloc(len);
-	memcpy(pub_buf,pos_start,len);
-	pub_buf[len] = '\0';
-	*file_pos = pub_buf;
-		
-	free(output_p);
+    char *output,*output_p;
+    int len;
+    char *pos_start,*pos_end,*pub_buf;
+    int i = 0;
+    
+    shopex_read_conf_file(config_filename,&output,&len);
+    output_p = output;
+    pos_start = pos_end = output;
+    while((pos_end - pos_start) < len){
+        pos_end = strstr(output,"\n");
+        if(i == 1){
+            break;
+        }
+        pos_start = pos_end + 1;
+        output = pos_start;
+        i++;
+    }
+    len = pos_end - pos_start;
+    pub_buf = (char *)malloc(len);
+    memcpy(pub_buf,pos_start,len);
+    pub_buf[len] = '\0';
+    *file_pos = pub_buf;
+        
+    free(output_p);
 
 }
 
 int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
-	FILE * fp;
-	int len;
-	unsigned char * buffer = NULL;
-	unsigned char md[33] = {'\0'};
-	
-	fp = fopen(allowfile, "r");
-	if (fp == NULL) {
-		syslog(LOG_USER|LOG_INFO, "read php file  failure");
-		exit(EXIT_FAILURE);
-	}
-	fseek(fp, 0L, SEEK_END);
-	len = ftell(fp);
-	fseek(fp, 0L, SEEK_SET);
-	buffer = (char *)malloc(len);
-	fread( buffer, 1, len, fp );
-	buffer[len] = '\0';
-	fclose(fp);
-		
-	 MD5(buffer,len,md);
-	 allowfile_md5 = (unsigned char *)allowfile_md5;
-	 if(strcmp(allowfile_md5,md) == 0 ){
-	 	return 1;
-	 }
-	 return 0;
+    FILE * fp;
+    int len;
+    unsigned char * buffer = NULL;
+    unsigned char md[MD5_DIGEST_LENGTH] = {'\0'};
+    unsigned char buf[MD5_DIGEST_LENGTH * 2] = {'\0'};
+    
+    fp = fopen(allowfile, "r");
+    if (fp == NULL) {
+        syslog(LOG_USER|LOG_INFO, "read php file  failure");
+        exit(EXIT_FAILURE);
+    }
+    fseek(fp, 0L, SEEK_END);
+    len = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    buffer = (char *)malloc(len);
+    fread( buffer, 1, len, fp );
+    buffer[len] = '\0';
+    fclose(fp);
+    
+    MD5(buffer,len,md);
+    for (i=0; i<MD5_DIGEST_LENGTH; i++) {
+        sprintf(&(buf[i*2]),"%02x",md[i]);
+    }
+    allowfile_md5 = (unsigned char *)allowfile_md5;
+    if(strcmp(allowfile_md5,buf) == 0 ){
+        return 1;
+    }
+    return 0;
 }
 
 int shopex_is_file_in_allowlist(char *config_filename,char *filename){
-	char *output,*output_p;
-	int len,buf_len;
-	char *pos_start,*pos_end;
-	char *cln_pos;
-	int i = 0;
-	char *buf;
-	char *allowfile;
-	char *allowfile_md5;
-	
-	len = buf_len = 0;
-	
-	shopex_read_conf_file(config_filename,&output,&len);
-	output_p = output;
-	pos_start = pos_end = output;
-	len = strlen(output);
-	while((pos_end - output_p) < len && strlen(output) > 0){
-		pos_end = strstr(output,"\n");
-		if(i > 1){
-			buf_len = pos_end - output;
-			buf = (char *)malloc(buf_len);
-			memset(buf,'\0',buf_len + 1);
-			memcpy(buf,output,buf_len);
-			buf[buf_len] = '\0';
-			cln_pos = strstr(buf,":");
-			len = cln_pos - buf;
-			allowfile = (char *)malloc(len);
-			memcpy(allowfile,buf,len);
-			len = buf_len - strlen(cln_pos+1);
-			allowfile_md5 = (char *)malloc(len);
-			memcpy(allowfile_md5,cln_pos+1,len);
-			if ( strcmp(allowfile,filename) == 0  && shopex_checkfile_md5(allowfile,allowfile_md5) == 0 ){
-				return 1;
-			}
-			
-			free(buf);
-			buf = NULL;
-			free(allowfile);
-			allowfile = NULL;
-			free(allowfile_md5);
-			allowfile_md5 = NULL;
-		}
-		output = pos_end + 1;
-		i++;
-	}
+    char *output,*output_p;
+    int len,buf_len;
+    char *pos_start,*pos_end;
+    char *cln_pos;
+    int i = 0;
+    char *buf;
+    char *allowfile;
+    char *allowfile_md5;
+    
+    len = buf_len = 0;
+    
+    shopex_read_conf_file(config_filename,&output,&len);
+    output_p = output;
+    pos_start = pos_end = output;
+    len = strlen(output);
+    while((pos_end - output_p) < len && strlen(output) > 0){
+        pos_end = strstr(output,"\n");
+        if(i > 1){
+            buf_len = pos_end - output;
+            buf = (char *)malloc(buf_len);
+            memset(buf,'\0',buf_len + 1);
+            memcpy(buf,output,buf_len);
+            buf[buf_len] = '\0';
+            cln_pos = strstr(buf,":");
+            len = cln_pos - buf;
+            allowfile = (char *)malloc(len);
+            memcpy(allowfile,buf,len);
+            len = buf_len - strlen(cln_pos+1);
+            allowfile_md5 = (char *)malloc(len);
+            memcpy(allowfile_md5,cln_pos+1,len);
+            if ( strcmp(allowfile,filename) == 0  && shopex_checkfile_md5(allowfile,allowfile_md5) == 0 ){
+                return 1;
+            }
+            
+            free(buf);
+            buf = NULL;
+            free(allowfile);
+            allowfile = NULL;
+            free(allowfile_md5);
+            allowfile_md5 = NULL;
+        }
+        output = pos_end + 1;
+        i++;
+    }
 
-	free(output_p);
-	
-	return 0;
+    free(output_p);
+    
+    return 0;
 }
 
 
@@ -423,13 +427,13 @@ void test_get_shopex_key(){
 }
 
 void test_get_user_key(){
-	 RSA *pub_rsa,*priv_rsa;
-	 
-	 char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
-	 char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
-	 pub_rsa = get_user_public_key(pub_keyfile_path);
-	 priv_rsa = get_user_private_key(priv_keyfile_path);
-	 
+     RSA *pub_rsa,*priv_rsa;
+     
+     char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
+     char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
+     pub_rsa = get_user_public_key(pub_keyfile_path);
+     priv_rsa = get_user_private_key(priv_keyfile_path);
+     
     if ((pub_rsa == NULL) || (priv_rsa == NULL))
         ERR_print_errors_fp(stderr);
     
@@ -441,24 +445,24 @@ void test_get_user_key(){
 }
 
 void test_get_user_public_key(){
-	 RSA *pub_rsa;
-	 
-	 char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
-	 pub_rsa = get_user_public_key(pub_keyfile_path);
-	 
-	RSA_print_fp(stdout,pub_rsa,11);
-	
-	RSA_free(pub_rsa);
+     RSA *pub_rsa;
+     
+     char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
+     pub_rsa = get_user_public_key(pub_keyfile_path);
+     
+    RSA_print_fp(stdout,pub_rsa,11);
+    
+    RSA_free(pub_rsa);
 }
 
 void test_get_user_private_key(){
-	RSA *priv_rsa;
-	 
+    RSA *priv_rsa;
+     
 
-	 char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
+     char *priv_keyfile_path = "/etc/shopex/skomart.com/sec.pem";
 
-	 priv_rsa = get_user_private_key(priv_keyfile_path);
-	 
+     priv_rsa = get_user_private_key(priv_keyfile_path);
+     
     RSA_print_fp(stdout,priv_rsa,11);
     
     RSA_free(priv_rsa);
@@ -477,7 +481,7 @@ void test_shopex_data_rsa_encrypt(){
     printf("%s\n",output);
 
 }
-	 
+     
 void test_shopex_data_rsa_decrypt(){
     char *priv_keyfile_path  = "/etc/shopex/skomart.com/sec.pem";
     char *input = NULL;
@@ -493,50 +497,50 @@ void test_shopex_data_rsa_decrypt(){
 }
 
 void test_shopex_read_conf_file(){
-	char *filename;
-	char *output;
-	int len;
-	
-	filename = "/etc/shopex/skomart.com/setting.conf";
-	shopex_read_conf_file(filename,&output,&len);
-	printf("%s",output);
-	
-	free(output);
+    char *filename;
+    char *output;
+    int len;
+    
+    filename = "/etc/shopex/skomart.com/setting.conf";
+    shopex_read_conf_file(filename,&output,&len);
+    printf("%s",output);
+    
+    free(output);
 }
 
 void test_shopex_read_pubkeypos_in_file(){
-	char *filename;
-	char *output;
-	
-	filename = "/etc/shopex/skomart.com/setting.conf";
-	shopex_read_pubkeypos_in_file(filename,&output);
-	printf("%s\n",output);
+    char *filename;
+    char *output;
+    
+    filename = "/etc/shopex/skomart.com/setting.conf";
+    shopex_read_pubkeypos_in_file(filename,&output);
+    printf("%s\n",output);
 }
 
 void test_shopex_read_privkeypos_in_file(){
-	char *filename;
-	char *output;
-	
-	filename = "/etc/shopex/skomart.com/setting.conf";
-	shopex_read_privkeypos_in_file(filename,&output);
-	printf("%s\n",output);
-	
+    char *filename;
+    char *output;
+    
+    filename = "/etc/shopex/skomart.com/setting.conf";
+    shopex_read_privkeypos_in_file(filename,&output);
+    printf("%s\n",output);
+    
 }
 
 void test_shopex_is_file_in_allowlist(){
-	char *filename;
-	char *config_filename;
-	int ret;
-	
-	config_filename = "/etc/shopex/skomart.com/setting.conf";
-	filename = "/srv/http/security/crypt/rsa/datasafe/test.php";
-	
-	ret = shopex_is_file_in_allowlist(config_filename,filename);	
-	printf("%d\n",ret);
-	
-	filename = "/srv/http/security/crypt/rsa/datasafe/heihei.php";
-	ret = shopex_is_file_in_allowlist(config_filename,filename);	
-	printf("%d\n",ret);
+    char *filename;
+    char *config_filename;
+    int ret;
+    
+    config_filename = "/etc/shopex/skomart.com/setting.conf";
+    filename = "/srv/http/security/crypt/rsa/datasafe/test.php";
+    
+    ret = shopex_is_file_in_allowlist(config_filename,filename);    
+    printf("%d\n",ret);
+    
+    filename = "/srv/http/security/crypt/rsa/datasafe/heihei.php";
+    ret = shopex_is_file_in_allowlist(config_filename,filename);    
+    printf("%d\n",ret);
 }
 
 
