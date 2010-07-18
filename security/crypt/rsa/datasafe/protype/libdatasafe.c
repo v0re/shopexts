@@ -390,8 +390,8 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
             len = buf_len - strlen(cln_pos+1);
             allowfile_md5 = (char *)malloc(len);
             memcpy(allowfile_md5,cln_pos+1,len);
-            if ( strcmp(allowfile,filename) == 0  && shopex_checkfile_md5(allowfile,allowfile_md5) == 0 ){
-                return 0;
+            if ( strcmp(allowfile,filename) != 0  || shopex_checkfile_md5(allowfile,allowfile_md5) != 0 ){
+                return -1;
             }
             
             free(buf);
@@ -407,7 +407,7 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 
     free(output_p);
     
-    return -1;
+    return 0;
 }
 
 
