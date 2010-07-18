@@ -215,6 +215,8 @@ PHP_FUNCTION(shopex_data_decrypt)
     char *privkeypos;
     
     zend_execute_data *zed;
+    
+    int = ret;
 
 
 
@@ -223,6 +225,7 @@ PHP_FUNCTION(shopex_data_decrypt)
 	}
 		
 	zed = EG(current_execute_data);
+	ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
 	if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
 		shopex_read_privkeypos_in_file(config_filepath,&privkeypos);	
 		shopex_data_rsa_decrypt(privkeypos,arg,arg_len,&output,&output_len);
