@@ -42,24 +42,21 @@ void base64_encode(unsigned char *input, int length,char *output, int *output_le
 }
 
 void  base64_decode(unsigned char *input, int length,char *output, int *output_len){
-    BIO *b64,*bmem;
-    int max_len = (length * 6 + 7) / 8;
-    int len;
-    
-    b64 = NULL;
-
-    b64 = BIO_new(BIO_f_base64());
-    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
-    bmem = BIO_new_mem_buf(input, length);
-    bmem = BIO_push(b64, bmem);
-    
-    len = BIO_read(bmem, output, max_len);
-
-    *output_len = len;
-    
-    BIO_free_all(b64);
-    bmem = NULL;
-    b64 = NULL;
+	BIO *b64, *bmem;
+	char *buffer;
+	int max_len = (length * 6 + 7) / 8;
+	int len;
+		
+	b64 = BIO_new(BIO_f_base64());
+	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+	bmem = BIO_new_mem_buf(input, length);
+	bmem = BIO_push(b64, bmem);
+	
+	len = BIO_read(bmem, output, max_len);
+	output[len] = 0;
+	*output_len = len;
+	
+	BIO_free_all(bmem);
 }
 
 void get_shopex_key(RSA **pubkey,RSA **privkey){
