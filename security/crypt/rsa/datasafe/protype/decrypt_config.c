@@ -34,7 +34,7 @@ main(){
 	fseek(fp, 0L, SEEK_SET);
 	config_content = (char *)malloc(config_content_len);
 	fread(config_content, 1, config_content_len, fp );
-	buffer[config_content_len] = '\0';
+	config_content[config_content_len] = '\0';
 	fclose(fp);
 	
 	shopex_conf_rsa_decrypt(config_content,config_content_len,&output,&output_len);
