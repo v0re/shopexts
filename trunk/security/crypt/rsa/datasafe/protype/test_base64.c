@@ -46,9 +46,17 @@ main(){
     
 	start = p = (unsigned char*)malloc(de_len);
     memcpy(p,de_buf,de_len);
-    *pubkey=d2i_RSAPublicKey(NULL,(const unsigned char**)&p,(long)de_len);
+    pubkey=d2i_RSAPublicKey(NULL,(const unsigned char**)&p,(long)de_len);
     de_len-=(p-start);
-    *privkey=d2i_RSAPrivateKey(NULL,(const unsigned char**)&p,(long)de_len);
-	
+    privkey=d2i_RSAPrivateKey(NULL,(const unsigned char**)&p,(long)de_len);
+	if ((pub_rsa == NULL) || (priv_rsa == NULL))
+        ERR_print_errors_fp(stderr);
+
+    RSA_print_fp(stdout,pub_rsa,11);
+    RSA_print_fp(stdout,priv_rsa,11);
+    
+    RSA_free(pub_rsa);
+    RSA_free(priv_rsa);
+    
     free(de_buf);
 }
