@@ -38,7 +38,7 @@ main(){
     key_buf = "MIGJAoGBAKharbgn9dHnXvzM1w9UVZqkIsNjghuk0JwFhs5Z9C007csKPTzm+PZfsAAeJpVr6a9beKd93xwJgQcI+RZERNh0rjINQqkmyqLB5fDBP15RWk8kiWWcZxs5m6P1w3ld7V7/iO8MC3xV3IsuktN7dpQekIqknaLQ5ym6uX5KkyhnAgMBAAEwggJdAgEAAoGBAKharbgn9dHnXvzM1w9UVZqkIsNjghuk0JwFhs5Z9C007csKPTzm+PZfsAAeJpVr6a9beKd93xwJgQcI+RZERNh0rjINQqkmyqLB5fDBP15RWk8kiWWcZxs5m6P1w3ld7V7/iO8MC3xV3IsuktN7dpQekIqknaLQ5ym6uX5KkyhnAgMBAAECgYEAjcGkyw6itvbaDYUxhM/fMNIKD3mnYT17BhTFONWXe8U4gSGDBNf7RAC4QrEgjeqKn0QnKOkcxw/dnB3bFvuu9zIU2T0dRCXm8d86MYihIluSzWm/bhV17o56haJssil+G2DEi6OvSxAAmmrazPuDZZYezAEqfrA+/WqiMk6850ECQQDXgpIJlDG1awgwfXrkof11vJaLmO5DgT6QQuXQYLYXZ5j4uRvjiLOkmpqpYnHkFAnkQhDtTh3nGPNN+IaAfhWHAkEAx/wLe/K2F+AUkQb/mjd6+Qgt779AK5Gva0QGItBu6sJ8dc65NexAKqtVYbVDvxpsrcpvwF0lGlwkoYVT6vMOIQJAKut6IiY9cCAM1XtoCjiovdX9NXgTm6YVy61HD6TzHt4m/QIAp+QFwvZ3btyISiAjiC4QKPKxyeCSNCkWwGhb6QJBALeH7z4sS8LzicxjINZ2DixXvlilKw4RIG0Pu5Xdtb1LCY/QTRdYnrbKEIygHvFWHeEMxKxEj1V2tMNrKc2YjCECQEYUOOVFMj1hml0RxO+Sdf+tBzzj0IPj9aewFyAgSDPMObXo7Nn4OC4bYd72Se2VABRLhem8vVOqrn+oHEkSZ28=";
     
     de_buf = (char *)malloc(strlen(key_buf));
-    base64_decode(key_buf,strlen(key_buf),de_buf,&len);
+    base64_decode(key_buf,strlen(key_buf),de_buf,&de_len);
     for(i=0;i<len;i++){
 		printf("%2x",de_buf[i]);
 	}
