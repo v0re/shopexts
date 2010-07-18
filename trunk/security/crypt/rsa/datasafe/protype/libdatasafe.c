@@ -329,7 +329,7 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
 
 int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
     FILE * fp;
-    int len;
+    int len,i;
     unsigned char * buffer = NULL;
     unsigned char md[MD5_DIGEST_LENGTH] = {'\0'};
     unsigned char buf[MD5_DIGEST_LENGTH * 2] = {'\0'};
@@ -348,6 +348,7 @@ int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
     fclose(fp);
     
     MD5(buffer,len,md);
+    free(buffer);
     for (i=0; i<MD5_DIGEST_LENGTH; i++) {
         sprintf(&(buf[i*2]),"%02x",md[i]);
     }
