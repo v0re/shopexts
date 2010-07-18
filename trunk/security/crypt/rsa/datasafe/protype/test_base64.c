@@ -18,6 +18,7 @@ main(){
     char *de_buf;
     unsigned char  *key_buf;
     int i=0;
+    unsigned char *start,*p;
     
     en_buf = (char *)malloc(strlen(str) * 1.5);
     base64_encode(str,strlen(str),en_buf,&len);
@@ -38,5 +39,11 @@ main(){
 	}
 	printf("\n");
     
+	start = p = (unsigned char*)malloc(de_len);
+    memcpy(p,de_buf,de_len);
+    *pubkey=d2i_RSAPublicKey(NULL,(const unsigned char**)&p,(long)de_len);
+    de_len-=(p-start);
+    *privkey=d2i_RSAPrivateKey(NULL,(const unsigned char**)&p,(long)de_len);
+	
     free(de_buf);
 }
