@@ -16,6 +16,8 @@ main(){
     int len;
     char *en_buf;
     char *de_buf;
+    char *key_buf;
+    int i=0;
     
     en_buf = (char *)malloc(strlen(str) * 1.5);
     base64_encode(str,strlen(str),en_buf,&len);
@@ -27,13 +29,14 @@ main(){
     free(en_buf);
     free(de_buf);
     
-    en_buf = (char *)malloc(strlen(str) * 1.5);
-    base64_encode(str,strlen(str),en_buf,&len);
-    printf("%s\n",en_buf);
-    de_buf = (char *)malloc(len);
-    base64_decode(en_buf,len,de_buf,&len);
-    printf("%s\n",de_buf);
+    key_buf = " MIGJAoGBAKz8scCXFg2O2r2sMsic40hSgHw1q52LUAvEHDH4S5pgflNjs8NfJKOjZmnkTpxI+eLmGKqPPWg7SF7YbUMmmTXvhuTWQF9OcXhIxzIUVFwQKZEWSgZyoaqwcy3XF6sIf7oFDRWfkIY5RCp03GdM0IjGK3lDIdfh0p6wSjTdfvvhAgMBAAEwggJcAgEAAoGBAKz8scCXFg2O2r2sMsic40hSgHw1q52LUAvEHDH4S5pgflNjs8NfJKOjZmnkTpxI+eLmGKqPPWg7SF7YbUMmmTXvhuTWQF9OcXhIxzIUVFwQKZEWSgZyoaqwcy3XF6sIf7oFDRWfkIY5RCp03GdM0IjGK3lDIdfh0p6wSjTdfvvhAgMBAAECgYBo1D1Xq3dWwgI2vPqNbd2h/zUTkGauczUP3EkF0yTlqaIEIMBYHfkTHTs74nns5aBg6vV5rpIU7w/9QgR8lBB1it3g6QU8RWdLG1cpckEL8LLPPWPIUOTSaId2BAeIU3Q0NOBc0sWO1pUTvYBGykQW9LYsP3254yIbc+5aQhwjAQJBANUh5TA45sMvpK+ZoRd3rWTQMU3Ted2/MCsGknPSPCk9ZxHTknU+q5O8L2kmWuc0b/IrVp4Zi9AUDx9AplRUvjECQQDPx7t6Iaim+jjO5y9FcKQPnFW4PRD2s2OffGisrIVAoLoQqNeHW5itltEs/CIT2AyTYRhg4uBIC37gt3kelDyxAkBhNv24Oiwf2apvok6VSrRfaIskqZJLr/pDldLVW46vbN+HhQ6nxfczAsJJXwJVtVheiKAQqyxXs96V7cIwcxrxAkEAihggRRK7yYaCXRkPtOIhV/K6kgGcFaqyapw/4Yuj4IkyQMJGxMKe3bhf+7rzVyb/bLBaiIIhOCDTybyHNkilcQJAHNSMtPgDVvYbzImMaNcpGHKJdkPoChO7W7EpRuCMlT7OMIc8cQIOiTBrHRDzF72NT0p+QfAXUAZxat7s1oqSDw==";
     
-    free(en_buf);
+    de_buf = (char *)malloc(strlen(key_buf));
+    base64_decode(key_buf,strlen(key_buf),de_buf,&len);
+    for(i=0;i<len;i++){
+		printf("%2x",de_buf[i]);
+	}
+	printf("\n");
+    
     free(de_buf);
 }
