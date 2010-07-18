@@ -21,7 +21,7 @@ main(){
     unsigned char  *key_buf;
     int i=0;
     unsigned char *start,*p;
-    RSA *pubkey,*privkey;
+    RSA *pub_rsa,*priv_rsa;
     int de_len;
     
     
