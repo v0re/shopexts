@@ -216,7 +216,7 @@ PHP_FUNCTION(shopex_data_decrypt)
     
     zend_execute_data *zed;
     
-    int = ret;
+    int ret = 0;
 
 
 
