@@ -17,8 +17,13 @@ main(){
     char *en_buf;
     char *de_buf;
     
+    en_buf = (char *)malloc(strlen(str) * 1.5);
     base64_encode(str,strlen(str),en_buf,&len);
     printf("%s\n",en_buf);
+    de_buf = (char *)malloc(len);
     base64_decode(en_buf,len,de_buf,&len);
     printf("%s\n",de_buf);
+    
+    free(en_buf);
+    free(de_buf);
 }
