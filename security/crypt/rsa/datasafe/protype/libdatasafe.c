@@ -543,5 +543,3 @@ void test_shopex_is_file_in_allowlist(){
     ret = shopex_is_file_in_allowlist(config_filename,filename);    
     printf("%d\n",ret);
 }
-
-void 
