@@ -23,6 +23,7 @@ main(){
 	int i;
 	int config_content_len;
 	int en_content_len;
+	char *en_content;
 	
 	shopex_read_conf_file(source_filename,&config_content,&config_content_len);
 	shopex_conf_rsa_encrypt(config_content,config_content_len,&en_content,&en_content_len);
