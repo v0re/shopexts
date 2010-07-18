@@ -19,7 +19,7 @@ main(){
 	char *en_content;
 	int en_content_len;
 	
-	shopex_read_conf_file(filename,config_content,config_content_len);
+	shopex_read_conf_file(filename,&config_content,&config_content_len);
 	shopex_conf_rsa_encrypt(config_content,config_content_len,&en_content,&en_content_len);
 	
 	printf("%s\n",en_content);
