@@ -21,7 +21,6 @@ main(){
 	
 	FILE *fp;
 	int i;
-	int config_content_len;
 	int en_content_len;
 	char *en_content;
 	
