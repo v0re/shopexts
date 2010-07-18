@@ -348,7 +348,7 @@ int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
     fclose(fp);
     
     MD5(buffer,len,md);
-    free(buffer);
+
     for (i=0; i<MD5_DIGEST_LENGTH; i++) {
         sprintf(&(buf[i*2]),"%02x",md[i]);
     }
