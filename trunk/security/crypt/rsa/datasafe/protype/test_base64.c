@@ -16,7 +16,7 @@ main(){
     int len;
     char *en_buf;
     char *de_buf;
-    char *key_buf;
+    unsigned char  *key_buf;
     int i=0;
     
     en_buf = (char *)malloc(strlen(str) * 1.5);
