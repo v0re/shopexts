@@ -12,5 +12,5 @@ All rights reserved.
 #include "datasafe_api.h"
 
 main(){
-    get_shopex_key();
+    test_get_shopex_key();
 }
