@@ -21,3 +21,5 @@ var_dump($decrypt_text);
 */
 
 echo "\ntest done!\n";
+
+?>
