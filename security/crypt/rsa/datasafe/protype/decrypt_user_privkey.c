@@ -26,6 +26,8 @@ main(){
 	int output_len;
 	int de_len;
 	
+	int i = 0;
+	
 	RSA *priv_rsa;
 	
 	if((fp=fopen(source_filename,"rb"))==NULL)
