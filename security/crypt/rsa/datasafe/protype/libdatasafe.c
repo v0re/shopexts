@@ -185,14 +185,14 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int
 }
 
 void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,int *output_len){
-    int de_len,ks,ret_len,ret_len_total;
+    int de_len,ks,ret_len,ret_len_total,remaining;
     char *rsa_ret_buf_p,*rsa_ret_buf;
     char *cipher_p,*cipher;
     char *de_buf_p,*de_buf;
     char *plain_p,*plain;
     char *output_buf;
     
-    ret_len = ret_len_total = 0;
+    ret_len = ret_len_total = remaining = 0;
     
     if((int)input_len < 0 ){
         input_len = strlen(input);
@@ -209,7 +209,12 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     while(de_buf - de_buf_p < de_len) {
         memset(cipher, '\0', ks);
         memset(plain, '\0', ks);
-        memcpy(cipher,de_buf,ks);
+        remaining = de_len - (de_buf - de_buf_p);
+        if( remaining > ks){
+        	memcpy(cipher,de_buf,ks);
+    	}else{
+    		memcpy(cipher,de_buf,remaining);
+    	}
         ret_len = RSA_private_decrypt(ks, cipher, plain, priv_rsa, RSA_PKCS1_PADDING);
         memcpy(rsa_ret_buf,plain,ret_len);
         ret_len_total += ret_len;
