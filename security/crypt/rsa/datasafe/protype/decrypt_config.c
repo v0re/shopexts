@@ -41,5 +41,4 @@ main(){
 	
 	printf("%s\n",output);
 
-
 }
