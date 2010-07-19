@@ -33,6 +33,8 @@ main(){
 	char *b64_decode;
 	int b64_decode_len = 0;
 	
+	char *input = NULL;
+	
 	if((fp=fopen(source_filename,"rb"))==NULL)
 	{
 		printf("cant open the file");
@@ -49,7 +51,9 @@ main(){
 	
 	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
 	b64_decode = (char *)malloc(output_len);
-	base64_decode(output,output_len,b64_decode,&b64_decode_len);
+	input = (char *)malloc(output_len);
+	memcpy(input,output,output_len);
+	base64_decode(input,output_len,b64_decode,&b64_decode_len);
 	printf("%d\n",b64_decode_len);
 	for(i=0;i<b64_decode_len;i++){
 		printf("%2x",b64_decode[i]);
