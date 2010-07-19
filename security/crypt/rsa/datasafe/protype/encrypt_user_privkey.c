@@ -30,7 +30,7 @@ main(){
 	int len = 0;
 	int en_len = 0;
 	
-	RSA *priv_key;	
+	RSA *priv_key = NULL;	
 		
 	priv_key = get_user_private_key(source_filename);
 	RSA_print_fp(stdout,priv_key,11);
