@@ -33,31 +33,22 @@ main(){
 	RSA *priv_key;	
 		
 	priv_key = get_user_private_key(source_filename);
-	
+	RSA_print_fp(stdout,priv_key,11);
+		
 	p=buf;	
 	len =i2d_RSAPrivateKey(priv_key,&p);
-	
-	RSA_print_fp(stdout,priv_key,11);
-	
 	RSA_free(priv_key);
 		
 	key_buf_p = key_buf = (unsigned char*)malloc(len);
 	memcpy(key_buf,buf,len);			
 	
-	p = buf;
-	base64_encode(key_buf,len,p,&en_len);
-	printf("%s\n",buf);	
-	
+	shopex_conf_rsa_encrypt(key_buf,len,&en_content,&en_content_len);	
 
-	
 	if((fp=fopen(dest_filename,"wb+"))==NULL)
 	{
 		printf("cant open the file");
 		exit(0);
 	}
-
-	fwrite(buf,en_len,1,fp);
-
-	free(key_buf_p);
-	fclose(fp);
+	fwrite(en_content,en_content_len,1,fp);
+	fclose(fp);	
 }
