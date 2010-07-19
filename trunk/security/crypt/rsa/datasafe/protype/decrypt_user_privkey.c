@@ -48,8 +48,8 @@ main(){
 	
 	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&output,(long)de_len);
 		
-	RSA_print_fp(stdout,priv_key,11);
+	RSA_print_fp(stdout,priv_rsa,11);
 	
-	RSA_free(priv_key);
+	RSA_free(priv_rsa);
 
 }
