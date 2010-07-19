@@ -42,6 +42,7 @@ main(){
 	file_content[file_content_len] = '\0';
 	fclose(fp);
 	
+	output = (char *)malloc(file_content_len);
 	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
 	
 	printf("%s\n",output);
