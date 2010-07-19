@@ -48,23 +48,16 @@ main(){
 	base64_encode(key_buf,len,p,&en_len);
 	printf("%s\n",buf);	
 	
-	free(key_buf_p);
-	
-	/*
-	
-	
-	shopex_conf_rsa_encrypt(config_content,config_content_len,&en_content,&en_content_len);
-	
 
+	
 	if((fp=fopen(dest_filename,"wb+"))==NULL)
 	{
 		printf("cant open the file");
 		exit(0);
 	}
 
-	fwrite(en_content,en_content_len,1,fp);
+	fwrite(buf,en_len,1,fp);
 
+	free(key_buf_p);
 	fclose(fp);
-	*/
-
 }
