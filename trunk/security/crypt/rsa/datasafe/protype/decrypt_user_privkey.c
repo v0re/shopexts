@@ -30,6 +30,9 @@ main(){
 	
 	RSA *priv_rsa;
 	
+	char *b64_decode;
+	int b64_decode_len = 0;
+	
 	if((fp=fopen(source_filename,"rb"))==NULL)
 	{
 		printf("cant open the file");
@@ -45,12 +48,12 @@ main(){
 	fclose(fp);
 	
 	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
-	
-	printf("%d\n",output_len);
-	for(i=0;i<output_len;i++){
-		printf("%2x",output[i]);
+	base64_decode(output,output_len,b64_decode,&b64_decode_len);
+	printf("%d\n",b64_decode_len);
+	for(i=0;i<b64_decode;i++){
+		printf("%2x",b64_decode[i]);
 	}
-	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&output,(long)de_len);
+	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
 		
 	RSA_print_fp(stdout,priv_rsa,11);
 	
