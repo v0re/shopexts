@@ -48,6 +48,7 @@ main(){
 	fclose(fp);
 	
 	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
+	b64_decode = (char *)malloc(output_len);
 	base64_decode(output,output_len,b64_decode,&b64_decode_len);
 	printf("%d\n",b64_decode_len);
 	for(i=0;i<b64_decode_len;i++){
