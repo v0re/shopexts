@@ -45,7 +45,7 @@ main(){
 	file_content = (char *)malloc(file_content_len);
 	fread(file_content, 1, file_content_len, fp );
 	file_content[file_content_len] = '\0';
-	fclose(fp);
+	//fclose(fp);
 	
 	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
 	b64_decode = (char *)malloc(output_len);
