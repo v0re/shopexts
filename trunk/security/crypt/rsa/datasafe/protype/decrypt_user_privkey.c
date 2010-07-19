@@ -50,7 +50,7 @@ main(){
 	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
 	base64_decode(output,output_len,b64_decode,&b64_decode_len);
 	printf("%d\n",b64_decode_len);
-	for(i=0;i<b64_decode;i++){
+	for(i=0;i<b64_decode_len;i++){
 		printf("%2x",b64_decode[i]);
 	}
 	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
