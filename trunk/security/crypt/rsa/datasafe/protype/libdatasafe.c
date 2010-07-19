@@ -178,9 +178,13 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int
     *output_len = en_len;
     
     free(b64_buf_p);
+    b64_buf_p =NULL;
     free(cipher_p);
+    cipher_p = NULL;
     free(plain_p);
+    plain_p = NULL;
     free(rsa_ret_buf_p);
+    rsa_ret_buf_p = NULL;
     RSA_free(pub_rsa);
 }
 

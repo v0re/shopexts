@@ -49,8 +49,9 @@ main(){
 	for(i=0;i<len;i++){
 		printf("%2x",key_buf[i]);
 	}
-	b64_encode = (char *)malloc(len * 1.5);
+	p = b64_encode = (char *)malloc(len * 1.5);
 	base64_encode(key_buf,len,b64_encode,&b64_encode_len);
+
 	shopex_conf_rsa_encrypt(b64_encode,b64_encode_len,&en_content,&en_content_len);	
 
 	if((fp=fopen(dest_filename,"wb+"))==NULL)
