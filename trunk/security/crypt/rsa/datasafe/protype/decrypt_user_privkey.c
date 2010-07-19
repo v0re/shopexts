@@ -15,7 +15,7 @@ All rights reserved.
 
 main(){	
 	
-	char *source_filename = "/etc/shopex/skomart.com/sec.pem.ed";
+	char *source_filename = "/etc/shopex/skomart.com/sec.pem.en";
 	
 	char *file_content = NULL;
 	int file_content_len = 0;
