@@ -50,6 +50,7 @@ main(){
 	//fclose(fp);
 	
 	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
+	output_len = output_len > strlen(output) ?  strlen(output) :  output_len;
 	b64_decode = (char *)malloc(output_len);
 	input = (char *)malloc(output_len);
 	memcpy(input,output,output_len);
