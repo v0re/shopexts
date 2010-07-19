@@ -29,6 +29,7 @@ main(){
 	char *key_buf_p,*key_buf;
 	int len = 0;
 	int en_len = 0;
+	int i = 0;
 	
 	RSA *priv_key = NULL;	
 		
@@ -41,7 +42,10 @@ main(){
 		
 	key_buf_p = key_buf = (unsigned char*)malloc(len);
 	memcpy(key_buf,buf,len);			
-	
+	printf("%d\n",len);
+	for(i=0;i<len;i++){
+		printf("%2x",key_buf[i]);
+	}
 	shopex_conf_rsa_encrypt(key_buf,len,&en_content,&en_content_len);	
 
 	if((fp=fopen(dest_filename,"wb+"))==NULL)
