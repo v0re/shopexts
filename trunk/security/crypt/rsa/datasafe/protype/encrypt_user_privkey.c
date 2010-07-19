@@ -31,7 +31,7 @@ main(){
 	int en_len = 0;
 	int i = 0;
 	
-	char *b64_encode_len =NULL;
+	char *b64_encode =NULL;
 	int b64_encode_len = 0;
 	
 	RSA *priv_key = NULL;	
