@@ -22,7 +22,7 @@ main(){
 	
 	FILE *fp;
 
-	unsigned char *output;
+	char *output;
 	int output_len;
 	int de_len;
 	
