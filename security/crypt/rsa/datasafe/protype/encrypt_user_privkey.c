@@ -25,7 +25,7 @@ main(){
 	int en_content_len;
 	char *en_content;
 	
-	char *p,buf[2048]={'\0'};
+	unsigned char *p,buf[2048]={'\0'};
 	char *key_buf_p,*key_buf;
 	int len = 0;
 	int en_len = 0;
