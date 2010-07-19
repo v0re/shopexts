@@ -9,6 +9,8 @@ All rights reserved.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
 #include "datasafe_api.h"
 
 main(){	
