@@ -19,6 +19,20 @@ All rights reserved.
 
 #include "datasafe_api.h"
 
+
+int is_encrypted(char *filename){
+    int len = 0;
+    char *ext =NULL;
+    
+    len = strlen(filename);
+    strncpy(ext,filename + (len -2),2);
+    if( strcmp(ext,"ed") == 0 ){
+        return 0;
+    }else{
+        return -1;
+    }
+}
+
 void base64_encode(unsigned char *input, int length,char *output, int *output_len){
     BIO *bmem, *b64;
     BUF_MEM *bptr;
@@ -42,21 +56,21 @@ void base64_encode(unsigned char *input, int length,char *output, int *output_le
 }
 
 void  base64_decode(unsigned char *input, int length,char *output, int *output_len){
-	BIO *b64, *bmem;
-	char *buffer;
-	int max_len = (length * 6 + 7) / 8;
-	int len;
-		
-	b64 = BIO_new(BIO_f_base64());
-	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
-	bmem = BIO_new_mem_buf(input, length);
-	bmem = BIO_push(b64, bmem);
-	
-	len = BIO_read(bmem, output, max_len);
-	output[len] = 0;
-	*output_len = len;
-	
-	BIO_free_all(bmem);
+    BIO *b64, *bmem;
+    char *buffer;
+    int max_len = (length * 6 + 7) / 8;
+    int len;
+        
+    b64 = BIO_new(BIO_f_base64());
+    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+    bmem = BIO_new_mem_buf(input, length);
+    bmem = BIO_push(b64, bmem);
+    
+    len = BIO_read(bmem, output, max_len);
+    output[len] = 0;
+    *output_len = len;
+    
+    BIO_free_all(bmem);
 }
 
 void get_shopex_key(RSA **pubkey,RSA **privkey){
@@ -215,7 +229,7 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     while(de_buf - de_buf_p < de_len) {
         memset(cipher, '\0', ks);
         memset(plain, '\0', ks);
-    	memcpy(cipher,de_buf,ks);
+        memcpy(cipher,de_buf,ks);
         ret_len = RSA_private_decrypt(ks, cipher, plain, priv_rsa, RSA_PKCS1_PADDING);
         memcpy(rsa_ret_buf,plain,ret_len);
         ret_len_total += ret_len;
@@ -267,6 +281,9 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
      FILE * fp;
      int len;
      char * buffer = NULL;
+     char *de_buffer = NULL;
+     int de_len = 0;
+     
      fp = fopen(filename, "r");
      if (fp == NULL) {
         syslog(LOG_USER|LOG_INFO, "read shopex config file failure");
@@ -278,11 +295,19 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
      buffer = (char *)malloc(len);
      fread( buffer, 1, len, fp );
      buffer[len] = '\0';
-     *output = buffer;
-     *output_len = len;
      
+     if( is_ecrypted(filename) == 0 ){
+        shopex_conf_rsa_decrypt(buffer,len,&de_buffer,&de_len);     
+        *output = de_buffer;
+        *output_len = de_len;
+     }else{
+        *output = buffer;
+        *output_len = len;
+    }
+          
      fclose(fp);
 }
+
 
 void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
     char *output;
