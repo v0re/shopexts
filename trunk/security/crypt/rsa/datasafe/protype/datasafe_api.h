@@ -4,6 +4,8 @@ Written by Ken Xu (Kyle<xuqinyong@gmail.com>)
 Copyright (C) 2010, ShopEx. 
 All rights reserved.
 */
+#include <openssl/rsa.h>
+
 #ifndef _DATASAFE_API_
 #define _DATASAFE_API_
 
