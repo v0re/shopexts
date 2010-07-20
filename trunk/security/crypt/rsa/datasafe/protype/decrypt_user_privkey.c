@@ -59,7 +59,7 @@ main(){
 	for(i=0;i<b64_decode_len;i++){
 		printf("%2x",b64_decode[i]);
 	}
-	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
+	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)b64_decode_len);
 		
 	RSA_print_fp(stdout,priv_rsa,11);
 	

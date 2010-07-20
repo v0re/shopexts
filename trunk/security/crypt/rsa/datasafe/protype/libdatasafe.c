@@ -147,24 +147,16 @@ RSA *get_user_private_key(char *keyfile_path){
 }
 
 RSA *get_user_private_key_en(char *source_filename){
-	//char *source_filename = "/etc/shopex/skomart.com/sec.pem.en";
-	
 	char *file_content = NULL;
 	int file_content_len = 0;
-	
 	FILE *fp;
-
 	char *output;
 	int output_len;
 	int de_len;
-	
 	int i = 0;
-	
 	RSA *priv_rsa;
-	
 	char *b64_decode;
 	int b64_decode_len = 0;
-	
 	char *input = NULL;
 	
 	if((fp=fopen(source_filename,"rb"))==NULL)
@@ -187,13 +179,18 @@ RSA *get_user_private_key_en(char *source_filename){
 	input = (char *)malloc(output_len);
 	memcpy(input,output,output_len);
 	base64_decode(input,output_len,b64_decode,&b64_decode_len);
-	printf("%d\n",b64_decode_len);
-	for(i=0;i<b64_decode_len;i++){
-		printf("%2x",b64_decode[i]);
-	}
+
 	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)b64_decode_len);
-	    RSA_print_fp(stdout,priv_rsa,11);		
-    return priv_rsa;
+	if(RSA_check_key(priv_rsa) == -1) {
+      syslog(LOG_USER|LOG_INFO, "Error: Problems while reading RSA Private Key in  file.\n");
+      exit(EXIT_FAILURE);
+    } else if(RSA_check_key(priv_rsa) == 0) {
+      syslog(LOG_USER|LOG_INFO, "Error: Bad RSA Private Key readed in  file.\n");
+      exit(EXIT_FAILURE);
+    }
+    else
+      return priv_rsa;
+
 }
 
 
