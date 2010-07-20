@@ -146,6 +146,59 @@ RSA *get_user_private_key(char *keyfile_path){
       return key;
 }
 
+RSA *get_user_private_key_en(char *source_filename){
+	char *file_content = NULL;
+	int file_content_len = 0;
+	
+	FILE *fp;
+
+	char *output;
+	int output_len;
+	int de_len;
+	
+	int i = 0;
+	
+	RSA *priv_rsa;
+	
+	char *b64_decode;
+	int b64_decode_len = 0;
+	
+	char *input = NULL;
+	
+	if((fp=fopen(source_filename,"rb"))==NULL)
+	{
+		syslog(LOG_USER|LOG_INFO, "cant open the file.\n");
+        exit(EXIT_FAILURE);
+	}
+	
+	fseek(fp, 0L, SEEK_END);
+	file_content_len = ftell(fp);
+	fseek(fp, 0L, SEEK_SET);
+	file_content = (char *)malloc(file_content_len);
+	fread(file_content, 1, file_content_len, fp );
+	file_content[file_content_len] = '\0';
+	//fclose(fp);
+	
+	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
+	output_len = output_len > strlen(output) ?  strlen(output) :  output_len;
+	b64_decode = (char *)malloc(output_len);
+	input = (char *)malloc(output_len);
+	memcpy(input,output,output_len);
+	base64_decode(input,output_len,b64_decode,&b64_decode_len);
+    
+	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
+    if(RSA_check_key(priv_rsa) == -1) {
+      syslog(LOG_USER|LOG_INFO, "Error: Problems while reading RSA Private Key in  file.\n");
+      exit(EXIT_FAILURE);
+    } else if(RSA_check_key(priv_rsa) == 0) {
+      syslog(LOG_USER|LOG_INFO, "Error: Bad RSA Private Key readed in  file.\n");
+      exit(EXIT_FAILURE);
+    }
+    else
+      return priv_rsa;
+}
+
+
 
 void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int *output_len){    
     int ks,chunk_len,rsa_ret_buf_len,ret_len,ret_len_total,en_len;
@@ -245,6 +298,7 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     output_buf[ret_len_total] = '\0';
     
     *output = output_buf;
+    //attention due to the segment algorithm the output_len may not be correct
     *output_len = ret_len_total;
     
     free(de_buf_p);
