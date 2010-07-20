@@ -296,7 +296,7 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
      fread( buffer, 1, len, fp );
      buffer[len] = '\0';
      
-     if( is_ecrypted(filename) == 0 ){
+     if( is_encrypted(filename) == 0 ){
         shopex_conf_rsa_decrypt(buffer,len,&de_buffer,&de_len);     
         *output = de_buffer;
         *output_len = de_len;
