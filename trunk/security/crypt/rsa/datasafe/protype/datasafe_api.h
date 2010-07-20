@@ -51,6 +51,14 @@ DLLENTRY void shopex_data_rsa_decrypt(
 	int *output_len
 );
 
+DLLENTRY RSA *get_user_private_key(
+    char *filename
+);
+
+DLLENTRY RSA *get_user_private_key_en(
+    char *filename
+);
+
 DLLENTRY void test_get_shopex_key(
 
 );
@@ -58,11 +66,6 @@ DLLENTRY void test_get_shopex_key(
 DLLENTRY void test_get_user_public_key(
 
 );
-
-DLLENTRY void test_get_user_private_key(
-
-);
-
 
 DLLENTRY void test_get_user_key(
 
