@@ -192,7 +192,7 @@ RSA *get_user_private_key_en(char *source_filename){
 		printf("%2x",b64_decode[i]);
 	}
 	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
-		
+	    RSA_print_fp(stdout,priv_rsa,11);		
     return priv_rsa;
 }
 
