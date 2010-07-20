@@ -147,7 +147,7 @@ RSA *get_user_private_key(char *keyfile_path){
 }
 
 RSA *get_user_private_key_en(char *source_filename){
-	char *source_filename = "/etc/shopex/skomart.com/sec.pem.en";
+	//char *source_filename = "/etc/shopex/skomart.com/sec.pem.en";
 	
 	char *file_content = NULL;
 	int file_content_len = 0;
