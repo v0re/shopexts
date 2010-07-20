@@ -427,7 +427,7 @@ int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
     buffer = (char *)malloc(len);
     fread( buffer, 1, len, fp );
     buffer[len] = '\0';
-    fclose(fp);
+    //fclose(fp);
     
     MD5(buffer,len,md);
 
