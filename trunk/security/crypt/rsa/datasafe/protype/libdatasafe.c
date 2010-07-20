@@ -25,8 +25,9 @@ int is_encrypted(char *filename){
     char *ext =NULL;
     
     len = strlen(filename);
-    strncpy(ext,filename + (len -2),2);
-    if( strcmp(ext,"ed") == 0 ){
+    memcpy(ext,filename + (len -2),2);
+    ext[2] = '\0';
+    if( strcmp(ext,"en") == 0 ){
         return 0;
     }else{
         return -1;
