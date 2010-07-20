@@ -147,6 +147,8 @@ RSA *get_user_private_key(char *keyfile_path){
 }
 
 RSA *get_user_private_key_en(char *source_filename){
+	char *source_filename = "/etc/shopex/skomart.com/sec.pem.en";
+	
 	char *file_content = NULL;
 	int file_content_len = 0;
 	
@@ -167,8 +169,8 @@ RSA *get_user_private_key_en(char *source_filename){
 	
 	if((fp=fopen(source_filename,"rb"))==NULL)
 	{
-		syslog(LOG_USER|LOG_INFO, "cant open the file.\n");
-        exit(EXIT_FAILURE);
+		printf("cant open the file");
+		exit(0);
 	}
 	
 	fseek(fp, 0L, SEEK_END);
@@ -185,10 +187,13 @@ RSA *get_user_private_key_en(char *source_filename){
 	input = (char *)malloc(output_len);
 	memcpy(input,output,output_len);
 	base64_decode(input,output_len,b64_decode,&b64_decode_len);
-    
-	priv_rsa = d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
-
-     return priv_rsa;
+	printf("%d\n",b64_decode_len);
+	for(i=0;i<b64_decode_len;i++){
+		printf("%2x",b64_decode[i]);
+	}
+	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
+		
+    return priv_rsa;
 }
 
 
