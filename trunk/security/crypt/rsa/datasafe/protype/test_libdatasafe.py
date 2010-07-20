@@ -1,8 +1,6 @@
 #! /usr/bin/env python
 import ctypes
 
-
-lib_handle = ctypes.CDLL('/usr/lib/libdatasafe.so')
-
-
-print lib_handle
+datasafe = ctypes.CDLL('/usr/lib/libdatasafe.so')
+is_encrypted = datasafe.is_encrypted
+print is_encrypted("/etc/shopex/skomart.com/setting.conf.en");
