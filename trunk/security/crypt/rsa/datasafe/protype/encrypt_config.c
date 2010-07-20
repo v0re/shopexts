@@ -14,7 +14,7 @@ All rights reserved.
 main(){	
 	
 	char *source_filename = "/etc/shopex/skomart.com/setting.conf";
-	char *dest_filename = "/etc/shopex/skomart.com/setting.conf.ed";
+	char *dest_filename = "/etc/shopex/skomart.com/setting.conf.en";
 	
 	char *config_content = NULL;
 	int config_content_len = 0;
