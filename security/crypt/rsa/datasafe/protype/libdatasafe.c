@@ -22,11 +22,11 @@ All rights reserved.
 
 int is_encrypted(char *filename){
     int len = 0;
-    char *ext =NULL;
+    char ext[3]  = {'\0'};
     
     len = strlen(filename);
     memcpy(ext,filename + (len -2),2);
-    ext[2] = '\0';
+
     if( strcmp(ext,"en") == 0 ){
         return 0;
     }else{
