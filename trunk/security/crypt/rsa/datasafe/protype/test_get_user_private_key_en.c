@@ -15,6 +15,7 @@ All rights reserved.
 
 main(int argc,char *argv[]){	
 	
+    char *filename;
     RSA *key;
     
     if(!argv[1]){
