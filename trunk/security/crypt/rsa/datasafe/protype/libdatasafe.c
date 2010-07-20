@@ -126,7 +126,7 @@ RSA *get_user_private_key(char *keyfile_path){
     FILE *fp;
     RSA *key=NULL;
     
-    if(is_encrypted(keyfile_path)){
+    if(is_encrypted(keyfile_path) == 0){
         return get_user_private_key_en(keyfile_path);
     }
     
