@@ -2,7 +2,6 @@
 svn update
 gcc  -g -lssl libdatasafe.c  -fPIC -shared -o libdatasafe.so 
 cp libdatasafe.so /usr/lib
-gcc  -g -ldatasafe -L/usr/lib test_datasafe.c -o test_datasafe 
 gcc  -g -ldatasafe -L/usr/lib test_get_shopex_key.c -o test_get_shopex_key
 gcc  -g -ldatasafe -L/usr/lib test_base64.c -o test_base64
 gcc  -g -ldatasafe -L/usr/lib test_shopex_conf_rsa_encrypt.c -o test_shopex_conf_rsa_encrypt
