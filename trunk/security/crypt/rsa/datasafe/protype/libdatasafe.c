@@ -493,22 +493,6 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
 }
 
 
-
-void test_get_shopex_key(){
-    RSA *pub_rsa,*priv_rsa;
-    
-    get_shopex_key(&pub_rsa,&priv_rsa);
-    
-    if ((pub_rsa == NULL) || (priv_rsa == NULL))
-        ERR_print_errors_fp(stderr);
-
-    RSA_print_fp(stdout,pub_rsa,11);
-    RSA_print_fp(stdout,priv_rsa,11);
-    
-    RSA_free(pub_rsa);
-    RSA_free(priv_rsa);
-}
-
 void test_get_user_key(){
      RSA *pub_rsa,*priv_rsa;
      
@@ -550,35 +534,6 @@ void test_get_user_private_key(){
     
     RSA_free(priv_rsa);
 }
-
-void test_shopex_data_rsa_encrypt(){
-    char *pub_keyfile_path  = "/etc/shopex/skomart.com/pub.pem";
-    char *input = NULL;
-    char *output = NULL;
-    int output_len;    
-    
-    input = "hello world!";
-    
-    shopex_data_rsa_encrypt(pub_keyfile_path,input,strlen(input),&output,&output_len);
-    output[output_len] = '\0';
-    printf("%s\n",output);
-
-}
-     
-void test_shopex_data_rsa_decrypt(){
-    char *priv_keyfile_path  = "/etc/shopex/skomart.com/sec.pem";
-    char *input = NULL;
-    char *output = NULL;
-    int output_len;
-    
-    input = "KTmCZFBep8qJnIZeo0hSq1Owc/QRWu66EZXb+gPj5fCrh1Vgpj1u+nWJb8aQpy4EOxNu1r7kuibF3OIekLjvrspnd1kD3mMUYuoDOXbp5rIv+EtDieRKbJqeDmfD8GrEGHwrHlec/gnLqhyN1cWXFDD1x7xSULMPLmTzbnbTWk4=";
-    
-    shopex_data_rsa_decrypt(priv_keyfile_path,input,strlen(input),&output,&output_len);
-    output[output_len] = '\0';
-    printf("%s\n",output);
-
-}
-
 
 void test_shopex_read_pubkeypos_in_file(){
     char *filename;
