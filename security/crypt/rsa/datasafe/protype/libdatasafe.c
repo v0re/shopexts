@@ -126,6 +126,10 @@ RSA *get_user_private_key(char *keyfile_path){
     FILE *fp;
     RSA *key=NULL;
     
+    if(is_encrypted(keyfile_path)){
+        return get_user_private_key_en(keyfile_path);
+    }
+    
     if((fp = fopen(keyfile_path,"r")) == NULL) {
       syslog(LOG_USER|LOG_INFO, "Error: Private Key file doesn't exists.\n");
       exit(EXIT_FAILURE);
