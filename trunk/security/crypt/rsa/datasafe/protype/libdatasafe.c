@@ -526,17 +526,6 @@ void test_shopex_data_rsa_decrypt(){
 
 }
 
-void test_shopex_read_conf_file(){
-    char *filename;
-    char *output;
-    int len;
-    
-    filename = "/etc/shopex/skomart.com/setting.conf";
-    shopex_read_conf_file(filename,&output,&len);
-    printf("%s",output);
-    
-    free(output);
-}
 
 void test_shopex_read_pubkeypos_in_file(){
     char *filename;

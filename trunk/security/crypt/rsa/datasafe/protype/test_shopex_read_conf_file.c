@@ -13,7 +13,13 @@ All rights reserved.
 
 main(){	
 	
-	test_shopex_read_pubkeypos_in_file();
-	test_shopex_read_privkeypos_in_file();
-	test_shopex_is_file_in_allowlist();
+    char *filename;
+    char *output;
+    int len;
+    
+    filename = "/etc/shopex/skomart.com/setting.conf";
+    shopex_read_conf_file(filename,&output,&len);
+    printf("%s",output);
+    
+    free(output);
 }
