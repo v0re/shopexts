@@ -186,16 +186,9 @@ RSA *get_user_private_key_en(char *source_filename){
 	memcpy(input,output,output_len);
 	base64_decode(input,output_len,b64_decode,&b64_decode_len);
     
-	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
-    if(RSA_check_key(priv_rsa) == -1) {
-      syslog(LOG_USER|LOG_INFO, "Error: Problems while reading RSA Private Key in  file.\n");
-      exit(EXIT_FAILURE);
-    } else if(RSA_check_key(priv_rsa) == 0) {
-      syslog(LOG_USER|LOG_INFO, "Error: Bad RSA Private Key readed in  file.\n");
-      exit(EXIT_FAILURE);
-    }
-    else
-      return priv_rsa;
+	priv_rsa = d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
+
+     return priv_rsa;
 }
 
 
