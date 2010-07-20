@@ -11,13 +11,18 @@ All rights reserved.
 #include <string.h>
 #include "datasafe_api.h"
 
-main(){	
+main(int argc,char *argv[]){	
 	
     char *filename;
     char *output;
     int len;
     
-    filename = "/etc/shopex/skomart.com/setting.conf";
+    if(!argv[1]){
+        filename = "/etc/shopex/skomart.com/setting.conf";
+    }else{
+        filename = argv[1];
+    }
+    
     shopex_read_conf_file(filename,&output,&len);
     printf("%s",output);
     
