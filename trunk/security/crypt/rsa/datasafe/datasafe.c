@@ -193,7 +193,7 @@ PHP_FUNCTION(shopex_data_encrypt)
 	    free(output);
 	    output = NULL;
     }
-	RETURN_STRINGL(ret,output_len);
+	RETURN_STRINGL(ret,output_len,0);
 }
 
 PHP_FUNCTION(shopex_data_decrypt)
