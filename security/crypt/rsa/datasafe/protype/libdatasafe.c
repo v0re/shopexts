@@ -437,17 +437,28 @@ void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * 
 void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
     char *keyfile_path = NULL;
+    char *de_buf = NULL;
+    int de_buf_len = 0;
     
     keyfile_path = (char *)malloc(MAX_FILENAME_LEN);
     assert( keyfile_path != NULL );
     memset(keyfile_path,'\0',MAX_FILENAME_LEN);
     shopex_read_privkeypos_in_file(config_file,&keyfile_path);
     priv_rsa = get_user_private_key(keyfile_path);
-    shopex_rsa_decrypt(priv_rsa,input,input_len,output,output_len);    
+    shopex_rsa_decrypt(priv_rsa,input,input_len,de_buf,de_buf_len);    
     
-    if(keyfile_path){
+    if(de_buf_len){
+       memcpy( *output,de_buf,de_buf_len);
+       *output_len = de_buf_len;
+    }
+    
+    if(keyfile_path != NULL){
         free(keyfile_path);
         keyfile_path = NULL;
+    }
+    if(de_buf != NULL){
+        free(de_buf);
+        de_buf = NULL;
     }
 }
 
