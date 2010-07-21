@@ -19,6 +19,8 @@ All rights reserved.
 
 #include "datasafe_api.h"
 
+#define MAX_FILENAME_LEN 256;
+
 
 int is_encrypted(char *filename){
     int len = 0;
@@ -344,8 +346,11 @@ void shopex_conf_rsa_decrypt(char *input,int input_len,char **output,int *output
     shopex_rsa_decrypt(priv_rsa,input,input_len,output,output_len);    
 }
 
-void shopex_data_rsa_encrypt(char *keyfile_path,char *input,int input_len,char * *output,int *output_len){
+void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * *output,int *output_len){
     RSA *pub_rsa;
+    char keyfile_path[MAX_FILENAME_LEN];
+    
+    shopex_read_pubkeypos_in_file(config_file,&keyfile_path);
     pub_rsa = get_user_public_key(keyfile_path);
     shopex_rsa_encrypt(pub_rsa,input,input_len,output,output_len);    
 }
@@ -389,20 +394,24 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
 
 
 void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
-    char *output;
-    int len;
-    char *pos_start,*pos_end,*pub_buf;
+    char *output,*output_p;
+    int len = 0;
     
     shopex_read_conf_file(config_filename,&output,&len);
     
-    pos_start = output;
-    pos_end = strstr(output,"\n");
-    len = pos_end - pos_start;
-    pub_buf = (char *)malloc(len);
-    memcpy(pub_buf,pos_start,len);
-    pub_buf[len] = '\0';
-    *file_pos = pub_buf;
+    output_p = output;
+    while(*output != '\n' && len < MAX_FILENAME_LEN){
+        output++;
+        len++;        
+    }
     
+    *output = '\0';   
+    strcpy(*file_pos,output_p,len);
+    
+    if(output){
+        free(output);
+        output_p = output = NULL;
+    }    
 }
 
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
