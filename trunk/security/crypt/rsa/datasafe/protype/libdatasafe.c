@@ -388,6 +388,8 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     int i = 0;
     
     shopex_read_conf_file(config_filename,&output,&len);
+    *file_pos = output;
+    /*
     output_p = output;
     pos_start = pos_end = output;
     while((pos_end - pos_start) < len){
@@ -406,7 +408,7 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     *file_pos = priv_buf;
         
     free(output_p);
-
+	*/
 }
 
 int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
