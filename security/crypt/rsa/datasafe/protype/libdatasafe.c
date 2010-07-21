@@ -247,13 +247,14 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int
    /*
      free(b64_buf_p);
     b64_buf_p =NULL;
-    */
+    
     free(cipher_p);
     cipher_p = NULL;
     free(plain_p);
     plain_p = NULL;
     free(rsa_ret_buf_p);
     rsa_ret_buf_p = NULL;
+    */
     RSA_free(pub_rsa);
 }
 
@@ -299,11 +300,12 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     *output = output_buf;
     //attention due to the segment algorithm the output_len may not be correct
     *output_len = ret_len_total;
-    
+    /*
     free(de_buf_p);
     free(rsa_ret_buf_p);
     free(cipher_p);
     free(plain_p);
+    */
     RSA_free(priv_rsa);
 }
 
@@ -359,7 +361,7 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
         *output_len = len;
     }
           
-     fclose(fp);
+     //fclose(fp);
 }
 
 
@@ -378,7 +380,7 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
     pub_buf[len] = '\0';
     *file_pos = pub_buf;
     
-    free(output);
+    //free(output);
 }
 
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
@@ -475,19 +477,20 @@ int shopex_is_file_in_allowlist(char *config_filename,char *filename){
             if ( strcmp(allowfile,filename) != 0  || shopex_checkfile_md5(allowfile,allowfile_md5) != 0 ){
                 return -1;
             }
-            
+            /*
             free(buf);
             buf = NULL;
             free(allowfile);
             allowfile = NULL;
             free(allowfile_md5);
             allowfile_md5 = NULL;
+            */
         }
         output = pos_end + 1;
         i++;
     }
 
-    free(output_p);
+    //free(output_p);
     
     return 0;
 }
