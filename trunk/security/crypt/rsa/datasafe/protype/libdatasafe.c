@@ -223,6 +223,37 @@ RSA *get_user_private_key_en(char *source_filename){
 }
 
 
+void shopex_read_conf_file(char *filename,char **output,int *output_len){
+     FILE * fp;
+     int len;
+     char * buffer = NULL;
+     char *de_buffer = NULL;
+     int de_len = 0;
+     
+     fp = fopen(filename, "r");
+     if (fp == NULL) {
+        syslog(LOG_USER|LOG_INFO, "read shopex config file failure");
+        exit(EXIT_FAILURE);
+     }
+     fseek(fp, 0L, SEEK_END);
+     len = ftell(fp);
+     fseek(fp, 0L, SEEK_SET);
+     buffer = (char *)malloc(len);
+     fread( buffer, 1, len, fp );
+     buffer[len] = '\0';
+     
+     if( is_encrypted(filename) == 0 ){
+        shopex_conf_rsa_decrypt(buffer,len,&de_buffer,&de_len);     
+        *output = de_buffer;
+        *output_len = de_len;
+     }else{
+        *output = buffer;
+        *output_len = len;
+    }
+          
+     //fclose(fp);
+}
+
 
 void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int *output_len){    
     int ks,chunk_len,rsa_ret_buf_len,ret_len,ret_len_total,en_len;
@@ -334,7 +365,7 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     RSA_free(priv_rsa);
 }
 
-void shopex_read_pubkeypos_in_file(char *config_filename,unsigned char **file_pos){
+void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
     char *output,*output_p;
     int len = 0;
     
@@ -408,36 +439,7 @@ void shopex_data_rsa_decrypt(char *keyfile_path,char *input,int input_len,char *
     shopex_rsa_decrypt(priv_rsa,input,input_len,output,output_len);    
 }
 
-void shopex_read_conf_file(char *filename,char **output,int *output_len){
-     FILE * fp;
-     int len;
-     char * buffer = NULL;
-     char *de_buffer = NULL;
-     int de_len = 0;
-     
-     fp = fopen(filename, "r");
-     if (fp == NULL) {
-        syslog(LOG_USER|LOG_INFO, "read shopex config file failure");
-        exit(EXIT_FAILURE);
-     }
-     fseek(fp, 0L, SEEK_END);
-     len = ftell(fp);
-     fseek(fp, 0L, SEEK_SET);
-     buffer = (char *)malloc(len);
-     fread( buffer, 1, len, fp );
-     buffer[len] = '\0';
-     
-     if( is_encrypted(filename) == 0 ){
-        shopex_conf_rsa_decrypt(buffer,len,&de_buffer,&de_len);     
-        *output = de_buffer;
-        *output_len = de_len;
-     }else{
-        *output = buffer;
-        *output_len = len;
-    }
-          
-     //fclose(fp);
-}
+
 
 
 
