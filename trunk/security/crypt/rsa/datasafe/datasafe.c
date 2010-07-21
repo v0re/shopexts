@@ -224,16 +224,19 @@ PHP_FUNCTION(shopex_data_decrypt)
 		return;
 	}
 		
-	zed = EG(current_execute_data);
-	allow_ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
-	if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
+	//zed = EG(current_execute_data);
+	//allow_ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
+	//if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
 		shopex_read_privkeypos_in_file(config_filepath,&privkeypos);	
 		shopex_data_rsa_decrypt(privkeypos,arg,arg_len,&output,&output_len);
 		ret = estrndup(output,output_len);
 		free(output);
+		output = NULL;
+		free(privkeypos);
+		privkeypos = NULL;
 		RETURN_STRING(ret,strlen(ret));
-	}
-	RETURN_STRING(arg,arg_len);
+	//}
+	//RETURN_STRING(arg,arg_len);
 }
 
 /* }}} */
