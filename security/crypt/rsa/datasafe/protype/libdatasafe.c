@@ -334,7 +334,7 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     RSA_free(priv_rsa);
 }
 
-void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
+void shopex_read_pubkeypos_in_file(char *config_filename,unsigned char **file_pos){
     char *output,*output_p;
     int len = 0;
     
