@@ -428,7 +428,9 @@ void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * 
     RSA *pub_rsa;
     char *keyfile_path = NULL;
     
-    keyfile_path = (char *)calloc(MAX_FILENAME_LEN);
+    keyfile_path = (char *)malloc(MAX_FILENAME_LEN);
+    assert( keyfile_path != NULL );
+    memset(keyfile_path,'\0',MAX_FILENAME_LEN);
     shopex_read_pubkeypos_in_file(config_file,&keyfile_path);
     pub_rsa = get_user_public_key(keyfile_path);
     shopex_rsa_encrypt(pub_rsa,input,input_len,output,output_len);    
