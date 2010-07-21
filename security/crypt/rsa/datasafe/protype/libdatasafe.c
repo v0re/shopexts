@@ -393,20 +393,18 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
 }
 
 
-void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
+void shopex_read_pubkeypos_in_file(char *config_filename,const char **file_pos){
     char *output,*output_p;
-    int len = 0;
     
     shopex_read_conf_file(config_filename,&output,&len);
     
     output_p = output;
     while(*output != '\n' && len < MAX_FILENAME_LEN){
         output++;
-        len++;        
     }
     
     *output = '\0';   
-    strcpy(*file_pos,output_p,len);
+    strcpy(*file_pos,output_p);
     
     if(output){
         free(output);
