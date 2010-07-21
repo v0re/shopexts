@@ -566,14 +566,7 @@ void test_get_user_private_key(){
     RSA_free(priv_rsa);
 }
 
-void test_shopex_read_pubkeypos_in_file(){
-    char *filename;
-    char *output;
-    
-    filename = "/etc/shopex/skomart.com/setting.conf";
-    shopex_read_pubkeypos_in_file(filename,&output);
-    printf("%s\n",output);
-}
+
 
 void test_shopex_read_privkeypos_in_file(){
     char *filename;
