@@ -34,6 +34,27 @@ int is_encrypted(char *filename){
     }
 }
 
+void read_line(char *filename,int line_no,char **output,size_t *output_len){
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    int i = 1;
+    
+    fp = fopen(filename, "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+    while ((read = getline(&line, &len, fp)) != -1) {
+        if(i == line_no){
+            line[read] = '\0';
+            *output = line;
+            *output_len = read;
+            break;
+        }
+        i++;
+    }
+}
+
 void base64_encode(unsigned char *input, int length,char *output, int *output_len){
     BIO *bmem, *b64;
     BUF_MEM *bptr;
@@ -151,41 +172,41 @@ RSA *get_user_private_key(char *keyfile_path){
 }
 
 RSA *get_user_private_key_en(char *source_filename){
-	char *file_content = NULL;
-	int file_content_len = 0;
-	FILE *fp;
-	char *output;
-	int output_len;
-	int de_len;
-	int i = 0;
-	RSA *priv_rsa;
-	char *b64_decode;
-	int b64_decode_len = 0;
-	char *input = NULL;
-	
-	if((fp=fopen(source_filename,"rb"))==NULL)
-	{
-		printf("cant open the file");
-		exit(0);
-	}
-	
-	fseek(fp, 0L, SEEK_END);
-	file_content_len = ftell(fp);
-	fseek(fp, 0L, SEEK_SET);
-	file_content = (char *)malloc(file_content_len);
-	fread(file_content, 1, file_content_len, fp );
-	file_content[file_content_len] = '\0';
-	//fclose(fp);
-	
-	shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
-	output_len = output_len > strlen(output) ?  strlen(output) :  output_len;
-	b64_decode = (char *)malloc(output_len);
-	input = (char *)malloc(output_len);
-	memcpy(input,output,output_len);
-	base64_decode(input,output_len,b64_decode,&b64_decode_len);
+    char *file_content = NULL;
+    int file_content_len = 0;
+    FILE *fp;
+    char *output;
+    int output_len;
+    int de_len;
+    int i = 0;
+    RSA *priv_rsa;
+    char *b64_decode;
+    int b64_decode_len = 0;
+    char *input = NULL;
+    
+    if((fp=fopen(source_filename,"rb"))==NULL)
+    {
+        printf("cant open the file");
+        exit(0);
+    }
+    
+    fseek(fp, 0L, SEEK_END);
+    file_content_len = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    file_content = (char *)malloc(file_content_len);
+    fread(file_content, 1, file_content_len, fp );
+    file_content[file_content_len] = '\0';
+    //fclose(fp);
+    
+    shopex_conf_rsa_decrypt(file_content,file_content_len,&output,&output_len);
+    output_len = output_len > strlen(output) ?  strlen(output) :  output_len;
+    b64_decode = (char *)malloc(output_len);
+    input = (char *)malloc(output_len);
+    memcpy(input,output,output_len);
+    base64_decode(input,output_len,b64_decode,&b64_decode_len);
 
-	priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)b64_decode_len);
-	if(RSA_check_key(priv_rsa) == -1) {
+    priv_rsa=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)b64_decode_len);
+    if(RSA_check_key(priv_rsa) == -1) {
       syslog(LOG_USER|LOG_INFO, "Error: Problems while reading RSA Private Key in  file.\n");
       exit(EXIT_FAILURE);
     } else if(RSA_check_key(priv_rsa) == 0) {
@@ -385,13 +406,15 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
 
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     char *output,*output_p;
-    int len;
+    size_t len;
     char *pos_start,*pos_end,*priv_buf;
     int i = 0;
     
-    shopex_read_conf_file(config_filename,&output,&len);
+    output = (char *)malloc(64);
+    read_line(config_filename,2,&output,&len);
     *file_pos = output;
     /*
+    shopex_read_conf_file(config_filename,&output,&len);
     output_p = output;
     pos_start = pos_end = output;
     while((pos_end - pos_start) < len){
@@ -410,7 +433,7 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     *file_pos = output;
         */
     //free(output_p);
-	
+    
 }
 
 int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
