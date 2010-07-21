@@ -448,7 +448,7 @@ void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * 
     }
 }
 
-void shopex_data_rsa_decrypt(char *keyfile_path,char *input,int input_len,char **output,int *output_len){
+void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
     char *keyfile_path =NULL;
     
