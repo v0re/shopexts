@@ -16,6 +16,7 @@ All rights reserved.
 #include <openssl/buffer.h>
 #include <openssl/md5.h>
 #include <syslog.h>
+#include <assert.h>
 
 #include "datasafe_api.h"
 
