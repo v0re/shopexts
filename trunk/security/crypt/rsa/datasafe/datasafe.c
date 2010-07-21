@@ -204,7 +204,7 @@ PHP_FUNCTION(shopex_data_decrypt)
 	int arg_len;
 
     char *keyfile_path;
-    char *output;
+    char *output = NULL;
     int output_len;
     
     char * ret;
@@ -213,7 +213,7 @@ PHP_FUNCTION(shopex_data_decrypt)
     zend_execute_data *zed;
     
     int allow_ret = 0;
-
+    int new_len = 0;
 
 
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
@@ -224,19 +224,12 @@ PHP_FUNCTION(shopex_data_decrypt)
 	//zed = EG(current_execute_data);
 	//allow_ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
 	//if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
-
-    //shopex_data_rsa_decrypt(config_filepath,arg,arg_len,&output,&output_len);
-    output = (char *)emalloc(256);
-    shopex_read_privkeypos_in_file(config_filepath,&output);
-    output_len = strlen(output);
-    ret = estrndup(output,output_len);
+	new_len = 128 * ( arg_len / 117 + 1 );
+    output = (char *)emalloc( new_len );
+    memset(output,'\0',new_len);
+    shopex_data_rsa_decrypt(config_filepath,arg,arg_len,&output,&output_len);
     
-    if(output){
-        efree(output);
-        output = NULL;
-    }
-    
-    RETURN_STRINGL(ret,output_len,0);
+    RETURN_STRINGL(output,output_len,0);
 	//}
 	//RETURN_STRING(arg,arg_len);
 }
