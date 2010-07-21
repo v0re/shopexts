@@ -224,7 +224,7 @@ PHP_FUNCTION(shopex_data_decrypt)
 		return;
 	}
 	
-	shopex_read_conf_file(config_filepath,output,output_len);
+	shopex_read_conf_file(config_filepath,&output,&output_len);
 	
 	RETURN_STRING(output,output_len);
 		

@@ -38,7 +38,7 @@ main(int argc,char *argv[]){
     while ( *output != "\n" && *output != '\0' ) {
         output++; 
         if ( *output == "\n" ) { 
-            *output++ = '\0'; 
+            *output = '\0'; 
             break;
         }
     }
