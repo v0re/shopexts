@@ -410,9 +410,9 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     char *pos_start,*pos_end,*priv_buf;
     int i = 0;
     
-    output = (char *)malloc(64);
-    read_line(config_filename,2,&output,&len);
-    *file_pos = output;
+
+    read_line(config_filename,2,file_pos,&len);
+
     /*
     shopex_read_conf_file(config_filename,&output,&len);
     output_p = output;
