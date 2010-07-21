@@ -223,11 +223,16 @@ PHP_FUNCTION(shopex_data_decrypt)
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
 		return;
 	}
+	
+	shopex_read_conf_file(config_filepath,output,output_len);
+	
+	RETURN_STRING(output,output_len);
 		
 	//zed = EG(current_execute_data);
 	//allow_ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
 	//if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
-		shopex_read_privkeypos_in_file(config_filepath,&privkeypos);	
+		//shopex_read_privkeypos_in_file(config_filepath,&privkeypos);	
+
 		/*
 		shopex_data_rsa_decrypt(privkeypos,arg,arg_len,&output,&output_len);
 		ret = estrndup(output,output_len);
@@ -237,7 +242,7 @@ PHP_FUNCTION(shopex_data_decrypt)
 		free(privkeypos);
 		privkeypos = NULL;
 		*/
-		RETURN_STRING(privkeypos,strlen(privkeypos));
+		//RETURN_STRING(privkeypos,strlen(privkeypos));
 	//}
 	//RETURN_STRING(arg,arg_len);
 }

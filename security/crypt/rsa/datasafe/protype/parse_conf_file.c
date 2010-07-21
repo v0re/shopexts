@@ -14,7 +14,7 @@ All rights reserved.
 main(int argc,char *argv[]){	
 	
     char *filename;
-    char *output;
+    char *output,output_p;
     int len;
     char * pch;
     
@@ -26,12 +26,24 @@ main(int argc,char *argv[]){
     
     shopex_read_conf_file(filename,&output,&len);
 
+/*
     printf ("Splitting string \"%s\" into tokens:\n",output);
     pch = strtok (output,"\n");
     while (pch != NULL)   {
         printf ("%s\n",pch);
         pch = strtok (NULL, "\n");
     }
+    */
+    output_p = output;
+    while ( *output != "\n" && *output != '\0' ) {
+        output++; 
+        if ( *output == "\n" ) { 
+            *output++ = '\0'; 
+            break;
+        }
+    }
+    
+    printf("%s",output);  
     
     free(output);
 }
