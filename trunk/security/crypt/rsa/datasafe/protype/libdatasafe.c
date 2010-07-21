@@ -334,6 +334,53 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     RSA_free(priv_rsa);
 }
 
+void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
+    char *output,*output_p;
+    int len = 0;
+    
+    shopex_read_conf_file(config_filename,&output,&len);
+    
+    output_p = output;
+    while(*output != '\n' && len < MAX_FILENAME_LEN){
+        output++;
+        len++;        
+    }
+    
+    *output = '\0';   
+    strcpy(*file_pos,output_p);
+    
+    if(output){
+        free(output);
+        output_p = output = NULL;
+    }    
+}
+
+void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
+    char *output,*output_p;
+    size_t len;
+    char *pos_start,*pos_end,*priv_buf;
+    int i = 0;
+
+    shopex_read_conf_file(config_filename,&output,&len);
+    output_p = output;
+    pos_start = pos_end = output;
+    while((pos_end - pos_start) < len){
+        pos_end = strstr(output,"\n");
+        if(i == 1){
+            break;
+        }
+        pos_start = pos_end + 1;
+        output = pos_start;
+        i++;
+    }
+    len = pos_end - pos_start;
+    priv_buf = (char *)malloc(len);
+    memcpy(priv_buf,pos_start,len);
+    priv_buf[len] = '\0';
+    *file_pos = output;
+}
+
+
 void shopex_conf_rsa_encrypt(char *input,int input_len,char **output,int *output_len){
     RSA *pub_rsa;
     pub_rsa = get_shopex_public_key();
@@ -393,51 +440,6 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
 }
 
 
-void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
-    char *output,*output_p;
-    int len = 0;
-    
-    shopex_read_conf_file(config_filename,&output,&len);
-    
-    output_p = output;
-    while(*output != '\n' && len < MAX_FILENAME_LEN){
-        output++;
-        len++;        
-    }
-    
-    *output = '\0';   
-    strcpy(*file_pos,output_p);
-    
-    if(output){
-        free(output);
-        output_p = output = NULL;
-    }    
-}
-
-void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
-    char *output,*output_p;
-    size_t len;
-    char *pos_start,*pos_end,*priv_buf;
-    int i = 0;
-
-    shopex_read_conf_file(config_filename,&output,&len);
-    output_p = output;
-    pos_start = pos_end = output;
-    while((pos_end - pos_start) < len){
-        pos_end = strstr(output,"\n");
-        if(i == 1){
-            break;
-        }
-        pos_start = pos_end + 1;
-        output = pos_start;
-        i++;
-    }
-    len = pos_end - pos_start;
-    priv_buf = (char *)malloc(len);
-    memcpy(priv_buf,pos_start,len);
-    priv_buf[len] = '\0';
-    *file_pos = output;
-}
 
 int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
     FILE * fp;
