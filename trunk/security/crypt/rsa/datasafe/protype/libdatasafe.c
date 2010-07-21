@@ -384,7 +384,7 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     char *output,*output_p;
     int len;
-    char *pos_start,*pos_end,*pub_buf;
+    char *pos_start,*pos_end,*priv_buf;
     int i = 0;
     
     shopex_read_conf_file(config_filename,&output,&len);
@@ -400,10 +400,10 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
         i++;
     }
     len = pos_end - pos_start;
-    pub_buf = (char *)malloc(len);
-    memcpy(pub_buf,pos_start,len);
-    pub_buf[len] = '\0';
-    *file_pos = pub_buf;
+    priv_buf = (char *)malloc(len);
+    memcpy(priv_buf,pos_start,len);
+    priv_buf[len] = '\0';
+    *file_pos = priv_buf;
         
     free(output_p);
 
