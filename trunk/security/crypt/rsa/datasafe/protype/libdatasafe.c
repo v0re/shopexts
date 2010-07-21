@@ -405,7 +405,7 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     priv_buf = (char *)malloc(len);
     memcpy(priv_buf,pos_start,len);
     priv_buf[len] = '\0';
-    *file_pos = priv_buf;
+    *file_pos = output;
         
     //free(output_p);
 	
