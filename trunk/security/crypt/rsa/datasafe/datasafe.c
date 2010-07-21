@@ -188,7 +188,7 @@ PHP_FUNCTION(shopex_data_encrypt)
 	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
 		return;
 	}
-
+/*
 	shopex_read_pubkeypos_in_file(config_filepath,&pubkeypos);
 	shopex_data_rsa_encrypt(pubkeypos,arg,arg_len,&output,&output_len);
 	ret = estrndup(output,output_len);
@@ -197,6 +197,8 @@ PHP_FUNCTION(shopex_data_encrypt)
 	pubkeypos = NULL;
 	free(output);
 	output = NULL;
+	*/
+    ret = '\0';
 	RETURN_STRING(ret,strlen(ret));
 }
 
