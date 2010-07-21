@@ -388,33 +388,19 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
 }
 
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
-    char *output,*output_p,*start;
+    char *output,*start,*end;
     int len = 0;
-    int found = 0;
     
     shopex_read_conf_file(config_filename,&output,&len);
         
-    output_p = output;
-    while(*output != '\0' ){
-        output++;
-        if(*output == '\n'){
-            found++;
-        }
-        if(found == 1){
-            start = output + 1;
-            len++; 
-        }
-        if(found ==2){
-            break;    
-        }               
-    }
-        
-    *output = '\0';   
+    start = strstr(output,'\n');
+    end = strstr(++start,'\n');
+    *end = '\0';
     strcpy(*file_pos,start);
     
     if(output){
-        free(output_p);
-        output_p = output = start = NULL;
+        free(output);
+        output = start = end = NULL;
     }    
 }
 

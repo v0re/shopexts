@@ -220,26 +220,20 @@ PHP_FUNCTION(shopex_data_decrypt)
 		return;
 	}
 	
-	//shopex_read_conf_file(config_filepath,&output,&output_len);
 	
-	RETURN_STRING(arg,arg_len);
-	
-		
 	//zed = EG(current_execute_data);
 	//allow_ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
 	//if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
-		//shopex_read_privkeypos_in_file(config_filepath,&privkeypos);	
 
-		/*
-		shopex_data_rsa_decrypt(privkeypos,arg,arg_len,&output,&output_len);
-		ret = estrndup(output,output_len);
-		/*
-		free(output);
-		output = NULL;
-		free(privkeypos);
-		privkeypos = NULL;
-		*/
-		//RETURN_STRING(privkeypos,strlen(privkeypos));
+    shopex_data_rsa_decrypt(config_filepath,arg,arg_len,&output,&output_len);
+    ret = estrndup(output,output_len);
+    
+    if(output){
+        free(output);
+        output = NULL;
+    }
+    
+    RETURN_STRINGL(ret,output_len,0);
 	//}
 	//RETURN_STRING(arg,arg_len);
 }
