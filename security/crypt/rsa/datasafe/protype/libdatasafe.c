@@ -393,8 +393,8 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     
     shopex_read_conf_file(config_filename,&output,&len);
         
-    start = strstr(output,'\n');
-    end = strstr(++start,'\n');
+    start = strstr(output,"\n");
+    end = strstr(++start,"\n");
     *end = '\0';
     strcpy(*file_pos,start);
     
