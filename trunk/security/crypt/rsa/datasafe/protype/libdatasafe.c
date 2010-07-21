@@ -55,6 +55,8 @@ void shopex_read_line(char *filename,int line_no,char **output,size_t *output_le
     }
 }
 
+
+
 void base64_encode(unsigned char *input, int length,char *output, int *output_len){
     BIO *bmem, *b64;
     BUF_MEM *bptr;
