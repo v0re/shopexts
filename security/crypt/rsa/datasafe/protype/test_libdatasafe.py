@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-import ctypes
+import ctypes.*
 
 datasafe = ctypes.CDLL('/usr/lib/libdatasafe.so')
 is_encrypted = datasafe.is_encrypted
