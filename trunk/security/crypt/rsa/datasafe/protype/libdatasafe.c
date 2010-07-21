@@ -426,11 +426,17 @@ void shopex_conf_rsa_decrypt(char *input,int input_len,char **output,int *output
 
 void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * *output,int *output_len){
     RSA *pub_rsa;
-    char keyfile_path[MAX_FILENAME_LEN] = {'\0'};
+    char *keyfile_path = NULL;
     
+    keyfile_path = (char *)calloc(MAX_FILENAME_LEN);
     shopex_read_pubkeypos_in_file(config_file,&keyfile_path);
     pub_rsa = get_user_public_key(keyfile_path);
     shopex_rsa_encrypt(pub_rsa,input,input_len,output,output_len);    
+    
+    if(keyfile_path){
+        free(keyfile_path);
+        keyfile_path = NULL;
+    }
 }
 
 void shopex_data_rsa_decrypt(char *keyfile_path,char *input,int input_len,char **output,int *output_len){
