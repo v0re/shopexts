@@ -8,5 +8,5 @@ print is_encrypted("/etc/shopex/skomart.com/setting.conf")
 
 shopex_read_pubkeypos_in_file = datasafe.shopex_read_pubkeypos_in_file
 return_string = ctypes.pointer(ctypes.c_char_p())
-shopex_read_conf_file("/etc/shopex/skomart.com/setting.conf",ctypes.byref(return_string))
+shopex_read_pubkeypos_in_file("/etc/shopex/skomart.com/setting.conf",ctypes.byref(return_string))
 print return_string
