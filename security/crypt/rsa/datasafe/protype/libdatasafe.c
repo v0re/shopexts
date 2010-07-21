@@ -457,10 +457,12 @@ void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **
         free(keyfile_path);
         keyfile_path = NULL;
     }
+    /*
     if(de_buf != NULL){
         free(de_buf);
         de_buf = NULL;
     }
+    */
 }
 
 
