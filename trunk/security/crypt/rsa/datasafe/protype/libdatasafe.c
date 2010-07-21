@@ -388,28 +388,34 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
 }
 
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
-    char *output,*output_p;
-    size_t len;
-    char *pos_start,*pos_end,*priv_buf;
-    int i = 0;
-
+    char *output,*output_p,*start;
+    int len = 0;
+    int found = 0;
+    
     shopex_read_conf_file(config_filename,&output,&len);
+        
     output_p = output;
-    pos_start = pos_end = output;
-    while((pos_end - pos_start) < len){
-        pos_end = strstr(output,"\n");
-        if(i == 1){
-            break;
+    while(*output != '\0' ){
+        output++;
+        if(*output == '\n'){
+            found++;
         }
-        pos_start = pos_end + 1;
-        output = pos_start;
-        i++;
+        if(found == 1){
+            start = output + 1;
+            len++; 
+        }
+        if(found ==2){
+            break;    
+        }               
     }
-    len = pos_end - pos_start;
-    priv_buf = (char *)malloc(len);
-    memcpy(priv_buf,pos_start,len);
-    priv_buf[len] = '\0';
-    *file_pos = output;
+        
+    *output = '\0';   
+    strcpy(*file_pos,start);
+    
+    if(output){
+        free(output_p);
+        output_p = output = start = NULL;
+    }    
 }
 
 
@@ -444,8 +450,19 @@ void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * 
 
 void shopex_data_rsa_decrypt(char *keyfile_path,char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
+    char *keyfile_path =NULL;
+    
+    keyfile_path = (char *)malloc(MAX_FILENAME_LEN);
+    assert( keyfile_path != NULL );
+    memset(keyfile_path,'\0',MAX_FILENAME_LEN);
+    shopex_read_privkeypos_in_file(config_file,&keyfile_path);
     priv_rsa = get_user_private_key(keyfile_path);
     shopex_rsa_decrypt(priv_rsa,input,input_len,output,output_len);    
+    
+    if(keyfile_path){
+        free(keyfile_path);
+        keyfile_path = NULL;
+    }
 }
 
 
