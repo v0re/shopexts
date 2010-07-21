@@ -19,7 +19,7 @@ All rights reserved.
 
 #include "datasafe_api.h"
 
-#define MAX_FILENAME_LEN 256;
+#define MAX_FILENAME_LEN 256
 
 
 int is_encrypted(char *filename){
@@ -348,7 +348,7 @@ void shopex_conf_rsa_decrypt(char *input,int input_len,char **output,int *output
 
 void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * *output,int *output_len){
     RSA *pub_rsa;
-    char keyfile_path[MAX_FILENAME_LEN];
+    char keyfile_path[MAX_FILENAME_LEN] = {'\0'};
     
     shopex_read_pubkeypos_in_file(config_file,&keyfile_path);
     pub_rsa = get_user_public_key(keyfile_path);
