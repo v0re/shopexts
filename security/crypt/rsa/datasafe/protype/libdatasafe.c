@@ -34,7 +34,7 @@ int is_encrypted(char *filename){
     }
 }
 
-void read_line(char *filename,int line_no,char **output,size_t *output_len){
+void shopex_read_line(char *filename,int line_no,char **output,size_t *output_len){
     FILE * fp;
     char * line = NULL;
     size_t len = 0;
@@ -401,7 +401,6 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
     pub_buf[len] = '\0';
     *file_pos = pub_buf;
     
-    //free(output);
 }
 
 void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
@@ -409,11 +408,7 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     size_t len;
     char *pos_start,*pos_end,*priv_buf;
     int i = 0;
-    
 
-    read_line(config_filename,2,file_pos,&len);
-
-    /*
     shopex_read_conf_file(config_filename,&output,&len);
     output_p = output;
     pos_start = pos_end = output;
@@ -431,9 +426,6 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     memcpy(priv_buf,pos_start,len);
     priv_buf[len] = '\0';
     *file_pos = output;
-        */
-    //free(output_p);
-    
 }
 
 int shopex_checkfile_md5(char *allowfile,char *allowfile_md5){
