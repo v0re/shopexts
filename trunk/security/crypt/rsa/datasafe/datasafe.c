@@ -226,9 +226,10 @@ PHP_FUNCTION(shopex_data_decrypt)
 		return;
 	}
 	
-	shopex_read_conf_file(config_filepath,&output,&output_len);
+	//shopex_read_conf_file(config_filepath,&output,&output_len);
 	
-	RETURN_STRING(output,output_len);
+	RETURN_STRING(arg,arg_len);
+	
 		
 	//zed = EG(current_execute_data);
 	//allow_ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
