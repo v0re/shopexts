@@ -226,12 +226,13 @@ PHP_FUNCTION(shopex_data_decrypt)
 	//if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
 
     //shopex_data_rsa_decrypt(config_filepath,arg,arg_len,&output,&output_len);
+    output = (char *)emalloc(256);
     shopex_read_privkeypos_in_file(config_filepath,&output);
     output_len = strlen(output);
     ret = estrndup(output,output_len);
     
     if(output){
-        free(output);
+        efree(output);
         output = NULL;
     }
     
