@@ -393,7 +393,7 @@ void shopex_read_conf_file(char *filename,char **output,int *output_len){
 }
 
 
-void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
+void shopex_read_pubkeypos_in_file(char *config_filename,const char **file_pos){
     char *output,*output_p;
     int len = 0;
     
