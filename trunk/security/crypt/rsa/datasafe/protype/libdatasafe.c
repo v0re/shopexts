@@ -436,7 +436,7 @@ void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * 
 
 void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
-    char *keyfile_path =NULL;
+    char *keyfile_path = NULL;
     
     keyfile_path = (char *)malloc(MAX_FILENAME_LEN);
     assert( keyfile_path != NULL );
