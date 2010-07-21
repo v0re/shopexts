@@ -445,7 +445,7 @@ void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **
     memset(keyfile_path,'\0',MAX_FILENAME_LEN);
     shopex_read_privkeypos_in_file(config_file,&keyfile_path);
     priv_rsa = get_user_private_key(keyfile_path);
-    shopex_rsa_decrypt(priv_rsa,input,input_len,de_buf,de_buf_len);    
+    shopex_rsa_decrypt(priv_rsa,input,input_len,&de_buf,&de_buf_len);    
     
     if(de_buf_len){
        memcpy( *output,de_buf,de_buf_len);
