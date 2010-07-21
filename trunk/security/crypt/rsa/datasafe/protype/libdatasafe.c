@@ -390,7 +390,7 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
     int i = 0;
     
     shopex_read_conf_file(config_filename,&output,&len);
-    file_pos = output;
+    *file_pos = output;
     /*
     output_p = output;
     pos_start = pos_end = output;
