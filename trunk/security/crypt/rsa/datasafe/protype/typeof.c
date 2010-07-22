@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 	 RSA *key;
  	FILE *fp;
  	int keylen=0;
+ 	BIO *go
+ 	
  	if(argc!=2)
  	{
   		fprintf(stderr,"Error: too many/few arguments.\n "
@@ -30,13 +32,13 @@ int main(int argc, char *argv[])
   		exit(-1);
  	}
  	
-	 if(RSA_print_fp(NULL,key,11)){
+	 if(RSA_print_fp(go,key,11)){
 	 	printf("ok\n");
 	 }	
 	 free(key);
 	 key = NULL;
 	 
-	 if( RSA_print_fp(NULL,key,11) ){
+	 if( RSA_print_fp(go,key,11) ){
 	 	printf("ok\n");
 	 }else{
 	 	printf("no ok\n");
