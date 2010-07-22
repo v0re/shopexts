@@ -29,16 +29,12 @@ int main(int argc, char *argv[])
   		fprintf(stderr,"%s\n",ERR_error_string(ERR_get_error(),NULL));
   		exit(-1);
  	}
- 	if(key->n != NULL){
- 		printf("n is ok");
- 	}
- 	free(key);
- 	key = NULL;
- 	 if((RSA *)key->n != NULL){
- 		printf("n is ok");
- 	}else{
- 		printf("not ok");
- 	}
+ 	
+	 RSA_print_fp(stdout,key,11);	
+	 free(key);
+	 key = NULL;
+	 
+	 
  	/*
  	if(RSA_check_key(key) < 1)
  	{
