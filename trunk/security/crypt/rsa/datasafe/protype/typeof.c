@@ -34,7 +34,9 @@ int main(int argc, char *argv[])
  	}
  	keylen = sizeof(key);
  	printf("%d",keylen);
-
+	free(key);
+	keylen = sizeof(key);
+ 	printf("%d",keylen);
  	/*
  	if(RSA_check_key(key) < 1)
  	{
