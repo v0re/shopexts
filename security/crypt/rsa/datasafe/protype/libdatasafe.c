@@ -314,7 +314,6 @@ void shopex_rsa_encrypt(RSA *pub_rsa,char *input,int input_len,char **output,int
     free(rsa_ret_buf_p);
     rsa_ret_buf_p = NULL;
     */
-    RSA_free(pub_rsa);
 }
 
 void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,int *output_len){
@@ -365,7 +364,6 @@ void shopex_rsa_decrypt(RSA *priv_rsa,char *input,int input_len,char **output,in
     free(cipher_p);
     free(plain_p);
     */
-    RSA_free(priv_rsa);
 }
 
 void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
@@ -410,13 +408,15 @@ void shopex_read_privkeypos_in_file(char *config_filename,char **file_pos){
 void shopex_conf_rsa_encrypt(char *input,int input_len,char **output,int *output_len){
     RSA *pub_rsa;
     pub_rsa = get_shopex_public_key();
-    shopex_rsa_encrypt(pub_rsa,input,input_len,output,output_len);    
+    shopex_rsa_encrypt(pub_rsa,input,input_len,output,output_len);   
+    RSA_free(pub_rsa); 
 }
 
 void shopex_conf_rsa_decrypt(char *input,int input_len,char **output,int *output_len){
     RSA *priv_rsa;
     priv_rsa = get_shopex_private_key();
     shopex_rsa_decrypt(priv_rsa,input,input_len,output,output_len);    
+     RSA_free(priv_rsa); 
 }
 
 void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * *output,int *output_len){
@@ -434,6 +434,7 @@ void shopex_data_rsa_encrypt(char *config_file,char *input,int input_len,char * 
         free(keyfile_path);
         keyfile_path = NULL;
     }
+     RSA_free(pub_rsa); 
 }
 
 void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **output,int *output_len){
@@ -460,6 +461,7 @@ void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **
        memcpy( *output,de_buf,de_buf_len);
        *output_len = de_buf_len;
     }
+    
     
 
     /*
