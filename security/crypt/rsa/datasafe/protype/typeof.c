@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	 RSA *key;
  	FILE *fp;
  	int keylen=0;
- 	BIO *go
+ 	BIO *go;
  	
  	if(argc!=2)
  	{
