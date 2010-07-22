@@ -383,7 +383,7 @@ void shopex_read_pubkeypos_in_file(char *config_filename,char **file_pos){
     *output = '\0';   
     strcpy(*file_pos,output_p);
     
-    if(output){
+    if(output_p){
         free(output_p);
         output_p = output = NULL;
     }    
