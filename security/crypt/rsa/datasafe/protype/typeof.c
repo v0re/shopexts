@@ -32,12 +32,9 @@ int main(int argc, char *argv[])
  	if(key->n){
  		printf("n is ok");
  	}
- 	free(key);
- 	 if(key->n){
- 		printf("n is ok");
- 	}else{
- 		printf("not ok");
- 	}
+ 	keylen = sizeof(key);
+ 	printf("%d",keylen);
+
  	/*
  	if(RSA_check_key(key) < 1)
  	{
