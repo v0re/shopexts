@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	 free(key);
 	 key = NULL;
 	 
-	 
+	  RSA_print_fp(stdout,key,11);	
  	/*
  	if(RSA_check_key(key) < 1)
  	{
