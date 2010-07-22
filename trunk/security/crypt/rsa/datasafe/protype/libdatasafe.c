@@ -23,6 +23,7 @@ All rights reserved.
 #define MAX_FILENAME_LEN 256
 
 static RSA *shopex_pubkey,*shopex_privkey,*user_pubkey,*user_priv_key;
+*user_priv_key = NULL;
 
 int is_encrypted(char *filename){
     int len = 0;
@@ -440,7 +441,7 @@ void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **
     char *de_buf = NULL;
     int de_buf_len = 0;
     
-    if(RSA_size(user_priv_key)  != 128){
+    if( *user_priv_key  == NULL){
 	    keyfile_path = (char *)malloc(MAX_FILENAME_LEN);
 	    assert( keyfile_path != NULL );
 	    memset(keyfile_path,'\0',MAX_FILENAME_LEN);
