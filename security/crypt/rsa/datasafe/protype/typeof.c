@@ -30,11 +30,17 @@ int main(int argc, char *argv[])
   		exit(-1);
  	}
  	
-	 RSA_print_fp(stdout,key,11);	
+	 if(RSA_print_fp(NULL,key,11)){
+	 	printf("ok\n");
+	 }	
 	 free(key);
 	 key = NULL;
 	 
-	  RSA_print_fp(stdout,key,11);	
+	 if( RSA_print_fp(NULL,key,11) ){
+	 	printf("ok\n");
+	 }else{
+	 	printf("no ok\n");
+	 }	
  	/*
  	if(RSA_check_key(key) < 1)
  	{
