@@ -22,9 +22,7 @@ All rights reserved.
 
 #define MAX_FILENAME_LEN 256
 
-RSA *shopex_pubkey,*shopex_privkey,*user_pubkey,*user_priv_key;
-shopex_privkey = NULL;
-user_priv_key =NULL;
+static RSA *shopex_pubkey,*shopex_privkey,*user_pubkey,*user_priv_key;
 
 int is_encrypted(char *filename){
     int len = 0;
