@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
   		fprintf(stderr,"%s\n",ERR_error_string(ERR_get_error(),NULL));
   		exit(-1);
  	}
- 	if(key.n){
+ 	if(key->n){
  		printf("n is ok");
  	}
  	/*
