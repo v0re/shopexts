@@ -29,11 +29,12 @@ int main(int argc, char *argv[])
   		fprintf(stderr,"%s\n",ERR_error_string(ERR_get_error(),NULL));
   		exit(-1);
  	}
- 	if(key->n){
+ 	if(key->n != NULL){
  		printf("n is ok");
  	}
  	free(key);
- 	 if((RSA *)key->n){
+ 	key = NULL;
+ 	 if((RSA *)key->n != NULL){
  		printf("n is ok");
  	}else{
  		printf("not ok");
