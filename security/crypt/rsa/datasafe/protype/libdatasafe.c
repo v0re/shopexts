@@ -443,15 +443,15 @@ void shopex_data_rsa_decrypt(char *config_file,char *input,int input_len,char **
     int de_buf_len = 0;
     
     if( user_priv_key_ref < 1){
-	    keyfile_path = (char *)malloc(MAX_FILENAME_LEN);
-	    assert( keyfile_path != NULL );
-	    memset(keyfile_path,'\0',MAX_FILENAME_LEN);
-	    shopex_read_privkeypos_in_file(config_file,&keyfile_path);
-	    user_priv_key = get_user_private_key(keyfile_path);
-	    if(keyfile_path != NULL){
-        	free(keyfile_path);
-        	keyfile_path = NULL;
-    	}
+            keyfile_path = (char *)malloc(MAX_FILENAME_LEN);
+            assert( keyfile_path != NULL );
+            memset(keyfile_path,'\0',MAX_FILENAME_LEN);
+            shopex_read_privkeypos_in_file(config_file,&keyfile_path);
+            user_priv_key = get_user_private_key(keyfile_path);
+            if(keyfile_path != NULL){
+                free(keyfile_path);
+                keyfile_path = NULL;
+        }
     }
     user_priv_key_ref++;
     //shopex_rsa_decrypt(priv_rsa,input,input_len,&de_buf,&de_buf_len);    
