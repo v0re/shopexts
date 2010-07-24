@@ -14,3 +14,5 @@ gcc  -g -ldatasafe -L/usr/lib decrypt_config.c -o decrypt_config
 gcc  -g -ldatasafe -L/usr/lib encrypt_user_privkey.c -o encrypt_user_privkey
 gcc  -g -ldatasafe -L/usr/lib decrypt_user_privkey.c -o decrypt_user_privkey
 gcc  -g -ldatasafe -L/usr/lib test_get_user_private_key_en.c -o test_get_user_private_key_en
+gcc  -g -ldatasafe -L/usr/lib test_shopex_read_pubkeypos_in_file.c -o test_shopex_read_pubkeypos_in_file
+gcc  -g -ldatasafe -L/usr/lib test_shopex_read_privkeypos_in_file.c -o test_shopex_read_privkeypos_in_file
