@@ -32,6 +32,7 @@
 #include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
+#include <string.h>
 
 
 /* If you declare any globals in php_datasafe.h uncomment this:
