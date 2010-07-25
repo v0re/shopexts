@@ -30,9 +30,11 @@
 #include "protype/datasafe_api.h"
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
-#include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
+#include <openssl/evp.h>
+#include <openssl/crypto.h>
+#include <openssl/ssl.h>
 #include <string.h>
 
 
