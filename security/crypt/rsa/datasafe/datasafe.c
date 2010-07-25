@@ -100,6 +100,10 @@ static void php_datasafe_init_globals(zend_datasafe_globals *datasafe_globals)
 */
 /* }}} */
 
+
+static RSA * shopex_get_shopex_public_key();
+
+
 /* {{{ PHP_MINIT_FUNCTION
  */
 PHP_MINIT_FUNCTION(datasafe)
