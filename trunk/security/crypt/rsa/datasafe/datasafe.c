@@ -25,6 +25,7 @@
 #include "php.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
+#include "ext/standard/base64.h"
 #include "php_datasafe.h"
 #include "protype/datasafe_api.h"
 #include <openssl/rsa.h>
