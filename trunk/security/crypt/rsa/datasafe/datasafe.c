@@ -36,7 +36,8 @@
 #include <openssl/crypto.h>
 #include <openssl/ssl.h>
 #include <string.h>
-
+#include <syslog.h>
+#include <assert.h>
 
 /* If you declare any globals in php_datasafe.h uncomment this:
 ZEND_DECLARE_MODULE_GLOBALS(datasafe)
@@ -276,15 +277,18 @@ static RSA* shopex_get_shopex_private_key(){
 
 
 static RSA* shopex_get_user_public_key(){
-    BIO* in;
-    RSA* key;
-    char *filename;
+    FILE *fp;
+    RSA *key=NULL;
     
-    filename = "/etc/shopex/skomart.com/pub.pem";
-    in = BIO_new_file(filename, "r");   
-    key = PEM_read_bio_PUBKEY(in, NULL,NULL, NULL);
-    BIO_free(in);
-    
+    if((fp = fopen(keyfile_path,"r")) == NULL) {
+        syslog(LOG_USER|LOG_INFO, "Error: Public Key file doesn't exists.\n");
+        exit(EXIT_FAILURE);
+    }
+    if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
+        syslog(LOG_USER|LOG_INFO, "Error: problems while reading Public Key.\n");
+        exit(EXIT_FAILURE);
+    }
+    fclose(fp);
     return key;
 }
 
