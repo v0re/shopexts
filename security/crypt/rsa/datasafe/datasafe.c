@@ -261,7 +261,7 @@ static RSA* shopex_get_shopex_private_key(){
     
     result = php_base64_encode(pem_key_str, strlen(pem_key_str), &ret_length);
 
-    privkey=d2i_RSAPrivateKey(NULL,(const unsigned char**)&result,(long)de_len);    
+    privkey=d2i_RSAPrivateKey(NULL,(const unsigned char**)&result,(long)ret_length);    
     
     return privkey;
 }
@@ -270,6 +270,7 @@ static RSA* shopex_get_shopex_private_key(){
 static RSA* shopex_get_user_public_key(){
     BIO* in;
     RSA* key;
+    char *filename;
     
     filename = "/etc/shopex/skomart.com/pub.pem";
     in = BIO_new_file(filename, "r");   
@@ -324,7 +325,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
         memset(plain,'\0',ks + 1);
         memset(cipher, '\0', ks + 1);
         memcpy(plain, data, chunk_len);
-        ret_len = RSA_public_encrypt(chunk_len, plain, cipher, pub_rsa, RSA_PKCS1_PADDING);
+        ret_len = RSA_public_encrypt(chunk_len, plain, cipher, pkey, RSA_PKCS1_PADDING);
         if(ret_len != ks){
             successful = -1;
             break;
