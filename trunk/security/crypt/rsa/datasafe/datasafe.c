@@ -309,7 +309,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	char *cipher_p,*cipher;
 	
 	char *config_filepath;
-	int config_filepath;
+	int config_filepath_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &crypted) == FAILURE)
 		return;
