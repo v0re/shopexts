@@ -310,7 +310,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 
 	RETVAL_FALSE;
 	
-	pkey = php_shopex_get_user_public_key();
+	pkey = shopex_get_user_public_key();
 	if (pkey == NULL) {
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid public key");
 		RETURN_FALSE;
