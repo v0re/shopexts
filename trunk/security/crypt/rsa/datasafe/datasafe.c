@@ -36,8 +36,6 @@
 #include <openssl/crypto.h>
 #include <openssl/ssl.h>
 #include <string.h>
-#include <syslog.h>
-#include <assert.h>
 
 /* If you declare any globals in php_datasafe.h uncomment this:
 ZEND_DECLARE_MODULE_GLOBALS(datasafe)
@@ -279,14 +277,16 @@ static RSA* shopex_get_shopex_private_key(){
 static RSA* shopex_get_user_public_key(){
     FILE *fp;
     RSA *key=NULL;
+    char *keyfile_path;
     
+    keyfile_path = "/etc/shopex/skomart.com/pub.pem";
     if((fp = fopen(keyfile_path,"r")) == NULL) {
-        syslog(LOG_USER|LOG_INFO, "Error: Public Key file doesn't exists.\n");
-        exit(EXIT_FAILURE);
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "public key file doesn't exists.");
+		RETURN_FALSE;
     }
     if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
-        syslog(LOG_USER|LOG_INFO, "Error: problems while reading Public Key.\n");
-        exit(EXIT_FAILURE);
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: problems while parse public key file");
+		RETURN_FALSE;
     }
     fclose(fp);
     return key;
