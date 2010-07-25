@@ -27,7 +27,11 @@
 #include "ext/standard/info.h"
 #include "php_datasafe.h"
 #include "protype/datasafe_api.h"
-
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
+#include <openssl/evp.h>
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
 
 
 /* If you declare any globals in php_datasafe.h uncomment this:
@@ -45,6 +49,8 @@ const zend_function_entry datasafe_functions[] = {
 	PHP_FE(confirm_datasafe_compiled,	NULL)		/* For testing, remove later. */
 	PHP_FE(shopex_data_encrypt,	NULL)		/* it will be use rsa . */
 	PHP_FE(shopex_data_decrypt,	NULL)		/* it will be use rsa. */
+	PHP_FE(shopex_data_encrypt_ex,	NULL)		/* it will be use rsa . */
+	PHP_FE(shopex_data_decrypt_ex,	NULL)		/* it will be use rsa. */
 	{NULL, NULL, NULL}	/* Must be the last line in datasafe_functions[] */
 };
 /* }}} */
@@ -232,6 +238,138 @@ PHP_FUNCTION(shopex_data_decrypt)
     RETURN_STRINGL(output,output_len,0);
 	//}
 	//RETURN_STRING(arg,arg_len);
+}
+
+static RSA* shopex_get_shopex_public_key(){
+    unsigned char *pem_key_str = "MIGHAoGBAJOgBnKvVN5PtNDXBO0TNRZeILWmo0rpPLAU6s1IYHfhxKBGm44qDH8ONjJFk8NT70zGtOiwoqKv6UjQvHwNCjyLalIUN2mgV7AvqC0Tj8Gw6P9LaYgMY8V/vRSqhGGgRDRVxXS1KipPrueDMQSjBO/N3WSN6ac+N+JEcTtpopUjAgED";
+    unsigned char *result;
+    int ret_length = 0;
+    RSA *pubkey;
+    
+    result = php_base64_encode(pem_key_str, strlen(pem_key_str), &ret_length);
+    
+    pubkey = d2i_RSAPublicKey(NULL,(const unsigned char**)&result,(long)ret_length);
+
+    return pubkey;
+}
+
+static RSA* shopex_get_shopex_private_key(){
+    unsigned char *pem_key_str = "MIICXAIBAAKBgQCToAZyr1TeT7TQ1wTtEzUWXiC1pqNK6TywFOrNSGB34cSgRpuOKgx/DjYyRZPDU+9MxrTosKKir+lI0Lx8DQo8i2pSFDdpoFewL6gtE4/BsOj/S2mIDGPFf70UqoRhoEQ0VcV0tSoqT67ngzEEowTvzd1kjemnPjfiRHE7aaKVIwIBAwKBgGJqrvcfjemKeIs6A0i3eLmUFc5vF4dGKHVjRzOFlaVBLcAvEl7Gsv9ezswuYoI39N3ZzfB1wcHKm4XgfagIsXyvDs90xgStABo3lML4zBJklKGad8/3L5a2fsjGUMU160S02t3DTUHO9OBiEa3ts1Fz/FB/7DTI/M8T2IFUmV7rAkEAxJ+1Ow78xMIZzQol47vUAjDHQEzLPjbjhgSRSprSYpeu+pmmp0pCVf5Y988BsSsOJTHIjpZHDlW+k5L/GD3FEwJBAMA0Zan/ZdgVbw8+4rqh0hfZRaNpBNtlf+f6VjZwZ2zLnkvjgWjsBUNBPfhHfg1M53qxIz9xEQJm7RMZelJ+wbECQQCDFSN8tKiDLBEzXBlCfTgBddoq3dzUJJeurbYxvIxBunSnERnE3Cw5VDtP31Z2HLQYy9sJuYS0OSm3t1S609i3AkEAgCLucVTukA5KCinsfGvhZTuDwkYDPO5VRVGOzvWaSIe+3UJWRfKuLNYpUC+pXjNE/HYXf6C2AZnzYhD8Nv8rywJBALBfzIMk/JuJcWLHYnGTNAYpZaAEFv6UVSx1bLFEKfMmIIO+KuOyVMGMqwTKjazfiMVVrnXzoWC7MM9WsBlZi+M=";
+    unsigned char *result;
+    int ret_length = 0;
+    RSA *privkey;
+    
+    result = php_base64_encode(pem_key_str, strlen(pem_key_str), &ret_length);
+
+    privkey=d2i_RSAPrivateKey(NULL,(const unsigned char**)&result,(long)de_len);    
+    
+    return privkey;
+}
+
+
+static RSA* shopex_get_user_public_key(){
+    BIO* in;
+    RSA* key;
+    
+    filename = "/etc/shopex/skomart.com/pub.pem";
+    in = BIO_new_file(filename, "r");   
+    key = PEM_read_bio_PUBKEY(in, NULL,NULL, NULL);
+    BIO_free(in);
+    
+    return key;
+}
+
+
+PHP_FUNCTION(shopex_data_encrypt_ex)
+{
+	zval **key, *crypted;
+	RSA *pkey;
+
+	int successful = 0;
+
+	char *data,*data_p;
+	int data_len;
+	
+	int ks,chunk_len;
+	int rsa_ret_buf_len;
+    int ret_len;
+    int ret_len_total;
+	
+	char *rsa_ret_buf_p,*rsa_ret_buf;
+	char *plain_p,*plain;
+	char *cipher_p,*cipher;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sz", &data, &data_len, &crypted) == FAILURE)
+		return;
+
+	RETVAL_FALSE;
+	
+	pkey = php_shopex_get_user_public_key();
+	if (pkey == NULL) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid public key");
+		RETURN_FALSE;
+	}
+
+	data_p = data;
+	    
+    ks = RSA_size(pkey);
+    chunk_len = data_len > (ks - 11) ? ks - 11 : data_len;
+    rsa_ret_buf_len = ( ( data_len / chunk_len + 1) * ks );
+    rsa_ret_buf_p = rsa_ret_buf = emalloc(rsa_ret_buf_len + 1);
+    memset(rsa_ret_buf_p,'\0', rsa_ret_buf_len + 1);
+    plain_p = plain = (char *)emalloc(ks + 1);
+    cipher_p = cipher = (char *)emalloc(ks + 1);
+    
+    while(data - data_p < data_len) {
+        memset(plain,'\0',ks + 1);
+        memset(cipher, '\0', ks + 1);
+        memcpy(plain, data, chunk_len);
+        ret_len = RSA_public_encrypt(chunk_len, plain, cipher, pub_rsa, RSA_PKCS1_PADDING);
+        if(ret_len != ks){
+            successful = -1;
+            break;
+        }
+        memcpy(rsa_ret_buf,cipher,ret_len);
+        rsa_ret_buf += ret_len;
+        plain = plain_p;
+        cipher = cipher_p;
+        ret_len_total += ret_len;
+        data += chunk_len;
+    }
+    
+    rsa_ret_buf = rsa_ret_buf_p;
+	if ( successful == 0 ){
+		zval_dtor(crypted);
+		rsa_ret_buf[ret_len_total] = '\0';
+		ZVAL_STRINGL(crypted, rsa_ret_buf, ret_len_total, 0);
+		rsa_ret_buf = rsa_ret_buf_p = NULL;
+		RETVAL_TRUE;
+	}
+
+	RSA_free(pkey);
+	if (rsa_ret_buf_p) {
+		efree(rsa_ret_buf_p);
+	}	
+	if (plain_p) {
+		efree(plain_p);
+	}	
+	if (cipher_p) {
+		efree(cipher_p);
+	}	
+}
+
+PHP_FUNCTION(shopex_data_decrypt_ex)
+{
+	char *arg = NULL;
+	int arg_len, len;
+	char *strg;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &arg, &arg_len) == FAILURE) {
+		return;
+	}
+
+	len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "datasafe", arg);
+	RETURN_STRINGL(strg, len, 0);
 }
 
 /* }}} */
