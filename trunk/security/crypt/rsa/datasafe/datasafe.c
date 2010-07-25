@@ -281,12 +281,10 @@ static RSA* shopex_get_user_public_key(){
     
     keyfile_path = "/etc/shopex/skomart.com/pub.pem";
     if((fp = fopen(keyfile_path,"r")) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "public key file doesn't exists.");
-		RETURN_FALSE;
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "public key file doesn't exists.");
     }
     if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: problems while parse public key file");
-		RETURN_FALSE;
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: problems while parse public key file");
     }
     fclose(fp);
     return key;
