@@ -401,7 +401,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
 {
-	zval *crypted;
+	zval *plain;
 	RSA *pkey;
 
 	int successful = 0;
@@ -463,9 +463,9 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     ret_len_total = strlen(rsa_ret_buf);
     rsa_ret_buf = rsa_ret_buf_p;
 	if ( successful == 0 ){
-		zval_dtor(crypted);
+		zval_dtor(plain);
 		rsa_ret_buf[ret_len_total] = '\0';
-		ZVAL_STRINGL(crypted, rsa_ret_buf, ret_len_total, 0);
+		ZVAL_STRINGL(plain, rsa_ret_buf, ret_len_total, 0);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
 		de_buf = de_buf_p = NULL;
 		RETVAL_TRUE;
@@ -474,12 +474,15 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	RSA_free(pkey);
 	if (rsa_ret_buf_p) {
 		efree(rsa_ret_buf_p);
+		rsa_ret_buf_p = NULL;
 	}	
 	if (plain_p) {
 		efree(plain_p);
+		plain_p = NULL;
 	}	
 	if (cipher_p) {
 		efree(cipher_p);
+		cipher_p = NULL;
 	}	
 }
 
