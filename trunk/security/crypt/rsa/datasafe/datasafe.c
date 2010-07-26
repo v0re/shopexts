@@ -449,10 +449,6 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
         memset(plain, '\0', ks + 1);
         memcpy(cipher,de_buf,ks);
         ret_len = RSA_private_decrypt(ks, cipher, plain, pkey, RSA_PKCS1_PADDING);
-        if(ret_len != ks){
-            successful = -1;
-            break;
-        }
         memcpy(rsa_ret_buf,plain,ret_len);
         ret_len_total += ret_len;
         rsa_ret_buf += ret_len;
