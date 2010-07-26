@@ -20,7 +20,7 @@ var_dump($encrypt_text);
 
 
 $decrypt_text = NULL;
-$decrypt_text = shopex_data_decrypt($config,$encrypt_text,$decrypt_text);
+$decrypt_text = shopex_data_decrypt_ex($config,$encrypt_text,$decrypt_text);
 var_dump($decrypt_text);
 
 
