@@ -293,7 +293,7 @@ static RSA* shopex_get_user_public_key(){
 
 PHP_FUNCTION(shopex_data_encrypt_ex)
 {
-	zval **key, *crypted;
+	zval *crypted;
 	RSA *pkey;
 
 	int successful = 0;
@@ -379,16 +379,85 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
 {
-	char *arg = NULL;
-	int arg_len, len;
-	char *strg;
+	zval *crypted;
+	RSA *pkey;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &arg, &arg_len) == FAILURE) {
+	int successful = 0;
+
+	char *data,*data_p;
+	int data_len;
+	
+	int ks,chunk_len;
+	int rsa_ret_buf_len;
+    int ret_len;
+    int ret_len_total;
+	
+	char *rsa_ret_buf_p,*rsa_ret_buf;
+	char *plain_p,*plain;
+	char *cipher_p,*cipher;
+	
+	char *config_filepath;
+	int config_filepath_len;
+	
+	char *de_buf,*de_buf_p;
+	int de_len;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &plain) == FAILURE)
 		return;
+
+	RETVAL_FALSE;
+	
+	pkey = shopex_get_user_private_key();
+	if (pkey == NULL) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid private key");
+		RETURN_FALSE;
 	}
 
-	len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "datasafe", arg);
-	RETURN_STRINGL(strg, len, 0);
+	data_p = data;
+	de_buf_p = db_buf = php_base64_decode(data,data_len,de_len);    
+	data = data_p;
+	
+    ks = RSA_size(pkey);
+    cipher_p = cipher = emalloc( ks + 1);
+    plain_p = plain = emalloc( ks + 1);
+    while(de_buf - de_buf_p < de_len) {
+        memset(cipher, '\0', ks + 1);
+        memset(plain, '\0', ks + 1);
+        memcpy(cipher,de_buf,ks);
+        ret_len = RSA_private_decrypt(ks, cipher, plain, pkey, RSA_PKCS1_PADDING);
+        if(ret_len != ks){
+            successful = -1;
+            break;
+        }
+        memcpy(rsa_ret_buf,plain,ret_len);
+        ret_len_total += ret_len;
+        rsa_ret_buf += ret_len;
+        cipher = cipher_p;
+        plain = plain_p;
+        de_buf += ret_len;    
+    }    
+        
+    ret_len_total = strlen(rsa_ret_buf);
+    rsa_ret_buf = rsa_ret_buf_p;
+	if ( successful == 0 ){
+		zval_dtor(crypted);
+		rsa_ret_buf[ret_len_total] = '\0';
+		ZVAL_STRINGL(crypted, rsa_ret_buf, ret_len_total, 0);
+		rsa_ret_buf = rsa_ret_buf_p = NULL;
+		de_buf = de_buf_p = NULL;
+		RETVAL_TRUE;
+	}
+
+	RSA_free(pkey);
+	if (rsa_ret_buf_p) {
+		efree(rsa_ret_buf_p);
+	}	
+	if (plain_p) {
+		efree(plain_p);
+	}	
+	if (cipher_p) {
+		efree(cipher_p);
+	}	
 }
 
 /* }}} */
