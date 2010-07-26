@@ -290,7 +290,7 @@ static RSA* shopex_get_user_public_key(){
     return key;
 }
 
-static RSA* shopex_get_user_public_key(){
+static RSA* shopex_get_user_private_key(){
     FILE *fp;
     RSA *key=NULL;
     char *keyfile_path;
