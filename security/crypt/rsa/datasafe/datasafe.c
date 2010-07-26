@@ -444,7 +444,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     cipher_p = cipher = emalloc( ks + 1);
     plain_p = plain = emalloc( ks + 1);
     rsa_ret_buf_p = rsa_ret_buf = emalloc(de_len);
-    while(de_buf - de_buf_p < de_len) {
+    while(de_buf - de_buf_p < de_len && de_len > ks) {
         memset(cipher, '\0', ks + 1);
         memset(plain, '\0', ks + 1);
         memcpy(cipher,de_buf,ks);
