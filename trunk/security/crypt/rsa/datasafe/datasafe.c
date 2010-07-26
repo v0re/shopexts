@@ -414,7 +414,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	}
 
 	data_p = data;
-	de_buf_p = db_buf = php_base64_decode(data,data_len,de_len);    
+	de_buf_p = de_buf = php_base64_decode(data,data_len,&de_len);    
 	data = data_p;
 	
     ks = RSA_size(pkey);
