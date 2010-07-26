@@ -443,6 +443,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     ks = RSA_size(pkey);
     cipher_p = cipher = emalloc( ks + 1);
     plain_p = plain = emalloc( ks + 1);
+    rsa_ret_buf_p = rsa_ret_buf = emalloc(de_len);
     while(de_buf - de_buf_p < de_len) {
         memset(cipher, '\0', ks + 1);
         memset(plain, '\0', ks + 1);
