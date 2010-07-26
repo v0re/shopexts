@@ -18,10 +18,11 @@ $encrypt_text = NULL;
 $isok = shopex_data_encrypt_ex($config,$text,$encrypt_text);
 var_dump($encrypt_text);
 
+/*
 $decrypt_text = NULL;
 $decrypt_text = shopex_data_decrypt($config,$encrypt_text,$decrypt_text);
 var_dump($decrypt_text);
-
+*/
 echo "\ntest done!\n";
 
 ?>
