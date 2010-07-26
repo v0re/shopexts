@@ -299,7 +299,7 @@ static RSA* shopex_get_user_private_key(){
     if((fp = fopen(keyfile_path,"r")) == NULL) {
         php_error_docref(NULL TSRMLS_CC, E_WARNING, "private key file doesn't exists.");
     }
-    if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
+    if((key = PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL)) == NULL) {
         php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: problems while parse public key file");
     }
     fclose(fp);
