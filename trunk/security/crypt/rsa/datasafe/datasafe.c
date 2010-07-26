@@ -401,7 +401,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
 {
-	zval *plain;
+	zval *result;
 	RSA *pkey;
 
 	int successful = 0;
@@ -415,6 +415,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     int ret_len_total;
 	
 	char *rsa_ret_buf_p,*rsa_ret_buf;
+	char *plain_p,*plain;
 	char *cipher_p,*cipher;
 	
 	char *config_filepath;
@@ -423,7 +424,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	char *de_buf,*de_buf_p;
 	int de_len;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &plain) == FAILURE)
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
 
 	RETVAL_FALSE;
@@ -462,9 +463,9 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     ret_len_total = strlen(rsa_ret_buf);
     rsa_ret_buf = rsa_ret_buf_p;
 	if ( successful == 0 ){
-		zval_dtor(plain);
+		zval_dtor(result);
 		rsa_ret_buf[ret_len_total] = '\0';
-		ZVAL_STRINGL(plain, rsa_ret_buf, ret_len_total, 0);
+		ZVAL_STRINGL(result, rsa_ret_buf, ret_len_total, 0);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
 		de_buf = de_buf_p = NULL;
 		RETVAL_TRUE;
