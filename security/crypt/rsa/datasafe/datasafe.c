@@ -336,6 +336,11 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 
 	RETVAL_FALSE;
 	
+	if (data_len == 0) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "input data is empty");
+		RETURN_FALSE;
+	}
+	
 	pkey = shopex_get_user_public_key();
 	if (pkey == NULL) {
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid public key");
@@ -343,6 +348,8 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	}
 
 	data_p = data;
+	ret_len = ret_len_total = 0;
+	
 	    
     ks = RSA_size(pkey);
     chunk_len = data_len > (ks - 11) ? ks - 11 : data_len;
