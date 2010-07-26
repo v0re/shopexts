@@ -373,7 +373,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	if ( successful == 0 ){
 	    result = php_base64_encode(rsa_ret_buf, ret_len_total, &result_len);
 		zval_dtor(crypted);
-		rsa_ret_buf[ret_len_total] = '\0';
+		result[result_len] = '\0';
 		ZVAL_STRINGL(crypted, result, result_len, 0);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
 		result = NULL;
