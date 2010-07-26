@@ -457,8 +457,8 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
         de_buf += ks;    
     }    
         
-    ret_len_total = strlen(rsa_ret_buf);
     rsa_ret_buf = rsa_ret_buf_p;
+    ret_len_total = strlen(rsa_ret_buf);
 	if ( successful == 0 ){
 		zval_dtor(result);
 		rsa_ret_buf[ret_len_total] = '\0';
