@@ -415,7 +415,6 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     int ret_len_total;
 	
 	char *rsa_ret_buf_p,*rsa_ret_buf;
-	char *plain_p,*plain;
 	char *cipher_p,*cipher;
 	
 	char *config_filepath;
