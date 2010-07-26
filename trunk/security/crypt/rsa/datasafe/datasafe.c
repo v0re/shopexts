@@ -253,7 +253,7 @@ static RSA* shopex_get_shopex_public_key(){
     int ret_length = 0;
     RSA *pubkey;
     
-    result = php_base64_encode(pem_key_str, strlen(pem_key_str), &ret_length);
+    result = php_base64_decode(pem_key_str, strlen(pem_key_str), &ret_length);
     
     pubkey = d2i_RSAPublicKey(NULL,(const unsigned char**)&result,(long)ret_length);
 
@@ -266,7 +266,7 @@ static RSA* shopex_get_shopex_private_key(){
     int ret_length = 0;
     RSA *privkey;
     
-    result = php_base64_encode(pem_key_str, strlen(pem_key_str), &ret_length);
+    result = php_base64_decode(pem_key_str, strlen(pem_key_str), &ret_length);
 
     privkey=d2i_RSAPrivateKey(NULL,(const unsigned char**)&result,(long)ret_length);    
     
@@ -312,6 +312,9 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	
 	char *config_filepath;
 	int config_filepath_len;
+	
+	char *result;
+	int result_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &crypted) == FAILURE)
 		return;
@@ -353,10 +356,12 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
     
     rsa_ret_buf = rsa_ret_buf_p;
 	if ( successful == 0 ){
+	    result = php_base64_encode(rsa_ret_buf, ret_len_total, &result_len);
 		zval_dtor(crypted);
 		rsa_ret_buf[ret_len_total] = '\0';
-		ZVAL_STRINGL(crypted, rsa_ret_buf, ret_len_total, 0);
+		ZVAL_STRINGL(crypted, result, result_len, 0);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
+		result = NULL;
 		RETVAL_TRUE;
 	}
 
