@@ -13,7 +13,7 @@ $decrypt_text = shopex_data_decrypt($config,$encrypt_text);
 var_dump($decrypt_text);
 
 $encrypt_text = NULL;
-$isok = shopex_data_encrypt_ex($config,$encrypt_text,$text);
+$isok = shopex_data_encrypt_ex($config,$text,$encrypt_text);
 var_dump($encrypt_text);
 
 echo "\ntest done!\n";
