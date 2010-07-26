@@ -436,6 +436,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	}
 
 	data_p = data;
+	ret_len = ret_len_total = 0;
 	de_buf_p = de_buf = php_base64_decode(data,data_len,&de_len);    
 	data = data_p;
 	
