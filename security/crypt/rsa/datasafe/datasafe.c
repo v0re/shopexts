@@ -290,6 +290,21 @@ static RSA* shopex_get_user_public_key(){
     return key;
 }
 
+static RSA* shopex_get_user_public_key(){
+    FILE *fp;
+    RSA *key=NULL;
+    char *keyfile_path;
+    
+    keyfile_path = "/etc/shopex/skomart.com/sec.pem";
+    if((fp = fopen(keyfile_path,"r")) == NULL) {
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "public key file doesn't exists.");
+    }
+    if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: problems while parse public key file");
+    }
+    fclose(fp);
+    return key;
+}
 
 PHP_FUNCTION(shopex_data_encrypt_ex)
 {
