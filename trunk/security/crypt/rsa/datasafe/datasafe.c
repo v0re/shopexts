@@ -415,6 +415,8 @@ static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,i
 	char *plain_p,*plain;
 	char *rsa_ret_buf_p,*rsa_ret_buf;
 	
+	int successful = 0;
+	
 	
 	data_p = data;
 	ret_len = ret_len_total = 0;
@@ -431,6 +433,10 @@ static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,i
         memset(plain, '\0', ks + 1);
         memcpy(cipher,de_buf,ks);
         ret_len = RSA_private_decrypt(ks, cipher, plain, pkey, RSA_PKCS1_PADDING);
+        if(ret_len == -1){
+        	successful = -1;
+        	break;
+        }
         memcpy(rsa_ret_buf,plain,ret_len);
         ret_len_total += ret_len;
         rsa_ret_buf += ret_len;
@@ -441,13 +447,26 @@ static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,i
         
     rsa_ret_buf = rsa_ret_buf_p;
     ret_len_total = strlen(rsa_ret_buf);
-
-	rsa_ret_buf[ret_len_total] = '\0';
-	zval_dtor(*output);
-	ZVAL_STRINGL(*output, rsa_ret_buf, ret_len_total, 1);
-	*output_len = ret_len_total;
+	if(successful == 0){
+		rsa_ret_buf[ret_len_total] = '\0';
+		zval_dtor(*output);
+		ZVAL_STRINGL(*output, rsa_ret_buf, ret_len_total, 1);
+		*output_len = ret_len_total;
+	}
 	rsa_ret_buf = rsa_ret_buf_p = NULL;
 	de_buf = de_buf_p = NULL;
+	if (rsa_ret_buf_p) {
+		efree(rsa_ret_buf_p);
+		rsa_ret_buf_p = NULL;
+	}	
+	if (plain_p) {
+		efree(plain_p);
+		plain_p = NULL;
+	}	
+	if (cipher_p) {
+		efree(cipher_p);
+		cipher_p = NULL;
+	}	
 }
 
 static void shopex_get_config(char *filename){
