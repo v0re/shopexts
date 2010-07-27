@@ -406,14 +406,14 @@ static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,i
 	char *data_p;
 	int ret_len,ret_len_total;
 	
-	char *de_buf_p,de_buf;
+	char *de_buf_p,*de_buf;
 	int de_len;
 	
 	int ks;
 	
 	char *cipher_p,*cipher;
 	char *plain_p,*plain;
-	char *rsa_ret_buf_p,rsa_ret_buf;
+	char *rsa_ret_buf_p,*rsa_ret_buf;
 	
 	
 	data_p = data;
