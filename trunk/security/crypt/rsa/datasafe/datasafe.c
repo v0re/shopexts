@@ -444,6 +444,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     cipher_p = cipher = emalloc( ks + 1);
     plain_p = plain = emalloc( ks + 1);
     rsa_ret_buf_p = rsa_ret_buf = emalloc(de_len);
+    memset(rsa_ret_buf,'\0',de_len);
     while( de_buf - de_buf_p < de_len ) {
         memset(cipher, '\0', ks + 1);
         memset(plain, '\0', ks + 1);
@@ -462,7 +463,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	if ( successful == 0 ){
 		zval_dtor(result);
 		rsa_ret_buf[ret_len_total] = '\0';
-		ZVAL_STRINGL(result, rsa_ret_buf, ret_len_total, 1);
+		ZVAL_STRINGL(result, rsa_ret_buf, ret_len_total, 0);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
 		de_buf = de_buf_p = NULL;
 		RETVAL_TRUE;
