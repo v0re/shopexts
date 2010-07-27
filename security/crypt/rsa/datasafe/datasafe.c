@@ -401,11 +401,63 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	}	
 }
 
+static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,int *output_len){
+	
+	char *data_p;
+	int ret_len,ret_len_total;
+	
+	char *de_buf_p,de_buf;
+	int de_len;
+	
+	int ks;
+	
+	char *cipher_p,*cipher;
+	char *plain_p,*plain;
+	char *rsa_ret_buf_p,rsa_ret_buf;
+	
+	
+	data_p = data;
+	ret_len = ret_len_total = 0;
+	de_buf_p = de_buf = php_base64_decode(data,data_len,&de_len);    
+	data = data_p;
+	
+    ks = RSA_size(pkey);
+    cipher_p = cipher = emalloc( ks + 1);
+    plain_p = plain = emalloc( ks + 1);
+    rsa_ret_buf_p = rsa_ret_buf = emalloc(de_len);
+    memset(rsa_ret_buf,'\0',de_len);
+    while( de_buf - de_buf_p < de_len ) {
+        memset(cipher, '\0', ks + 1);
+        memset(plain, '\0', ks + 1);
+        memcpy(cipher,de_buf,ks);
+        ret_len = RSA_private_decrypt(ks, cipher, plain, pkey, RSA_PKCS1_PADDING);
+        memcpy(rsa_ret_buf,plain,ret_len);
+        ret_len_total += ret_len;
+        rsa_ret_buf += ret_len;
+        cipher = cipher_p;
+        plain = plain_p;
+        de_buf += ks;    
+    }    
+        
+    rsa_ret_buf = rsa_ret_buf_p;
+    ret_len_total = strlen(rsa_ret_buf);
+
+	rsa_ret_buf[ret_len_total] = '\0';
+	zval_dtor(*output);
+	ZVAL_STRINGL(*output, rsa_ret_buf, ret_len_total, 1);
+	*output_len = ret_len_total;
+	rsa_ret_buf = rsa_ret_buf_p = NULL;
+	de_buf = de_buf_p = NULL;
+}
+
 static void shopex_get_config(char *filename){
     FILE *fp;
     int len;
     char *buffer;
     RSA *pkey;
+    
+    zval *config;
+    int config_len;
 
     fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -419,6 +471,9 @@ static void shopex_get_config(char *filename){
     buffer[len] = '\0';
     
     pkey = shopex_get_shopex_private_key();
+    shopex_rsa_decrypt(pkey,buffer,len,&config,&config_len);
+    
+    RSA_free(pkey);        
 }
 
 static void shopex_set_config(char *fielname){
