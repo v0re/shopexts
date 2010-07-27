@@ -247,6 +247,8 @@ PHP_FUNCTION(shopex_data_decrypt)
 	//RETURN_STRING(arg,arg_len);
 }
 
+
+
 static RSA* shopex_get_shopex_public_key(){
     unsigned char *pem_key_str = "MIGHAoGBAJOgBnKvVN5PtNDXBO0TNRZeILWmo0rpPLAU6s1IYHfhxKBGm44qDH8ONjJFk8NT70zGtOiwoqKv6UjQvHwNCjyLalIUN2mgV7AvqC0Tj8Gw6P9LaYgMY8V/vRSqhGGgRDRVxXS1KipPrueDMQSjBO/N3WSN6ac+N+JEcTtpopUjAgED";
     unsigned char *result;
@@ -403,6 +405,7 @@ static void shopex_get_config(char *filename){
     FILE *fp;
     int len;
     char *buffer;
+    RSA *pkey;
 
     fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -414,6 +417,8 @@ static void shopex_get_config(char *filename){
     buffer = emalloc(len);
     fread( buffer, 1, len, fp );
     buffer[len] = '\0';
+    
+    pkey = shopex_get_shopex_private_key();
 }
 
 static void shopex_set_config(char *fielname){
