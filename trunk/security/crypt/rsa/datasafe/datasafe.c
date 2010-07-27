@@ -461,8 +461,11 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     rsa_ret_buf = rsa_ret_buf_p;
     ret_len_total = strlen(rsa_ret_buf);
 	if ( successful == 0 ){
-		zval_dtor(result);
 		rsa_ret_buf[ret_len_total] = '\0';
+		if(ret_len_total < 12){
+		    memset(rsa_ret_buf + ret_len_toal,'\0',12 - ret_len_toal);
+		}
+	    zval_dtor(result);
 		ZVAL_STRINGL(result, rsa_ret_buf, ret_len_total, 0);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
 		de_buf = de_buf_p = NULL;
