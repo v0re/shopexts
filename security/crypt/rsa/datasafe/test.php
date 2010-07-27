@@ -2,7 +2,7 @@
 
 echo confirm_datasafe_compiled("datasafe");
 echo "\n";
-$config = "/etc/shopex/skomart.com/setting.conf";
+$config = "/etc/shopex/skomart.com/setting.conf.en";
 #$config = "skomart.com";
 $text = 'hi man';
 $encrypt_text = null;
