@@ -401,6 +401,8 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 
 static void shopex_get_config(char *filename){
     FILE *fp;
+    int len;
+    char *buffer;
 
     fp = fopen(filename, "r");
     if (fp == NULL) {
