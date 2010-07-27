@@ -308,6 +308,152 @@ static RSA* shopex_get_user_private_key(){
     return key;
 }
 
+static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,zval **output,int *output_len){
+	int successful = 0;
+
+	char *data_p;
+
+	int ks,chunk_len;
+	int rsa_ret_buf_len;
+    int ret_len;
+    int ret_len_total;
+	
+	char *rsa_ret_buf_p,*rsa_ret_buf;
+	char *plain_p,*plain;
+	char *cipher_p,*cipher;
+	
+	char *result;
+	int result_len;
+	
+	if (data_len == 0) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "input data is empty");
+	}
+	
+	if (pkey == NULL) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid public key");
+	}
+
+	data_p = data;
+	ret_len = ret_len_total = 0;
+		    
+    ks = RSA_size(pkey);
+    chunk_len = data_len > (ks - 11) ? ks - 11 : data_len;
+    rsa_ret_buf_len = ( ( data_len / chunk_len + 1) * ks );
+    rsa_ret_buf_p = rsa_ret_buf = emalloc(rsa_ret_buf_len + 1);
+    memset(rsa_ret_buf_p,'\0', rsa_ret_buf_len + 1);
+    plain_p = plain = (char *)emalloc(ks + 1);
+    cipher_p = cipher = (char *)emalloc(ks + 1);
+    
+    while(data - data_p < data_len) {
+        memset(plain,'\0',ks + 1);
+        memset(cipher, '\0', ks + 1);
+        memcpy(plain, data, chunk_len);
+        ret_len = RSA_public_encrypt(chunk_len, plain, cipher, pkey, RSA_PKCS1_PADDING);
+        if(ret_len != ks){
+            successful = -1;
+            break;
+        }
+        memcpy(rsa_ret_buf,cipher,ret_len);
+        rsa_ret_buf += ret_len;
+        plain = plain_p;
+        cipher = cipher_p;
+        ret_len_total += ret_len;
+        data += chunk_len;
+    }
+    
+    rsa_ret_buf = rsa_ret_buf_p;
+	if ( successful == 0 ){
+	    result = php_base64_encode(rsa_ret_buf, ret_len_total, &result_len);
+		zval_dtor(*output);
+		result[result_len] = '\0';
+		ZVAL_STRINGL(*output, result, result_len, 1);
+		*output_len = result_len;
+	}
+	rsa_ret_buf = rsa_ret_buf_p = NULL;
+	result = NULL;
+	if (rsa_ret_buf_p) {
+		efree(rsa_ret_buf_p);
+		rsa_ret_buf_p = NULL;
+	}	
+	if (plain_p) {
+		efree(plain_p);
+		plain_p = NULL;
+	}	
+	if (cipher_p) {
+		efree(cipher_p);
+		cipher_p = NULL;
+	}	
+}
+
+static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,int *output_len){
+	
+	char *data_p;
+	int ret_len,ret_len_total;
+	
+	char *de_buf_p,*de_buf;
+	int de_len;
+	
+	int ks;
+	
+	char *cipher_p,*cipher;
+	char *plain_p,*plain;
+	char *rsa_ret_buf_p,*rsa_ret_buf;
+	
+	int successful = 0;
+	
+	
+	data_p = data;
+	ret_len = ret_len_total = 0;
+	de_buf_p = de_buf = php_base64_decode(data,data_len,&de_len);    
+	data = data_p;
+	
+    ks = RSA_size(pkey);
+    cipher_p = cipher = emalloc( ks + 1);
+    plain_p = plain = emalloc( ks + 1);
+    rsa_ret_buf_p = rsa_ret_buf = emalloc(de_len);
+    memset(rsa_ret_buf,'\0',de_len);
+    while( de_buf - de_buf_p < de_len ) {
+        memset(cipher, '\0', ks + 1);
+        memset(plain, '\0', ks + 1);
+        memcpy(cipher,de_buf,ks);
+        ret_len = RSA_private_decrypt(ks, cipher, plain, pkey, RSA_PKCS1_PADDING);
+        if(ret_len == -1){
+        	successful = -1;
+        	break;
+        }
+        memcpy(rsa_ret_buf,plain,ret_len);
+        ret_len_total += ret_len;
+        rsa_ret_buf += ret_len;
+        cipher = cipher_p;
+        plain = plain_p;
+        de_buf += ks;    
+    }    
+        
+    rsa_ret_buf = rsa_ret_buf_p;
+    ret_len_total = strlen(rsa_ret_buf);
+	if(successful == 0){
+		rsa_ret_buf[ret_len_total] = '\0';
+		zval_dtor(*output);
+		ZVAL_STRINGL(*output, rsa_ret_buf, ret_len_total, 1);
+		*output_len = ret_len_total;
+	}
+	rsa_ret_buf = rsa_ret_buf_p = NULL;
+	de_buf = de_buf_p = NULL;
+	if (rsa_ret_buf_p) {
+		efree(rsa_ret_buf_p);
+		rsa_ret_buf_p = NULL;
+	}	
+	if (plain_p) {
+		efree(plain_p);
+		plain_p = NULL;
+	}	
+	if (cipher_p) {
+		efree(cipher_p);
+		cipher_p = NULL;
+	}	
+}
+
+
 PHP_FUNCTION(shopex_data_encrypt_ex)
 {
 	zval *crypted;
@@ -401,75 +547,9 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	}	
 }
 
-static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,int *output_len){
-	
-	char *data_p;
-	int ret_len,ret_len_total;
-	
-	char *de_buf_p,*de_buf;
-	int de_len;
-	
-	int ks;
-	
-	char *cipher_p,*cipher;
-	char *plain_p,*plain;
-	char *rsa_ret_buf_p,*rsa_ret_buf;
-	
-	int successful = 0;
-	
-	
-	data_p = data;
-	ret_len = ret_len_total = 0;
-	de_buf_p = de_buf = php_base64_decode(data,data_len,&de_len);    
-	data = data_p;
-	
-    ks = RSA_size(pkey);
-    cipher_p = cipher = emalloc( ks + 1);
-    plain_p = plain = emalloc( ks + 1);
-    rsa_ret_buf_p = rsa_ret_buf = emalloc(de_len);
-    memset(rsa_ret_buf,'\0',de_len);
-    while( de_buf - de_buf_p < de_len ) {
-        memset(cipher, '\0', ks + 1);
-        memset(plain, '\0', ks + 1);
-        memcpy(cipher,de_buf,ks);
-        ret_len = RSA_private_decrypt(ks, cipher, plain, pkey, RSA_PKCS1_PADDING);
-        if(ret_len == -1){
-        	successful = -1;
-        	break;
-        }
-        memcpy(rsa_ret_buf,plain,ret_len);
-        ret_len_total += ret_len;
-        rsa_ret_buf += ret_len;
-        cipher = cipher_p;
-        plain = plain_p;
-        de_buf += ks;    
-    }    
-        
-    rsa_ret_buf = rsa_ret_buf_p;
-    ret_len_total = strlen(rsa_ret_buf);
-	if(successful == 0){
-		rsa_ret_buf[ret_len_total] = '\0';
-		zval_dtor(*output);
-		ZVAL_STRINGL(*output, rsa_ret_buf, ret_len_total, 1);
-		*output_len = ret_len_total;
-	}
-	rsa_ret_buf = rsa_ret_buf_p = NULL;
-	de_buf = de_buf_p = NULL;
-	if (rsa_ret_buf_p) {
-		efree(rsa_ret_buf_p);
-		rsa_ret_buf_p = NULL;
-	}	
-	if (plain_p) {
-		efree(plain_p);
-		plain_p = NULL;
-	}	
-	if (cipher_p) {
-		efree(cipher_p);
-		cipher_p = NULL;
-	}	
-}
 
-static void shopex_get_config(char *filename){
+
+static void shopex_get_config(char *filename,char **output,int *output_len){
     FILE *fp;
     int len;
     char *buffer;
@@ -495,7 +575,7 @@ static void shopex_get_config(char *filename){
     RSA_free(pkey);        
 }
 
-static void shopex_set_config(char *fielname){
+static void shopex_set_config(char *fielname,char *input,int input_len){
     
 }
 
@@ -524,13 +604,16 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	
 	char *de_buf,*de_buf_p;
 	int de_len;
+	
+	char *output_content;
+	int output_content_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
 
 	RETVAL_FALSE;
 	
-	shopex_get_config(config_filepath);
+	shopex_get_config(config_filepath,&config_content,&output_content_len);
 	
 	pkey = shopex_get_user_private_key();
 	if (pkey == NULL) {
