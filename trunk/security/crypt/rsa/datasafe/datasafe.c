@@ -399,6 +399,26 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	}	
 }
 
+static void shopex_get_config(char *filename){
+    FILE *fp;
+
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
+    }
+    fseek(fp, 0L, SEEK_END);
+    len = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    buffer = emalloc(len);
+    fread( buffer, 1, len, fp );
+    buffer[len] = '\0';
+}
+
+static void shopex_set_config(char *fielname){
+    
+}
+
+
 PHP_FUNCTION(shopex_data_decrypt_ex)
 {
 	zval *result;
@@ -428,6 +448,8 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		return;
 
 	RETVAL_FALSE;
+	
+	shopex_get_config(config_filepath);
 	
 	pkey = shopex_get_user_private_key();
 	if (pkey == NULL) {
