@@ -605,15 +605,15 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	char *de_buf,*de_buf_p;
 	int de_len;
 	
-	char *output_content;
-	int output_content_len;
+	char *config_content;
+	int config_content_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
 
 	RETVAL_FALSE;
 	
-	shopex_get_config(config_filepath,&config_content,&output_content_len);
+	shopex_get_config(config_filepath,&config_content,&config_content_len);
 	
 	pkey = shopex_get_user_private_key();
 	if (pkey == NULL) {
