@@ -594,6 +594,8 @@ PHP_FUNCTION(shopex_set_config_ex){
     
     RSA *pkey;
     
+    FILE *fp;
+    
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &config_filepath,&config_filepath_len,&data, &data_len) == FAILURE)
     return;
     
@@ -601,6 +603,10 @@ PHP_FUNCTION(shopex_set_config_ex){
     
     pkey = shopex_get_shopex_public_key();
     shopex_rsa_encrypt(pkey,data,data_len,&crypted,&crypted_len);
+    
+    fp=fopen(config_filepath,"wb+");
+    fwrite(crypted,crypted_len,1,fp);    
+    fclose(fp);
 }
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
