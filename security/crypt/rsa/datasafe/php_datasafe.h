@@ -47,6 +47,7 @@ PHP_FUNCTION(shopex_data_encrypt);
 PHP_FUNCTION(shopex_data_decrypt);
 PHP_FUNCTION(shopex_data_encrypt_ex);
 PHP_FUNCTION(shopex_data_decrypt_ex);
+PHP_FUNCTION(shopex_set_config_ex);
 /* 
   	Declare any global variables you may need between the BEGIN
 	and END macros here:     
