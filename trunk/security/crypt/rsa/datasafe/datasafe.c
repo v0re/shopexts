@@ -643,6 +643,7 @@ PHP_FUNCTION(shopex_get_user_private_key){
     
     pkey = shopex_get_user_private_key(filepath);
     
+    p = buf;
     len =i2d_RSAPrivateKey(pkey,&p);
     p = buf;
     result = php_base64_encode(p, len, &result_len);
