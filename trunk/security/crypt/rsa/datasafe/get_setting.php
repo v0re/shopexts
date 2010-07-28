@@ -1,18 +1,6 @@
 <?php 
 
-$setting = array(
-'/etc/shopex/skomart.com/pub.pem',
-'/etc/shopex/skomart.com/sec.pem',
-'/srv/http/security/crypt/rsa/datasafe/test.php',
-);
-
-$config_file = "setting.conf";
-$fp = fopen($config_file,"wb+");
-fwrite($fp,trim($setting[0])."\n");
-fwrite($fp,trim($setting[1])."\n");
-for($i=2;$i<count($setting);$i++){
-	$setting[$i] = trim($setting[$i]);
-	$md5 = md5_file($setting[$i]);
-	fwrite($fp,$setting[$i].":".$md5."\n");
-}
-fclose($fp);
+$plain_config_file = "/etc/shopex/skomart.com/setting.conf";
+$config = file_get_contents($plain_config_file);
+$save_file = "/etc/shopex/skomart.com/setting.conf.en";
+shopex_set_config_ex($save_file,$config);
