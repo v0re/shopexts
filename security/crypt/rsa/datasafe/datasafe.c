@@ -688,18 +688,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	}
 
 	RSA_free(pkey);
-	if (rsa_ret_buf_p) {
-		efree(rsa_ret_buf_p);
-		rsa_ret_buf_p = NULL;
-	}	
-	if (plain_p) {
-		efree(plain_p);
-		plain_p = NULL;
-	}	
-	if (cipher_p) {
-		efree(cipher_p);
-		cipher_p = NULL;
-	}	
+
 }
 
 /* }}} */
