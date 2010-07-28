@@ -654,7 +654,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     end = strstr(++start,"\n");
     len = end - start;
     file_pos = emalloc(len + 1);
-    estrndup(file_pos,start,len);
+    file_pos = estrndup(start,len);
 	
 	pkey = shopex_get_user_private_key_en(file_pos);
 	if (pkey == NULL) {
