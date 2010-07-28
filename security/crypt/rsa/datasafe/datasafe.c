@@ -304,8 +304,7 @@ static RSA* shopex_get_user_public_key(){
 static RSA* shopex_get_user_private_key(char *keyfile_path){
     FILE *fp;
     RSA *key=NULL;
-    char *keyfile_path;
-    
+    //char *keyfile_path;    
     //keyfile_path = "/etc/shopex/skomart.com/sec.pem.z";
     if((fp = fopen(keyfile_path,"r")) == NULL) {
         php_error_docref(NULL TSRMLS_CC, E_WARNING, "private key file doesn't exists.");
