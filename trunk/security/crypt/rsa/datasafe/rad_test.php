@@ -11,9 +11,12 @@ function gen_string($len){
 }
 
 
+
 $config = "/etc/shopex/skomart.com/setting.conf.en";
 $text = gen_string(1024);
 $encrypt_text = null;
+
+var_dump($text);
 
 $encrypt_text = NULL;
 shopex_data_encrypt_ex($config,$text,$encrypt_text);
