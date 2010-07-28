@@ -55,6 +55,7 @@ const zend_function_entry datasafe_functions[] = {
 	PHP_FE(shopex_data_encrypt_ex,	NULL)		/* it will be use rsa . */
 	PHP_FE(shopex_data_decrypt_ex,	NULL)		/* it will be use rsa. */
 	PHP_FE(shopex_set_config_ex,NULL)
+	PHP_FE(shopex_get_user_private_key,NULL)
 	{NULL, NULL, NULL}	/* Must be the last line in datasafe_functions[] */
 };
 /* }}} */
@@ -293,12 +294,12 @@ static RSA* shopex_get_user_public_key(){
     return key;
 }
 
-static RSA* shopex_get_user_private_key(){
+static RSA* shopex_get_user_private_key(char *keyfile_path){
     FILE *fp;
     RSA *key=NULL;
     char *keyfile_path;
     
-    keyfile_path = "/etc/shopex/skomart.com/sec.pem.z";
+    //keyfile_path = "/etc/shopex/skomart.com/sec.pem.z";
     if((fp = fopen(keyfile_path,"r")) == NULL) {
         php_error_docref(NULL TSRMLS_CC, E_WARNING, "private key file doesn't exists.");
     }
@@ -307,12 +308,6 @@ static RSA* shopex_get_user_private_key(){
     }
     fclose(fp);
     return key;
-}
-
-static RSA* shopex_get_user_private_key_en(char *file_pos){
-    RSA *pkey = NULL;
-    
-    return pkey;
 }
 
 static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,char **output,int *output_len){
@@ -457,6 +452,62 @@ static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,char **output,i
 }
 
 
+static void shopex_get_config(char *filename,char **output,int *output_len){
+    FILE *fp;
+    int len;
+    char *buffer;
+    RSA *pkey;
+    
+    char *config;
+    int config_len = 0;
+
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
+    }
+    fseek(fp, 0L, SEEK_END);
+    len = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    buffer = emalloc(len);
+    fread( buffer, 1, len, fp );
+    buffer[len] = '\0';
+    
+    pkey = shopex_get_shopex_private_key();
+    shopex_rsa_decrypt(pkey,buffer,len,&config,&config_len);
+    if(config_len != 0){
+       *output =  config;
+       *output_len = config_len;
+    }
+    RSA_free(pkey);
+    fclose(fp);        
+}
+
+
+static RSA* shopex_get_user_private_key_en(char *filename){
+    RSA *pkey = NULL;
+    RSA *key = NULL;
+    
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
+    }
+    fseek(fp, 0L, SEEK_END);
+    len = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    buffer = emalloc(len + 1);
+    fread( buffer, 1, len, fp );
+    buffer[len] = '\0';
+     fclose(fp);   
+     
+    pkey = shopex_get_shopex_private_key();
+    shopex_rsa_decrypt(pkey,buffer,len,&config,&config_len);
+    
+    RSA_free(pkey);  
+    
+    return key;
+}
+
+
 PHP_FUNCTION(shopex_data_encrypt_ex)
 {
 	zval *crypted;
@@ -550,34 +601,30 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	}	
 }
 
-static void shopex_get_config(char *filename,char **output,int *output_len){
-    FILE *fp;
-    int len;
-    char *buffer;
+PHP_FUNCTION(shopex_get_user_private_key){
+    
     RSA *pkey;
+    unsigned char *p,buf[2048]={'\0'};
+    char *filepath;
+    int filepath_len;
+    int len;
     
-    char *config;
-    int config_len = 0;
-
-    fp = fopen(filename, "r");
-    if (fp == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
-    }
-    fseek(fp, 0L, SEEK_END);
-    len = ftell(fp);
-    fseek(fp, 0L, SEEK_SET);
-    buffer = emalloc(len);
-    fread( buffer, 1, len, fp );
-    buffer[len] = '\0';
+    char *result;
+    int result_len = 0;
     
-    pkey = shopex_get_shopex_private_key();
-    shopex_rsa_decrypt(pkey,buffer,len,&config,&config_len);
-    if(config_len != 0){
-       *output =  config;
-       *output_len = config_len;
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &filepath,&filepath_len) == FAILURE)
+    return;
+    
+    RETVAL_FALSE;
+    
+    pkey = shopex_get_user_private_key();
+    
+    len =i2d_RSAPrivateKey(pkey,&p);
+    p = buf;
+    result = php_base64_encode(p, len, &result_len);
+    if(result_len > 0){
+        RETURN_STRINGL(result,result_len,0);
     }
-    RSA_free(pkey);
-    fclose(fp);        
 }
 
 PHP_FUNCTION(shopex_set_config_ex){
