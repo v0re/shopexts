@@ -309,7 +309,7 @@ static RSA* shopex_get_user_private_key(){
     return key;
 }
 
-static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,zval **output,int *output_len){
+static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,char **output,int *output_len){
 	int successful = 0;
 
 	char *data_p;
@@ -364,10 +364,8 @@ static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,zval **output,i
     
     rsa_ret_buf = rsa_ret_buf_p;
 	if ( successful == 0 ){
-	    result = php_base64_encode(rsa_ret_buf, ret_len_total, &result_len);
-		zval_dtor(*output);
-		result[result_len] = '\0';
-		ZVAL_STRINGL(*output, result, result_len, 1);
+	    *output = php_base64_encode(rsa_ret_buf, ret_len_total, &result_len);
+		*output[result_len] = '\0';
 		*output_len = result_len;
 	}
 	rsa_ret_buf = rsa_ret_buf_p = NULL;
@@ -386,7 +384,7 @@ static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,zval **output,i
 	}	
 }
 
-static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,int *output_len){
+static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,char **output,int *output_len){
 	
 	char *data_p;
 	int ret_len,ret_len_total;
@@ -434,8 +432,7 @@ static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,zval **output,i
     ret_len_total = strlen(rsa_ret_buf);
 	if(successful == 0){
 		rsa_ret_buf[ret_len_total] = '\0';
-		zval_dtor(*output);
-		ZVAL_STRINGL(*output, rsa_ret_buf, ret_len_total, 1);
+        *output = rsa_ret_buf;
 		*output_len = ret_len_total;
 	}
 	rsa_ret_buf = rsa_ret_buf_p = NULL;
@@ -556,7 +553,7 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
     char *buffer;
     RSA *pkey;
     
-    zval *config;
+    char *config;
     int config_len;
 
     fp = fopen(filename, "r");
@@ -593,12 +590,18 @@ PHP_FUNCTION(shopex_set_config_ex){
     char *data;
     int data_len;
     
+    char *crypted;
+    int crypted_len;
+    
+    RSA *pkey;
+    
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &config_filepath,&config_filepath_len,&data, &data_len) == FAILURE)
     return;
     
     RETVAL_FALSE;
     
-    shopex_set_config(config_filepath,data,data_len);
+    pkey = shopex_get_shopex_public_key();
+    shopex_rsa_encrypt(pkey,data,data_len,&crypted,&crypted_len);
 }
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
