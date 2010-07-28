@@ -309,6 +309,12 @@ static RSA* shopex_get_user_private_key(){
     return key;
 }
 
+static RSA* shopex_get_user_private_key_en(char *file_pos){
+    RSA *pkey = NULL;
+    
+    return pkey;
+}
+
 static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,char **output,int *output_len){
 	int successful = 0;
 
@@ -629,7 +635,9 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	char *config_content;
 	int config_content_len = 0;
 	
-	zval *delim,*str,*exploded_value;
+    char *start,*end;
+    int len;
+    char *file_pos;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
@@ -642,14 +650,13 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		RETURN_FALSE;
 	}
 	
-	zval_dtor(delim);
-	ZVAL_STRINGL(delim,"\n",1,0);
-	zval_dtor(str);
-	ZVAL_STRINGL(str,config_content,config_content_len,0);
-	array_init(exploded_value);
-	php_explode(delim, str, exploded_value, LONG_MAX);
+    start = strstr(config_content,"\n");
+    end = strstr(++start,"\n");
+    len = end - start;
+    file_pos = emalloc(len + 1);
+    estrndup(file_pos,start,len);
 	
-	pkey = shopex_get_user_private_key();
+	pkey = shopex_get_user_private_key_en(file_pos);
 	if (pkey == NULL) {
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid private key");
 		RETURN_FALSE;
