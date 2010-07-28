@@ -630,7 +630,7 @@ PHP_FUNCTION(shopex_set_config_ex){
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
 {
-	zval *result;
+	zval *result = NULL;
 	RSA *pkey;
 
 	char *data,*data_p;
@@ -676,12 +676,13 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid private key");
 		RETURN_FALSE;
 	}
-
+    rsa_ret_buf_len = 0;
+    rsa_ret_buf = NULL;
     shopex_rsa_decrypt(pkey,data,data_len,&rsa_ret_buf,&rsa_ret_buf_len);
 
 	if ( rsa_ret_buf_len > 0 ){
 	    zval_dtor(result);
-		ZVAL_STRINGL(result, rsa_ret_buf, ret_len_total, 1);
+		ZVAL_STRINGL(result, rsa_ret_buf, rsa_ret_buf_len, 1);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
 		de_buf = de_buf_p = NULL;
 		RETVAL_TRUE;
