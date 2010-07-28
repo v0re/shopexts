@@ -537,25 +537,14 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	zval *crypted;
 	RSA *pkey;
 
-	int successful = 0;
-
 	char *data,*data_p;
 	int data_len;
-	
-	int ks,chunk_len;
-	int rsa_ret_buf_len;
-    int ret_len;
-    int ret_len_total;
-	
-	char *rsa_ret_buf_p,*rsa_ret_buf;
-	char *plain_p,*plain;
-	char *cipher_p,*cipher;
-	
+		
 	char *config_filepath;
 	int config_filepath_len;
 	
-	char *result;
-	int result_len;
+	char *output;
+	int output_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &crypted) == FAILURE)
 		return;
@@ -572,57 +561,17 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid public key");
 		RETURN_FALSE;
 	}
-
-	data_p = data;
-	ret_len = ret_len_total = 0;
 	
-	    
-    ks = RSA_size(pkey);
-    chunk_len = data_len > (ks - 11) ? ks - 11 : data_len;
-    rsa_ret_buf_len = ( ( data_len / chunk_len + 1) * ks );
-    rsa_ret_buf_p = rsa_ret_buf = emalloc(rsa_ret_buf_len + 1);
-    memset(rsa_ret_buf_p,'\0', rsa_ret_buf_len + 1);
-    plain_p = plain = (char *)emalloc(ks + 1);
-    cipher_p = cipher = (char *)emalloc(ks + 1);
-    
-    while(data - data_p < data_len) {
-        memset(plain,'\0',ks + 1);
-        memset(cipher, '\0', ks + 1);
-        memcpy(plain, data, chunk_len);
-        ret_len = RSA_public_encrypt(chunk_len, plain, cipher, pkey, RSA_PKCS1_PADDING);
-        if(ret_len != ks){
-            successful = -1;
-            break;
-        }
-        memcpy(rsa_ret_buf,cipher,ret_len);
-        rsa_ret_buf += ret_len;
-        plain = plain_p;
-        cipher = cipher_p;
-        ret_len_total += ret_len;
-        data += chunk_len;
-    }
-    
-    rsa_ret_buf = rsa_ret_buf_p;
-	if ( successful == 0 ){
-	    result = php_base64_encode(rsa_ret_buf, ret_len_total, &result_len);
+	shopex_rsa_encrypt(pkey,data,data_len,&output,&output_len);
+
+	if ( output_len > 0 ){
 		zval_dtor(crypted);
-		result[result_len] = '\0';
-		ZVAL_STRINGL(crypted, result, result_len, 0);
-		rsa_ret_buf = rsa_ret_buf_p = NULL;
-		result = NULL;
+		ZVAL_STRINGL(crypted, output, output_len, 0);
 		RETVAL_TRUE;
 	}
 
 	RSA_free(pkey);
-	if (rsa_ret_buf_p) {
-		efree(rsa_ret_buf_p);
-	}	
-	if (plain_p) {
-		efree(plain_p);
-	}	
-	if (cipher_p) {
-		efree(cipher_p);
-	}	
+
 }
 
 PHP_FUNCTION(shopex_get_user_private_key){
@@ -684,19 +633,13 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	zval *result;
 	RSA *pkey;
 
-	int successful = 0;
-
 	char *data,*data_p;
 	int data_len;
 	
-	int ks,chunk_len;
 	int rsa_ret_buf_len;
-    int ret_len;
     int ret_len_total;
 	
 	char *rsa_ret_buf_p,*rsa_ret_buf;
-	char *plain_p,*plain;
-	char *cipher_p,*cipher;
 	
 	char *config_filepath;
 	int config_filepath_len;
@@ -734,33 +677,9 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		RETURN_FALSE;
 	}
 
-	data_p = data;
-	ret_len = ret_len_total = 0;
-	de_buf_p = de_buf = php_base64_decode(data,data_len,&de_len);    
-	data = data_p;
-	
-    ks = RSA_size(pkey);
-    cipher_p = cipher = emalloc( ks + 1);
-    plain_p = plain = emalloc( ks + 1);
-    rsa_ret_buf_p = rsa_ret_buf = emalloc(de_len);
-    memset(rsa_ret_buf,'\0',de_len);
-    while( de_buf - de_buf_p < de_len ) {
-        memset(cipher, '\0', ks + 1);
-        memset(plain, '\0', ks + 1);
-        memcpy(cipher,de_buf,ks);
-        ret_len = RSA_private_decrypt(ks, cipher, plain, pkey, RSA_PKCS1_PADDING);
-        memcpy(rsa_ret_buf,plain,ret_len);
-        ret_len_total += ret_len;
-        rsa_ret_buf += ret_len;
-        cipher = cipher_p;
-        plain = plain_p;
-        de_buf += ks;    
-    }    
-        
-    rsa_ret_buf = rsa_ret_buf_p;
-    ret_len_total = strlen(rsa_ret_buf);
-	if ( successful == 0 ){
-		rsa_ret_buf[ret_len_total] = '\0';
+    shopex_rsa_decrypt(pkey,data,data_len,&rsa_ret_buf,&rsa_ret_buf_len);
+
+	if ( rsa_ret_buf_len > 0 ){
 	    zval_dtor(result);
 		ZVAL_STRINGL(result, rsa_ret_buf, ret_len_total, 0);
 		rsa_ret_buf = rsa_ret_buf_p = NULL;
