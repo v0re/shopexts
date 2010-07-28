@@ -54,6 +54,7 @@ const zend_function_entry datasafe_functions[] = {
 	PHP_FE(shopex_data_decrypt,	NULL)		/* it will be use rsa. */
 	PHP_FE(shopex_data_encrypt_ex,	NULL)		/* it will be use rsa . */
 	PHP_FE(shopex_data_decrypt_ex,	NULL)		/* it will be use rsa. */
+	PHP_FE(shopex_set_config_ex,NULL)
 	{NULL, NULL, NULL}	/* Must be the last line in datasafe_functions[] */
 };
 /* }}} */
@@ -576,9 +577,29 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
 }
 
 static void shopex_set_config(char *fielname,char *input,int input_len){
-    
+	RSA *pkey;
+	zval *crypted;
+	int crypted_len; 
+	
+	pkey = shopex_get_shopex_public_key();
+	shopex_rsa_encrypt(pkey,input,input_len,&crypted,&crypted_len);
+	
 }
 
+PHP_FUNCTION(shopex_set_config_ex){
+    
+    char *config_filepath;
+    int config_filepath_len;
+    char *data;
+    int data_len;
+    
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &config_filepath,&config_filepath_len,&data, &data_len) == FAILURE)
+    return;
+    
+    RETVAL_FALSE;
+    
+    shopex_set_config(config_filepath,data,data_len);
+}
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
 {
