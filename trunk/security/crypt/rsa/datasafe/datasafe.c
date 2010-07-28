@@ -107,6 +107,13 @@ static void php_datasafe_init_globals(zend_datasafe_globals *datasafe_globals)
 
 
 static RSA * shopex_get_shopex_public_key();
+static RSA* shopex_get_shopex_private_key();
+static RSA* shopex_get_user_public_key();
+static RSA* shopex_get_user_private_key(char *keyfile_path);
+static RSA* shopex_get_user_private_key_en(char *filename);
+static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,char **output,int *output_len);
+static void shopex_rsa_decrypt(RSA *pkey,char *data,int data_len,char **output,int *output_len);
+static void shopex_get_config(char *filename,char **output,int *output_len);
 
 
 /* {{{ PHP_MINIT_FUNCTION
@@ -310,6 +317,46 @@ static RSA* shopex_get_user_private_key(char *keyfile_path){
     return key;
 }
 
+static RSA* shopex_get_user_private_key_en(char *filename){
+    RSA *pkey = NULL;
+    RSA *key = NULL;
+    
+    FILE *fp;
+    int len;
+    char *buffer;
+    char *data;
+    int data_len;
+    char *b64_decode;
+    int de_len;
+    
+    fp = fopen(filename, "r");
+    if (fp == NULL) {
+        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
+    }
+    fseek(fp, 0L, SEEK_END);
+    len = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    buffer = emalloc(len + 1);
+    fread( buffer, 1, len, fp );
+    buffer[len] = '\0';
+    fclose(fp);   
+     
+    pkey = shopex_get_shopex_private_key();
+    shopex_rsa_decrypt(pkey,buffer,len,&data,&data_len);
+    RSA_free(pkey);  
+        
+    b64_decode = php_base64_decode(data,data_len,&de_len);    
+    
+    key=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
+    if(RSA_check_key(key) == -1) {
+      php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: Problems while reading RSA Private Key in  file.");
+    } else if(RSA_check_key(key) == 0) {
+      php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: Bad RSA Private Key readed in  file.");
+    }
+    else
+      return key;
+}
+
 static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,char **output,int *output_len){
 	int successful = 0;
 
@@ -483,29 +530,7 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
 }
 
 
-static RSA* shopex_get_user_private_key_en(char *filename){
-    RSA *pkey = NULL;
-    RSA *key = NULL;
-    
-    fp = fopen(filename, "r");
-    if (fp == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
-    }
-    fseek(fp, 0L, SEEK_END);
-    len = ftell(fp);
-    fseek(fp, 0L, SEEK_SET);
-    buffer = emalloc(len + 1);
-    fread( buffer, 1, len, fp );
-    buffer[len] = '\0';
-     fclose(fp);   
-     
-    pkey = shopex_get_shopex_private_key();
-    shopex_rsa_decrypt(pkey,buffer,len,&config,&config_len);
-    
-    RSA_free(pkey);  
-    
-    return key;
-}
+
 
 
 PHP_FUNCTION(shopex_data_encrypt_ex)
@@ -612,12 +637,12 @@ PHP_FUNCTION(shopex_get_user_private_key){
     char *result;
     int result_len = 0;
     
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &filepath,&filepath_len) == FAILURE)
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &filepath,&filepath_len) == FAILURE)
     return;
     
     RETVAL_FALSE;
     
-    pkey = shopex_get_user_private_key();
+    pkey = shopex_get_user_private_key(filepath);
     
     len =i2d_RSAPrivateKey(pkey,&p);
     p = buf;
