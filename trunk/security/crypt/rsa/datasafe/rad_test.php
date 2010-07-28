@@ -1,7 +1,7 @@
 <?php 
 
 function gen_string($len){ 
-    $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz' 
+    $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz' ;
     $string = ''; 
     for(;$len>=1;$len--)   {
         $position=rand()%strlen($chars);
