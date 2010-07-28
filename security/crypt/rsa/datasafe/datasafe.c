@@ -646,6 +646,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	ZVAL_STRINGL(delim,"\n",1,0);
 	zval_dtor(str);
 	ZVAL_STRINGL(str,config_content,config_content_len,0);
+	array_init(exploded_value);
 	php_explode(delim, str, exploded_value, LONG_MAX);
 	
 	pkey = shopex_get_user_private_key();
