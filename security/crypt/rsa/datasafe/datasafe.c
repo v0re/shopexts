@@ -365,7 +365,6 @@ static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,char **output,i
     rsa_ret_buf = rsa_ret_buf_p;
 	if ( successful == 0 ){
 	    *output = php_base64_encode(rsa_ret_buf, ret_len_total, &result_len);
-		*output[result_len] = '\0';
 		*output_len = result_len;
 	}
 	rsa_ret_buf = rsa_ret_buf_p = NULL;
