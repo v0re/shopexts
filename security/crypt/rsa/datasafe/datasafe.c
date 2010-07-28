@@ -544,8 +544,6 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	}	
 }
 
-
-
 static void shopex_get_config(char *filename,char **output,int *output_len){
     FILE *fp;
     int len;
@@ -553,7 +551,7 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
     RSA *pkey;
     
     char *config;
-    int config_len;
+    int config_len = 0;
 
     fp = fopen(filename, "r");
     if (fp == NULL) {
@@ -568,8 +566,12 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
     
     pkey = shopex_get_shopex_private_key();
     shopex_rsa_decrypt(pkey,buffer,len,&config,&config_len);
-    
-    RSA_free(pkey);        
+    if(config_len != 0){
+       *output =  config;
+       *output_len = config_len;
+    }
+    RSA_free(pkey);
+    fclose(fp);        
 }
 
 PHP_FUNCTION(shopex_set_config_ex){
@@ -625,7 +627,9 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	int de_len;
 	
 	char *config_content;
-	int config_content_len;
+	int config_content_len = 0;
+	
+	zval *delim,*str,*exploded_value;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
@@ -633,6 +637,16 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	RETVAL_FALSE;
 	
 	shopex_get_config(config_filepath,&config_content,&config_content_len);
+	if (config_content_len < 1) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid private key");
+		RETURN_FALSE;
+	}
+	
+	zval_dtor(delim);
+	ZVAL_STRINGL(delim,"\n",1,0);
+	zval_dtor(str);
+	ZVAL_STRINGL(str,config_content,config_content_len,0);
+	php_explode(delim, str, exploded_value, 0);
 	
 	pkey = shopex_get_user_private_key();
 	if (pkey == NULL) {
