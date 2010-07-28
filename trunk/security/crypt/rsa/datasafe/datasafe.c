@@ -572,16 +572,6 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
     RSA_free(pkey);        
 }
 
-static void shopex_set_config(char *fielname,char *input,int input_len){
-	RSA *pkey;
-	zval *crypted;
-	int crypted_len; 
-	
-	pkey = shopex_get_shopex_public_key();
-	shopex_rsa_encrypt(pkey,input,input_len,&crypted,&crypted_len);
-	
-}
-
 PHP_FUNCTION(shopex_set_config_ex){
     
     char *config_filepath;
