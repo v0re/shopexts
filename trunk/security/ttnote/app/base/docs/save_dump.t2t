@@ -1,0 +1,44 @@
+save && dump文档
+
+since   :   %%date(%Y-%m-%d)  $Rev$
+
+%!target:html
+%!postproc(tex): '\.gif' '.eps'
+%!preproc(html): '\.dot' '.gif'
+%!preproc(tex): '\.dot' '.pdf'
+%!encoding:utf-8
+
+
++=db_save=+
+
+final public function db_save(&$dbData,$mustUpdate=null){
+
+==参数==
+| 名称 | 说明 | 结构 | 引用 | 必要 |
+| $plainData | 需保存数据的 | db | √ | √ |
+| $mustUpdate | 必须保存的结构说明 | sdf | 　 | 　 |
+
+==说明==
+将单条db结构数据入数据库，不递归save，返回bool，主键回写应用$plainData
+
++=save=+
+
+public function save(&$data,$mustUpdate = null)
+同function db_save
+
++=db_dump=+
+
+final public function db_dump($filter,$field = '*')
+
+==参数==
+| 名称 | 说明 | 类型 | 默认 | 必要 |
+| $filter | 搜索条件 | String(表示主键) 或 array(表示filter参数) | 　 | √ |
+| $field | 主表需要输出字段 | String | * | 　 |
+
+==说明==
+将单条表记录输出 
+
++=dump=+
+
+public function dump($filter,$field = '*')
+同function db_dump

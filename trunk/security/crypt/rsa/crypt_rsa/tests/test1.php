@@ -63,6 +63,8 @@ $public_key = $key_pair->getPublicKey();
 $private_key = $key_pair->getPrivateKey();
 $key_length = $key_pair->getKeyLength();
 
+#var_dump($public_key,$private_key,$key_length);
+
 if ($key_length != 128) {
     $errors[] = "wrong result returned from Crypt_RSA_KeyPair::getKeyLength() function";
 }
@@ -89,7 +91,6 @@ $public_key1 = new Crypt_RSA_Key($public_key->getModulus(), $public_key->getExpo
 
 // serialize $private_key
 $private_key_str = $private_key->toString();
-
 // try to use $public_key1 for encryption and unserialized form
 // $private_key_str key for decryption
 
