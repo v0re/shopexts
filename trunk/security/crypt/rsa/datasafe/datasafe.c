@@ -685,7 +685,6 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     	}    	
     	line = line_p;
     	config_content = end;
-    	config_content++;
 	}
 	efree(line_p);
 	
