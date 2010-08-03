@@ -684,7 +684,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 			md5_string = ++cln_pos;
     	}    	
     	line = line_p;
-    	config_content = end;
+    	config_content = --end;
 	}
 	efree(line_p);
 	
