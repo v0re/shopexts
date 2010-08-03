@@ -292,10 +292,10 @@ static RSA* shopex_get_user_public_key(){
     
     keyfile_path = "/etc/shopex/skomart.com/pub.pem";
     if((fp = fopen(keyfile_path,"r")) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "public key file doesn't exists.");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "public key file doesn't exists.");
     }
     if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: problems while parse public key file");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: problems while parse public key file");
     }
     fclose(fp);
     return key;
@@ -307,10 +307,10 @@ static RSA* shopex_get_user_private_key(char *keyfile_path){
     //char *keyfile_path;    
     //keyfile_path = "/etc/shopex/skomart.com/sec.pem.z";
     if((fp = fopen(keyfile_path,"r")) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "private key file doesn't exists.");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "private key file doesn't exists.");
     }
     if((key = PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL)) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: problems while parse public key file");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: problems while parse public key file");
     }
     fclose(fp);
     return key;
@@ -330,7 +330,7 @@ static RSA* shopex_get_user_private_key_en(char *filename){
     
     fp = fopen(filename, "r");
     if (fp == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "read shopex config file failure");
     }
     fseek(fp, 0L, SEEK_END);
     len = ftell(fp);
@@ -348,9 +348,9 @@ static RSA* shopex_get_user_private_key_en(char *filename){
     
     key=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
     if(RSA_check_key(key) == -1) {
-      php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: Problems while reading RSA Private Key in  file.");
+      php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: Problems while reading RSA Private Key in  file.");
     } else if(RSA_check_key(key) == 0) {
-      php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error: Bad RSA Private Key readed in  file.");
+      php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: Bad RSA Private Key readed in  file.");
     }
     else
       return key;
@@ -374,11 +374,11 @@ static void shopex_rsa_encrypt(RSA *pkey,char *data,int data_len,char **output,i
 	int result_len;
 	
 	if (data_len == 0) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "input data is empty");
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "input data is empty");
 	}
 	
 	if (pkey == NULL) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid public key");
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid public key");
 	}
 
 	data_p = data;
@@ -509,7 +509,7 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
 
     fp = fopen(filename, "r");
     if (fp == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "read shopex config file failure");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "read shopex config file failure");
     }
     fseek(fp, 0L, SEEK_END);
     len = ftell(fp);
@@ -552,13 +552,13 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	RETVAL_FALSE;
 	
 	if (data_len == 0) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "input data is empty");
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "input data is empty");
 		RETURN_FALSE;
 	}
 	
 	pkey = shopex_get_user_public_key();
 	if (pkey == NULL) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid public key");
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid public key");
 		RETURN_FALSE;
 	}
 	
@@ -661,7 +661,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	
 	shopex_get_config(config_filepath,&config_content,&config_content_len);
 	if (config_content_len < 1) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid private key");
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid private key");
 		RETURN_FALSE;
 	}
 	
@@ -673,7 +673,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	
 	pkey = shopex_get_user_private_key_en(file_pos);
 	if (pkey == NULL) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "key parameter is not a valid private key");
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid private key");
 		RETURN_FALSE;
 	}
     rsa_ret_buf_len = 0;
