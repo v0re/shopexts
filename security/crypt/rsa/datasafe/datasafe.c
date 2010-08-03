@@ -647,12 +647,19 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	char *de_buf,*de_buf_p;
 	int de_len;
 	
-	char *config_content;
+	char *config_content,*config_content_p;
 	int config_content_len = 0;
+	int found = 0;
 	
     char *start,*end;
     int len;
     char *file_pos;
+    char *line,*line_p;
+    char *cln_pos;
+    char *filename;
+    int filename_len = 0;
+    char *md5_string;
+    int md5_string_len = 0;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
@@ -664,7 +671,23 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid private key");
 		RETURN_FALSE;
 	}
-	
+	config_content_p = config_content;
+	while(*config_content != '\0'){
+	   	start = strstr(config_content,"\n");
+	    config_content = end = strstr(++start,"\n");
+	    len = end - start;
+	    line_p = line = emalloc(len + 1);
+    	line = estrndup(start,len);
+    	if(cln_pos = strstr(line,":")){
+			*cln_pos = '\0';
+			filename = line;
+			md5_string = ++cln_pos;
+    	}
+    	efree(line_p);
+    	line_p = line = NULL;
+    	config_content++;
+	}
+	config_content = config_content_p;
     start = strstr(config_content,"\n");
     end = strstr(++start,"\n");
     len = end - start;
