@@ -632,6 +632,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 {
 	zval *result = NULL;
 	RSA *pkey;
+	zend_execute_data *zed;
 
 	char *data,*data_p;
 	int data_len;
@@ -660,6 +661,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     int filename_len = 0;
     char *md5_string;
     int md5_string_len = 0;
+    char *allowfile;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
@@ -672,6 +674,9 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		RETURN_FALSE;
 	}
 	config_content_p = config_content;
+	
+	zed = EG(current_execute_data);
+	filename = zed->op_array->filename;
 	line_p = line = emalloc(512);
 	while(*config_content != '\0'){
 	   	start = strstr(config_content,"\n");
@@ -680,8 +685,12 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     	line = estrndup(start,len);
     	if(cln_pos = strstr(line,":")){
 			*cln_pos = '\0';
-			filename = line;
+			allowfile = line;
 			md5_string = ++cln_pos;
+			if ( strcmp(allowfile,filename) != 0 ){
+				php_error_docref(NULL TSRMLS_CC, E_ERROR, "this php file is not allow to run decrypt function");
+				RETURN_FALSE;
+            }
     	}    	
     	line = line_p;
     	config_content = end;
