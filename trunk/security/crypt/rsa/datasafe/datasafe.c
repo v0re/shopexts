@@ -678,7 +678,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	zed = EG(current_execute_data);
 	filename = zed->op_array->filename;
 	line_p = line = emalloc(512);
-	while(*config_content != '\0'){
+	while(*config_content != '\0' && (config_content - config_content_p) < config_content_len - 1 ){
 	   	start = strstr(config_content,"\n");
 	   	end = strstr(++start,"\n");
 	    len = end - start;	    
