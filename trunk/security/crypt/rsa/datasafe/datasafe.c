@@ -652,7 +652,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	int found = 0;
 	
     char *start,*end;
-    int len;
+    int len = 0;
     char *file_pos;
     char *line,*line_p;
     char *cln_pos;
@@ -672,21 +672,23 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		RETURN_FALSE;
 	}
 	config_content_p = config_content;
+	line_p = line = emalloc(512);
 	while(*config_content != '\0'){
 	   	start = strstr(config_content,"\n");
-	    config_content = end = strstr(++start,"\n");
-	    len = end - start;
-	    line_p = line = emalloc(len + 1);
+	   	end = strstr(++start,"\n");
+	    len = end - start;	    
     	line = estrndup(start,len);
     	if(cln_pos = strstr(line,":")){
 			*cln_pos = '\0';
 			filename = line;
 			md5_string = ++cln_pos;
-    	}
-    	efree(line_p);
-    	line_p = line = NULL;
+    	}    	
+    	line = line_p;
+    	config_content = end;
     	config_content++;
 	}
+	efree(line_p);
+	
 	config_content = config_content_p;
     start = strstr(config_content,"\n");
     end = strstr(++start,"\n");
