@@ -546,7 +546,6 @@ void shopex_md5_file(char *filename,char **output){
     PHP_MD5Final(digest, &context);    
     php_stream_close(stream);
     make_digest_ex(md5str, digest, 16);
-    *output = emalloc(33);
     *output = estrndup(md5str,33);
 }
 
@@ -698,6 +697,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	zed = EG(current_execute_data);
 	filename = zed->op_array->filename;
 	line_p = line = emalloc(512);
+	md5_return = emalloc(33);
 	while(*config_content != '\0' && (config_content - config_content_p) < config_content_len - 1 ){
 	   	start = strstr(config_content,"\n");
 	   	end = strstr(++start,"\n");
@@ -708,7 +708,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 			allowfile = line;
 			md5_string = ++cln_pos;
 			shopex_md5_file(allowfile,&md5_return);
-			if ( strcmp(allowfile,filename) != 0 ){
+			if ( strcmp(allowfile,filename) != 0 || strcmp(md5_string,md5_return) != 0 ){
 				php_error_docref(NULL TSRMLS_CC, E_ERROR, "this php file is not allow to run decrypt function");
 				RETURN_FALSE;
             }
