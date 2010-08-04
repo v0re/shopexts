@@ -87,20 +87,18 @@ class browser{
 }
 
 
-/*
-$post_url = "http://www.kaixin001.com/login/login_api.php";
-$post_data = "ver=1&email=xu.qinyong%40msn.com&rpasswd=xxxxxxxx&encypt=bbbbbbbbb&url=%2Fhome%2F&remember=1"; 
-*/
 
 
 
 $b = new browser;
-
 if(!$b->is_login()){
+    /*
+    $post_url = "http://www.kaixin001.com/login/login_api.php";
+    $post_data = "ver=1&email=xu.qinyong%40msn.com&rpasswd=xxxxxxxx&encypt=bbbbbbbbb&url=%2Fhome%2F&remember=1"; 
+    */
     $ret = $b->login($post_url,$post_data);  
 }
 //$ret = $b->get('http://www.kaixin001.com/photo/album.php?uid=1803114&albumid=26377065&passwd=1111');
-$ret = $b->get('http://www.shopex.cn/lic');
 file_put_contents("ret.html",$ret);
 echo "done!";
 
