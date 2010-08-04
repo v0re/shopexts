@@ -23,6 +23,7 @@
 #endif
 
 #include "php.h"
+#include "md5.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
 #include "ext/standard/base64.h"
@@ -529,7 +530,25 @@ static void shopex_get_config(char *filename,char **output,int *output_len){
 }
 
 
-
+void shopex_md5_file(char *filename,char **output){
+    char          md5str[33];
+    unsigned char buf[1024];
+    unsigned char digest[16];
+    PHP_MD5_CTX   context;
+    int           n;  
+    php_stream    *stream;
+        
+    stream = php_stream_open_wrapper(filename, "rb", REPORT_ERRORS | ENFORCE_SAFE_MODE, NULL);  
+    PHP_MD5Init(&context);    
+    while ((n = php_stream_read(stream, buf, sizeof(buf))) > 0) {
+        PHP_MD5Update(&context, buf, n); 
+    }       
+    PHP_MD5Final(digest, &context);    
+    php_stream_close(stream);
+    make_digest_ex(md5str, digest, 16);
+    *output = emalloc(33);
+    *output = estrndup(md5str,33);
+}
 
 
 PHP_FUNCTION(shopex_data_encrypt_ex)
