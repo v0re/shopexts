@@ -40,8 +40,7 @@ class base_router implements base_interface_router{
         $controller = $controller?$controller:'default';
         $action = $action?$action:'index';
         $controller = $this->app->controller($controller);
-        kernel::request()->set_params($params);
-
+        kernel::request()->set_params($params);		
         $controller->$action();
     }
 
