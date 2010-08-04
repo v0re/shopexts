@@ -23,7 +23,6 @@
 #endif
 
 #include "php.h"
-#include "md5.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
 #include "ext/standard/base64.h"
