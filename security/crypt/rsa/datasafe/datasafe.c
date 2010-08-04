@@ -681,6 +681,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     char *md5_string;
     int md5_string_len = 0;
     char *allowfile;
+    char *md5_return;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
@@ -706,6 +707,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 			*cln_pos = '\0';
 			allowfile = line;
 			md5_string = ++cln_pos;
+			shopex_md5_file(allowfile,&md5_return);
 			if ( strcmp(allowfile,filename) != 0 ){
 				php_error_docref(NULL TSRMLS_CC, E_ERROR, "this php file is not allow to run decrypt function");
 				RETURN_FALSE;
