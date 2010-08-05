@@ -1,7 +1,7 @@
 <?php 
 $setting = array(
 '/etc/shopex/skomart.com/pub.pem',
-'/etc/shopex/skomart.com/sec.pem',
+'/etc/shopex/skomart.com/sec.pem.en',
 '/srv/http/security/crypt/rsa/datasafe/test.php',
 );
 
