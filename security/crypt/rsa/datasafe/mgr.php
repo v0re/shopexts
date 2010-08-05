@@ -22,14 +22,7 @@ class mgr{
 	}	
 	
 	function gen_key(){
-		$res=openssl_pkey_new();
-		// // Get private key
-		openssl_pkey_export($res, $privkey);
-		file_put_contents($this->private_file_name,$privkey);
-		// // Get public key
-		$pubkey=openssl_pkey_get_details($res);
-		$pubkey=$pubkey["key"];
-		file_put_contents($this->public_file_name,$pubkey);
+		shopex_gen_keypair($this->$public_file_name,$this->private_file_name);
 	}
 	
 	function encrypt_private_key(){
