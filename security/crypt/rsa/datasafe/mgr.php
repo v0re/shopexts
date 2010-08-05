@@ -58,6 +58,7 @@ class mgr{
 	function encrypt_conf(){
 		$plain_config_file = realpath($this->setting_file);
 		$config = file_get_contents($plain_config_file);
+		$encrypted = NULL;
 		shopex_public_encrypt($config,$encrypted);
 		file_put_contents($this->setting_file_encrypted,$encrypted);
 	}
