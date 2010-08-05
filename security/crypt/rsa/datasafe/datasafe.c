@@ -637,8 +637,7 @@ PHP_FUNCTION(shopex_get_user_private_key){
     }
 }
 
-PHP_FUNCTION(shopex_set_config_ex){
-    
+PHP_FUNCTION(shopex_set_config_ex){    
     char *config_filepath;
     int config_filepath_len;
     char *data;
