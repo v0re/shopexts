@@ -43,8 +43,6 @@ PHP_RSHUTDOWN_FUNCTION(datasafe);
 PHP_MINFO_FUNCTION(datasafe);
 
 PHP_FUNCTION(confirm_datasafe_compiled);	/* For testing, remove later. */
-PHP_FUNCTION(shopex_data_encrypt);
-PHP_FUNCTION(shopex_data_decrypt);
 PHP_FUNCTION(shopex_data_encrypt_ex);
 PHP_FUNCTION(shopex_data_decrypt_ex);
 PHP_FUNCTION(shopex_public_encrypt);

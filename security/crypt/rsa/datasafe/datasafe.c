@@ -51,8 +51,6 @@ static int le_datasafe;
  */
 const zend_function_entry datasafe_functions[] = {
 	PHP_FE(confirm_datasafe_compiled,	NULL)		/* For testing, remove later. */
-	PHP_FE(shopex_data_encrypt,	NULL)		/* it will be use rsa . */
-	PHP_FE(shopex_data_decrypt,	NULL)		/* it will be use rsa. */
 	PHP_FE(shopex_data_encrypt_ex,	NULL)		/* it will be use rsa . */
 	PHP_FE(shopex_data_decrypt_ex,	NULL)		/* it will be use rsa. */
 	PHP_FE(shopex_public_encrypt,NULL)
@@ -193,72 +191,6 @@ PHP_FUNCTION(confirm_datasafe_compiled)
 	len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "datasafe", arg);
 	RETURN_STRINGL(strg, len, 0);
 }
-
-
-PHP_FUNCTION(shopex_data_encrypt)
-{
-	char *config_filepath = NULL;
-    int config_filepath_len;
-    char *arg = NULL;
-	int arg_len;
-
-    char *output;
-    int output_len;
-    
-    char * ret;    
-    
-	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
-		return;
-	}
-		
-	shopex_data_rsa_encrypt(config_filepath,arg,arg_len,&output,&output_len);
-	ret = estrndup(output,output_len);
-	if(output){
-	    free(output);
-	    output = NULL;
-    }
-	RETURN_STRINGL(ret,output_len,0);
-}
-
-PHP_FUNCTION(shopex_data_decrypt)
-{
-	char *config_filepath = NULL;
-    int config_filepath_len;
-    char *arg = NULL;
-	int arg_len;
-
-    char *keyfile_path;
-    char *output = NULL;
-    int output_len;
-    
-    char * ret;
-    char *privkeypos;
-    
-    zend_execute_data *zed;
-    
-    int allow_ret = 0;
-    int new_len = 0;
-
-
-	if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,"ss", &config_filepath,&config_filepath_len,&arg, &arg_len) == FAILURE){
-		return;
-	}
-	
-	
-	//zed = EG(current_execute_data);
-	//allow_ret = shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename);
-	//if(shopex_is_file_in_allowlist(config_filepath,zed->op_array->filename) == 0){
-	new_len = 128 * ( arg_len / 117 + 1 );
-    output = (char *)emalloc( new_len );
-    memset(output,'\0',new_len);
-    shopex_data_rsa_decrypt(config_filepath,arg,arg_len,&output,&output_len);
-    
-    RETURN_STRINGL(output,output_len,0);
-	//}
-	//RETURN_STRING(arg,arg_len);
-}
-
-
 
 static RSA* shopex_get_shopex_public_key(){
     unsigned char *pem_key_str = "MIGHAoGBAJOgBnKvVN5PtNDXBO0TNRZeILWmo0rpPLAU6s1IYHfhxKBGm44qDH8ONjJFk8NT70zGtOiwoqKv6UjQvHwNCjyLalIUN2mgV7AvqC0Tj8Gw6P9LaYgMY8V/vRSqhGGgRDRVxXS1KipPrueDMQSjBO/N3WSN6ac+N+JEcTtpopUjAgED";
@@ -570,17 +502,21 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	
 	char *pos,*public_file_pos;
 	
+	char filename_buf[255];
+	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &crypted) == FAILURE)
 		return;
 
 	RETVAL_FALSE;
 	
+
+	
 	if (data_len == 0) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "input data is empty");
 		RETURN_FALSE;
 	}
-	
-	shopex_get_config(config_filepath,&config_content,&config_content_len);
+	sprintf(filename_buf,"/etc/shopex/%s",config_filepath);
+	shopex_get_config(filename_buf,&config_content,&config_content_len);
 	if (config_content_len < 1) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "decode setting file fail");
 		RETURN_FALSE;
@@ -703,13 +639,15 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     int md5_string_len = 0;
     char *allowfile;
     char *md5_return;
+    
+    char *filename_buf[255];
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
 
 	RETVAL_FALSE;
-	
-	shopex_get_config(config_filepath,&config_content,&config_content_len);
+	sprintf(filename_buf,"/etc/shopex/%s",config_filepath);
+	shopex_get_config(filename_buf,&config_content,&config_content_len);
 	if (config_content_len < 1) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid private key");
 		RETURN_FALSE;
