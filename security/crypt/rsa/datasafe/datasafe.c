@@ -515,7 +515,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "input data is empty");
 		RETURN_FALSE;
 	}
-	sprintf(filename_buf,"/etc/shopex/%s",config_filepath);
+	sprintf(filename_buf,"/etc/shopex/%s/setting.conf.en",config_filepath);
 	shopex_get_config(filename_buf,&config_content,&config_content_len);
 	if (config_content_len < 1) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "decode setting file fail");
@@ -646,7 +646,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 		return;
 
 	RETVAL_FALSE;
-	sprintf(filename_buf,"/etc/shopex/%s",config_filepath);
+	sprintf(filename_buf,"/etc/shopex/%s/setting.conf.en",config_filepath);
 	shopex_get_config(filename_buf,&config_content,&config_content_len);
 	if (config_content_len < 1) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid private key");
