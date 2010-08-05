@@ -22,7 +22,7 @@ class mgr{
 	}	
 	
 	function gen_key(){
-		shopex_gen_keypair($this->$public_file_name,$this->private_file_name);
+		shopex_gen_keypair($this->public_file_name,$this->private_file_name);
 	}
 	
 	function encrypt_private_key(){
