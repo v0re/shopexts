@@ -35,10 +35,9 @@ class mgr{
 	function encrypt_private_key(){
 		$plain_private_key = realpath($this->private_file_name);
 		$plain_private_key = shopex_get_user_private_key($plain_private_key);
-		$save_file = realpath($this->private_file_name_encrypted);
 		$encrypted = NULL;
 		shopex_public_encrypt($plain_private_key,$encrypted);
-		file_put_contents($save_file,$encrypted);
+		file_put_contents($this->private_file_name_encrypted,$encrypted);
 	}
 	
 	function gen_conf($setting){
@@ -59,9 +58,8 @@ class mgr{
 	function encrypt_conf(){
 		$plain_config_file = realpath($this->setting_file);
 		$config = file_get_contents($plain_config_file);
-		$save_file = realpath($this->setting_file_encrypted);
 		shopex_public_encrypt($config,$encrypted);
-		file_put_contents($save_file,$encrypted);
+		file_put_contents($this->setting_file_encrypted,$encrypted);
 	}
 
 }
