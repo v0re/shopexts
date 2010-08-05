@@ -59,6 +59,7 @@ class mgr{
 		$config = file_get_contents($plain_config_file);
 		$save_file = realpath($this->setting_file_encrypted);
 		shopex_public_encrypt($config,$encrypted);
+		var_dump($encrypted);
 	}
 
 }
