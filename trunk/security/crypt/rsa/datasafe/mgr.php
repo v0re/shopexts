@@ -36,7 +36,7 @@ class mgr{
 		$plain_private_key = realpath($this->private_file_name);
 		$plain_private_key = shopex_get_user_private_key($plain_private_key);
 		$save_file = realpath($this->private_file_name_encrypted);
-		shopex_set_config_ex($save_file,$plain_private_key);
+		shopex_public_encrypt($plain_private_key,$encrypted);
 	}
 	
 	function gen_conf($setting){
@@ -58,7 +58,7 @@ class mgr{
 		$plain_config_file = realpath($this->setting_file);
 		$config = file_get_contents($plain_config_file);
 		$save_file = realpath($this->setting_file_encrypted);
-		shopex_set_config_ex($save_file,$config);
+		shopex_public_encrypt($config,$encrypted);
 	}
 
 }
