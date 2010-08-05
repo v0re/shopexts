@@ -286,12 +286,12 @@ static RSA* shopex_get_shopex_private_key(){
 }
 
 
-static RSA* shopex_get_user_public_key(){
+static RSA* shopex_get_user_public_key(char *keyfile_path){
     FILE *fp;
     RSA *key=NULL;
-    char *keyfile_path;
+    //char *keyfile_path;
     
-    keyfile_path = "/etc/shopex/skomart.com/pub.pem";
+    //keyfile_path = "/etc/shopex/skomart.com/pub.pem";
     if((fp = fopen(keyfile_path,"r")) == NULL) {
         php_error_docref(NULL TSRMLS_CC, E_ERROR, "public key file doesn't exists.");
     }
@@ -563,7 +563,12 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	
 	char *output;
 	int output_len;
-
+	
+	char *config_content;
+	int config_content_len;
+	
+	char *pos,*public_file_pos;
+	
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &crypted) == FAILURE)
 		return;
 
@@ -574,7 +579,17 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 		RETURN_FALSE;
 	}
 	
-	pkey = shopex_get_user_public_key();
+	shopex_get_config(config_filepath,&config_content,&config_content_len);
+	if (config_content_len < 1) {
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "decode setting file fail");
+		RETURN_FALSE;
+	}
+
+    pos = strstr(config_content,"\n");
+    *pos = '\0';
+	public_file_pos = config_content;
+    
+	pkey = shopex_get_user_public_key(public_file_pos);
 	if (pkey == NULL) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid public key");
 		RETURN_FALSE;
