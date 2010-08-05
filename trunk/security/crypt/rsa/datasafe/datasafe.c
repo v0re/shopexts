@@ -640,7 +640,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     char *allowfile;
     char *md5_return;
     
-    char *filename_buf[255];
+    char filename_buf[255];
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssz", &config_filepath,&config_filepath_len,&data, &data_len, &result) == FAILURE)
 		return;
