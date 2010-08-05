@@ -776,7 +776,7 @@ PHP_FUNCTION(shopex_gen_keypair)
 	RSA *key;
  	FILE *fp;
  	
- 	char *pub,*prive;
+ 	char *pub,*priv;
  	int pub_len,priv_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &pub,&pub_len,&priv, &priv_len) == FAILURE)
