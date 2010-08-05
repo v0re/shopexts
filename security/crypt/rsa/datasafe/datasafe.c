@@ -590,6 +590,9 @@ PHP_FUNCTION(shopex_data_encrypt_ex)
 	public_file_pos = config_content;
     
 	pkey = shopex_get_user_public_key(public_file_pos);
+	if(config_content){
+		efree(config_content);
+	}
 	if (pkey == NULL) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid public key");
 		RETURN_FALSE;
@@ -741,6 +744,9 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
     file_pos = estrndup(start,len);
 	
 	pkey = shopex_get_user_private_key_en(file_pos);
+	if(config_content_p){
+		efree(config_content_p);
+	}
 	if (pkey == NULL) {
 		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key parameter is not a valid private key");
 		RETURN_FALSE;
