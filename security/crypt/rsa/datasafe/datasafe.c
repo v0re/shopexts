@@ -55,7 +55,7 @@ const zend_function_entry datasafe_functions[] = {
 	PHP_FE(shopex_data_decrypt,	NULL)		/* it will be use rsa. */
 	PHP_FE(shopex_data_encrypt_ex,	NULL)		/* it will be use rsa . */
 	PHP_FE(shopex_data_decrypt_ex,	NULL)		/* it will be use rsa. */
-	PHP_FE(shopex_set_config_ex,NULL)
+	PHP_FE(shopex_public_encrypt,NULL)
 	PHP_FE(shopex_get_user_private_key,NULL)
 	{NULL, NULL, NULL}	/* Must be the last line in datasafe_functions[] */
 };
@@ -637,9 +637,7 @@ PHP_FUNCTION(shopex_get_user_private_key){
     }
 }
 
-PHP_FUNCTION(shopex_set_config_ex){    
-    char *config_filepath;
-    int config_filepath_len;
+PHP_FUNCTION(shopex_public_encrypt){    
     char *data;
     int data_len;
     
@@ -648,19 +646,25 @@ PHP_FUNCTION(shopex_set_config_ex){
     
     RSA *pkey;
     
-    FILE *fp;
+    zval *result = NULL;
     
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &config_filepath,&config_filepath_len,&data, &data_len) == FAILURE)
-    return;
+    
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sz", &data, &data_len,&result) == FAILURE)
+        return;
     
     RETVAL_FALSE;
     
     pkey = shopex_get_shopex_public_key();
     shopex_rsa_encrypt(pkey,data,data_len,&crypted,&crypted_len);
     
-    fp=fopen(config_filepath,"wb+");
-    fwrite(crypted,crypted_len,1,fp);    
-    fclose(fp);
+    if ( crypted_len > 0 ){
+	    zval_dtor(result);
+		ZVAL_STRINGL(result, crypted, crypted_len, 1);
+		crypted =  NULL;
+		RETVAL_TRUE;
+	}
+    
+    RSA_free(pkey);
 }
 
 PHP_FUNCTION(shopex_data_decrypt_ex)
