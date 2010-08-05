@@ -6,7 +6,7 @@ class mgr{
 	var $config_file_path;
 	var $public_file_name = "pub.pem";
 	var $private_file_name = "sec.pem";
-	var $private_file_name_encrypted = "sec.pem";
+	var $private_file_name_encrypted = "sec.pem.en";
 	var $setting = array();
 	var $setting_file = 'setting.conf';
 	var $setting_file_encrypted = 'setting.conf.en';
@@ -41,7 +41,7 @@ class mgr{
 	
 	function gen_conf($setting){
 		$config_file = $this->setting_file ;
-		$this->setting += $setting;
+		$this->setting = array_merge($this->setting, $setting);
 		$fp = fopen($config_file,"wb+");
 		fwrite($fp,trim($this->setting[0])."\n");
 		fwrite($fp,trim($this->setting[1])."\n");
