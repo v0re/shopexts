@@ -49,6 +49,7 @@ PHP_FUNCTION(shopex_data_encrypt_ex);
 PHP_FUNCTION(shopex_data_decrypt_ex);
 PHP_FUNCTION(shopex_public_encrypt);
 PHP_FUNCTION(shopex_get_user_private_key);
+PHP_FUNCTION(shopex_gen_keypair);
 /* 
   	Declare any global variables you may need between the BEGIN
 	and END macros here:     

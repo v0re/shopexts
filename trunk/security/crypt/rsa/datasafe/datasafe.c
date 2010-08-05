@@ -57,6 +57,7 @@ const zend_function_entry datasafe_functions[] = {
 	PHP_FE(shopex_data_decrypt_ex,	NULL)		/* it will be use rsa. */
 	PHP_FE(shopex_public_encrypt,NULL)
 	PHP_FE(shopex_get_user_private_key,NULL)
+	PHP_FE(shopex_gen_keypair,NULL)
 	{NULL, NULL, NULL}	/* Must be the last line in datasafe_functions[] */
 };
 /* }}} */
@@ -296,7 +297,7 @@ static RSA* shopex_get_user_public_key(char *keyfile_path){
         php_error_docref(NULL TSRMLS_CC, E_ERROR, "public key file doesn't exists.");
     }
     if((key = PEM_read_RSAPublicKey(fp,NULL,NULL,NULL)) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: problems while parse public key file");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "problems while parse public key file");
     }
     fclose(fp);
     return key;
@@ -311,7 +312,7 @@ static RSA* shopex_get_user_private_key(char *keyfile_path){
         php_error_docref(NULL TSRMLS_CC, E_ERROR, "private key file doesn't exists.");
     }
     if((key = PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL)) == NULL) {
-        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: problems while parse public key file");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "problems while parse private key file");
     }
     fclose(fp);
     return key;
@@ -349,9 +350,9 @@ static RSA* shopex_get_user_private_key_en(char *filename){
     
     key=d2i_RSAPrivateKey(NULL,(const unsigned char**)&b64_decode,(long)de_len);
     if(RSA_check_key(key) == -1) {
-      php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: Problems while reading RSA Private Key in  file.");
+      php_error_docref(NULL TSRMLS_CC, E_ERROR, "Problems while reading RSA Private Key in  file.");
     } else if(RSA_check_key(key) == 0) {
-      php_error_docref(NULL TSRMLS_CC, E_ERROR, "Error: Bad RSA Private Key readed in  file.");
+      php_error_docref(NULL TSRMLS_CC, E_ERROR, "Bad RSA Private Key readed in  file.");
     }
     else
       return key;
@@ -768,6 +769,42 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 
 	RSA_free(pkey);
 
+}
+
+PHP_FUNCTION(shopex_gen_keypair)
+{
+	RSA *key;
+ 	FILE *fp;
+ 	
+ 	char *pub,*prive;
+ 	int pub_len,priv_len;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss", &pub,&pub_len,&priv, &priv_len) == FAILURE)
+		return;
+
+	RETVAL_FALSE;
+
+ 	if((key = RSA_generate_key(1024,3,NULL,NULL)) == NULL)	{
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "generate key fail");
+		RETURN_FALSE;
+ 	}
+ 	if(RSA_check_key(key) < 1) 	{
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "key is not good");
+		RETURN_FALSE;
+ 	}
+ 	fp=fopen(priv,"w");
+ 	if(PEM_write_RSAPrivateKey(fp,key,NULL,NULL,0,0,NULL) == 0) 	{
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "write private key fail");
+		RETURN_FALSE;
+ 	}
+ 	fclose(fp);
+ 	fp=fopen(pub,"w");
+ 	if(PEM_write_RSAPublicKey(fp,key) == 0) 	{
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "write public key fail");
+		RETURN_FALSE;
+ 	}
+ 	fclose(fp);
+ 	RSA_free(key);
 }
 
 /* }}} */
