@@ -84,7 +84,7 @@ if(!$option = $_SERVER['argv'][1] || !$site = $_SERVER['argv'][2]){
 }
 
 $ib = new mgr($site);
-switch(){
+switch($option){
 	case "-n":
 		$ib->gen_key();
 		$ib->encrypt_private_key();
