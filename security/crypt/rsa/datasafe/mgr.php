@@ -67,7 +67,7 @@ function help_info(){
 			-u update setting.conf
 		for example:
 		{$__FILE__} shopex.cn -n
-EOF
+EOF;
 }
 
 
