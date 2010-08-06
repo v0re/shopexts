@@ -78,7 +78,7 @@ if( $_SERVER['argc'] != 3){
 	exit;
 }
 
-if(!$option = $_SERVER['argv'][1] || !$site = $_SERVER['argv'][2]){
+if(!$option = trim($_SERVER['argv'][1]) || !$site = trim($_SERVER['argv'][2])){
 	echo "wrong parameter\n";
 	exit;
 }
