@@ -68,8 +68,7 @@ option:
 
 for example:
 {$__FILE__}  -n shopex.cn
-\n
-	";
+";
 }
 
 
