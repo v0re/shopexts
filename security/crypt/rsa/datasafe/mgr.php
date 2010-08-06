@@ -68,6 +68,7 @@ option:
 
 for example:
 {$__FILE__}  -n shopex.cn
+
 ";
 }
 
@@ -77,11 +78,17 @@ if( $_SERVER['argc'] != 3){
 	exit;
 }
 
-$ib = new mgr('skomart.com');
-switch($_SERVER['argv'][2]){
+if(!$option = $_SERVER['argv'][1] || !$site = $_SERVER['argv'][2]){
+	echo "wrong parameter\n";
+	exit;
+}
+
+$ib = new mgr($site);
+switch(){
 	case "-n":
 		$ib->gen_key();
 		$ib->encrypt_private_key();
+		echo "new site $site ok!\n";
 	break;
 	case "-u":
 		$setting = array(
@@ -89,6 +96,7 @@ switch($_SERVER['argv'][2]){
 		);
 		$ib->gen_conf($setting);
 		$ib->encrypt_conf();
+		echo "update $ib->setting_file_encrypted ok!\n";
 	break;
 }
 
