@@ -61,14 +61,14 @@ class mgr{
 function help_info(){
 	$__FILE__ = basename(__FILE__);
 	echo <<<EOF	
-usage:  {$__FILE__}  option target
-option:
--n	create a new site
--u	update setting.conf
-
-for example:
-{$__FILE__} shopex.cn -n
-\n
+	usage:  {$__FILE__}  option target
+	option:
+	-n	create a new site
+	-u	update setting.conf
+	
+	for example:
+	{$__FILE__} shopex.cn -n
+	\n
 EOF;
 }
 
