@@ -83,14 +83,20 @@ if(!$option = $_SERVER['argv'][1] || !$site = $_SERVER['argv'][2]){
 	exit;
 }
 
-$ib = new mgr($site);
+
 switch($option){
 	case "-n":
+		$ib = new mgr($site);
 		$ib->gen_key();
 		$ib->encrypt_private_key();
 		echo "new site $site ok!\n";
 	break;
 	case "-u":
+		if(!file_exists($site)){
+			echo "site $site not exists\n";
+			exit;
+		}
+		$ib = new mgr($site);
 		$setting = array(
 			'/srv/http/security/crypt/rsa/datasafe/test.php',
 		);
@@ -100,5 +106,5 @@ switch($option){
 	break;
 }
 
-echo "all done!";
+echo "all done!\n";
 
