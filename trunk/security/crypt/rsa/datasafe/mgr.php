@@ -58,14 +58,38 @@ class mgr{
 
 }
 
+function help_info(){
+	$__FILE__ = basename(__FILE__);
+	echo <<<EOF
+		usage:  {$__FILE__}  site option
+			option:
+			-n	create a new site
+			-u update setting.conf
+		for example:
+		{$__FILE__} shopex.cn -n
+EOF
+}
+
+
+if( $_SERVER['argc'] != 3){
+	help_info();
+	exit;
+}
+
 $ib = new mgr('skomart.com');
-$ib->gen_key();
-$ib->encrypt_private_key();
-$setting = array(
-'/srv/http/security/crypt/rsa/datasafe/test.php',
-);
-$ib->gen_conf($setting);
-$ib->encrypt_conf();
+switch($_SERVER['argv'][2]){
+	case "-n":
+		$ib->gen_key();
+		$ib->encrypt_private_key();
+	break;
+	case "-u":
+		$setting = array(
+			'/srv/http/security/crypt/rsa/datasafe/test.php',
+		);
+		$ib->gen_conf($setting);
+		$ib->encrypt_conf();
+	break;
+}
 
 echo "all done!";
 
