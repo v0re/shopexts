@@ -60,16 +60,16 @@ class mgr{
 
 function help_info(){
 	$__FILE__ = basename(__FILE__);
-	echo <<<EOF	
+	echo "EOF	
 	usage:  {$__FILE__}  option target
 	option:
 	-n	create a new site
 	-u	update setting.conf
 	
 	for example:
-	{$__FILE__} shopex.cn -n
+	{$__FILE__}  -n shopex.cn
 	\n
-EOF;
+	";
 }
 
 
