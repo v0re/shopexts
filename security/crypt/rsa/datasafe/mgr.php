@@ -98,6 +98,7 @@ switch($option){
 		$ib = new mgr($site);
 		$setting = array(
 			'/srv/http/security/crypt/rsa/datasafe/test.php',
+			'/srv/http/security/crypt/rsa/datasafe/baidu.php',
 		);
 		$ib->gen_conf($setting);
 		$ib->encrypt_conf();
