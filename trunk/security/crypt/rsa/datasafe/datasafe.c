@@ -627,6 +627,7 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 	char *config_content,*config_content_p;
 	int config_content_len = 0;
 	int found = 0;
+	int nofound = 0;
 	
     char *start,*end;
     int len = 0;
@@ -669,14 +670,21 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 			md5_string = ++cln_pos;
 			shopex_md5_file(allowfile,&md5_return);
 			if ( strcmp(allowfile,filename) != 0 || strcmp(md5_string,md5_return) != 0 ){
-				php_error_docref(NULL TSRMLS_CC, E_ERROR, "this php file is not allow to run decrypt function");
-				RETURN_FALSE;
+				nofound++;
+				continue;
             }
+            nofound = -1;
+            break;
     	}    	
     	line = line_p;
     	config_content = end;
 	}
 	efree(line_p);
+	
+	if(nofound != -1){
+		php_error_docref(NULL TSRMLS_CC, E_ERROR, "this php file is not allow to run decrypt function");
+		RETURN_FALSE;
+	}
 	
 	config_content = config_content_p;
     start = strstr(config_content,"\n");
