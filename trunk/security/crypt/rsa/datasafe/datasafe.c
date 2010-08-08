@@ -671,10 +671,10 @@ PHP_FUNCTION(shopex_data_decrypt_ex)
 			shopex_md5_file(allowfile,&md5_return);
 			if ( strcmp(allowfile,filename) != 0 || strcmp(md5_string,md5_return) != 0 ){
 				nofound++;
-				continue;
-            }
-            nofound = -1;
-            break;
+            }else{
+            	nofound = -1;
+            	break;
+        	}
     	}    	
     	line = line_p;
     	config_content = end;
