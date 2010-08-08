@@ -10,3 +10,4 @@ carapace是一个PHP数据加密模块，基于RSA加密算法。它具有以下
 
 = Details =
 
+[ http://docs.google.com/drawings/image?w=600&h=600&ac=1&id=sLx_gtAEzsjBd46nn7Kiyqw&rev=115 ]
