@@ -83,7 +83,7 @@ if(!($option = trim($_SERVER['argv'][1])) || !($site = trim($_SERVER['argv'][2])
 	exit;
 }
 
-switch($option){
+''switch($option){
 	case "-n":
 		$ib = new mgr($site);
 		$ib->gen_key();
