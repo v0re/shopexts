@@ -20,7 +20,6 @@ class ttnote_ctl_default extends base_controller{
     	}
         $this->pagedata['project_name'] = 'ShopEx Security Vulnerability Bulletin Board';
         $this->pagedata['items'] = $items;
-        var_dump($items);
         $this->display('default.html');
     }
     
@@ -31,9 +30,10 @@ class ttnote_ctl_default extends base_controller{
     	}
     	$python = "D:\python26\python.exe";
     	$txt2tags =realpath( APP_DIR."/ttnote/lib/txt2tags");
-    	$t2t_cmd = "$python $txt2tags --target=html --infile=$t2tfile --outfile=-";
-    	//exec($t2t_cmd);
-        passthru($t2t_cmd);
-    	var_dump($t2t_cmd);
+    	$tmp_out = realpath("$this->t2t_dir/tmp");
+    	$t2t_cmd = "$python $txt2tags --target=html --infile=$t2tfile --outfile=$tmp_out";
+    	//$t2t_cmd = "$python $txt2tags --help";
+    	$r = system($t2t_cmd,$ret);
+    	var_dump($r,$t2t_cmd);
     }
 }
