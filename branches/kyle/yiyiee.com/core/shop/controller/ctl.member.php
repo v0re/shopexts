@@ -184,7 +184,7 @@ class ctl_member extends shopPage{
     function orders($nPage=1){
         $order = $this->system->loadModel('trading/order');
         $aData = $order->fetchByMember($this->member['member_id'],$nPage-1);
-        $order->combine_payment_id($aData);
+        $order->combine_logi_no($aData);
         $this->pagedata['orders'] = $aData['data'];
         $this->pagination($nPage,$aData['page'],'orders');
         $this->_output();

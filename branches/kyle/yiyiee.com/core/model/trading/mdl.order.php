@@ -2527,6 +2527,20 @@ class mdl_order extends shopObject{
 		}    	
     }
     
+    function combine_logi_no(&$data){
+    	foreach($data['data'] as $key=>$item ){
+    		$array_order_id[$key] = $item['order_id']; 
+    	}
+    	$string_order_id = implode(',',$array_order_id);
+    	$rows = $this->db->select($sql = "select order_id,logi_no from sdb_delivery where order_id in($string_order_id) order by order_id ASC");
+    	foreach((array) $rows as $row){
+    		$array_payment_id[$row['order_id']] = $row['logi_no'];
+    	}
+		foreach($data['data'] as $key=>$item ){
+			$data['data'][$key]['logi_no'] = $array_payment_id[$item['order_id']];
+		}    	
+    }
+    
     function front_search($member_id,$key){
     	$key = mysql_escape_string($key);
     	return $this->db->select('select * from sdb_orders where disabled="false" AND member_id='.intval($member_id).' AND ( order_id like \'%'.$key.'%\' OR ship_name like \'%'.$key.'%\')  order by acttime desc');

@@ -16,7 +16,7 @@
     	//--> 
     <th><{t}>收货人<{/t}></th> 
     <th><{t}>总金额<{/t}></th>
-     <th><{t}>付款单号<{/t}></th>
+     <th><{t}> 快递单号<{/t}></th>
      <th><{t}>状态<{/t}></th>
   </tr>
 </thead>
@@ -26,7 +26,7 @@
   <td><a href="<{link ctl=member act=orderdetail arg0=$order.order_id}>"><{$order.order_id}></a></td>
   <td><{$order.ship_name}></td>
   <td class="textright"><{$order.final_amount|cur:$order.currency:false:false}></td>
-   <td><{$order.payment_id}></td>
+   <td><{$order.logi_no}></td>
   <td>
   <{if $order.status == 'finish'}>已完成
   <{elseif $order.status == 'dead'}>已作废
