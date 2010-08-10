@@ -24,26 +24,19 @@ class ttnote_router implements base_interface_router{
 
     function dispatch($query){
         $query_args = explode('/',$query);
-        $controller = array_shift($query_args);
         $action = array_shift($query_args);
-        if($controller == 'index.php'){
-            $controller = '';
-        }
-        foreach($query_args as $i=>$v){
-            if($i%2){
-                $k = $v;
-            }else{
-                $params[$k] = $v;
-            }
-        }
+        $action = $action ? $action : 'index';
+        $params = $query_args;
 
-        $controller = $controller?$controller:'default';
-        $action = $action?$action:'index';
-        $controller = $this->app->controller($controller);
+        $controller = $this->app->controller('default');   
         kernel::request()->set_params($params);		
+        
+        if(!in_array($action,get_class_methods($controller))){
+        	die('not good really');
+        }
         if(is_array($params)){
         	call_user_func_array(array($controller,$action),$params);
-    	}else{
+    	}else{    		
         	$controller->$action();
     	}
     }

@@ -24,12 +24,16 @@ class ttnote_ctl_default extends base_controller{
         $this->display('default.html');
     }
     
-    function show($t2tfile){
+    function view($t2tfile){
     	$t2tfile = realpath("$this->t2t_dir/$t2tfile");
+    	if(!file_exists($t2tfile)){
+    		die("file {$t2tfile} not found");
+    	}
     	$python = "D:\python26\python.exe";
     	$txt2tags =realpath( APP_DIR."/ttnote/lib/txt2tags");
-    	$t2t_cmd = "$python $txt2tags  $t2tfile -o -";
-    	//exec($t2t_cmd,$ret);
+    	$t2t_cmd = "$python $txt2tags --target=html --infile=$t2tfile --outfile=-";
+    	//exec($t2t_cmd);
+        passthru($t2t_cmd);
     	var_dump($t2t_cmd);
     }
 }
