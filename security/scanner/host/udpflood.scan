@@ -3,7 +3,7 @@
 #Webshell Check Shell for php 
 #************************************************************ 
 __FILE__="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
-LOG_FILE=__FILE__. $(date +%Y%m%d%H%M%S).log
+LOG_FILE=$__FILE__. $(date +%Y%m%d).log
 PATTERN="system(\|passthru(\|shell_exec(\|popen(\|proc_open(\|pcntl_exec(\|base64_decode(\|gzinflate(\|gzuncompress(\|eval(\$_POST"
 HTDOCS=/www/users
 touch $LOG_FILE
