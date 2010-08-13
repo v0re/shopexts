@@ -1,0 +1,25 @@
+#!/bin/sh 
+#************************************************************ 
+#Webshell Check Shell for php 
+#************************************************************ 
+SOURCE_File="/home/xuni/final.txt"
+IGNORE_FILE="/home/xuni/ignore.txt"
+while read line
+do
+hostname=$(echo $line | awk -F: '{print $1}')
+LOG_FILE="/home/xuni/scanlog/"$hostname".log"
+touch $LOG_FILE
+echo "">$LOG_FILE
+date +%Y-%m-%d/%H:%M >> $LOG_FILE
+documentroot=$(echo $line | awk -F: '{print $2}')
+cd $documentroot
+pwd >> $LOG_FILE
+echo " ---------------------------------------------------------------------------------------------------" >> $LOG_FILE
+echo "|Executive Order function:system(\|passthru(\|shell_exec(\|popen(\|proc_open(\|pcntl_exec(" >> $LOG_FILE
+echo " ---------------------------------------------------------------------------------------------------" >> $LOG_FILE
+echo -e "\n" >> $LOG_FILE
+find . -type f -name "*.php" | xargs -i grep -i -n -H 'system(\|passthru(\|shell_exec(\|popen(\|proc_open(\|pcntl_exec(\|base64_decode(\|gzinflate(\|gzuncompress(' {}  >> $LOG_FILE
+echo $hostname >> $IGNORE_FILE
+done < /home/xuni/final.txt
+
+tail $LOG_FILE | mail -s "webshell scan done" ken@shopex.cn
