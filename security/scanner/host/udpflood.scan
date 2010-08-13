@@ -19,6 +19,7 @@ do
     date +%Y-%m-%d/%H:%M >> $LOG_FILE
     echo " ---------------------------------------------------------------------------------------------------" >> $LOG_FILE
     echo "|Executive Order function: "$PATTERN >> $LOG_FILE
+    echo " @".$line >> $LOG_FILE
     echo " ---------------------------------------------------------------------------------------------------" >> $LOG_FILE
     echo -e "\n" >> $LOG_FILE
     find $site -type f -name "*.php" | xargs -i grep  -i -n -H $PATTERN {}  >> $LOG_FILE
