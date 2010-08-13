@@ -10,8 +10,7 @@ do
 	if [ ! -d $site ] ; then
 		exit
 	fi
-	pushd $site;
-	pwd
+	
 	exit
 	hostname=$line
 	LOG_FILE="/home/xuni/scanlog/"$hostname".log"
