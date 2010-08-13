@@ -3,9 +3,16 @@
 #Webshell Check Shell for php 
 #************************************************************ 
 __FILE__="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
-HTDOCS=/data/httpd
+HTDOCS=/www/users
 for line in $(ls $HTDOCS)
 do
+	site=$HTDOCS/$line
+	if [ ! -d $site ] ; then
+		exit
+	fi
+	pushd $site;
+	pwd
+	exit
 	hostname=$line
 	LOG_FILE="/home/xuni/scanlog/"$hostname".log"
 	touch $LOG_FILE
