@@ -19,9 +19,7 @@ do
     echo "|Executive Order function: "$PATTERN >> $LOG_FILE
     echo " ---------------------------------------------------------------------------------------------------" >> $LOG_FILE
     echo -e "\n" >> $LOG_FILE
-    pushd $site
-    grep -r -i -n -H $PATTERN {} *.php >> $LOG_FILE
-    popd
+    find $site -type f -name "*.php" | xargs -i grep  -i -n -H $PATTERN {}  >> $LOG_FILE
 done 
 exit
 tail $LOG_FILE | mail -s "webshell scan done" ken@shopex.cn
