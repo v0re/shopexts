@@ -363,10 +363,9 @@ if($_POST){
    	$uri = $_SERVER['PHP_SELF'];
    	$uri = ltrim($uri,'/');
    	$url = "http://$host/$uri";
-	$data = "action=flood&post_url=$post_url&$post_data";
+	$data = "action=flood&post_url=$post_url&post_data=$post_data";
 	$b = new browser;
     $step = ceil($num / $thread);
-    
     for($i=0;$i<$step;$i++){
     	$b->nonblock_post($url,$data);
         echo "……ok……";
