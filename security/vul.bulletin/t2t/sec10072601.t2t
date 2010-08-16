@@ -2,7 +2,7 @@ ShopEx485订单留言XSS漏洞
 last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
 
 %! Target   : html
-%! Style    : http://shopexts.googlecode.com/files/t2t.css
+%! Style    : http://shopexts.googlecode.com/files/vul.css
 %! Encoding : UTF-8
 %! Options  : --css-sugar
 
@@ -13,7 +13,7 @@ last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
  
 ====系统编号====
  
-SEC-0726-01
+SEC10072601
  
 ====影响版本====
  
