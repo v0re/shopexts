@@ -4,13 +4,18 @@ out_type=--target=html
 htc_dir=htdocs
 t2t_dir=t2t
 t2t_files=$(wildcard $(t2t_dir)/*.t2t)
-html_files=$(t2t_files:$(t2t_dir)/%.t2t=%.html)
+html_files=$(t2t_files:$(t2t_dir)/%.t2t=$(htc_dir)/%.html)
 
 all:$(html_files)
+	
+$(htc_dir)/%.html:$(t2t_dir)/%.t2t
+	${t2t_bin} ${out_type} --infile=$< --outfile=$@ 
+
+.PHONY:update
+update:
+	$(svn) add $(htc_dir)
+	$(svn) add $(t2t_dir)
 	${svn} commit -m 'update vul ok'
-$(html_files):$(t2t_files)
-	${t2t_bin} ${out_type} --infile=$< --outfile=$(htc_dir)/$@ ; \
-	$(svn) add $(htc_dir)/$@
 
 .PHONY:clean    
 clean:
