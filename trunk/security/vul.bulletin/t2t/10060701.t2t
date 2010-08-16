@@ -26,13 +26,13 @@ ShopEx485 >= 38669
 ====漏洞原理====
 招行支付接口是把数据合法性验证的工作交给开发者自己实现的，我们对提交的数据签名算法有问题，callback函数中:
 
-'''
+```
 $MerchantPara = $in["MerchantPara"];
 $md5src = $merId.$keyPass.$BranchID.$BillNo.$Amount.$this->callbackUrl;
 $md5sign = strtoupper(md5($md5src));
 $money = $Amount;
 if($md5sign == $MerchantPara ){
-'''
+```
 
 $MerchantPara取的不是招行返回的Signature变量，而是我们提交时候的MerchantPara，恶意用户是可以根据提交的数据推导出这个验证支付穿的。
 

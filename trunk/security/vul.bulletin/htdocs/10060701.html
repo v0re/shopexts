@@ -10,7 +10,7 @@
 
 <DIV CLASS="header" ID="header">
 <H1>招行帐号支付插件验签方法无效</H1>
-<H2>last modify 2010-08-16 11:42:12 Monday</H2>
+<H2>last modify 2010-08-16 14:05:30 Monday</H2>
 </DIV>
 
 <DIV CLASS="body" ID="body">
@@ -34,15 +34,14 @@ ShopEx485 &gt;= 38669
 <P>
 招行支付接口是把数据合法性验证的工作交给开发者自己实现的，我们对提交的数据签名算法有问题，callback函数中:
 </P>
-<P>
-'''
+<PRE>
 $MerchantPara = $in["MerchantPara"];
 $md5src = $merId.$keyPass.$BranchID.$BillNo.$Amount.$this-&gt;callbackUrl;
 $md5sign = strtoupper(md5($md5src));
 $money = $Amount;
 if($md5sign == $MerchantPara ){
-'''
-</P>
+</PRE>
+<P></P>
 <P>
 $MerchantPara取的不是招行返回的Signature变量，而是我们提交时候的MerchantPara，恶意用户是可以根据提交的数据推导出这个验证支付穿的。
 </P>
