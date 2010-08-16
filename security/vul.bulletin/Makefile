@@ -11,10 +11,7 @@ all:$(html_files)
 $(html_files):$(t2t_files)
 	${t2t_bin} ${out_type} --infile=$< --outfile=$(htc_dir)/$@ 
 
-.PHONY:update
-update:
-	${svn} commit -m 'update vul ok'
-    
+.PHONY:clean    
 clean:
 	rm -f  *.html
 	rm -f htdocs/*.html
