@@ -1,0 +1,51 @@
+crontab日志注释符使用当
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+2010-07-26
+ 
+====系统编号====
+ 
+SEC10072601
+ 
+====影响版本====
+ 
+ShopEx485 >= 38669
+ 
+====漏洞危害====
+ 
+生成webshell
+ 
+====漏洞原理====
+ 
+\core\include_v5\crontab.php
+
+file_put_contents( $this->logFile, "#\n" );
+
+生成文件时加多了一个#号在前面，导致某些版本的php(尤其是linux)会把#后面的判定为注释
+
+====检测方法====
+
+直接提交：http://127.0.0.1/shopex/?cron=1&action=1&p=1
+一句话在：http://127.0.0.1/shopex/home/logs/access.log.php
+
+====解决方案====
+
+http://bbs.shopex.cn/read.php?tid-160218.html
+
+修复CRONTAB.PHP的安全问题 485 SVN版本号 48329 484 SVN版本号48330
+
+====信息来源====
+
+http://www.haik8.com/haikejishu/2010-06-11/soft_794.html
+
+
+
+

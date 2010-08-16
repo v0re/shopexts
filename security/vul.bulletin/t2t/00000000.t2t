@@ -1,0 +1,44 @@
+title
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+2010-07-26
+ 
+====系统编号====
+ 
+SEC10072601
+ 
+====影响版本====
+ 
+ShopEx485 >= 38669
+ 
+====漏洞危害====
+ 
+劫持正常管理员的会话，非法登录后台
+ 
+====漏洞原理====
+ 
+
+
+====检测方法====
+
+无
+
+====解决方案====
+
+
+
+====信息来源====
+
+ 
+====注意事项====
+
+
+

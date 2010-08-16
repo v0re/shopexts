@@ -13,8 +13,8 @@ $(htc_dir)/%.html:$(t2t_dir)/%.t2t
 
 .PHONY:update
 update:
-	$(svn) add $(htc_dir)
-	$(svn) add $(t2t_dir)
+	$(svn) add $(htc_dir)/*
+	$(svn) add $(t2t_dir)/*
 	${svn} commit -m 'update vul ok'
 
 .PHONY:clean    
