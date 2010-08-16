@@ -27,19 +27,26 @@ ShopEx485 >= 38669
  
 \core\include_v5\crontab.php
 
+```
 file_put_contents( $this->logFile, "#\n" );
+```
 
 生成文件时加多了一个#号在前面，导致某些版本的php(尤其是linux)会把#后面的判定为注释
 
 ====检测方法====
 
-直接提交：http://127.0.0.1/shopex/?cron=1&action=1&p=1
-一句话在：http://127.0.0.1/shopex/home/logs/access.log.php
-
+直接提交：
+```
+http://127.0.0.1/shopex/?cron=1&action=1&p=1
+```
+一句话在：
+```
+http://127.0.0.1/shopex/home/logs/access.log.php
+```
 ====解决方案====
-
+```
 http://bbs.shopex.cn/read.php?tid-160218.html
-
+```
 修复CRONTAB.PHP的安全问题 485 SVN版本号 48329 484 SVN版本号48330
 
 ====信息来源====
