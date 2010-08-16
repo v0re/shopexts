@@ -1,0 +1,78 @@
+SPGDIF函数身份验证不严
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+ 2010-06-15
+ 
+====系统编号====
+ 
+SEC10061501
+ 
+====影响版本====
+ 
+ShopEx485 >= 38669
+ 
+====漏洞危害====
+ 
+直接操作数据库
+ 
+====漏洞原理====
+ 
+关键代码是在/core/include/shopCore.php的spgdif方法，其在做sql查询前的身份验证代码有问题：
+ 
+            if(md5($_POST['query'].$_POST['session'].'shopex_stats')==$_POST['sign']){
+                $cert = $this->loadModel("service/certificate");
+                if($data = $cert->session_vaild($_POST['session'])){
+                    $this->fetchdata($_POST['query']);
+                }else{
+ 
+这段代码有两重身份验证，第一重验证
+ 
+ if(md5($_POST['query'].$_POST['session'].'shopex_stats')==$_POST['sign']){
+只要知道salt是shopex_stats字符串就可以自己伪造通过验证，第二重
+ 
+ 
+if($data = $cert->session_vaild($_POST['session'])){
+ 
+因为session_vaild方法的返回是这样的：
+ 
+        if($return_msg['res']=="succ"){
+            return true;
+        }
+        return $return_msg;
+ 
+如果中心，返回等于succ,那么返回一个true，否则返回$return_msg,在失败的情况下$return_msg的内容是
+  {"res":"fail","msg":"error : has_no_sess","info":""}
+ 
+结合spgdif方法中的判断
+ 
+if($data = $cert->session_vaild($_POST['session'])){
+ 
+这个判断永远是真的。
+
+
+====检测方法====
+
+无
+
+====解决方案====
+
+关闭spgdif的调用。
+ 
+补丁包下载地址：
+ 
+http://downtcom.shopex.cn/update/SE.1025.0001.zip
+
+====信息来源====
+
+ 
+
+
+
