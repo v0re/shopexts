@@ -9,7 +9,8 @@ html_files=$(t2t_files:$(t2t_dir)/%.t2t=%.html)
 all:$(html_files)
 	${svn} commit -m 'update vul ok'
 $(html_files):$(t2t_files)
-	${t2t_bin} ${out_type} --infile=$< --outfile=$(htc_dir)/$@ 
+	${t2t_bin} ${out_type} --infile=$< --outfile=$(htc_dir)/$@ ; \
+	$(svn) add $@
 
 .PHONY:clean    
 clean:
