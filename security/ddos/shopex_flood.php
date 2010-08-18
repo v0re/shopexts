@@ -422,6 +422,22 @@ if($_POST){
 </form>
 
 
+<form method=post>
+<div style="width:50%">
+<fieldset>
+<legend>商品评论</legend>
+<table>
+<tr><td>用户名：</td><td><input type='text' name='e_contact' size=32 value='noname@nowhere.com'></td></tr>
+<tr><td>主题：</td><td><input type='text' name='e_title' size=32 value='这个商品挺奇怪'></td></tr>
+<tr><td >留言:</td><td><textarea name='e_comment' cols=50 rows=5 >是这样的，衣服的颜色太淡了，我觉得问题很严重，请尽快解决，我的电话是13800138000！</textarea></td></tr>
+<tr><td>发送条数:</td><td><input type='text' name='e_num' value=100></td></tr>
+<tr><td>网站地址:</td><td><input type='text' name='e_p_url' size=32 value=http://61.152.76.187/?product-37.html></td></tr>
+<input type='hidden' name='action' value='p_order'>
+</table>
+</fieldset>
+</div>
+<input type='submit' value='start'>
 
+</form>
 
 
