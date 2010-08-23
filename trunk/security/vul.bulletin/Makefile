@@ -28,6 +28,7 @@ $(htc_dir)/%.html:$(t2t_dir)/%.t2t
 index.t2t:
 	$(cp) etc/index.t2t ./tmp ;\
 	cat tmp index.txt > index.t2t
+	rm -f htdocs/index.html
 
 .PHONY:update
 update:
