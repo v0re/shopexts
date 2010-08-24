@@ -1,0 +1,318 @@
+﻿/*
+Theme Design: shopex官方认证的网店模板设计服务商 - 莎菲设计
+Theme URI: http://www.saffidesign.com/
+Contact US: QQ:914127640  E-mail:saffilai@yahoo.cn
+*/
+
+@import url("border.css");
+@import url("header.css");
+@import url("footer.css");
+
+body {
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 12px;
+	color:#666;
+	text-align:center;
+        line-height:23px;
+}
+*{
+        margin:0;
+        padding:0;
+}
+a{
+        color:#666;
+	text-decoration:none;
+}
+a:hover {
+	font-size: 12px;
+	text-decoration:none;
+        color:#f48a00;
+}
+ul,li{
+        line-height:23px;
+}
+h3,h4,h5,h6{
+	padding:0;
+	margin:5px 0 0 0;
+}
+h2{
+	font-size:16px;
+	font-weight:bold;
+	text-align:left;
+}
+h3{
+	text-align:left;
+	font-size:14px;
+	font-weight:bold;
+}
+/*=布局样式
+===================================================================*/
+.mains{
+        width:1007px;
+	margin:0 auto;
+	overflow:hidden;
+	text-align:left;
+}
+.left_body{
+        float:left;
+	width:217px;
+	margin:0 10px;
+        display:inline;
+	overflow:hidden;
+}
+.right_body{
+        float:left;
+        width:760px;
+	overflow:hidden;
+}
+.main_all{
+        width:950px;
+	margin-left:30px;
+	margin-bottom:10px;
+	overflow:hidden;
+}
+.main_show{
+        height:256px;
+        margin-bottom:10px;
+        background:url(ybgx_09.jpg);
+	overflow:hidden;
+}
+.main_show .goods_ad{
+        float:left;
+        width:190px;
+	overflow:hidden;
+}
+.main_show .goods_show{
+        float:left;
+        width:570px;
+	overflow:hidden;
+        background:url(ybgx_11.jpg) no-repeat;
+}
+/*=附加布局样式
+===================================================================*/
+.clear{
+   border-top:1px solid transparent !important;
+   border-top:0;
+   clear:both;
+   line-height:0;
+   font-size:0;
+   height:0;
+   height:1%;
+}
+.more{
+	text-align:right;
+	margin-right:5px;
+}
+.more:after {
+	content:"";
+	display:block;
+	clear:both;
+	visibility:hidden;
+	height:0;
+}
+/*=附加宽度布局样式
+===================================================================*/
+
+/*=商品分类goodscat==========================================*/
+.GoodsCategoryWrap{color:#654529;
+        padding:20px 0 20px 15px; ;
+        border:1px solid #e1e1e1;
+        background:#fff url(ybgx_04.jpg) repeat-y;
+}
+.c-cat-depth-1{
+        line-height:25px;
+
+}
+.c-cat-depth-1 a{
+        color:#654529;
+	font-weight:bold;
+	font-size:14px;padding:0;
+	background:none;
+}
+.c-cat-depth-1 a:hover{
+	font-size:14px;
+}
+.c-cat-depth-2{
+        line-height:23px;
+        padding:5px 0 0 0;
+        border-top:1px dashed #654529;
+}
+.c-cat-depth-2 a{
+        color:#654529;
+	font-weight:normal;
+	border-bottom:none;
+	background:none;
+	padding:0;
+        margin:0;
+        font-size:12px;
+}
+.c-cat-depth-2 a:hover{
+        color:#fff;
+	background:#654529;
+        font-size:12px;   
+}
+.c-cat-depth-3{
+	margin:3px 0 0 10px;
+}
+.c-cat-depth-3 a{
+	color:#333;
+	background:none;
+	padding:0;
+}
+/*=排行榜 
+=============================================================================================*/
+.RankingList .pic{
+	text-align:center;
+}
+.RankingList li{
+	padding:6px 0;
+	background:none;
+        border-bottom:1px dotted #dedede;
+}
+.RankingList li span{
+	width:20px;
+	height:22px;
+	background:url(ranklt.gif) no-repeat 0 2px;
+	display:block;
+	float:left;
+	color:#ccc;
+	text-align:center;
+}
+.RankingList .hl span{
+	font-size:11px;
+	line-height:22px;
+	font-weight:bold;
+	color:#8a1331;
+	background:url(ranklt.gif) no-repeat 0 -22px;
+}
+/*=路径显示
+=============================================================================================*/
+.Navigation{
+        line-height:35px;
+        padding-left:25px;
+        background:url(arrs3.jpg) no-repeat;
+        border-bottom:2px solid #aed352;
+        margin-bottom:10px;
+}
+.now{
+	color:#aed352;
+}
+/*=品牌例表
+=============================================================================================*/
+.BrandListWrap img{
+        width:80px;
+        height:30px;
+        border:1px solid #dedede;
+}
+/*=帮助中心页站点目录
+=============================================================================================*/
+.border2 .TreeList{
+	text-align:left;
+}
+.border2 .TreeList .cat1{
+  	border-bottom:1px dashed #699d32;
+        padding:6px 0 8px 5px;
+}
+.border2 .TreeList .cat1 a{
+        color:#699d32;
+	font-weight:bold;
+        padding-left:20px;
+	background:url(arrs4.jpg) no-repeat left;
+        display:inline;
+}
+.border2 .TreeList .cat2{
+        line-height:150%;
+        margin:5px 0 0 5px;
+}
+.border2 .TreeList .cat2 a{
+        color:#333;
+	font-weight:normal;
+	border-bottom:none;
+	background:none;
+	padding:0;
+        margin:0;
+}
+/*=价格筛选
+=============================================================================================*/
+.border2 .GoodsCategoryWrap,
+.border3 .GoodsCategoryWrap,
+.border5 .GoodsCategoryWrap{
+       padding:0;
+       margin:2px;
+       background:none;
+       border:none;
+}
+.border2 .c-cat-depth-1,
+.border3 .c-cat-depth-1,
+.border5 .c-cat-depth-1{
+        border:none;
+        padding:0;
+        display:inline;
+}
+.border2 .c-cat-depth-1 a,
+.border3 .c-cat-depth-1 a,
+.border5 .c-cat-depth-1 a{
+        border:none;
+}
+.border2 .c-cat-depth-2,
+.border3 .c-cat-depth-2,
+.border5 .c-cat-depth-2{
+        line-height:150%;
+        border:none;
+}
+.border2 .c-cat-depth-2 td,
+.border3 .c-cat-depth-2 td,
+.border5 .c-cat-depth-2 td{
+        width:90px;
+        text-align:center;
+}
+
+/*=首页单层商品显示-default.html===================*/
+.border6 .GoodsListWrap{
+}
+.border6 .GoodsList{
+        padding-top:10px;
+        margin-right:-30px;
+}
+.border6 .itemsWrap{
+        margin-bottom:15px;
+        border-bottom:1px dashed #dedede;
+}
+.border6 .goodsImg{
+        border:1px solid #dedede;
+}
+/*=多层商品
+=============================================================================================*/
+.GoodsList-Tabs{
+        height:24px;
+        border:none;
+        overflow:hidden;
+        margin-left:5px;
+}
+.GoodsList-Tabs div{
+        width:134px;
+        height:24px;
+        color: #000;
+        float: left;
+        text-align:center;
+        font-weight: bold;
+        background:url(jigje_51.gif) no-repeat;
+        border:none;
+}
+.GoodsList-Tabs .current{
+        width:134px;
+        height:24px;
+        float: left;
+        color: #000;
+        background:url(jigje_54.gif) no-repeat;
+        text-align:center;
+        border:none;
+}
+/*=默认文章列表====================================================*/
+.ArticleList li,
+.ArticleList td{
+	display:block;
+	padding:4px 0;
+        overflow:hidden;
+        border-bottom:1px dashed #dedede;
+}
