@@ -1,0 +1,22 @@
+<{if $use_buildin_selectrow}>
+<div class="finder-tip" id="finder-tip-<{$name}>" count="<{$pinfo.count}>" style='display:none;'>
+ <i class='selected'>您当前选定了<em></em>条记录，
+ <strong onclick="<{$var_name}>.unselectAll()">点此取消选定</strong>。
+ <strong onclick="<{$var_name}>.selectAll()">点此选定全部</strong>的<span><{$pinfo.count}></span>条记录</i>
+ <i class='selectedall'>您当前选定了全部的<span><{$pinfo.count}></span>条记录，
+ <strong onclick="<{$var_name}>.unselectAll()">点此取消选定</strong>全部记录</i>
+</div>
+<{/if}>
+<div id="finder-list-<{$name}>" class="finder-list finder-normal">
+<table width="100%" cellpadding="0" cellspacing="0">
+
+    <{if $use_buildin_selectrow}><col class="col-select"></col><{/if}>
+    <{$detail_col_html}> 
+    <{$column_col_html}> 
+  <col></col>
+
+<tbody>
+<{$body}>
+</tbody>
+</table>
+</div>

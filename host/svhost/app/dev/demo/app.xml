@@ -1,0 +1,24 @@
+<app>
+    <name>APP_NAME</name>
+    <description>APP_DESC</description>
+
+    <author>
+        <name>APP_AUTHOR</name>
+        <email>foo@bar.com</email>
+        <url>http://www.foobar.com</url>
+    </author>
+
+    <version>1</version>
+    <license>shopex license</license>
+
+   <depends>
+      <app>base</app>
+    </depends>
+
+	<admin>
+		<workground controller="DEFAULT_CTL">
+			<name>APP_NAME</name>
+		</workground>
+	</admin>
+
+</app>

@@ -1,0 +1,16 @@
+<{if $multi_conditions}>
+    <div>
+       <h4>过滤条件(判断订单是否符合)</h4>
+       <div class="division"><{$conditions}></div>
+    </div>
+    <div>
+       <h4>应用条件(优惠方案要应用到的商品)</h4><div class="red">默认应用所有</div>
+       <div class="division"><{$action_conditions}></div>
+    </div>
+<{else}>
+     <{if $conditions}>
+        <div><{$conditions}></div>
+     <{else}>
+        <{*<div class="notice"><strong><{t}>请选择促销模板<{/t}></strong></div>*}>
+     <{/if}>
+<{/if}>

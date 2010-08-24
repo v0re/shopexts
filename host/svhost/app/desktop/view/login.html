@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title><{t}>POSSPORTS - LOGIN<{/t}></title>
+<link rel="shortcut icon" href="../favicon.gif" type="image/gif" />
+<link href="<{$env.app.res_url}>/framework.css" rel="stylesheet" type="text/css"  /> 
+<link href="<{$env.app.res_url}>/login/login.css" rel="stylesheet" type="text/css"  />
+</head>
+<body>
+<div class="signup-contant clearfix">
+ <div class="signup-contant-main ">
+ <div class="logo clearfix"><h3><{$env.conf.desktop.logo}><span><{$env.conf.desktop.logo_desc}></span></h3></div>
+ <div class="signup">
+  <div class="signup-left"></div>
+  <div class="signip-main">
+  <div class="ifram">
+<div class="publicize">
+	<iframe name="publicize-iframe" frameborder="0" scrolling="no" height="100%" width="100%" allowTransparency="true"   src="http://top.shopex.cn/ecos/welcome.php" >	
+	</iframe> 
+ </div>
+  </div>
+  <div class="window">
+   <div class="window-tabsingle">
+    <ul>
+     <li class="window-tab-current">
+     <div class="window-tabcurrent-leftsingle"></div>
+     <div class="window-tabcurrent-midsingle"><{foreach from=$passports item=item}><{$item.name}><{/foreach}></div>
+     <div class="window-tabcurrent-rightsingle"></div>
+     </li>
+     <!--  <li class="window-tab-unselected">高级登录</li>
+     <li class="window-tab-unselected">淘宝登录</li>--> 
+    </ul>
+   </div>
+   <div class="window-main">
+        <{foreach from=$passports item=item}>
+			<div class="passport-bd"><{$item.html}></div>
+		<{/foreach}>
+   </div>
+  </div>
+  </div>
+  <div class="signup-right"></div>
+ </div>
+ </div>
+   <div class="inverted-image" id="inverted-image">&nbsp;</div>
+   <div class="copyright">Copyright &copy; 2003-<script>document.write(new Date().getFullYear());</script> ShopEx. All rights reserved.</div>
+</div> 
+<script>
+	
+    (function(el){
+     	     	if (window.ActiveXObject&&!window.XMLHttpRequest) { el.style.cssText="background:none;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<{$env.app.res_url}>/login/signup_31.png')"; 
+     			}
+     			return this;
+     	  })(document.getElementById('inverted-image'));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<site>
+	<module id='aftersales' controller='site_returnproduct' >
+        <name>aftersales</name>
+        <title>售后服务</title>
+        <disable>false</disable>
+    </module>
+</site>

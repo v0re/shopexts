@@ -1,0 +1,113 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class='grid'>
+ <tbody>
+  <{if count($products) > 0}>
+  <tr valign="top"> <{foreach from=$products key=key item=product name=goods}>
+    <td id="pdt-<{$product.goods_id}>" product="<{$product.goods_id}>" width="<{math equation=floor(10) x=$env.conf.gallery.display.grid.colnum}>%;">
+   <div class="items-gallery <{$mask_webslice}>">
+    <div class="goodpic" style='<{if $default_image.S.height}> height:<{$default_image.S.height}>px;<{/if}>'>
+        <a target="_blank" href='<{link app=b2c ctl=site_product act=index arg=$product.goods_id}>'  style='<{if $image_set.S.width}> width:<{$image_set.S.width}>px;height:<{$image_set.S.height}>px;<{/if}>'>
+      <{if $product.udfimg == 'true'}>
+      <{assign var="gimage" value=$product.thumbnail_pic}>
+      <{else}>
+      <{assign var="gimage" value=$product.image_default_id|default:$defaultImage}>
+      <{/if}>
+        <img src="<{$gimage|storager:'s'}>" alt="<{$product.name|escape:html}>"/>
+        </a>
+    </div>
+      <div class="goodinfo">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="entry-content">
+          <tr>
+            <td colspan="2"><h6><a href="<{link app=b2c ctl=site_product act=index arg=$product.goods_id}>" title="<{$product.name|escape:html}>" class="entry-title"><{$product.name|escape:"html"}></a></h6></td>
+          </tr>
+          <tr>
+            <td colspan="2"><ul>
+                <li><span class="price1"><{$product.price|cur}></span></li>
+              </ul></td>
+          </tr>
+          <tr>
+            <td><{if $product.mktprice && $setting.mktprice eq true}><span class="mktprice1"><{$product.mktprice|cur}></span><{else}>&nbsp;<{/if}></td>
+            <td><ul class="button">
+                <{goodsmenu product=$product setting=$setting login=$login}>
+                                <li class="btncmp">
+             <a href="javascript:void(0)" onclick="gcompare.add({gid:'<{$product.goods_id}>',gname:'<{$product.name|escape:'quotes'}>',gtype:'<{$product.type_id}>'});" class="btncmp" title="商品对比">
+              <{t}>商品对比<{/t}>
+             </a>
+             </li>
+              </ul></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    </td>
+    <{assign var=gallery_display value=$env.app.getConf('gallery.display.grid.colnum')}>
+    <{assign var=gallery_display value=(($smarty.foreach.goods.iteration)%$gallery_display)}>
+    <{if !$gallery_display}>
+    </tr>
+
+  <{/if}>
+  <{/foreach}>
+    </tr>
+  <{/if}>
+  </tbody>
+</table>
+<script>
+void function(){
+/*橱窗放大镜
+  author:litie[A]shopex.cn
+  [c]  ShopEx
+  last update : 2009年9月25日14:51:20
+*/
+    (new Image()).src = '<{$base_url}>statics/loading.gif';
+    var getAmongPos = function(size,to){
+                 var elpSize = $(to).getSize();
+                 return {
+                    'top':Math.abs((elpSize.y/2).toInt()-(size.height/2).toInt()+to.getPosition().y+elpSize.scroll.y),
+                    'left':Math.abs((elpSize.x/2).toInt()-(size.width/2).toInt()+to.getPosition().x+elpSize.scroll.x)
+                 };
+            };
+
+   $$('.grid .zoom a').addEvent('click',function(e){
+            e.stop();
+            if(this.retrieve('active'))return;
+            var _this = this;
+            _this.store('active',true);
+            var tpic = this.getParent('.items-gallery').getElement('.goodpic img');
+            var bpic_src = this.get('pic');
+
+            var loading = new Element('div',{
+                 styles:{'background':'#fff url(<{$base_url}>statics/loading.gif) no-repeat 50% 50%',
+                         'width':40,
+                         'height':40,
+                         'border':'1px #e9e9e9 solid',
+                         'opacity':.5}}).inject(document.body).amongTo(tpic);
+
+            new Asset.image(bpic_src,{onload:function(img){
+
+                  loading.remove();
+                  var winsize = window.getSize();
+                  var imgSize = $(img).zoomImg(winsize.x,winsize.y,1);
+                  var fxv = $extend(getAmongPos(imgSize,window),imgSize);
+                  var imgFx = new Fx.Morph(img,{link:'cancel'});
+                  img.setStyles($extend(tpic.getCis(),{opacity:0.5})).inject(document.body).addClass('img-zoom').addEvent('click',function(){
+                      imgFx.start(tpic.getCis()).chain(function(){this.element.remove();_this.store('active',false);});
+                  });
+                  imgFx.start($extend(fxv,{opacity:1}));
+                  document.addEvent('click',function(){
+
+                       img.fireEvent('click');
+                       document.removeEvent('click',arguments.callee);
+
+                  });
+
+            },onerror:function(){
+                _this.store('active',false);
+                loading.remove();
+            }});
+
+
+   });
+
+
+   }();
+</script>

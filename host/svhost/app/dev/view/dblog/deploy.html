@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>慢查询</title>
+<{script src="moo.js"}>
+<script type="text/javascript">
+function check(){
+	var dblog = document.getElementById('dblog').value;
+	var amount = document.getElementById('amount').value;
+	if (dblog == "") {
+		document.getElementById('error_dblog').innerHTML = '<em class="red">请输入路径名</em>';
+		return false;
+	}
+	else {
+		document.getElementById('error_dblog').innerHTML = "";
+	}
+	if(amount == ""){
+		document.getElementById('error_amount').innerHTML='<span><em class="red">请输入要显示的条数</em></span>';
+		return false;
+	}else{
+		document.getElementById('error_amount').innerHTML="";
+		
+	}
+	var url = "index.php?app=dev&ctl=dblog&act=dblogact&dblog="+dblog+"&amount="+amount;
+	var myRequest = new Request.JSON({url: url, method: 'get',data:'json',  onSuccess: function(responseText, responseXML) {
+		$('myname').value = (responseText.content);
+	}}).send(); 		
+}
+</script>
+</head>
+<body>
+<div align="center" style="margin-bottom: 20px" id="user-edit-form">
+	<table>
+		<tr>
+			<td align="right" width="480px">请输入要查询的路径：</td>
+			<td align="left" width="100px"><input type="text" name="dblog" id="dblog" value="<{$dblog}>" vtype="required"></td>
+			<td align='left'><span id="error_dblog"></span></td>
+		</tr>
+		<tr align="right">
+			<td align="right" width="480px">请输入要显示的行数：</td>
+			<td align="left" width="100px"><input type="text" name="amount" id="amount" value="<{$amount}>" vtype="unsignedint"></td>
+			<td align='left'><span id="error_amount"></span></td>
+		</tr>
+	</table>
+<{button onclick="check()" label="提交并保存配置"}><br />
+</div>
+<hr />
+<div align="center" style="margin-top: 20px">
+<textarea rows="20" cols="120" id="myname"><{$content}></textarea>
+</div>
+</body>
+</html>

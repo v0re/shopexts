@@ -1,0 +1,93 @@
+<desktop>
+
+    <panelgroup id="shipment" icon="admin/panel-shipment.png" order='30'>配送设置</panelgroup>
+    <adminpanel group="desktop_setting" controller="admin_setting" action="index" permission="setting" display="true" order='10'>商店设置</adminpanel>
+    <adminpanel group="b2c_shipment" controller="admin_dlytype" action="index" permission="shipment" display="true" order='20'>配送方式</adminpanel>
+	<adminpanel group="b2c_shipment" controller="admin_dlytype" action="add_dlytype" permission="shipment" display="false" order='21'>添加配送方式</adminpanel>
+    <adminpanel group="b2c_shipment" controller="admin_dlycorp" action="index" permission="shipment" display="true" order='30'>物流公司</adminpanel>
+
+    <adminpanel group="desktop_other" permission="other" controller='admin_member_attr' action='index' display='true'>会员注册项</adminpanel>
+
+	<adminpanel group="desktop_setting" permission="setting" controller='admin_member_messenger' action='index' display='true' order="30">邮件短信模板</adminpanel>
+	
+	<adminpanel group="desktop_other" permission="other" controller='admin_shoprelation' action='index' display='true'>网店绑定关系</adminpanel>
+	
+	<adminpanel group="desktop_other" permission="other" controller='admin_shopnode' action='index' display='false'>网店节点显示</adminpanel>
+
+    <permissions>
+        <permission id="shipment" display='true'>配送设置</permission>
+        <permission id="goods" display='true'>商品</permission>
+        <permission id="order" access_opctl='b2c_access:test' display='true'>订单</permission>
+        <permission id="member" display='true'>会员</permission>
+        <permission id="sales" display='true'>营销</permission>
+    </permissions>
+ 
+    <workground name="订单" id="ectools.wrokground.order" controller="admin_order" action="index" order='10'>
+        <menugroup name="订单管理">
+            <menu controller='admin_order' action='addnew' permission='order' display='false' order='10'>新建订单</menu>
+            <menu controller='admin_order' action='showPrintStyle' permission='order' display='false' order='11'>打印样式</menu>
+            <menu controller='admin_order' action='index' permission='order' display='true' order='20'>订单列表</menu>
+        </menugroup>
+        <menugroup name="单据管理">
+            <menu controller='admin_delivery' action='index' permission='order' display='true' order='50'>发货单</menu>
+            <menu controller='admin_reship' action='index' permission='order' display='true' order='60'>退货单</menu>
+        </menugroup>
+    </workground>
+
+    <workground name="商品" id="b2c.wrokground.goods" controller="admin_goods" action="index" order="20">
+        <menugroup name="商品管理">
+            <menu controller='admin_goods_editor' action='add' permission='goods' display='false' order='10'>添加商品</menu>
+            <menu controller='admin_goods' action='index' permission='goods' display='true' order='20'>商品列表</menu>
+            <menu controller='admin_goods' action='import' permission='goods' display='false' order='22'>商品导入</menu>
+            <menu controller='admin_goods_sto' action='index' permission='goods' display='true' order='25'>到货通知</menu>
+        </menugroup>
+        <menugroup name="商品配置">
+            <menu controller='admin_goods_type' action='index' permission='goods' display='true' order='40'>商品类型</menu>
+            <menu controller='admin_goods_type' action='add' permission='goods' display='false' order='50'>添加类型</menu>
+            <menu controller='admin_goods_type' action='set' permission='goods' display='false' order='60'>自定义商品类型</menu>
+            <menu controller='admin_goods_type' action='edit' permission='goods' display='false' order='70'>新类型</menu>
+            <menu controller='admin_goods_cat' action='index' permission='goods' display='true' order='30'>商品分类</menu>
+			<menu controller='admin_goods_virtualcat' action='index' permission='goods' display='true' order='150'>商品虚拟分类</menu>
+            <menu controller='admin_goods_cat' action='addnew' permission='goods' display='false' order='90'>添加分类</menu>
+            <menu controller='admin_specification' action='index' permission='goods' display='true' order='100'>商品规格</menu>
+            <menu controller='admin_specification' action='add' permission='goods' display='false' order='110'>新建规格</menu>
+            <menu controller='admin_specification' action='edit' permission='goods' display='false' order='120'>规格编辑</menu>
+            <menu controller='admin_brand' action='create' permission='goods' display='false' order='130'>添加品牌</menu>
+            <menu controller='admin_brand' action='index' permission='goods' display='true' order='140'>商品品牌</menu>
+        </menugroup>
+    </workground>
+
+    <workground name="会员" id="b2c.wrokground.member" controller="admin_member" action="index" order='30'>
+        <menugroup name="会员管理">
+            <menu controller='admin_member' action='add_page' permission='member' display='false' order='10'>添加会员</menu>
+            <menu controller='admin_member' action='index' permission='member' display='true' order='20'>会员列表</menu>
+            <menu controller='admin_member_lv' action='index' permission='member' display='true' order='30'>会员等级</menu>
+            <menu controller='admin_member' action='send_email' permission='member' display='false' order='70'>群发邮件</menu>
+            <menu controller='admin_member' action='send_msg' permission='member' display='false' order='80'>群发短消息</menu>
+        </menugroup>
+        <menugroup name="咨询评论">
+            <menu controller='admin_member_gask' action='index' permission='member' display='true' order='90'>咨询列表</menu>
+            <menu controller='admin_member_discuss' action='index' permission='member' display='true' order='110'>评论列表</menu>
+            <menu controller='admin_member_discuss' action='setting' permission='member' display='false' order='120'>评论设置</menu>
+            <menu controller='admin_member_shopbbs' action='index' permission='member' display='true' order='130'>留言列表</menu>
+            <menu controller='admin_member_shopbbs' action='setting' permission='member' display='false' order='140'>留言设置</menu>
+            <menu controller='admin_member_msgbox' action='index' permission='member' display='true' order='150'>站内消息</menu>
+            <menu controller='admin_member_gask' action='setting' permission='member' display='true' order='160'>反馈设置</menu>
+        </menugroup>
+    </workground>
+
+    <workground name="营销" id="b2c.wrokground.sale" controller="admin_sales_coupon" action="index" order="40">
+        <menugroup name="促销">
+            <menu controller='admin_sales_order' action='index' permission='sales' display='true' order='10'>订单促销</menu>
+            <menu controller='admin_sales_order' action='add' permission='sales' display='false' order='20'>添加规则</menu>
+            <menu controller='admin_sales_goods' action='index' permission='sales' display='true' order='30'>商品促销</menu>
+            <menu controller='admin_sales_goods' action='add' permission='sales' display='false' order='40'>添加规则</menu>
+        </menugroup>
+        <menugroup name="优惠券">
+            <menu controller='admin_sales_coupon' action='add' permission='sales' display='false' order='60'>添加优惠券</menu>
+            <menu controller='admin_sales_coupon' action='index' permission='sales' display='true' order='50'>优惠券列表</menu>
+            <menu controller='admin_sales_coupon_exchange' action='index' permission='sales' display='true' order='70'>积分兑换优惠券</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

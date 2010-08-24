@@ -1,0 +1,96 @@
+<div class="oder-printbox">
+  <div class="oder-print_title">购物订单打印</div>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td colspan="2" ></td>
+      <td><div id="chk_print1" class="noprint">
+          <input name="chk_pic_print" type="checkbox" id="chk_pic_print"  checked="checked" />
+          <label class="label_pic_print" for="chk_pic_print"><{t}>打印图片<{/t}></label>
+        </div></td>
+    </tr>
+    <tr>
+      <td rowspan="5" width="15%"><img src="<{$env.conf.site.logo|storager}>" width="150" height="60" /></td>
+      <td width="65%" rowspan="5"><h1><{$shop.name}></h1>
+        <{$shop.url}></td>
+      <tr><td><{t}>客户：<{/t}><{$orderInfo.consignee.name}></td></tr>
+     <tr><td> 电话：<{$orderInfo.consignee.telephone}></td>
+    </tr>
+    <tr>
+      <td><{t}>订单号：<{/t}><{$orderInfo.order_id}></td>
+    </tr>
+    <tr>
+      <td><{t}>订购日期：<{/t}><{$orderInfo.createtime|userdate}></td>
+    </tr>
+  </table>
+  <table width="100%" border="0" align="center" cellpadding="0" class="table-border" cellspacing="0">
+    <tr class="table_data_title">
+      <td>No</td>
+      <td><{t}>货号<{/t}></td>
+      <td><{t}>商品名称<{/t}></td>
+      <td><{t}>单价<{/t}></td>
+      <td><{t}>数量<{/t}></td>
+      <td><{t}>小计<{/t}></td>
+    </tr>
+    <{foreach from=$goodsItem item=aGoods name="item"}>
+    <tr>
+      <td><{$smarty.foreach.item.iteration}></td>
+      <td><{$aGoods.bn}></td>
+      <td><img class="product" src="<{$aGoods.small_pic|default:$env.conf.site.default_thumbnail_pic|storager}>" width="50" height="50" align="absmiddle" /><{$aGoods.name}>
+        <{if count($aGoods.minfo)}>
+        <{foreach from=$aGoods.minfo item=minfo key=name}> <br>
+        <{$minfo.label}>：<{$minfo.value}>
+        <{/foreach}>
+        <{/if}><{$aGoods.addon.adjname}> </td>
+      <td><{$aGoods.price|cur}><{t}>元<{/t}></td>
+      <td><{$aGoods.quantity}></td>
+      <td><{$aGoods.price*$aGoods.quantity|cur}><{t}>元<{/t}></td>
+    </tr>
+    <{/foreach}>
+  </table>
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="80%" valign="top"  rowspan="7" style="height:150px;">
+      <table cellpadding="0" cellspacing="0" border="0" width="90%">
+      <tr>
+      <td width="10%"><{t}>赠品：<{/t}></td><td><{foreach from=$giftsItem item=aGift}>   <{$aGift.name}>,   <{/foreach}></td>
+      </tr>
+      <tr><td><{t}>备注：<{/t}></td><td><{$orderInfo.memo}></td></tr>
+      </table>
+ </td>
+    </tr>
+    <tr>
+      <td><{t}>商品总价：<{/t}><{$orderInfo.cost_item|cur}></td>
+    </tr>
+    <tr>
+      <td><{t}>配送费用：<{/t}><{$orderInfo.shipping.cost_shipping|cur}></td>
+    </tr>
+    <tr>
+      <td><{t}>保价费用：<{/t}><{$orderInfo.shipping.cost_protect|cur}></td>
+    </tr>
+    <tr>
+      <td><{t}>支付手续费：<{/t}><{$orderInfo.payinfo.cost_payment|cur}></td>
+    </tr>
+    <tr>
+      <td><{t}>订单优惠：<{/t}><{$orderInfo.self|cur}>
+      </td>
+    </tr>
+    <tr><td ><h2><{t}>应付总金额：<{/t}><{$orderInfo.total_amount|cur}><{t}>元<{/t}></h2></td>
+    </tr>
+    
+  </table>
+  <table width="100%" border="0" align="center" cellpadding="0" class="table-border" cellspacing="0">
+    <tr>
+      <td><{t}>服务商：<{/t}><{$shop.name}></td></tr>
+        <tr><td><{t}>电话：<{/t}><{$shop.tel}></td></tr>
+       <tr><td><{t}>邮箱：<{/t}><{$shop.email}></td></tr>
+      <tr><td><{t}>网址：<{/t}><{$shop.url}></td></tr>
+  </table>
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+      <td>您目前的总积分为 <{$memberPoint}> ，累计购物<{$orderSum.sum}>次，累计购物金额<{$orderSum.sum_pay|cur}>元 </td>
+    </tr>
+    <tr>
+      <td ><div style="text-align:right; height35px; border-bottom:2px solid #333;line-height:35px"><strong>Powered by ShopEx.cn</strong></div></td>
+    </tr>
+  </table>
+</div>

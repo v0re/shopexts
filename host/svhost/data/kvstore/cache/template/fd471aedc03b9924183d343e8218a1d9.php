@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";s:44:"<?php echo $this->_vars['_PAGE_CONTENT']; ?>";s:6:"expire";i:0;}

@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:3:{s:22:"base_service_cachevary";s:22:"base_service_cachevary";s:22:"site_service_cachevary";s:22:"site_service_cachevary";s:31:"b2c_service_cachemgr_globalvary";s:31:"b2c_service_cachemgr_globalvary";}}s:6:"expire";i:0;}

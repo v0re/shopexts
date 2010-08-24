@@ -1,0 +1,24 @@
+﻿<form class="tableform" action="index.php?ctl=dashboard&act=profile" method="post">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>姓名:</th><td><{$name}></td>
+            </tr>
+            <tr>
+                <th>超级管理员:</th><td><{if $super}>是<{else}>否<{/if}></td>
+            </tr>
+            <tr>
+                <th>操作界面风格:</th><td><{input type="select" name="theme" options=$themes value=$current_theme required="true" default="desktop/default"}></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td><span class="lnk" onclick="new Dialog('index.php?ctl=dashboard&act=chkpassword',{width:400,height:240,title:'密码修改'})" >修改密码</span></td> 
+            </tr>
+            <tr>
+                <th></th>
+                <td><{button label="保存设置" type="submit" }></td>
+            </tr>
+        </table>
+
+    </div>
+</form>

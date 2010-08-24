@@ -1,0 +1,7 @@
+<site>
+	<module controller='site_default' >
+        <name>default</name>
+        <title>统计默认页面</title>
+        <disable>false</disable>
+    </module>
+</site>

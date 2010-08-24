@@ -1,0 +1,106 @@
+<div class="notice" style="margin:5px">
+  对选择的<strong><{$count}></strong>个条目应用标签
+</div>
+
+<form action="<{$url}>&action=settag" method="post" id="tag_from">
+	<input type="hidden" name="_PKEY_" value="<{$selected_item}>" class="pkey"/>
+	<div class="gridlist" id="tag_setter" style="border-bottom:none">
+	<{foreach from=$tags item=t}>
+	<div class="row tag-item">
+	    <div class="row-line" style="padding-left:20px;">
+	<span>
+	<{if $t.tag_id|in_array:$intersect}>
+	<{img src="bundle/tag_all.gif" class="icon" stat="0"}>
+	<{assign var=used_status value=0}>
+	<{elseif $t.tag_id|in_array:$used_tag}>
+	<{img src="bundle/tag_part.gif" class="icon" stat="2"}>
+	<{assign var=used_status value=2}>
+	<{else}>
+	<{img src="bundle/tag_none.gif" class="icon" stat="1"}>
+	<{assign var=used_status value=1}>
+	<{/if}>
+	</span>
+
+	<input type="hidden" name="tag[name][]" value="<{$t.tag_name}>" class="tag-name"/>
+	<input type="hidden" name="tag[stat][]" value="<{$used_status}>"   class="stat"/>
+	<input type="hidden" name="tag[tag_id][]" value="<{$t.tag_id}>"   class="tag-id"/>
+
+	<{if $t.tag_abbr}>
+		<span class="tag-label"<{if $t.tag_bgcolor}> style="color:#<{$t.tag_fgcolor}>;background-color:#<{$t.tag_bgcolor}>"<{/if}>>
+		<{$t.tag_abbr}>
+		</span>
+
+	<{/if}>
+	<{$t.tag_name}><{if $t.rel_count}> (<{$t.rel_count}>)<{/if}>
+	</div>
+    </div>
+	<{/foreach}>
+	</div>
+</form>
+	<div style="display:none;" id="new-tag-tmpl">
+		<div class="row tag-item">
+		    <div class="row-line" style="padding-left:20px;">
+        		<span>
+        		<{img src="bundle/tag_all.gif" class="icon" stat="0"}>
+        		</span>
+        		<input type="text" name="tag[name][]"  value="" class="tag-name tag-new" style="width:80px" />
+        		<{img src="bundle/delete.gif" class="del-tag lnk" alt="删除" onclick="this.getParent('.tag-item').remove()"}>
+        		<input type="hidden" name="tag[stat][]"  value="0"	class="stat"/>
+        		<input type="hidden" name="tag[tag_id][]" value="0"   class="stat"/>
+		    </div>
+		</div>
+	</div>
+
+<div style="padding:6px 0 6px 80px!important;padding:6px 0 6px 65px; text-align:center; ">
+<ul class="finder-action-items flt" style="list-style-type:none" >
+<li style=" display:block; padding:0 1px; float:left"><a  style="margin-right:5px;" onclick="$E('div','new-tag-tmpl').clone().inject($('tag_setter'))"><span>+添加新标签</span></a>&nbsp;</li>
+<li style=" display:block; padding:0 1px; float:left"><a  target="_blank" href='index.php?app=desktop&ctl=default&act=alertpages&nobuttion=1&goto=index.php%3Fapp%3D<{$env.get.app}>%26ctl%3D<{$env.get.ctl}>%26act%3Dtags%26finder_id%3D<{$env.get.finder_id}>'><span>标签管理</a></span></li>
+</ul>
+</div>
+
+<{area inject=".mainFoot"}>
+<div class="table-action">
+    <{button label="保存" class="btn-primary" onclick="$('tag_from').fireEvent('submit',new Event(event))" }>
+</div>
+<{/area}>
+
+<script>
+(function(){
+		var status = [
+			{type:'all',icon:'<{img src="bundle/tag_all.gif" class="icon" stat="0"}>'},
+			{type:'none',icon:'<{img src="bundle/tag_none.gif" class="icon" stat="1"}>'},
+			{type:'part',icon:'<{img src="bundle/tag_part.gif" class="icon" stat="2"}>'}
+		];
+		$('tag_setter').addEvent('click',function(e){
+			var target = $(e.target);
+			if(target.hasClass('icon')){		
+				var el=target.getParent('span');
+				switch(target.get('stat')){
+					case '0':			
+						el.innerHTML=status[1].icon;
+						el.getNext('.stat').value=1;
+						break;
+					case '1':
+						el.innerHTML=status[2].icon;
+						el.getNext('.stat').value=2;
+						break;
+					default:
+						el.innerHTML=status[0].icon;
+						el.getNext('.stat').value=0;
+					break;
+				}
+			}
+		});
+		$('tag_setter').addEvent('change',function(e){
+				var target=$(e.target);
+				if(target.hasClass('tag-new')&&target.getNext('.tag-name')){
+					target.getNext('.tag-name').value=target.value;
+				}
+		});
+
+		$('tag_from').store('target',{onComplete:function(){
+			$('tag_from').getParent('.dialog').retrieve('instance').close();
+		}});
+		
+})();
+</script>

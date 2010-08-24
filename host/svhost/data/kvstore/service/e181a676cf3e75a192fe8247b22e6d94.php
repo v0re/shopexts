@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:19:"stats_data_storager";s:19:"stats_data_storager";}}s:6:"expire";i:0;}

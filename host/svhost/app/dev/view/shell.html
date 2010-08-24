@@ -1,0 +1,19 @@
+<h5 class="head-title">命令行模拟器</h5>
+<div class="head-toolbar" >
+	<input type="text" style="margin:5px 0 0 10px;width:300px" placeholder="输入help查看帮助" id="dev_shell_commander" />
+</div>
+
+<script>
+$('dev_shell_commander').addEvent('keypress',function(e){
+	if(e.key=="enter"){
+		$('dev_shell_commander').disabled=true;
+		$('dev_shell_iframe').src="index.php?ctl=shell&app=dev&act=exec&cmd="+encodeURIComponent($('dev_shell_commander').value);
+	}
+});
+$('dev_shell_iframe').addEvent('load',function(e){
+	$('dev_shell_commander').disabled=false;
+	$('dev_shell_commander').value='';
+});
+</script>
+<iframe id="dev_shell_iframe" style="width:100%;height:100%;background:#f0f0f0;" src="index.php?ctl=shell&app=dev&act=exec&cmd=help">
+</iframe>

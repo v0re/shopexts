@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";s:31:"{ENV_goods_name}_{ENV_shopname}";s:6:"expire";i:0;}

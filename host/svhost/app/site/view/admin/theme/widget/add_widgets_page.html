@@ -1,0 +1,81 @@
+<{*<{area inject=".mainHead"}>
+<!-- <h2 class="titleimg">Widgets Center</h2> -->
+<{/area}>*}> 
+<div id="wgtcenter" class='wgtcenter clearfix'>
+       <div class="span-4 wgtcat side-bx side" style="height:498px">
+		 <div class="spage-side-nav">
+            <ul>
+            <{foreach from=$widgetsLib.list item=widgets key=key}>
+            <li> 
+                <a catalog='<{$widgets}>' href='index.php?app=site&ctl=admin_theme_widget&act=add_widgets_page_extend&theme=<{$theme}>' target='_blank'>
+                   <{$widgets}>
+                </a>
+            </lli>
+            <{/foreach}>
+            </ul> 
+		   </div>
+       </div>
+
+      <div class='span-15 last'>
+		<div class="wgtcontent">
+                <h2 class="head-title"><{t}>欢迎来到版块中心<{/t}><span class="num"><a href="http://www.shopex.cn/bbs/read.php?tid-64535.html" target="_blank"><{t}>什么是版块？<{/t}></a></span></h2>
+                <p class="notice"><{t}>您可以点击左侧版块分类找到您需要的版块，加入到您正在编辑的页面中，以丰富页面表现。<{/t}><br /><{t}>如您在使用过程中需要帮助或者有相关意见和建议，请访问<{/t}><a href="http://www.shopex.cn/bbs/thread.php?fid-135.html" target="_blank"><{t}>ShopEx版块(widgets)交流专区<{/t}></a>。</p>
+                <h3><{t}>常用版块:<{/t}></h3>
+                <div class="commenwgt clearfix">
+                      <{foreach from=$widgetsLib.usual item=widgets key=key}>
+                        <div class="wgtitem-box"onclick='_addWeigets(eval([<{json from=$widgets}>,"<{$theme}>"]));'>
+                        <div class="quickaddwgt"></div>
+                         <span><{$widgets.label}></span>
+                          <div class="desc">
+                           <a href='index.php?app=site&ctl=admin_theme_widget&act=get_widgets_info&widgets=<{$widgets.name}>&widgets_app=<{$widgets.app}>&theme=<{$theme}>' onclick='new Event(event).stop();new Dialog(this.href,{width:513,height:332,title:"<{$env.post.catalog}>&raquo;<{$widgets.label}>"});' target='_blank'>
+                             板块说明&raquo;&raquo;
+                          </a>
+                          </div>
+                        </div>
+                      <{/foreach}>
+                </div>  
+			 </div>
+        </div>
+  
+</div>
+
+
+
+<script>
+void function(){
+    var wgtCenter = $('wgtcenter');
+    var wgtCat = wgtCenter.getElement('.wgtcat');
+    var wgtcontent = wgtCenter.getElement('.wgtcontent');
+   
+    
+    wgtCat.getElements('a').addEvent('click',function(e){
+        e.stop();
+        var now = wgtCenter.retrieve('cur');
+        if(!now || now != this) {
+            if(now) now.removeClass('current');
+            this.addClass('current');
+            wgtCenter.store('cur', this);
+        }
+        
+        new Request.HTML({update:wgtcontent,onRequest:function(){
+               
+               wgtcontent.set('html','<div class="notice">正在载入板块信息...</div>');
+        
+        },onComplete:initContent}).post(this.href,$H({catalog:this.get('catalog')}));
+    
+    });
+    var initContent = (function (){
+       var witems = wgtcontent.getElements('.commenwgt .wgtitem-box'); 
+	    wgtCat.setStyles({'height':wgtCat.getParent('.dialog-content-body').getScrollSize().y-wgtCat.getPatch().y});
+       witems.addEvents({
+        'mouseenter':function(){ this.addClass('wgtitem-box-hover') },
+        'mouseleave':function(){ this.removeClass('wgtitem-box-hover') }
+       });
+
+	   new Equalizer(witems).equalize('width');
+       
+       return arguments.callee;
+   })();
+}();
+
+</script>

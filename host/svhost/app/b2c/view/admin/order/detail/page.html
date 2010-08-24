@@ -1,0 +1,29 @@
+<{capture name="header"}>
+   <!--JAVASCRIPTS SRC-->     
+    <!--JAVASCRIPTS SRC END-->
+
+<{script src="coms/dropmenu.js"  app='desktop'}>
+<{script src="coms/datapicker.js" app='desktop' }>
+
+<{script src="coms/colorpicker.js" app='desktop' }>
+<{script src="coms/editor.js" app='desktop' }>
+<{script src="coms/editor_style_1.js"  app='desktop'}>
+
+<{script src="coms/finder.js" app='desktop'}>
+<{script src="coms/modedialog.js" app='desktop'}>
+
+<{/capture}>
+
+<div class="spage-main-box">
+    <{if $order}>
+        <{if $order.is_has_remote_pdts!=='true'}>
+            <{include file="admin/order/order_edit.html"}>
+        <{elseif $order.is_has_remote_pdts=='true'}>
+        
+            <{include file="admin/order/edit_po.html"}> 
+            
+        <{/if}>   
+	<{else}>   
+        <{include file="admin/order/detail/detail.html"}> 
+    <{/if}>   
+</div>

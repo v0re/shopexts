@@ -1,0 +1,31 @@
+
+<{assign var=defaultImage value=app::get('image')->getConf('image.set')}>
+<{assign var=defaultImage value=$defaultImage['S']['default_image']}>
+<div class="RankingList">
+<ul>
+<{foreach from=$data item=data key=key}>
+<{if $setting.showPic=="on"}>
+  <{if $key == 0}>
+    <div class="pic" style="overflow:hidden;text-align:center;vertical-align:
+    <{if $env.app.getConf('site.thumbnail_pic_width')>0 && $env.app.getConf('site.thumbnail_pic_height')>0}>width:<{$env.app.getConf('site.thumbnail_pic_width')}>px;height:<{$env.app.getConf('site.thumbnail_pic_height')}>px;<{/if}>><a href="<{link app=b2c ctl=site_product act=index arg=$data.goods_id}>" target="_blank" title="<{$data.name}>">
+	<a href="<{link app=b2c ctl=site_product act=index arg=$data.goods_id}>" target="_blank" title="<{$data.name}>" style="color:<{$setting.fontColor}>;<{$setting.fontStyle|styleset}>">
+	<img src="<{if $data.udfimg == 'true'}><{$data.thumbnail_pic|storager}><{elseif $data.image_default_id}><{$data.image_default_id|storager:'s'}><{else}><{$defaultImage|storager}><{/if}>">
+	</a>
+	</a></div>
+  <{/if}>
+<{/if}>
+
+<{if $key <= $setting.showing}>
+<li class="l<{$key+1}> dotsep hl" style="color:<{$setting.fontColor}>;<{$setting.fontStyle}>"><span><{$key+1}></span>&nbsp;<a href="<{link app=b2c ctl=site_product act=index arg=$data.goods_id}>" target="_blank" title="<{$data.name}>" style="color:<{$setting.fontColor}>;<{$setting.fontStyle|styleset}>"><{$data.name|cut:$setting.maxlength}></a></li>
+<{else}>
+<li class="l<{$key+1}> dotsep" style="color:<{$setting.fontColor2}>;<{$setting.fontStyle2}>"><span><{$key+1}></span>&nbsp;<a href="<{link app=b2c ctl=site_product act=index arg=$data.goods_id}>" target="_blank" title="<{$data.name}>" style="color:<{$setting.fontColor2}>;<{$setting.fontStyle2|styleset}>"> <{$data.name|cut:$setting.maxlength}></a></li>
+<{/if}>
+
+<{/foreach}>
+</ul>
+</div>
+
+<{if $setting.showMore == "on"}>
+  <div class="more clearfix"><a href="<{$setting.link}>">更多...</a></div>
+<{/if}>
+

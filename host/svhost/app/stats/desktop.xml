@@ -1,0 +1,10 @@
+<desktop>
+    
+     <workground name="营销" id="b2c.wrokground.sale" controller="admin_sales_coupon" action="index" order="40">
+        <menugroup name="营销统计">
+            <menu controller='admin_bussiness' action='index' permission='sales' display='true'  order='130'>生意经统计</menu>
+        </menugroup>
+        
+    </workground>
+
+</desktop>

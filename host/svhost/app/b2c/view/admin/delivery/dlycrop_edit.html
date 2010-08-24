@@ -1,0 +1,64 @@
+<form id="dlycrop-edit-form" action="index.php?app=b2c&amp;ctl=admin_dlycorp&amp;act=save&amp;_finder[finder_id]=a01bc0&amp;action=detail&amp;id=<{$dlycrop.corp_id}>">
+<input type="hidden" name="corp_id" value="<{$dlycrop.corp_id}>" />
+	<div class="tableform">    
+		<div class="division">
+			<table width="100%" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<th><em class="red">*</em><label for="dom_el_f949790">物流公司名称</label></th>
+						<td><input type="text" id="dom_el_f949790" name="name" title="物流公司名称" vtype="required" value="<{$dlycrop.name}>" class="x-input " autocomplete="off"></td>
+					</tr>
+					<tr>
+						<th><label for="dom_el_f949791">网址</label></th>
+						<td><input type="text" id="dom_el_f949791" name="website" title="网址" value="<{$dlycrop.website}>" class="x-input " autocomplete="off"></td>
+					</tr>
+					<tr>
+						<th><label for="dom_el_f949792">物流公司网址</label></th>
+						<td><input type="text" id="dom_el_f949792" name="request_url" title="物流公司网址" value="<{$dlycrop.request_url}>" class="x-input " autocomplete="off"></td>
+					</tr>
+					<tr>
+					<th><label for="dlycorp_ordernum">排序</label></th>
+					<td><input type="text" id="dlycorp_ordernum" name="ordernum" title="排序" style="width: 50px;" class="x-input " value="<{$dlycrop.ordernum}>" autocomplete="off"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</form>
+
+<div class="table-action">
+	<table width="100%" cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr>
+				<td>
+					<button class="btn btn-primary" id="dlycrop-edit-form-submit" type="submit"><span><span>确定</span></span></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script>
+(function(){
+	var _form = $('dlycrop-edit-form');
+	var btn =$('dlycrop-edit-form-submit');
+	var finder = finderGroup['<{$env.get.finder_id}>'];
+	
+	_form.store('target',{
+		onComplete:function(){			
+			finder.refresh.delay(400,finder);			
+		}
+		
+	});
+
+	    btn.addEvent('click',function(){
+		
+		    _form.fireEvent('submit',{stop:$empty});			
+		
+		
+		});
+	
+})();
+	
+	
+</script>

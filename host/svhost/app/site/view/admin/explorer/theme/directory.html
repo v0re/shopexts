@@ -1,0 +1,90 @@
+<form action="" id="catEditor" method="post">
+    <{area inject=".mainHead"}>
+	<{if $last_path}>
+	<div class="gridlist-action">
+  <{button  label="返回上级目录" app="desktop" icon="mceico_13.gif" onclick="W.page('{$url}&open_path={$last_path}',{update:$('theme_explorer')})" }>
+	</div>
+    <{/if}>
+
+        <div class='gridlist-head mainHead'>
+            <div class='span-2'><{t}>示意图<{/t}></div>
+            <div class='span-4' ><{t}>模板名称<{/t}></div>
+            <div class='span-2'><{t}>后缀名<{/t}></div>
+            <div class='span-2'><{t}>文件类型<{/t}></div>
+            <div class='span-2'><{t}>编辑<{/t}></div>
+            <div class='span-2'><{t}>删除<{/t}></div>
+
+        </div>
+    <{/area}>
+    <div id="cat_tree" class='gridlist'>
+
+    <{foreach from=$file item=item name="item"}>
+    <div depath="<{$item.step}>" class="clear_cat row" cid="<{$item.cat_id}>" pid="<{$item.pid}>">
+         <div class='row-line'>
+         <{if $item.filetype eq "css"}>
+         <div class='span-2'><span class="opt"><{img app=desktop src="bundle/tupian_4.gif" border="0" alt="图标"}></span></div>
+         <{elseif $item.filetype eq "Folder"}>
+         <div class='span-2'><span class="opt"><{img app=desktop src="bundle/tupian_1.gif" border="0" alt="图标"}></span></div>
+         <{elseif $item.filetype eq "xml"}>
+         <div class='span-2'><span class="opt"><{img app=desktop src="bundle/tupian_5.gif" border="0" alt="图标"}></span></div>
+         <{elseif $item.filetype eq "html"}>
+         <div class='span-2'><span class="opt"><{img app=desktop src="bundle/tupian_3.gif" border="0" alt="图标"}></span></div>
+         <{elseif $item.filetype eq "jpg" || $item.filetype eq "gif" || $item.filetype eq "bmp" || $item.filetype eq "jpeg"}>
+         <div class='span-2'><span class="opt"><{img app=desktop src="bundle/tupian_6.gif" border="0" alt="图标"}></span></div>
+         <{elseif $item.filetype eq "js"}>
+         <div class='span-2'><span class="opt"><{img app=desktop src="bundle/tupian_2.gif" border="0" alt="图标"}></span></div>
+         <{else}>
+         <div class='span-2'><span class="opt"><{img app=desktop src="bundle/tupian_7.gif" border="0" alt="图标"}></span></div>
+         <{/if}>
+
+         <{if $item.filetype eq "css" ||$item.filetype eq "html"||$item.filetype eq "xml"||$item.filetype eq "js"}>
+         <div class='span-4' onclick="new Dialog('index.php?app=site&ctl=admin_explorer_theme&act=detail&theme=<{$theme}>&open_path=<{$open_path}>&file_name=<{$item.name}>',{'title':'编辑<{$item.name}>',width:0.5,height:0.5});"><span class="quiet"  ><{$item.name}></span></div>
+         <{elseif $item.filetype eq "Folder"}>
+         <div class='span-4' onclick="W.page('<{$url}>&open_path=<{$open_path}>-<{$item.name}>',{update:$('theme_explorer')})"><span class="quiet"  ><{$item.name}></span></div>
+         <{else}>
+         <div class='span-4' onclick="new Dialog('index.php?app=site&ctl=admin_explorer_theme&act=detail&theme=<{$theme}>&open_path=<{$open_path}>&file_name=<{$item.name}>',{'title':'编辑<{$item.name}>',width:0.5,height:0.5});"><span class="quiet"  ><{$item.name}></span></div>
+          <{/if}>
+
+          <div class='span-2'><span class="quiet" style="padding:0 5px"><{$item.filetype}></span></div>
+          <div class='span-2'><span class="quiet" style="padding:0 5px"><{$item.memo}></span></span></div>
+
+         <{if $item.filetype eq "css" ||$item.filetype eq "html"||$item.filetype eq "xml"||$item.filetype eq "js"}>
+         <div class='span-2'><span class="opt" onclick="new Dialog('index.php?app=site&ctl=admin_explorer_theme&act=detail&theme=<{$theme}>&open_path=<{$open_path}>&file_name=<{$item.name}>',{'title':'编辑<{$item.name}>',width:0.5,height:0.5});" ><{img img app=desktop src="bundle/btn_edit.gif" border="0" alt="编辑"}></span></div>
+         <{elseif $item.filetype eq "Folder"}>
+         <div class='span-2'><span class="opt" onclick="W.page('<{$url}>&open_path=<{$open_path}>-<{$item.name}>',{update:$('theme_explorer')})" ><{img app=desktop src="bundle/btn_edit.gif" border="0" alt="编辑"}></span></div>
+         <{else}>
+         <div class='span-2'><span class="opt" onclick="new Dialog('index.php?app=site&ctl=admin_explorer_theme&act=detail&theme=<{$theme}>&open_path=<{$open_path}>&file_name=<{$item.name}>',{'title':'编辑<{$item.name}>',width:0.5,height:0.5});" ><{img img app=desktop src="bundle/btn_edit.gif" border="0" alt="编辑"}></span></div>
+          <{/if}>
+         <{if $item.filetype eq "Folder"}>
+         <div class='span-2'><span class="opt">-</span></div>
+		 <{else}>
+         <div class='span-2'><span class="opt" onclick="deleteR(this, 'index.php?app=site&ctl=admin_explorer_theme&act=delete_file&theme=<{$theme}>&open_path=<{$open_path}>&file_name=<{$item.name}>')"><{img app=desktop src="bundle/delecate.gif" border="0" alt="删除"}></span></div>
+          <{/if}>
+         </div>
+        </div>
+        <{/foreach}> </div>
+    <{area inject=".mainFoot"}>
+    <div class="footer">
+        <table cellspacing="0" cellpadding="0" border="0" align="center" class="table-action">
+            <tr>
+                <td><b class="submitBtn">
+
+                    </b></td>
+            </tr>
+        </table>
+    </div>
+    <{/area}>
+</form>
+<script>
+function deleteR(event, path){
+    if(confirm('您确定要删除该文件?(删除后将不可恢复)')){
+		W.page(path, {onSuccess: function(){
+			$(event).getParent('div').getParent('div').remove();
+		}});
+    }
+}
+(function(){
+	
+
+});
+</script>

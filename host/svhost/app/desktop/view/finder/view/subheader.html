@@ -1,0 +1,28 @@
+<table width="100%" cellpadding="0" cellspacing="0" class="finder-header">
+	    <{if $use_buildin_selectrow}><col class="col-select"></col><{/if}>
+		<{$detail_col_html}>
+		<{$column_col_html}>
+	    <col></col>
+	<thead>
+	  <tr>
+		<{if $use_buildin_selectrow}>
+		<td> 
+          <{if !$env.get.singleselect}>
+          <input type="checkbox" class="sellist" onclick='this.blur()'/>
+          <{/if}>
+        </td>
+		<{/if}>
+		<{$detail_td_html}>
+		<{$column_td_html}>
+		<td>&nbsp;</td>
+	  </tr>
+	  </thead>
+</table>
+
+<script>
+$ES('.finder-filter-comb').each(function(el,v){
+	new DropMenu(el,{offset:{y:20},stopEl:true});
+});
+</script>
+
+<{$filterhandle}>

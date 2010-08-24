@@ -1,0 +1,16 @@
+<div class="tableform">
+<form action="index.php?<{$env.server.QUERY_STRING}>" method="post">
+
+    <table class="gridlist" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<thead>  <tr>  <th>订单号</th><th>订单状态</th><th>支付状态</th><th>发货状态</th><th>总金额</th><th>下单日期</th>      </tr>
+    </thead>
+	<tbody>
+		<{foreach from=$orders item=item key=key}>
+             <tr>  <th><a target='_blank' href="index.php?app=b2c&ctl=admin_order&act=index&action=detail&id=<{$item.order_id}>"><{$item.order_id}></a></td><td><{$item.status}></td><td><{$item.pay_status}></td><td><{$item.ship_status}></td><td><{$item.total_amount|cur}></td><td><{$item.createtime|cdate:'FDATE_FTIME'}></td> </tr>
+        <{/foreach}>
+	</tbody>
+    </table>
+</form>
+</div>
+
+ 

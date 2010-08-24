@@ -1,0 +1,25 @@
+<div align="center">
+    <div style="padding:10px">可以应用到的商品数为:<{$num}></div>
+    <form name="apply" id="apply_form" method="post" action="index.php?app=b2c&ctl=admin_sales_goods&act=apply&p[0]=<{$rule_id}>">
+    <input type="hidden" name="rule_id" value="<{$rule_id}>"/>
+    <{if $rule.status=='false'}>
+       <span>没有启用,是否启用<input type="checkbox" name="status" value="1"/></span>
+    <{else}>
+        <input type="hidden" name="status" value="1"/>
+    <{/if}>
+    <{button type="submit"  label="应用" id="btn_apply"}>
+    </from>
+</div>
+<script>
+    $('apply_form').store('target',{
+        onComplete:function(){
+          var _dialogIns = $("apply_form").getParent('.dialog').retrieve('instance');
+            
+            if(_dialogIns)
+            {   
+                _dialogIns.close();
+            }   
+        }
+    
+    });
+</script>

@@ -1,0 +1,271 @@
+<{capture name="header"}>
+   <!--JAVASCRIPTS SRC-->   
+    <!--JAVASCRIPTS SRC END-->
+
+<{script src="goodseditor.js" app="b2c"}>
+<{script src="catalog.js" app="b2c"}>
+<{script src="coms/pager.js" app='desktop'}>
+<{script src="coms/datapicker.js"  app='desktop'}>
+
+<{/capture}>
+
+<script>
+var goodsEditor = null;
+
+var goodsEditFrame = (function(){
+  goodsEditor = new ShopExGoodsEditor('gEditor',{imgtype:'<{$uploader}>',url:'<{$url}>',goods_id:'<{$goods.id}>'});
+    new Swiff.Uploader( { 
+		verbose: true,
+		url:'index.php?app=image&ctl=admin_manage&act=gimage_swf_remote&sess_id='+sess_id,
+		path: '<{$image_dir}>/uploader.swf',
+		typeFilter: {
+			'Images (*.jpg, *.jpeg, *.gif, *.png)': '*.jpg; *.jpeg; *.gif; *.png'
+		},
+		fileSizeMax:20000000,
+		target:'pic-uploader',
+		onSelectFail:function(rs){
+			rs.each(function(v){
+				if(v.validationError=='sizeLimitMax'){
+					alert(v.name+'\n\n文件超出大小');
+				};
+			});			
+		},
+		onSelectSuccess:function(rs){
+			var PID='up_';
+			var _this=this;
+			rs.each(function(v,i){
+				 new Element('div',{'class':'gpic-box','id':PID+v.id}).inject($('all-pics'));
+			});
+			this.start();		
+		},
+		onFileOpen:function(e){
+			$('up_'+e.id).setHTML('<em style="font-size:13px;font-family:Georgia;">0%</em>');
+		},
+		onFileProgress:function(e){ 
+            $('up_'+e.id).getElement('em').set('text',e.progress.percentLoaded+'%');
+		},		
+		onFileComplete: function(res){		
+			if(res.response.error){
+				return  new MessageBox('文件'+res.name+'上传失败',{type:'error',autohide:true});
+			}
+			$('up_'+res.id).setHTML(res.response.text);
+			if(!$E('#pic-area .current')){
+              $E('#pic-area .gpic').onclick();
+            }
+		}
+	});	
+    
+    
+      /*
+         *  sign:{
+               1:保存并增加相似商品,
+               2:保存并返回,
+               3:保存当前不返回，               
+         *    }       
+         */
+   var _form=$('gEditor'),_formActionURL=_form.get('action'); 
+
+
+    subGoodsForm = function (event,sign){  
+       //var _form=$('coupon_form');
+       if($('gEditor-GCat-input').get('value')==0)  return new MessageBox('请选择分类',{type:'error',autohide:true});
+        switch (sign){
+            case 1:
+            var target={
+                    onComplete:function(){
+                        location.reload();
+                }};
+            break;
+            case 2:
+            var target={
+                    onComplete:function(rs){
+                        if(JSON.decode(rs).error) {
+                            return ;
+                        }
+                        window.close();
+                    }};
+            break;
+            case 3:
+            var target={           //保存当前
+                    onComplete:function(rs){
+                        var id = JSON.decode(rs).goods_id;              
+                        if(id > 0){
+                            $('gEditor-GId-input').value =id;                   
+                        }
+                    }};
+            break;  
+       }
+       
+       if(window.opener.finderGroup&&window.opener.finderGroup['<{$env.get.finder_id}>']){
+            window.opener.finderGroup['<{$env.get.finder_id}>'].refresh();
+        }
+                        
+                        
+       _form.store('target',target);
+       _form.fireEvent('submit',new Event(event));
+       
+    };
+    
+    
+});
+goodsEditFrame();
+
+window.addEvent('domready',function(){
+    category_change= function (id,typeid){
+        if(goodsEditor)goodsEditor.catalogSelect(typeid,id);
+    }
+
+
+});
+
+</script>
+
+
+
+<form name="gEditor" id="gEditor" method='post' action='index.php?app=gift&ctl=admin_gift&act=toAdd'>
+<input name="goods[goods_id]" value="<{$goods.goods_id}>" id="gEditor-GId-input" type="hidden">
+
+<h3><{t}>基本信息<{/t}></h3>
+<div id="x-g-basic" class="goods-detail">
+
+        <div class="tableform">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th><em class="red">*</em><{t}>赠品名称：<{/t}></th>
+                    <td><{input type="text" id="id_gname" name="goods[name]" required="true" vtype='required' value=$goods.name }></td>
+                </tr>
+                <tr>
+                    <th><em class="red">*</em><{t}>所属分类：<{/t}></th>
+                    <td>
+                        <select name="goods[category][cat_id]" id="gEditor-GCat-input" class="x-input" >
+                            <{if $goods.category.cat_id < 1}>
+                            <option value="0" ><{t}>请选择所属分类<{/t}></option>
+                            <{/if}>
+                            <{foreach from=$cat_path item=cat}>
+                            <option class="optionlevels optionlevel_<{math equation="x" x=$cat.step|default:1}>
+                            " value="<{$cat.cat_id}>" <{if $cat.cat_id==$goods.category.cat_id}>selected<{/if}> ><{$cat.cat_name}></option>
+                            <{/foreach}>
+                        </select>
+                        
+                        <{input type="hidden" value=$goods.category.cat_id id="gEditor-GType-input" name="goods[type][type_id]" }>
+
+                    </td>
+                    <td rowspan="10" style="width:300px; border-bottom:none;">
+                        <div class="division" style="margin:0">
+                            <div class="clearfix">
+                                <span id="pic-uploader">
+                          <{button app="desktop" class="btn-upload" label="添加商品图片" icon="image_new.gif"}>
+                                </span>  
+                             </div>     
+                            <div class="pic-area" id="pic-area">
+                               <input type="hidden" name="image_default" value="<{$goods.image_default_id}>" />
+                                <{include file="admin/goods/detail/img/gimage_goods.html" app="b2c"}>
+                            </div>   
+                        </div> 
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>发布：<{/t}></th>
+                    <td>
+                        <input type="radio" name="goods[status]" value='true' <{if $goods.marketable!='false'}>checked<{/if}> >是
+                        <input type="radio" name="goods[status]" value='false' <{if $goods.marketable=='false'}>checked<{/if}> >否
+                         <{help}><{t}>是否可通过前台链接直接浏览<{/t}><{/help}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><em class="red">*</em><{t}>所需积分：<{/t}></th>
+                    <td><{input type="digits" value=$goods.params.consume_score name="goods[params][consume_score]" size="4" maxlength="25" required="true" vtype='required'  }><span class="notice-inline"><{t}>注：赠品发布时、可用积分兑换。<{/t}></span></td>
+                </tr>
+                <tr>
+                    <th><{t}>兑换起始时间：<{/t}></th>
+                    <td>
+                        <{input type="time" name="from_time" value=$goods.uptime }>
+                    </td>
+                </tr>
+                
+
+                <tr>
+                    <th><{t}>兑换终止时间：<{/t}></th>
+                    <td>
+                        <{input type="time" name="to_time" value=$goods.downtime size=4 }>
+                    </td>
+                </tr>
+                
+                
+                
+                <tr>
+                    <th><{t}>作为推荐赠品：<{/t}></th>
+                    <td>
+                        <input type="radio" value="true"  name="memberlv[ifrecommend]" <{if $memberlv.ifrecommend=='true'}>checked<{/if}> >是
+                        <input type="radio" value="false" name="memberlv[ifrecommend]" <{if $memberlv.ifrecommend!='true'}>checked<{/if}> >否
+                        <{help}><{t}>该属性应用于挂件！<{/t}><{/help}>
+                    </td>
+                </tr>
+                  
+                <tr>
+                    <th><{t}>允许兑换的会员等级：<{/t}></th>
+                    <td>
+                       <{foreach from=$member_level item=ml}>
+                            <lable><input type="checkbox" value="<{$ml.member_lv_id}>" name="memberlv[member_lv_ids][]" <{if ($memberlv.member_lv_ids != '') && in_array($ml.member_lv_id,$memberlv.member_lv_ids)}>checked<{/if}>/><{$ml.name}></label>
+                       <{/foreach}>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th><{t}>排序：<{/t}></th>
+                    <td>
+                        <{input type="text" name="goods[p_order]" value=$goods.p_order size=4 }>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th><{t}>每人限购数量：<{/t}></th>
+                    <td>
+                        <{input type="text" name="goods[params][max_store]" value=$goods.params.max_store size="4" }>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th><{t}>简介：<{/t}></th>
+                    <td><{input type="textarea" value=$goods.brief name="goods[brief]" style="width:80%" rows="6" max="255" }><br />
+                        <span class="notice-inline"><{t}>简短的商品介绍,请不要超过255字节<{/t}></span></td>
+                </tr>
+                <tr>
+                    <th><{t}>销售价：<{/t}><input type='hidden' name='goods[product][0][product_id]' value='<{$product.product_id}>'></th>
+                    <td>
+                        <{input type="unsigned" key="price" value=$goods.price name="goods[product][0][price][price][price]" size="4" maxlength="25"   }>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <th><{t}>重量：<{/t}></th>
+                    <td><{input type="unsigned" key="weight" value=$goods.weight name="goods[product][0][weight]" size="4" maxlength="25"  }><{t}>克(g)<{/t}></td>
+                  </tr>
+                  
+                  <tr>
+                    <th><{t}>库存：<{/t}></th>
+                    <td><{input type="unsigned" key="store" value=$goods.store name="goods[product][0][store]" size="4" maxlength="25" }></td>
+                  </tr>
+            </table>
+            
+        </div>
+</div>
+
+
+<{capture name='footbar'}>
+<table cellspacing="0" cellpadding="0" class="table-action">
+      <tbody><tr valign="middle">
+        <td>
+            <{button label="保存并关闭窗口" class="btn-primary" onclick="subGoodsForm(event,2)"}>
+            <{button label="保存并添加相似商品" class="btn-primary" onclick="subGoodsForm(event,1)"}>
+            <{button label="保存当前" class="btn-primary" onclick="subGoodsForm(event,3)"}>
+            <{button label="关  闭" class="btn-secondary" onclick="if(confirm('确定退出?'))window.close()"}>
+        </td>
+        </tr>
+        </tbody></table>
+<{/capture}>
+</form>
+
+
+
+    

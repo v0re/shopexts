@@ -1,0 +1,117 @@
+
+
+<form method="POST" id='newmember-edit-form' action="index.php?app=b2c&ctl=admin_member&act=add" class="tableform">
+<div class="division">
+<table width="100%" >
+    <tr><th><em class="red">*</em><{t}>用户名：<{/t}></th><td><{input type="text" name="pam_account[login_name]"  size="20" vtype="required"}></td></tr>
+    <tr><th><em class="red">*</em><{t}>密码：<{/t}></th><td><{input type="password" name="pam_account[login_password]" size="20" vtype="required"}></td></tr>
+    <tr><th><em class="red">*</em><{t}>确认密码：<{/t}></th><td><{input type="password" name="pam_account[psw_confirm]" size="20" vtype="required"}></td></tr>
+    <tr><th><em class="red">*</em>E-mail：</th><td><{input type="email" name="contact[email]" size="20" vtype="required&&email"}></td></tr>
+    <tr><th><em class="red">*</em>会员等级：</th><td><{input type='select' name='member_lv[member_group_id]' vtype="required" options=$mem.lv.options value=$mem.lv.value }></td></tr>
+</table>
+<hr style="margin:5px 0;">
+
+<table width="100%">
+  <{foreach from=$attr item=item name="item" key='row'}>
+<tr><th><{if $item.attr_required eq 'true'}><em class="red">*</em><{/if}><{$item.attr_name}>：</th><td><{if $item.attr_type =='date'}>
+    <{input class="cal" type='date' name=$item.attr_column value=$item.attr_value required=$item.attr_required }>
+  <{/if}>
+      
+   <{if $item.attr_type =='region'}>
+   <{input app=ectools type="region" name=$item.attr_column vtype='area2' }>
+   <{/if}>
+   
+   <{if $item.attr_type =='gender'}>
+    <{input type='gender' name=$item.attr_column value=$item.attr_value }>
+   <{/if}>
+   
+      <{if $item.attr_type =='select'}>
+ <select name='<{$item.attr_column}>' <{if $item.attr_required eq 'true'}>class='_x_ipt' vtype='required'<{/if}>>
+  <option value='' <{if $item.attr_value == ''}>selected='true'<{/if}>><{t}>- 请选择 -<{/t}></option>
+ <{foreach from=$item.attr_option item=option name="option"}>
+ <option value='<{$option}>' <{if $item.attr_value == $option}>selected='true'<{/if}>><{$option}></option>
+ <{/foreach}>
+ </select>
+   <{/if}>
+   
+     <{if $item.attr_type =='checkbox'}>
+ 
+ <{foreach from=$item.attr_option item=checkbox name="checkbox" }>
+ <input type='checkbox' name=box:<{$item.attr_column}>[] value='<{$checkbox}>'><label><{$checkbox}></label><br/>
+ <{/foreach}>
+ <input type='hidden' name='<{$item.attr_column}>[]' value='%no%'>
+<{if $item.attr_required eq 'true'}>
+<input type='hidden' class='_x_ipt' vtype='selectc'/>
+<{/if}>
+   <{/if}>
+   
+   
+   <{if $item.attr_type == 'text'}>
+  <input type='text' name=<{$item.attr_column}> value='<{$item.attr_value}>' vtype='<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_valtype}>' />
+   <{/if}>
+   
+     <{if $item.attr_type == 'number'}>
+    <input type='text' name=<{$item.attr_column}> value='<{$item.attr_value}>' vtype='<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_valtype}>' />
+   <{/if}>
+
+  <{if $item.attr_type == 'alpha'}>
+    <input type='text' name=<{$item.attr_column}> value='<{$item.attr_value}>' vtype='<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_type}>' />
+   <{/if}></td></tr>
+  <{/foreach}>
+</table>
+</div>
+</form>
+<{area inject='.mainFoot'}>
+
+
+<div class="table-action"><{button type="submit"  label="保存" id='newmember-edit-form-submit'}></div>
+
+
+<{/area}>
+
+
+<script>
+(function(){
+	var _form = $('newmember-edit-form');
+	var btn =$('newmember-edit-form-submit');
+	var finder = finderGroup['<{$env.get.finder_id}>'];
+	
+	_form.store('target',{
+		onComplete:function(){			
+			
+		},
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+				
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					finder.refresh.delay(400,finder);
+				}
+			}
+			else
+			{
+				//alert(hash_res_obj.error);
+			}			
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		
+		    _form.fireEvent('submit',{stop:$empty});
+			
+		
+		
+		});
+	
+})();
+	
+	
+</script>
+
+

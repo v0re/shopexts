@@ -1,0 +1,19 @@
+<{tabber}>
+	<{tab name="shopex网络"}>
+		<iframe src="<{$env.const.URL_JOIN_NETWORK}>" style="height:240px;width:100%">
+		</iframe>
+	<{/tab}>
+	<{tab name="网店直连"}>
+		<form style="margin-left:150px" action='index.php?ctl=network&act=ping_node' method='post'>
+			<label>要连接的网店地址：</label><br />
+			<input type="text" name="site_url" style="width:300px" value="http://" /><br /><br />
+
+			<label>请输入验证信息：</label><br />
+			<textarea style="width:300px;height:70px" name="message"></textarea><br /><br />
+
+			<input type="submit" value="提交申请" />
+		</form>
+	<{/tab}>
+<{/tabber}>
+<div>
+</div>

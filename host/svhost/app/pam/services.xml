@@ -1,0 +1,11 @@
+<services>
+	<service id="passport">
+		<class>pam_passport_basic</class>
+		<class>pam_passport_oauth</class>	
+		<class>pam_passport_uc</class>
+	</service>
+
+	<service id="api.pam_callback">
+		<class>pam_callback</class>
+	</service>
+</services>

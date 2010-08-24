@@ -1,0 +1,91 @@
+
+<{if $haspacket}>
+<div class="finder-packet" id="finder-packet-<{$name}>">
+    <span class="font9px">loading...</span>
+</div>
+<{/if}>
+
+
+
+  <div class="gridlist-action finder-action clearfix" id="finder-action-<{$name}>">
+		<ul class="finder-action-items flt">
+			<{foreach from=$show_actions item=item}>
+				<li><a <{foreach from=$item item=v key=k}> <{$k}>="<{$v}>" <{/foreach}>><span><{$item.label}></span></a></li>
+			<{/foreach}>
+			<{if $other_actions}>
+				<li><div id="finder-action-more-handle-<{$finder_name}>" dropmenu="finder-actions-more-<{$finder_name}>"><span><{t}>其他动作...<{/t}></span></div></li>
+		</ul>
+		<div id="finder-actions-more-<{$finder_name}>" class="x-drop-menu">
+    		<ul class="group">
+    		<{foreach from=$other_actions item=item}>
+    			<li class="item"><a <{foreach from=$item item=v key=k}>  <{$k}>="<{$v}>" <{/foreach}> ><{$item.label}></a></li>
+    		<{/foreach}>
+    		</ul>
+		</div>
+		<script>new DropMenu("finder-action-more-handle-<{$finder_name}>",{offset:{x:-2,y:20},relative:'finder-action-<{$name}>'})</script>
+			<{else}>
+		</ul>
+		    <{/if}>
+
+		<{if $searchOptions}>
+			<div class="frt">
+				<form class="finder-search" id="finder-search-<{$name}>" current_key="<{$searchOptions|key}>">
+				    <table cellpadding="0" cellspacing="0">
+				        <tr>
+				            <td><span class="finder-search-select" id="finder-keywords-handle-<{$name}>" dropmenu="finder-keywords-<{$name}>"><label><{$searchOptions|current}></label><{img src="bundle/arrow-down.gif"}></span></td>
+				            <td><input class="finder-search-input" type="text" search="true" autocomplete="off" size="15" maxlength="40" />
+        					</td>
+				            <td><{img class="finder-search-btn" src="/bundle/finder_search_btn.gif"}>
+        					</td>
+				        </tr>
+				    </table>
+					<div id="finder-keywords-<{$name}>" class="x-drop-menu" style="width:auto;">
+						<ul class="group">
+							<{foreach from=$searchOptions key=key item=item}>
+							<li class="item" key="<{$key}>"><{$item}></li>
+							<{/foreach}>
+						</ul>
+					</div>
+				</form>
+			<script>
+			void function(){
+				
+				new DropMenu("finder-keywords-handle-<{$name}>", {eventType:'mouse',offset:{x:-6, y:17}, relative:'finder-action-<{$name}>'}); 
+				 
+				var lis = $$('#finder-keywords-<{$name}> li');
+			    $('finder-search-<{$finder_name}>').getElement('.finder-search-input').name=lis[0].get('key');
+				lis.addEvent('click',function(e){
+						$('finder-search-<{$finder_name}>').getElement('label').set('text',this.get('text'));
+					$('finder-search-<{$finder_name}>').getElement('.finder-search-input').set('name',this.get('key'));
+                   });    
+                    <{*                           
+					<{if $env.get.search|key}>
+			 $$('#finder-keywords-<{$name}> li[key=<{$env.get.search|key}>]')[0].fireEvent('click');
+					<{/if}>*}>
+			}();
+			</script> 
+		  
+			</div>
+		<{/if}>
+		    
+		
+		
+		
+		 <{if $use_buildin_setcol}>
+			<div class='finder-col-option' id="finder-col-option-<{$finder_name}>">
+			<a href="<{$url}>&action=column&finder_aliasname=<{$finder_aliasname}>" target="dialog::{width:300,title:'配置列表项'}"><{img src="bundle/column_setting.gif"}></a>
+			</div>
+			<script>
+			(function(){ 
+				var fco = $('finder-col-option-<{$finder_name}>');
+				 //fco.setAttribute('title',null);
+				 fco.store('tip:title',"配置列表项"); 
+				 fco.store('tip:text',"点击进入列表项的的配置，您可以用拖动的方式改变显示顺序，并且可以控制某一列是否显示。"); 
+				 Xtip.attach(fco);
+			})();
+			 
+			</script>
+	   <{/if}>
+		
+  </div>
+

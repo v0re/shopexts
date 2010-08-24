@@ -1,0 +1,35 @@
+<div id="cart-coupon-list">
+<{if $aCart.object.coupon}>
+<h3><{t}>使用的优惠券<{/t}></h3>
+<div>
+    <table width="100%" cellpadding="3" cellspacing="0" class="liststyle cart-list">
+       <col class="span-5"></col>
+       <col class="span-auto"></col>
+       <col class="span-1"></col>
+       <{if !$checkout}><col class="span-2"></col><{/if}>
+      <thead>
+        <tr>
+          <th><{t}>优惠券<{/t}></th>
+          <th><{t}>描述<{/t}></th>
+          <th><{t}>是否适用<{/t}></th>
+          <{if !$checkout}><th><{t}>删除<{/t}></th><{/if}>
+        </tr>
+      </thead>
+    <tbody >
+      <{foreach from=$aCart.object.coupon item=coupon}>
+        <tr urlremove="<{link app=b2c ctl='site_cart' act='removeCart' arg0='coupon'}>">
+            <td style="text-align:left;">
+                <{if !$checkout}><input type="hidden" name="modify_quantity[<{$coupon.obj_ident}>]" value="1" /><{/if}>
+                <{$coupon.name}>
+            </td>
+            <td><{$coupon.description}></td>
+            <td><{if $coupon.used}><font color='green'>是</font><{else}><font color='red'>否</font><{/if}></td>
+            <{if !$checkout}><td><span><{img src='icons/icon_delete.gif' app=b2c alt='删除' style='cursor:pointer' class="delItem"}></span></td><{/if}>
+        </tr>
+      <{/foreach}>
+    </table>
+</div>
+<{/if}>
+
+
+</div>

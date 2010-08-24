@@ -1,0 +1,30 @@
+<form class="tableform" method="post" action="index.php?app=b2c&ctl=admin_member&act=insert_queue" id='messenger-form' >
+
+
+
+<h4><{t}>标题<{/t}></h4>
+<div class="division">
+<{input type="text" name="title" }>
+</div>
+
+
+<h4><{t}>信息内容<{/t}></h4>
+<div class="division">
+ <{input type="html" name="content" }>
+</div>
+<div class="table-action">
+	<{button label="发送" type="submit"}>
+</div>
+</form>
+<script>
+   $('messenger-form').store('target',{
+        
+        update:'messagebox',
+        onComplete:function(){
+                  finderDialog.close();
+             
+        }
+   
+   });
+
+</script>

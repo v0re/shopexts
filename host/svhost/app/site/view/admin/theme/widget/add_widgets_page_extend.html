@@ -1,0 +1,15 @@
+
+<!--<h3><{t}><{$env.post.catalog}><{/t}></h3>-->
+  <div class="commenwgt clearfix">   
+	  <{foreach from=$widgetsLib.list item=widgets key=key}>
+	    <div class="span-auto wgtitem-box " onclick='_addWeigets(eval([<{json from=$widgets}>,"<{$theme}>"]));'>
+        <div class="quickaddwgt"></div>
+         <span><{$widgets.label}></span>  
+		  <div class='desc'>
+		  <a href='index.php?app=site&ctl=admin_theme_widget&act=get_widgets_info&widgets=<{$widgets.name}>&widgets_app=<{$widgets.app}>&theme=<{$theme}>' onclick='new Event(event).stop();new Dialog(this.href,{width:513,height:332,title:"<{$env.post.catalog}>&raquo;<{$widgets.label}>"});' target='_blank'>
+			 板块说明&raquo;&raquo;
+		  </a>
+		  </div>
+	   	</div>
+	  <{/foreach}>
+ </div>    

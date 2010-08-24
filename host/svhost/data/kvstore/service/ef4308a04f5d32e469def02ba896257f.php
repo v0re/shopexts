@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:18:"b2c_service_logout";s:18:"b2c_service_logout";}}s:6:"expire";i:0;}

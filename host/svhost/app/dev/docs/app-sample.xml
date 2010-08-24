@@ -1,0 +1,49 @@
+<app>
+    <name>Application demo</name>
+    <description>样例程序</description>
+
+    <author>
+        <name>shopex开发团队</name>
+        <email>dev@shopex.cn</email>
+        <url>http://www.shopex.cn</url>
+    </author>
+
+    <version>0.1</version>
+    <license>shopex license</license>
+
+    <permissions>
+        <permission id="p1">权限一</permission>
+        <permission id="p2">权限二</permission>
+        <permission id="p3">权限三</permission>
+        <permission id="p4">权限四</permission>
+    </permissions>
+
+    <admin>
+        <cfgpanel controller="system" action="basic">样例设置</cfgpanel>
+
+        <workground controller="abcde">
+            <name>action foo</name>
+            <permission_allow>p1</permission_allow>
+            <permission_allow>p3</permission_allow>
+        </workground>
+        <workground controller="abcde">
+            <name>action what</name>
+            <permission_allow>p1</permission_allow>
+            <permission_allow>p3</permission_allow>
+        </workground>
+    </admin>
+    
+    <site>
+        <module controller="foo" action="gogogo">那个那个啥</module>
+        <module controller="boo">那个那个啥</module>
+    </site>
+
+   <depends>
+      <app minver="" maxver="">base</app>
+      <app>b2c</app>
+	  <function></function>
+	  <class></class>
+    </depends>
+
+    <optional app="adt">开发者工具</optional>
+</app>

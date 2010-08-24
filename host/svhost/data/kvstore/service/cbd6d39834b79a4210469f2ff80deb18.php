@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:3:{s:34:"b2c_sales_order_aggregator_combine";s:34:"b2c_sales_order_aggregator_combine";s:32:"b2c_sales_order_aggregator_found";s:32:"b2c_sales_order_aggregator_found";s:36:"b2c_sales_order_aggregator_subselect";s:36:"b2c_sales_order_aggregator_subselect";}}s:6:"expire";i:0;}

@@ -1,0 +1,14 @@
+<form method="post" action="index.php?app=b2c&ctl=admin_goods&act=index&action=to_export" class="tableform" target='csv_tmpl_form' enctype="multipart/form-data">
+  <h4><{t}>下载商品CSV文件（仅限ShopEx后台和ShopEx小助理使用）<{/t}></h4>
+  <div class="division">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th><{t}>请选择商品类型：<{/t}></th>
+        <td><select name='_gType'><{foreach from=$gtype item=item}><option value='<{$item.type_id}>'><{$item.name}></option><{/foreach}></select></td>
+      </tr>
+    </table>
+  </div>
+  <div class="table-action"><input type='hidden' value='csv' name='_io_type'/><{button class="btn-primary" label="下载" type="submit"}></div>
+  <iframe id='csv_tmpl_form' frameborder="0" scrolling="no">f
+  </iframe>
+</form>
