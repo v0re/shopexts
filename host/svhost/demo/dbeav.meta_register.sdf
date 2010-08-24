@@ -1,1 +1,0 @@
-a:6:{s:5:"mr_id";s:1:"1";s:8:"tbl_name";s:13:"sdb_b2c_goods";s:7:"pk_name";s:8:"goods_id";s:8:"col_name";s:7:"adjunct";s:8:"col_type";s:4:"text";s:8:"col_desc";a:5:{s:4:"type";s:5:"array";s:8:"required";b:0;s:5:"label";s:12:"商品配件";s:5:"width";i:110;s:8:"editable";b:0;}}
