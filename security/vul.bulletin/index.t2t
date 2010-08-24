@@ -1,0 +1,17 @@
+ShopEx漏洞公告板
+
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+===漏洞列表===
+
+ - [招行帐号支付插件验签方法无效 10060701.html]
+ - [crontab日志注释符使用当 10061201.html]
+ - [SPGDIF函数身份验证不严 10061501.html]
+ - [ShopEx485订单留言XSS漏洞 10072601.html]
+ - [ECshop礼包id未过滤漏洞 10082301.html]

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<theme>
+  <name>公司产品中心</name>
+  <id>gs</id>
+  <version>ShopEx4.8</version>
+  <info></info>
+  <author>ShopEx</author>
+  <site>http://www.shopex.cn</site>
+  <update_url></update_url>
+  <borders>
+    <set key="灰色渐变" tpl="borders/hui.html" />
+    <set key="首页新品栏目" tpl="borders/hui2.html" />
+	<set key="无灰色渐变文章" tpl="borders/hui3.html" />
+  </borders>
+  <views></views>
+  <config></config>
+</theme>

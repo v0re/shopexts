@@ -1,0 +1,5 @@
+a:8:{s:8:"props_id";s:1:"1";s:7:"type_id";s:1:"2";s:4:"type";s:6:"select";s:4:"show";s:2:"on";s:4:"name";s:6:"质地";s:5:"alias";s:0:"";s:7:"goods_p";s:1:"1";s:10:"lastmodify";s:10:"1277901571";}
+a:8:{s:8:"props_id";s:1:"2";s:7:"type_id";s:1:"2";s:4:"type";s:6:"select";s:4:"show";s:2:"on";s:4:"name";s:6:"风格";s:5:"alias";s:0:"";s:7:"goods_p";s:1:"2";s:10:"lastmodify";s:10:"1277901571";}
+a:8:{s:8:"props_id";s:1:"3";s:7:"type_id";s:1:"2";s:4:"type";s:6:"select";s:4:"show";s:2:"on";s:4:"name";s:12:"适合季节";s:5:"alias";s:0:"";s:7:"goods_p";s:1:"3";s:10:"lastmodify";s:10:"1277901571";}
+a:8:{s:8:"props_id";s:1:"4";s:7:"type_id";s:1:"3";s:4:"type";s:6:"select";s:4:"show";s:2:"on";s:4:"name";s:6:"图案";s:5:"alias";s:0:"";s:7:"goods_p";s:1:"1";s:10:"lastmodify";s:10:"1277901571";}
+a:8:{s:8:"props_id";s:1:"5";s:7:"type_id";s:1:"3";s:4:"type";s:6:"select";s:4:"show";s:2:"on";s:4:"name";s:6:"款式";s:5:"alias";s:0:"";s:7:"goods_p";s:1:"2";s:10:"lastmodify";s:10:"1277901571";}
