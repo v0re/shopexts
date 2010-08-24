@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";s:22:"The future of shopping";s:6:"expire";i:0;}

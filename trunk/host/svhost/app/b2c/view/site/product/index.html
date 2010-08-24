@@ -1,0 +1,710 @@
+<script>
+  /*商品详细通用函数*/
+
+   var priceControl={
+              base:<{$goods.current_price}>,
+              _format:<{$money_format|default:'false'}>,
+              format:function(num){
+                var part;
+                if(!num)return;
+                var num = num.toFloat();
+                    num = num.round(this._format.decimals)+'';
+                    var p =num.indexOf('.');
+                    if(p<0){
+                        p = num.length;
+                        part = '';
+                    }else{
+                        part = num.substr(p+1);
+                    }
+                    while(part.length<this._format.decimals){
+                            part+='0';
+                        }
+                    var c=[];
+                    while(p>0){
+                        if(p>2){
+                            c.unshift(num.substr(p-=3,3));
+                        }else{
+                            c.unshift(num.substr(0,p));
+                            break;
+                        }
+                    }
+                    if(!part){
+                        this._format.dec_point='';
+                    }
+                    return (this._format.sign||"")+c.join(this._format.thousands_sep)+this._format.dec_point+part;
+            }
+       };
+
+    String.implement({
+      toFormElements:function(){
+            if(!this.contains('=')&&!this.contains('&'))return new Element('input',{type:'hidden'});
+            var elements=[];
+            var queryStringHash=this.split('&');
+            $A(queryStringHash).each(function(item){
+                if(item.contains('=')){
+                    item=$A(item.split('='));
+                    elements.push(new Element('input',{type:'hidden',name:item[0],value:item[1]}));
+                }else{
+                  elements.push(new Element('input',{type:'hidden',name:item}));
+                }
+            });
+            return new Elements(elements);
+            }
+    });
+    Number.implement({
+           interzone:function(min,max){
+                 var _v=this.toFloat();
+                 if(!_v)_v=0;
+                 return _v>=min&&_v<=max;
+             }
+          });
+   var keyCodeFix=[48,49,50,51,52,53,54,55,56,57,96,97,98,99,100,101,102,103,104,105,8,9,46,37,39<{if $goods.type.floatstore}>,110,190<{/if}>];
+
+
+</script>
+
+
+
+<div class="GoodsInfoWrap">
+<div id="goods-viewer">
+  <table width="100%">
+  <tr>
+    <td valign="top" align="center">
+     <div class='goodspic'>
+        <{include file="site/product/goodspics.html" app=b2c}>
+       </div>
+    </td>
+    <td width="60%" valign="top">
+<!------------------------------------ 购买区域 开始 -------------------------------->
+<form class="goods-action" action="<{link app=b2c ctl='site_cart' act='addToCart' arg0='goods'}>" gnotify="<{link app=b2c ctl=site_product act=gnotify}>" method="post"<{if $goods.setting.buytarget==2}> target="_blank_cart"<{elseif $goods.setting.buytarget==3}> target="_dialog_minicart"<{/if}>>
+
+    <h1 class="goodsname"><{$goods.name|escape:"html"}></h1>
+    <{if $goods.brief}>
+    <p class="brief"><{$goods.brief}></p>
+    <{/if}>
+
+    <{assign var=tmp value=$goods.product}>
+    <{assign var=product0bn value=$tmp|array_shift}>
+      <ul class="goodsprops clearfix">
+        <{if $goods.bn && $goodsBnShow != 'false'}><li><span><{t}>商品编号：<{/t}></span><{$goods.bn}></li><{/if}>
+        <{if $goods.weight && $goods.weight != 0.000 }><li><span><{t}>商品重量：<{/t}></span><span id="goodsWeight"><{if $goods.weight}><{$goods.weight}><{else}><{$goods.weight.0.bn}><{/if}></span><{t}> 克(g)<{/t}></li><{/if}>
+
+        <{if $goods.product_bn || $product0bn.bn}><li><span><{t}>货号：<{/t}></span><span id="goodsBn"><{if $goods.product_bn}><{$goods.product_bn}><{else}><{$product0bn.bn}><{/if}></span></li><{/if}>
+
+        <{if $goods.brand.brand_name}><li><span><{t}>品　　牌：<{/t}></span><{if $goodsproplink}><a href="<{link app=b2c ctl=site_brand act=index arg0=$goods.brand.brand_id}>" target="_blank"><{$goods.brand.brand_name}></a><{else}><{$goods.brand.brand_name}><{/if}></li><{/if}>
+        <{if $goods.unit}><li><span><{t}>计量单位：<{/t}></span><{$goods.unit}></li><{/if}>
+    <{if $env.app.getConf('goodsprop.display.position') != 2}>
+    <{foreach from=$goods.type.props item=propord key=key}>
+      <{if $propord.show}>
+          <{assign var="pkey" value="p_{$key}"}>
+          <{assign var="pcol" value=$goods.props.$pkey.value}>
+          <{if trim($pcol) !== ''}>
+          <li>
+          <span><{$propord.name}>：</span>
+          <{if $propord.type == 'select'}>
+            <{if $env.app.getConf('goodsprop.display.switch') == 'true'}><a href="<{selector args=array("{$goods[category][cat_id]}") value="{$goods[category][cat_id]}" filter=array('cat_id'=>array("{$goods[category][cat_id]}"),"p_{$key}"=>array($pcol))}>" target="_blank"><{$propord.options.$pcol}></a><{else}><{$propord.options.$pcol}><{/if}>
+          <{else}>
+            <{$pcol}>
+          <{/if}>
+              </li>
+          <{/if}>
+      <{/if}>
+    <{/foreach}>
+    <{/if}>
+     </ul>
+
+     <ul class='goods-price list'>
+
+      <{if $goods.setting.mktprice}>
+      <li>
+        <span><{t}>市场价：<{/t}></span><i class="mktprice1">
+
+       <{if $goods.minmktprice && $goods.maxmktprice}>
+       <{$goods.minmktprice|cur}>&nbsp;-&nbsp;<{$goods.maxmktprice|cur}>
+       <{else}>
+       <{$goods.mktprice|cur}>
+       <{/if}>
+        </i>
+        </span>
+      </li>
+      <{/if}>
+
+    <li>
+       <span><{t}>销售价：<{/t}></span>
+      <span class="price1">
+            <{if $goods.minprice && $goods.maxprice}>
+             <{$goods.minprice|cur}>&nbsp;-&nbsp;<{$goods.maxprice|cur}>
+            <{else}>
+            <{$goods.current_price|cur}>
+            <{/if}>
+      </span>
+      </li>
+
+      <{if $goods.mktprice > $goods.price && $goods.setting.mktprice && $goods.setting.saveprice > 0}>
+            <li><span class="discount"><{if $goods.setting.saveprice == 1}>节省：<{$goods.mktprice-$goods.current_price|cur}>
+              <{elseif $goods.setting.saveprice == 2}>优惠：<{$goods.current_price/$goods.mktprice*100|number:'2'}>%
+              <{elseif $goods.setting.saveprice == 3}><{$goods.current_price/$goods.mktprice*10|number:'3'}>折
+              <{/if}></span>
+            </li>
+
+      <{/if}>
+    <{if $goods.min_buy}>
+    <li>
+       <span><{t}>最小购买数量：<{/t}></span>
+      <span class="discount">
+           <{$goods.min_buy}>
+      </span>
+      </li>
+     <{/if}>
+
+
+    <{if $mLevel}>
+       <li class='mprice' <{if $goods.spec }> style="display:none" <{/if}>>
+       <span><{t}>会员价:<{/t}></span>
+        <ul><{assign var=aProduct value=$goods[product]|current}>
+            <{foreach from=$aProduct.price.member_lv_price item=lItem name=mlv}>
+            <li>
+             <span><{t}><{$lItem.title}>:<{/t}></span>
+             <span class='mlvprice lv-<{$lItem.level_id}>' mlv='<{$lItem.level_id}>'><{$lItem.price|cur}></span>
+            </li>
+            <{/foreach}>
+        </ul>
+      </li>
+    <{/if}>
+   <{if $promotionMsg}>
+   <li>
+      <span><{t}>促销规则：<{/t}></span>
+      <span class="price1">
+               <{$promotionMsg}>
+      </span>
+   </li>
+   <{/if}>
+
+
+     </ul>
+
+      <{if count($promotions)>0}>
+      <ul class="boxBlue list">
+        <{foreach from=$promotions item=promotion key=key}>
+          <li><strong class="fontcolorRed"><{$promotion.pmt_describe}></strong><span class="font11px fontcolorBlack"><{$promotion.pmt_time_begin|userdate}> ~ <{$promotion.pmt_time_end|userdate}></span></li>
+        <{/foreach}>
+     </ul>
+      <{/if}>
+
+
+<{if $goods.status == 'false' }>
+ <!---已下架--->
+<div class="hight-offline">
+    <div class="hightbox">
+        <div class="btnBar clearfix">
+            <div class="floatLeft" style="font-weight:bold; padding-top:15px;">此商品已下架</div>
+            <div class="floatRight">
+                <ul>
+                  <li <{if $login!="nologin"}>star="<{$goods.goods_id}>"<{/if}> class="star-off" title=<{$goods.name|escape:"html"}>><a <{if $login=="nologin"}> href="<{link app=b2c ctl="site_passport" act="login"}>" <{else}>href="#" rel="nofollow" onclick="return false;" <{/if}> class="btn-fav"><{t}>收藏此商品<{/t}></a>
+                  </li>
+                    <!-- <li><a href="#" class="btn-send"><{t}>发送给好友<{/t}></a></li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<{else}>
+ <!---购物面板--->
+ <div class='hightline'>
+ <div class='hightbox'>
+ <!---规格开始--->
+<{if $goods.spec }>
+<{include file='site/product/spec.html' app=b2c}>
+<{/if}>
+<!---规格结束--->
+
+<!--购买数量-->
+         <div class='buyinfo'>
+         <table width='auto'>
+            <tr>
+               <td><span><{t}>购买数量：<{/t}></span></td>
+               <td><div class="Numinput">
+                    <input type="text" name="goods[num]" size="5" value=1 />
+                    <span  class="numadjust increase"></span>
+                    <span  class="numadjust decrease"></span>
+                    </div>
+                    <td><{if $goods.package_unit}><{$goods.package_unit}>(每<{$goods.package_scale}>个一<{$goods.package_unit}>)<{/if}></td>
+               </td>
+               <td>
+               </td>
+               <td><span <{if $showStorage != 'true'}>style='display:none;'<{/if}>><{t}>&nbsp;&nbsp;(库存<{/t}><span class='store'><{if $goods.store >= 9999 || $goods.store == null || $goods.store === ''}>9999+<{else}><{$goods.store - $goods.product_freez}><{/if}></span>)</span></td>
+            </tr>
+         </table>
+         </div>
+<!--购买数量结束-->
+<!------------------------------------ 购买 按钮 -------------------------------->
+
+<input type="hidden" name="goods[goods_id]" value="<{$goods.goods_id}>" />
+<input type="hidden" name="goods[pmt_id]" value="<{$goods.pmt_id}>" />
+<{if !$goods.spec }>
+<input type='hidden' name='goods[product_id]' value='<{$product0bn.product_id}>'/>
+<{/if}>
+
+
+<div class="btnBar clearfix" <{if count($goods.product)<0}>style="visibility:hidden"<{/if}>>
+
+  <div class="floatLeft">
+        <{if count($goods.product)>1}>
+           <{if $env.app.getConf('system.goods.fastbuy')=='true'}>
+
+           <{/if}>
+            <input class="actbtn btn-buy" value="加入购物车" type="submit" />
+            <input  class="actbtn btn-notify" value="缺货登记" type="submit" style="display: none;" />
+        <{else}>
+            <{if $goods.store>0 || $goods.store==''}>
+                <input class="actbtn btn-buy" value="加入购物车" type="submit" />
+            <{else}>
+                <input  class="actbtn btn-notify" value="缺货登记" type="submit" />
+            <{/if}>
+        <{/if}>
+    </div>
+    <div class="floatRight">
+    <ul>
+      <li <{if $login!="nologin"}>star="<{$goods.goods_id}>"<{/if}> class="star-off" title=<{$goods.name|escape:"html"}>><a <{if $login=="nologin"}> href="<{link app=b2c ctl="site_passport" act="login"}>" <{else}>href="#" rel="nofollow" onclick="return false;" <{/if}> class="btn-fav"><{t}>收藏此商品<{/t}></a>
+      </li>
+        <!-- <li><a href="#" class="btn-send"><{t}>发送给好友<{/t}></a></li> -->
+    </ul>
+    </div>
+</div>
+<!--购买按钮结束-->
+    </div><!-- end hightbox-->
+  </div><!-- end hightline-->
+
+
+
+<{/if}>
+
+
+<!------------------------------------ 配件 开始 -------------------------------->
+
+<{if $goods.adjunct && count($goods.adjunct)>0}>
+<{include file='site/product/adjunct.html' app=b2c}>
+<{/if}>
+
+
+</form>
+
+    </td>
+  </tr>
+
+  </table>
+
+
+
+<!--货品列表-->
+<{if $goods.spec}>
+<{include file='site/product/products.html' app=b2c}>
+<{/if}>
+<div style="clear:both"></div>
+<!------------------------------------ 购买区域 结束 -------------------------------->
+<!-- 原捆绑商品 -->
+
+
+<div class="goods-detail-tab clearfix">
+</div>
+<div class="clear"></div>
+<{foreach from=$addons item=tmpl}>
+  <{require file=$tmpl}>
+<{/foreach}>
+<div class="goodsDetailContent">
+
+
+<{if $goods.description}>
+<div class="section pdtdetail" tab="商品详情">
+
+<h2><strong><{t}>商品详情<{/t}></strong></h2>
+<div class="goodsprop_ultra clearfix">
+    <{if $env.app.getConf('goodsprop.display.position') != 1}>
+    <{foreach from=$goods.type.props item=propord key=key}>
+      <{if $propord.show}>
+      <{assign var="pkey" value="p_{$key}"}>
+          <{assign var="pcol" value=$goods.props.$pkey.value}>
+      <{if trim($pcol) !== ''}>
+      <div class="span-4">
+      <span><{$propord.name}>：</span>
+      <{if $propord.type == 'select'}>
+        <{if $env.app.getConf('goodsprop.display.switch') == 'true'}><a href="<{selector args=array("{$goods[category][cat_id]}") value="{$goods[category][cat_id]}" filter=array('cat_id'=>array("{$goods[category][cat_id]}"),"p_{$key}"=>array($pcol))}>" target="_blank"><{$propord.options.$pcol}></a><{else}><{$propord.options.$pcol}><{/if}>
+      <{else}>
+        <{$pcol}>
+      <{/if}>
+
+      </div>
+      <{/if}>
+      <{/if}>
+    <{/foreach}>
+    <{/if}>
+</div>
+<div class="body indent uarea-output" id="goods-intro">
+<{$goods.description}>
+</div>
+</div>
+<{/if}>
+
+
+
+
+<{if count($goods.params)>0 && $goods.params}>
+<div class="section pdtdetail" tab="详细参数" >
+<h2><{t}>详细参数<{/t}></h2>
+<div class="body"  id="goods-params">
+<table width="100%" cellpadding="0" cellspacing="0" class="liststyle data">
+<col class="span-4 ColColorGray fontcolorBlack"></col>
+  <{foreach from=$goods.params item=params key=group}>
+  <tr><td colspan="2" class="colspan ColColorGraydark"><{$group}><span class="gname"></span></td></tr>
+    <{foreach from=$params item=value key=key}>
+        <{if $value != ''}>
+      <tr><th><{$key}></th><td><{$value|default:'-'}></td></tr>
+        <{/if}>
+        <{/foreach}>
+  <{/foreach}>
+  </table>
+</div>
+</div>
+<{/if}>
+<{if $goods.link_count > 0}>
+<div class="section pdtdetail" tab="相关商品">
+<h2><{t}>相关商品<{/t}></h2>
+<div class="body" id="goods-rels">
+  <div class="GoodsSearchWrap">
+    <table width="100%" border="0" cellpadding="0" cellspacing="6">
+  <tr valign="top"> <{foreach from=$goods.link item=linklist name=goods}>
+    <td product="<{$linklist.goods_id}>" width="25%">
+    <div class="items-gallery">
+
+    <div class="goodpic" style='<{if $env.app.getConf('site.thumbnail_pic_width') !=0 && $env.app.getConf('site.thumbnail_pic_height') !=0}>height:<{$env.app.getConf('site.thumbnail_pic_height')}>px;<{/if}>'>
+    <a href='<{link app=b2c ctl=site_product act=index arg0=$linklist.goods_id}>' style='<{if $env.app.getConf('site.thumbnail_pic_width') !=0 && $env.app.getConf('site.thumbnail_pic_width') !=0}> width:<{$env.app.getConf('site.thumbnail_pic_width')}>px;height:<{$env.app.getConf('site.thumbnail_pic_height')}>px;<{/if}>;'>
+     <img src="<{$linklist.image_default_id|storager:'s'}>"/>
+     </a></div>
+      <div class="goodinfo">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td colspan="2"><h6 style="text-align:center"><a href="<{link app=b2c ctl=site_product act=index arg0=$linklist.goods_id}>" title="<{$linklist.name}>"><{$linklist.name}></a></h6></td>
+          </tr>
+          <tr>
+            <td colspan="2"><ul>
+                <li><span class="price1"><{$linklist.price|cur}></span></li>
+              </ul></td>
+          </tr>
+          <tr>
+            <td>
+                <{if $goods.setting.mktprice}>
+                <span class="mktprice1"><{$linklist.mktprice|cur}></span>
+                <{/if}>
+            </td>
+            <td><ul class="button">
+                <li>
+                <a class="viewpic" href="<{link app=b2c ctl=site_product act=viewpic arg0=$linklist.goods_id arg1=def}>" target="_blank"><{t}>查看图片<{/t}></a></li>
+        <{assign var="dddd" value="333"}>
+                <{goodsmenu product=$linklist setting=$setting login=$login set='true'}>
+                <li class="btncmp">
+             <a href="javascript:void(0)" onclick="gcompare.add({gid:'<{$product.goods_id}>',gname:'<{$product.name|escape:'quotes'}>',gtype:'<{$product.type_id}>'});" class="btncmp" title="商品对比">
+              <{t}>商品对比<{/t}>
+             </a>
+             </li>
+              </ul></td>
+          </tr>
+        </table>
+      </div>
+      </div>
+      </td>
+    <{if !($smarty.foreach.goods.iteration%4)}> </tr>
+  <{if !$smarty.foreach.goods.last}>
+  <tr valign="top"> <{/if}>
+
+    <{elseif $smarty.foreach.goods.last}>
+    <td colspan="<{math equation='4 - y' y=$smarty.foreach.goods.iteration%4}>">&nbsp;</td>
+  </tr>
+  <{/if}>
+  <{/foreach}>
+</table>
+  </div>
+</div>
+</div>
+<{/if}>
+
+
+<{if $comment.switch.ask == 'on'}>
+<div class="section pdtdetail" tab="购买咨询(<em><{$comment.askCount|default:'0'}></em>)">
+
+<div class="commentTabLeft floatLeft"><strong><{t}>购买咨询<{/t}></strong><span><a href="<{link app=b2c ctl="site_comment" act="commentlist" arg0=$goods.goods_id arg1="ask"}>"><{t}>（已有<{/t}><{$comment.askCount|default:'0'}><{t}>条咨询）<{/t}></a></span></div>
+<div class="floatLeft commentTabRight"></div>
+<div style="clear:both;"></div>
+<div class="FormWrap" style="background:#f6f6f6; margin-top:0px;">
+<{if count($comment.list.ask) == 0}>
+<div class="boxBlue division">
+<{$comment.null_notice.ask}>
+</div>
+<{else}>
+<div class=" Comments" id="goods-comment">
+<{foreach from=$comment.list.ask item=comlist name=asklist}>
+
+
+
+  <div class="division boxBlue clearfix" style="margin-bottom:0px;">
+    <div class=" floatLeft commentMain">
+    <div class="floatLeft commentAsk">提问</div>
+    <span class="author fontcolorOrange"><{$comlist.author}><!--<{if $comlist.levelname!=""}> [<{$comlist.levelname}>]<{/if}> --></span> <{t}>说：<{/t}>
+    <span class="timpstamp font10px fontcolorGray"><{$comlist.time|cdate:'SDATE_STIME'}></span>
+    <div  style="clear:both;"></div>
+    <div class="commentText"><{$comlist.comment|nl2br}></div>
+    </div>
+    <div class="floatRight"><a class="floatRight lnk " href="<{link app=b2c ctl="site_comment" act="reply" arg0=$comlist.comment_id}>" arg1="ask"><{t}>查看或回复此评论<{/t}></a></div>
+    </div>
+    <div class="commentReply">
+    <{foreach from=$comlist.items item=items}>
+    <div class="division  item " style=" margin:0px;" >
+    <div class="floatLeft commentReply-admin">回答</div>
+    <span class="author fontcolorOrange"><{$items.author}><!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}> --><{t}><{/t}></span>&nbsp;&nbsp;回复：
+    <span class="timpstamp font10px fontcolorGray"><{$items.time|cdate:'SDATE_STIME'}></span>
+    <div  style="clear:both;"></div>
+    <div class="commentText"><{$items.comment|nl2br}></div>
+    </div>
+ <{/foreach}>
+ </div>
+<{/foreach}>
+</div>
+<div class="textright"><a href="<{link app="b2c" ctl="site_comment" act="commentlist" arg0=$goods.goods_id arg1="ask"}>"><{t}>查看所有咨询&gt;&gt;<{/t}></a></div>
+<{/if}>
+
+<form class="addcomment" method="post" action='<{link app=b2c ctl="site_comment" act="toComment" arg0=$goods.goods_id arg1="ask"}>' onsubmit='checkFormReqs(event);'>
+  <h4><{t}>发表咨询<{/t}></h4>
+  <div class='title'><{t}>标题：<{/t}><{input type="text" class="inputstyle blur"  required="true" size=50 name="title" value="[咨询]".$goods.name }></div>
+  <div class="division">
+      <table border="0" width="100%" cellpadding="0" cellspacing="0" class="forform">
+            <tr>
+            <th><em>*</em><{t}>咨询内容：<{/t}></th>
+              <td><{input type="textarea" class="inputstyle"  vtype="required" rows="5" name="comment" style="width:80%;"}></td>
+            </tr>
+            <tr>
+			<{if $login eq "nologin"}>
+           <tr>
+           <th><{t}>联系方式：<{/t}></th>
+                <td><{input type="text" class="inputstyle"   size=20 name="contact"}><span class="infotips"><{t}>(可以是电话、email、qq等)<{/t}></span></td>
+            </tr>
+            <{/if}>
+            <{if $askshow == "on"}>
+            <th><em>*</em><{t}>验证码：<{/t}></th>
+              <td><{input type="number" required="true" size="4" maxlength="4" name="askverifyCode"}>&nbsp;<img src="<{link app="b2c" ctl="site_comment" act="gen_askvcode" arg0=$smarty.now}>" border="1" id="askimgVerifyCode"/><a href="javascript:changeimg('askimgVerifyCode','ask')"><{t}>&nbsp;看不清楚?换个图片<{/t}></a></td>
+
+            </tr>
+            <{/if}>
+
+            <tr>
+            <td></td>
+              <td><input type="submit" value="提交咨询"></td>
+            </tr>
+        </table>
+  </div>
+</form>
+</div>
+</div>
+<{/if}>
+
+<{if $comment.switch.discuss == 'on'}>
+<div class="section pdtdetail" tab="商品评论 (<em><{$comment.discussCount|default:'0'}></em>)">
+<div class="commentTabLeft floatLeft"><strong><{t}>商品评论<{/t}></strong><span><a href="<{link app=b2c ctl="site_comment" act="commentlist" arg0=$goods.goods_id arg1="discuss"}>"><{t}>（已有<{/t}><em><{$comment.discussCount|default:'0'}></em><{t}>条评论）<{/t}></a></span></div>
+<div class="commentTabRight floatLeft"></div>
+<div style="clear:both;"></div>
+<div class="FormWrap" style="background:#f6f6f6; margin-top:0px;">
+<{if count($comment.list.discuss) == 0}>
+<div class="boxBrown division">
+<{$comment.null_notice.discuss}>
+</div>
+<{else}>
+<div class=" Comments" id="goods-comment">
+<{foreach from=$comment.list.discuss item=comlist name=discusslist}>
+
+
+
+  <div class="division boxBlue clearfix" style="margin-bottom:0px;">
+    <div class=" floatLeft commentMain">
+     <div class="floatLeft commentAsk">提问</div>
+   <span class="author fontcolorOrange"><{$comlist.author}><!--<{if $comlist.levelname!=""}> [<{$comlist.levelname}>]<{/if}> --></span><{t}>说：<{/t}><{/t}>
+    <span class="timpstamp font10px fontcolorGray replies prepend-1"><{$comlist.time|cdate:'SDATE_STIME'}></span>
+ <div  style="clear:both;"></div>
+
+
+  <div class="commentText"><{$comlist.comment|nl2br}></div>
+    </div>
+
+<div class="floatRight"><a class="floatRight lnk " href="<{link app=b2c ctl="site_comment" act="reply" arg0=$comlist.comment_id}>" arg1="ask"><{t}>查看或回复此评论<{/t}></a></div>
+ </div>
+
+     <div class="commentReply">
+    <{foreach from=$comlist.items item=items}>
+      <div class="division  item " style=" margin:0px;" >
+        <div class="floatLeft commentReply-admin">回复</div>
+    <span class="author fontcolorOrange"><{$items.author}><!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}> --><{t}></span>&nbsp;&nbsp;回复：<{/t}>
+    <span class="timpstamp font10px fontcolorGray replies prepend-1"><{$items.time|cdate:'SDATE_STIME'}></span>
+    <div  style="clear:both;"></div>
+    <div class="commentText"><{$items.comment|nl2br}></div>
+    </div>
+ <{/foreach}>
+ </div>
+
+
+
+<{/foreach}>
+</div>
+
+    <div class="textright"><a href="<{link app=b2c ctl="site_comment" act="commentlist" arg0=$goods.goods_id arg1="discuss"}>"><{t}>查看所有评论&gt;&gt;<{/t}></a></div>
+    <{/if}>
+
+    <form class="addcomment" method="post" action='<{link app=b2c ctl="site_comment" act="toComment" arg0=$goods.goods_id arg1="discuss"}>' onsubmit='checkFormReqs(event);'>
+      <h4><{t}>发表评论<{/t}></h4>
+      <div class='title'><{t}>标题：<{/t}><{input type="text" class="inputstyle blur"  required="true" size=50 name="title" value="[评论]".$goods.name}></div>
+      <div class="division">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="forform">
+
+                <tr>
+                <th><em>*</em><{t}>评论内容：<{/t}></th>
+                  <td><{input type="textarea" class="x-input inputstyle"  vtype="required" rows="5" name="comment" style="width:80%;"}></td>
+            </tr>
+				<{if $login eq "nologin"}>
+               <tr>
+                <th><{t}>联系方式：<{/t}></th>
+                    <td><{input type="text" class="inputstyle"  size=20 name="contact"}><span class="infotips"><{t}>(可以是电话、email、qq等).<{/t}></span></td>
+                </tr>
+                <{/if}>
+               <{if $discussshow == "on"}>
+                <tr>
+                <th><em>*</em><{t}>验证码：<{/t}></th>
+                    <td><{input type="number" required="true" size="4" maxlength="4" name="discussverifyCode"}>&nbsp;<img src="<{link app="b2c" ctl="site_comment" act="gen_dissvcode" arg0=$smarty.now}>" border="1" id="discussimgVerifyCode"/><a href="javascript:changeimg('discussimgVerifyCode','discuss')"><{t}>&nbsp;看不清楚?换个图片<{/t}></a>
+
+                    </td>
+                </tr>
+                <{/if}>
+
+                <tr>
+                <td></td>
+                  <td><input type="submit" value="提交评论"></td>
+                </tr>
+            </table>
+      </div>
+    </form>
+</div>
+</div>
+<{/if}>
+
+<div id='template-modal' style='display:none;'> <div class='dialog'> <div class='dialog-title clearfix'> <div class='title span-auto'>{title}</div> <div class='dialog-close-btn' onclick='$(this).getParent(".dialog").remove();'>X</div> </div> <div class='dialog-content'> {content} </div> </div> </div>
+
+
+
+
+<script>
+<{if $comment.switch.ask == 'on' or $comment.switch.discuss == 'on'}>
+
+    var checkFormReqs =function(e){
+           e    = new Event(e);
+       var _form= $(e.target);
+
+       var reqs = $$(_form.getElements('input[type=text]'),_form.getElements('textarea'));
+
+
+       if(reqs.some(function(req){
+            if(!req.get('required')&&!req.get('vtype').contains('required'))return;
+            if(req.getValue().trim()==''){
+                       req.focus();
+                       MessageBox.error('请完善表单必填项<sup>*</sup>');
+                       return true;
+            }
+
+              return false;
+
+
+       })){
+
+           e.stop();
+
+       }
+
+    };
+
+    function changeimg(){ alert(111);
+    $('discussimgVerifyCode').set('src','<{link app="b2c" ctl="site_comment" act="gen_dissvcode" }>?'+$time());
+}
+</script>
+<{/if}>
+
+
+
+
+<{if count($gift)>0}>
+<div class="section pdtdetail" tab="赠品">
+<h2><{t}>赠品<{/t}></h2>
+<div class="body" id="goods-gift">
+  <div class="GoodsSearchWrap">
+    <{foreach from=$gift item=gift key=key}>
+      <div class="items-list" product="<{$gift.gift_id}>">
+      <div class="goodpic">
+      <{input type="checkbox" name="g[]" value=$gift.goods_id }>
+      <a href="<{link app=b2c ctl="site_product" act="index" arg0=$gift.goods_id}>" title="<{$gift.name}>" style='<{if $env.conf.site.thumbnail_pic_width !=0 && $env.conf.site.thumbnail_pic_width !=0}> width:<{$env.conf.site.thumbnail_pic_height}>px;height:<{$env.conf.site.thumbnail_pic_height}>px;<{/if}>
+     overflow:hidden;text-align:center;vertical-align: middle;margin:0px auto; line-height:<{$env.conf.site.small_pic_height}>px;'>
+        <img src="<{$goods.image_default|gimage:'thumbnail'}>" alt="<{$gift.name}>"/></a></div>
+      <div class="goodinfo">
+        <h6><a href="<{link app=b2c ctl="site_gift" act="index" arg0=$gift.gift_id}>" title="<{$gift.name}>"><{$gift.name}></a></h6>
+        <ul>
+        <li class="intro"><{$gift.intro}></li>
+        <li><{$gift.describe}></li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+      </div>
+      <{/foreach}>
+  </div>
+</div>
+</div>
+<{/if}>
+
+<{if count($coupon)>0}>
+<div class="section pdtdetail" tab="可得优惠券">
+<h2><{t}>可得优惠券<{/t}></h2>
+<div class="body" id="goods-coupon">
+  <ul style="padding:5px 20px;">
+  <{foreach from=$coupon item=coupon key=key}>
+    <li><{$coupon.cpns_name}></li>
+  <{/foreach}>
+  </ul>
+</div>
+</div>
+<{/if}>
+<div class="section pdtdetail" tab="商品推荐">
+	<div class="FormWrap">
+<h4><{t}>商品推荐<{/t}></h4>
+您可以把该商品推荐给您的好友,在下面输入您好友的E-mail地址，我们会发送邮件通知您的好友！
+<div class="division">
+
+<form method="POST" action="<{link app=b2c ctl=site_product act=recooemd}>">
+  <input type="hidden" name="goods_id" value="<{$goods.goods_id}>">
+  <input type="hidden" name="goods_name" value="<{$goods.name}>">
+    <table border="0" cellspacing="0" cellpadding="0" class="forform">
+ <tr>
+    <th><{t}>您的姓名:<{/t}></th>
+    <td><{input type='text'  class="_x_ipt" name="name" required="true" size="30"}></td>
+  </tr>
+  <tr>
+    <th><{t}>您好友的邮箱:<{/t}></th>
+    <td><{input type='text' vtype="email" class="_x_ipt" name="email" required="true" size="30" value=$member.email}></td>
+    <td><input type="submit" value="提交"></td>
+  </tr>
+</table>
+
+
+
+</form>
+</div></div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<{include file='site/product/goods_js.html' app=b2c}>

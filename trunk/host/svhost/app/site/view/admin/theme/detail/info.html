@@ -1,0 +1,41 @@
+<div class="tableform">
+
+<table>
+<tr>
+<th width="100">名称：</th>
+<td><{$row.name}></td>
+</tr>
+
+<tr>
+<th width="100">作者：</th>
+<td><{$row.author}></td>
+</tr>
+
+<tr>
+<th width="100">站点：</th>
+<td><{$row.site}></td>
+</tr>
+
+<tr>
+<th width="100">版本：</th>
+<td><{$row.version}></td>
+</tr>
+
+<tr>
+<th width="100">介绍：</th>
+<td><{$row.info}></td>
+</tr>
+
+<tr>
+<th width="100">边框配置：</th>
+<td>
+<{foreach from=$row.config.borders item=item name="item"}>
+<{$item[key]}> -> <{$item[tpl]}><br/>
+<{/foreach}>
+</td>
+</tr>
+
+
+</table>
+
+</div>

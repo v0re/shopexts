@@ -1,0 +1,87 @@
+<form action="index.php?app=content&ctl=admin_node&act=save" method="POST" id="node_add_form">
+<{input type='hidden' name='node_id' value=$node.node_id id='aEditor-Nodeid-input'}>
+    <div class="tableform">
+    <div class="division">
+    <h4><{t}>节点信息<{/t}></h4>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>  <th>节点名称：</th>
+      <td> <{input type='text' name='node[node_name]' vtype='required&&text' caution='请填写节点名称' value=$node.node_name }>  </td>
+      </tr>
+     
+      <tr>  <th>上级节点：</th>
+      <td> <{input type='select' name='node[parent_id]' value=$node.parent_id  vtype='required' caution='请选择上级节点' rows=$selectmaps valueColumn="node_id" labelColumn="node_name"}> <span class="notice-inline"><{t}>顶级节点请选'无'<{/t}></span> </td>
+      </tr>
+
+      <tr>  <th>URL路径：</th>
+      <td> <{input type='text' name='node[node_pagename]' value=$node.node_pagename size='20' vtype='text' }><span class="notice-inline"> <{t}>默认为节点名称的拼音缩写<{/t}></span> </td>
+      </tr>
+      
+      <tr>  <th>SEO title：</th>
+      <td> <{input type='text' name='node[seo_title]' size='40' vtype='text' value=$node.seo_title }> <span class="notice-inline"><{t}>默认为节点名称<{/t}></span> </td>
+      </tr>
+
+      <tr>  <th>SEO keywords：</th>
+      <td> <{input type='text' name='node[seo_keywords]' size='20' vtype='text' value=$node.seo_keywords }> <span class="notice-inline"><{t}>默认为节点名称<{/t}></span> </td>
+      </tr>
+
+      <tr>  <th>SEO description：</th>
+      <td> <{input type='textarea' rows='2' cols='60' name='node[seo_description]' size='20' vtype='text' value=$node.seo_description }> <span class="notice-inline"><{t}>默认为节点名称<{/t}></span> </td>
+      </tr>
+    
+      <tr>  <th>是否启用：</th>
+      <td>
+        <input type="radio" value="1" name="node[ifpub]" <{if $node.ifpub == 'true'}>checked<{/if}> />是
+        <input type="radio" value="0" name="node[ifpub]" <{if $node.ifpub != 'true'}>checked<{/if}> />否
+      </td>
+      </tr>
+
+      <tr>  <th>排序：</th>
+      <td> <{input type='text' name='node[ordernum]' size='20' size='3' vtype='required&&number' value='0' caution='请填写排序值' value=$node.ordernum }> <span class="notice-inline"><{t}>数字越小越靠前<{/t}> </span></td>
+      </tr>
+      <tr>
+        <th>是否启用主页：</th>
+        <td>
+            <input type="radio" id="homepage" value="1" name="node[homepage]" <{if $node.homepage=='true'}> checked <{/if}> >是
+            <input type="radio" id="homepage" value="0" name="node[homepage]" <{if $node.homepage!='true'}> checked <{/if}> >否
+        </td>
+      </tr>
+      </table>
+      </div>
+      
+      <div class="division">
+            <div id="show-edit-view">
+                <{foreach from=$sections item=section}>
+                  <{include file=$section.file}>
+                <{/foreach}>
+            </div>
+      </div>
+    <div class="table-action">
+    <{button type="submit" label="保存" class="btn-primary" }>
+    <{button type="reset" label="重置" class="btn-secondary"}>
+    </div>
+    </div>
+</form>
+
+<script>
+   <{if $node.homepage!='true'}>
+   $('show-edit-view').setStyle('display', 'none');
+   <{/if}>
+   $('homepage').addEvent('click', function(e){
+      //alert(document.getElementById('homepage').checked)
+      //if(e.checked) {
+      if(document.getElementById('homepage').checked) {
+          $('show-edit-view').setStyle('display', '');
+      } else {
+          //alert('no');
+          $('show-edit-view').setStyle('display', 'none');
+      }
+   });
+
+$('node_add_form').store('target',{
+    onComplete:function(){
+        if($('node_add_form').getParent('.dialog'))
+        $('node_add_form').getParent('.dialog').retrieve('instance').close();
+    }
+});
+</script>

@@ -1,0 +1,301 @@
+<div id='gEditor-sepc-panel'>
+    <div class="action-bar">
+        <div class="frt" style="padding-top:2px;"><{button label="增加规格项" class="add addspec" app="desktop" icon="btn_add.gif"}></div>
+        <input type="hidden" name="ctlType" value="<{$ctlType}>">
+        <span class="notice-inline"><{t}>1 增加规格项或选择规格标签 » 2 添加需要的规格值 » 3 自定义规格值或关联相册 » 保存<{/t}></span>
+    </div>
+    <div>
+    <div id='set_spec_desc'>
+    <{include file='admin/goods/detail/spec/set_spec_desc.html'}>
+    </div>
+    </div>
+        <div class="table-action">
+            <{button label="生成所有货品" class="btn-primary save_create"}><{button label="保存" class="btn-primary save"}>
+        </div>
+</div>
+
+<script>
+(function(){
+var updateSpec = (function(addSpecId){
+    W.page('index.php?app=b2c&ctl=admin_goods_editor&act=set_spec_desc',{
+        data:$('gEditor-sepc-panel').toQueryString()+'&addSpecId='+addSpecId,
+        method:'post',
+        update:$('set_spec_desc'),
+        onComplete:function(){
+            setSpecDesc();
+        }
+    });
+});
+var siteration = 0;
+
+var specOp = (function(opArea){
+	opArea.removeEvents('click');
+	opArea.setStyle('cursor','pointer').addEvent('click',function(){
+	   var tr=this.getParent('tr');
+	   var trp=tr.getPrevious('tr');
+	   var trn=tr.getNext('tr');
+
+	   switch (this.get('alt')) {
+		   case '向上':
+				 if(trp)tr.injectBefore(trp);
+				 return ;
+		   case '向下':
+				  if(trn)tr.injectAfter(trn);
+				  return;
+		   case '删除':				
+				  if($('productNode')&&$$('#productNode tr')&&$('productNode').retrieve('specOBJ')){				
+					var hasFlag = $('productNode').retrieve('specOBJ').data.some(function(psv,i){
+						if($H(psv).getValues().indexOf(tr.get('pspecid'))==-1)return false;
+						return true;
+					});						
+					if(hasFlag){
+						return	alert('此规格值已有货品使用，请先删除相关货品！');						
+					}
+				  }
+				  if(confirm('删除后将不能恢复，确认删除本行吗？'))tr.remove();
+				  sumSpecNum();
+				  return;
+	   }
+})});
+ var sumSpecNum = (function(){
+	$$('#gEditor-sepc-panel label[class^=spec-sum-]').each(function(e){
+		e.setText(' ('+$$('#spec-tab-'+e.getParent('span').get('specid')+' .spec-body tr').length+') ');
+	});
+});
+
+var selAlbumsImg = (function(){		
+		$$('#gEditor-sepc-panel .sel-albums-images').removeEvents('click').addEvent('click',function(e){
+			var imgArea = this.getPrevious('span[class^=sel-imgs-area]');
+			var selImgs = imgArea.getNext('.spec_goods_images');
+			var _img_data = 'selImgs='+selImgs.get('value');
+			$$('#all-pics  div[class^=gpic-box]').each(function(imgdiv){
+				var imgid = imgdiv.getChildren('input[name^=goods[images][]').get('value');
+				_img_data += '&img['+imgid+']='+encodeURIComponent(imgdiv.getChildren('span').getElement('img[sn^=_img_'+imgid+']').get('src'));
+			});
+			var _img_tmp = '<img src="{imgsrc}" width="22" height="22" style="margin:0 1px" />';
+			new Dialog('index.php?app=b2c&ctl=admin_goods_editor&act=selAlbumsImg',{title:'关联商品相册图片',
+			 ajaxoptions:{data:_img_data, method:'post'},
+			 callback:function(_sel_img_data){
+					var outimghtml = '';
+					_sel_img_data.each(function(selImgId, outImgIteration){
+						if(outImgIteration < 4)
+							outimghtml += _img_tmp.substitute({'imgsrc':$E('#all-pics  div[class^=gpic-box] img[sn=_img_'+selImgId+']').get('src')});
+						if( outImgIteration == 4 )
+							outimghtml += '...';
+					});
+					imgArea.set('html',outimghtml);
+					selImgs.set('value',_sel_img_data.join());
+			}});
+		});
+});
+
+ var selImage = (function(){
+		$$('#gEditor-sepc-panel .sel_image').removeEvents('click').addEvent('click',function(){
+			 var input = this.getParent('td').getPrevious('.spec-value-input').getChildren('input[class=spec-image]');
+			 var img = this.getPrevious('div[class^=goods-spec-box]').getChildren('img');
+			var selImgDialog= new Dialog('index.php?app=b2c&ctl=admin_editor&act=image&p[0]=0',{title:'选择图片',callback:function(src,_img,ident){
+				  input.set('value',ident);
+				  img.set({'width':'20','height':'20','src':src});
+				  selImgDialog.close();
+			   }});
+		});
+});
+var setSpecDesc =  function(){
+    if($E('#gEditor-sepc-panel .handles .t-handle-current')){
+       $E('#gEditor-sepc-panel .handles .t-handle-current').removeClass('t-handle-current').addClass('t-handle').getElement('.t-del').hide();;
+    }
+   try{
+       $('gEditor-sepc-panel').retrieve('setTabs',function(){
+          
+            $$('#gEditor-sepc-panel .handles .t-handle').removeEvents('click');
+            $$('#gEditor-sepc-panel .handles .t-handle  .t-del').removeEvents('click').setStyle('cursor','pointer').addEvent('click',function(e){
+                e.stop();
+               
+                if(!confirm('确定删除'))return;
+                var tab=this.getParent();
+                $$(tab,tab.retrieve('item')).remove();
+				if( $E('#gEditor-sepc-panel .handles .t-handle'))
+	                $E('#gEditor-sepc-panel .handles .t-handle').fireEvent('click',e);    
+                
+            });
+     
+            new ItemAgg($$('#gEditor-sepc-panel .handles .t-handle'),$$('#gEditor-sepc-panel .spec-items .item'),{
+                         activeName:'t-handle-current',
+                         onActive:function(tab,item){
+                           tab.removeClass('t-handle');
+                           tab.retrieve('item',item);
+                           tab.getElement('.t-del').show();
+                         },
+                         onBackground:function(tab,item){
+                           tab.addClass('t-handle');
+                           tab.getElement('.t-del').hide();
+                         }
+                    }); 
+       })();
+    
+    }catch(e){}
+    
+	var hasProFlag = (function(){
+		return ($$('#productNode tr').length > 0);
+	});
+
+	if( $E('#gEditor-sepc-panel .addspec') ){
+    
+		$E('#gEditor-sepc-panel .addspec').addEvent('click',function(){
+
+        if($E('#gEditor-sepc-panel .notice'))
+        $E('#gEditor-sepc-panel .notice').remove();
+        
+		   this.store('dialog',
+			 new Dialog('index.php?app=b2c&ctl=admin_specification&act=selSpecDialog',{title:'选择规格',callback:function(id,name){
+                updateSpec(id);
+            }})
+		   );
+		});
+	}
+    
+    $$('#gEditor-sepc-panel .editspec').addEvent('click',function(){
+          var specId=this.get('specid');
+          var specbox=this.getParent('tr').getElement('.goods-spec-box');
+          new Dialog('index.php?app=b2c&ctl=admin_specification&act=edit&p[0]='+specId,{title:'编辑规格',onLoad:function(){
+				 var dlg=this.dialog;
+                 if(dlg.getElement('.nav-bar'))dlg.getElement('.nav-bar').remove();
+				
+                 dlg.getElement('form').removeEvents('submit')
+                 .addEvent('submit',function(e){
+                    e.stop();
+                    new Request({
+                        data:this,
+						onSuccess:function(re){
+                           if(re.contains('failedSplash')){
+                              return MessageBox.show(re);
+                           }else{						
+                             new Request({onSuccess:function(re){
+                                specbox.setHTML(re);
+								addbind();
+                                dlg.retrieve('instance').close();
+                             }}).get("index.php?app=b2c&ctl=admin_goods_editor&act=specValue&spec_id="+specId);
+                           }
+                          }
+                        }).post(this.action);
+                 
+                 });
+            }});
+        
+    });
+
+   
+function addbind(){
+	$$('#gEditor-sepc-panel .spec-name li').addEvent('click',function(f){
+		siteration -= -1;
+		var e=this;
+		var sId = e.getParent('ul').get('specId');
+		 var spec_add_data ='spec[specType]='+e.getParent('ul').get('specType')+'&spec[specValueId]='+e.get('specValueId')+'&spec[specId]='+sId+'&spec[specValue]='+e.get('specValue')+'&spec[specImage]='+(e.get('specImage')?e.get('specImage'):'')+'&sIteration='+siteration;
+         
+		new XHR({data:spec_add_data,onRequest:function(){      
+        },onSuccess:function(re){       
+		  addRow(sId,re);
+			if(f == 'addall'){
+				if(e.getNext('li[specvalueid]')){
+					e.getNext('li[specvalueid]').fireEvent('click','addall');
+				}
+			}
+		}}).send('index.php?app=b2c&ctl=admin_goods_editor&act=addSpecValue');
+	});
+};
+addbind();
+specOp( $$('#gEditor-sepc-panel .spec-body .operater'));
+sumSpecNum();
+selImage();
+selAlbumsImg();
+	var addRow = (function(sId,re){
+		  var newtr=new Element('table').set('html', re ).getElement('tr');
+			$E('#spec-tab-'+sId+' .spec-body').adopt(newtr);
+			specOp( $$('#gEditor-sepc-panel .spec-body .operater'));
+			sumSpecNum();
+			selImage();
+			selAlbumsImg();
+	});
+
+	$$('#gEditor-sepc-panel .add-spec-all').addEvent('click', function(e){
+		e=this;	
+		var sid = e.get('specid');
+	
+		var typeNode=this.getParent().getNext('ul[spectype]').getElements('li');	
+			
+		if(typeNode.length>=1){$$('#gEditor-sepc-panel ul[specid='+sid+']').getFirst('li[specvalueid]').fireEvent('click','addall')}else{return false;}		
+	});
+
+    
+ };
+
+
+setSpecDesc();
+
+
+    /*保存规格设置*/
+    $$('#gEditor-sepc-panel .table-action .btn').addEvent('click',function(e){
+
+		if(!$E('#gEditor-sepc-panel .spec-menu .t-handle-current')){
+            alert('您还没有添加任何规格值');
+			return false;
+		}
+        var  flag=$$('#gEditor-sepc-panel div[id^=spec-tab-] .spec-body').every(function(etb,index,arr){
+            return etb.getElement('tr');
+        });
+        if( !flag){
+            alert('您还没有添加任何规格值');
+            return false;
+        }
+
+        var valueHash = new $H({});
+
+		var sameValueFlag = $$('#gEditor-sepc-panel div[id^=spec-tab-] .spec-body tr td[class^=spec-value-input]').every(function(etd){
+			var spid = etd.getChildren('input[class^=spec-value-id]').get('value');
+			var spval = etd.getChildren('input[class^=spec-value]').get('value');
+			if( valueHash.has(spid+'-'+spval) )
+				return false;
+			valueHash.set(spid+'-'+spval, '');
+			return true;
+		});
+		valueHash = null;
+		if( !sameValueFlag )return MessageBox.error('自定义规格值重复，请核实');
+
+          var dialog=this.getParent('.dialog');      
+		  var create_flag = this.hasClass('save_create');
+          
+		  var needUpValue = {'needUpValue':{}};
+		  $$('#gEditor-sepc-panel .spec-value-input').each(function(specTd,si){
+			var cSpecValue = specTd.getElement('.spec-value');
+			var cSpecImg = specTd.getElement('.spec-image');
+			if( cSpecValue.get('value') != cSpecValue.get('oldvalue') || ( (cSpecImg.get('value') || cSpecImg.get('oldvalue')) && cSpecImg.get('value') != cSpecImg.get('oldvalue') ) ){
+				needUpValue.needUpValue[si+'1'] = {'specid':specTd.get('specid'),'specpvid':specTd.get('specpvid')};
+			}
+		  });
+
+          new Request.HTML({
+			 evalScripts:false,
+              onComplete:function(){
+                 dialog.getElement('.btn-close').fireEvent('click');
+		    	 if( $$('#productNode tr').length <= 0 || create_flag ){
+				 	$('goods-spec').empty().set('html',arguments[2]);
+			      }
+				  $exec(arguments[3]);
+              },
+              data:$('gEditor-sepc-panel').toQueryString()+'&'+$H(needUpValue).toQueryString()//+(spec_desc?'&'+spec_desc.toQueryString():'')
+          }).post('index.php?app=b2c&ctl=admin_goods_editor&act=doAddSpec'+(create_flag?'&create=true':''));
+            
+      
+    });
+	if( $$('#productNode tr').length > 0 ){
+	
+		if($E('#gEditor-sepc-panel .save_create')){			
+			$E('#gEditor-sepc-panel .save_create').remove();
+		}
+		$ES('#gEditor-sepc-panel .addspec').removeEvents('click').addEvent('click',function(){alert('请先删除所有货品后再新增规格标签')});
+		$$('#gEditor-sepc-panel .handles .t-handle  .t-del').removeEvents('click').addEvent('click',function(){alert('请先删除所有货品后再关闭规格标签')});
+	}
+
+
+})();
+</script>

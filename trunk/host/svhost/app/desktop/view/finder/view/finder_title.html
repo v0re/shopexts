@@ -1,0 +1,32 @@
+<div class="finder-title">
+    <h2 class="head-title flt"><{$title}><{if !$haspacket}> <span class="num">(共<{$pinfo.count}>条)</span><{/if}></h2>
+    <ul class="frt">
+    	<{if $use_buildin_filter}>
+    	<li>
+    		<span lnk="<{$url}>&action=filter" class="lnk" id="filter-action-<{$name}>" class="abcd1234">
+    			<{img src="bundle/filter.gif"}>
+    			<{t}>高级筛选<{/t}>
+			</span> | 
+    	</li>  
+		<script>
+			$('filter-action-<{$name}>').addEvent('click',function(){
+				
+				new Side_R(this.get('lnk'),{
+			    width:200, 
+			    title:'高级筛选',
+			    trigger:$('filter-action-<{$name}>'),
+				onLoad:function(){  
+					W.render(this.container); 
+				},onHide:function(){
+					finderGroup['<{$name}>'].filter.value = "";
+					finderGroup['<{$name}>'].refresh();
+					
+				}});
+			});
+		</script>
+    	<{/if}>
+    	<li>
+    	  <a href="javascript:void(0);" onclick="<{$var_name}>.refresh()"><{t}>刷新<{/t}></a>  				    
+    	</li>
+    </ul>
+</div>

@@ -1,0 +1,10 @@
+<site>
+    
+    <module controller='site_gift' >
+        <name>gift</name>
+        <title>赠品</title>
+        <disable>false</disable>
+        <allow_menu act='lists'>赠品列表页</allow_menu>
+    </module>
+    
+</site>

@@ -1,0 +1,31 @@
+<{if $goods.gift}>
+  <tr >
+    <td><{t}><{$goods.obj_items.products.0.new_name}> ( 赠品 )<{/t}></td>
+    <td colspan="7">
+        <table width="100%" cellpadding="2" cellspacing="0" class="liststyle cart-list">
+              <col class="span-2 "></col>
+              <col class="span-auto"></col>
+              <col class="span-2"></col>
+              <thead>
+                <tr>
+                  <th><{t}>图片<{/t}></th>
+                  <th><{t}>赠品名称<{/t}></th>
+                  <th><{t}>赠品数量<{/t}></th>
+                </tr>
+              </thead>
+          <{foreach from=$goods.gift item=goods}>
+            <tr>
+            <td>
+                <div class='cart-product-img' isrc="<{$goods.default_image.thumbnail|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" ghref='<{link app=gift ctl=site_gift act="index" arg0=$goods.goods_id}>' style='width:50px;height:50px;'>
+                    <img src='statics/loading.gif'/>
+                 </div>
+            </td>
+            <td style="text-align:left"><a target="_blank" href="<{link app=gift ctl=site_gift arg0=$goods.goods_id }>"><{$goods.name}></a></td>
+            <td><{$goods.quantity}></td>
+            </tr>
+         <{/foreach}>
+         
+       </table>
+   </td>
+  </tr>
+<{/if}>

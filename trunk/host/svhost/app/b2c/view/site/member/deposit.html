@@ -1,0 +1,55 @@
+<!-- right-->
+  <div class="MemberMain">
+  <div style="margin-right:175px;">
+
+<div class="title"><{t}>充值到预存款<{/t}></div>
+<form action="<{link app=b2c ctl="site_paycenter" act="dopayment" arg0="recharge"}>" method="post" target="_blank" class="section">
+  <input type="hidden" name="payment[member_id]" value="<{$member_id}>" />
+  <input type="hidden" name="payment[return_url]" value="<{$return_url}>" />
+    
+  <div class="FormWrap" style="background:none; border:none; padding:0; margin:0;">
+    <div class="division" style="border:none;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform">
+  <tr>
+    <th><{t}>输入充值金额：<{/t}></th>
+    <td><{input class="inputstyle" type="unsigned" name="payment[money]" required="true" id=''}></td>
+  </tr>
+    <tr>
+    <th><{t}>选择支付币别：<{/t}></th>
+    <td><{$currencys.cur_name}></td>
+  </tr>
+</table>
+</div>
+
+
+<div style="border-top:1px solid #f1f1f1;"></div>
+
+    <div class="division" style="border:none;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform">
+  <tr>
+    <th><{t}>选择支付方式：<{/t}></th>
+    <td id="paymentlist">    <{include file="site/common/paymethod.html"}></td>
+  </tr>
+    <tr>
+    <th></th>
+    <td><input class="btnstyle" type="submit" value="点击立刻付款" /></td>
+  </tr>
+</table>
+</div></div>
+
+</form>
+<script>
+$('payment-cur').addEvent('change', function(e){
+  new Request.HTML({update:'paymentlist'}).post('./?cart-online-payment.html',$H({cur:this.value}));
+});
+Order ={
+          paymentChange:function(){
+          /*$$('#_normal_payment th .ExtendCon input[type=radio]').fireEvent('checkedchange');
+          this.updateTotal();*/
+        }
+      };
+</script>
+
+  </div>
+  </div>
+<!-- right-->

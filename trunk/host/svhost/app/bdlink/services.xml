@@ -1,0 +1,15 @@
+<services>
+    
+    <service id="b2c_save_post_om">
+		<class>bdlink_link</class>
+	</service>
+	
+	<service id="html_input">   
+        <class>bdlink_input_helper</class> 
+    </service>
+    
+    <service id="desktop_finder.bdlink_mdl_list">
+        <class>bdlink_finder_list</class>
+    </service>
+    
+</services>

@@ -1,0 +1,46 @@
+<{if count($product.spec_desc_info)>1}>
+<li class="addcart buy-select" style="z-index:<{$zindex}>">
+<{if $showtextbuy}><a class='lnk'><{t}>加入购物车<{/t}></a><{/if}>
+<div class="buy-select-list" style="display:none;">
+<h3><{t}><{if count($product.spec_desc_info) == 0}>该商品暂时无货<{else}>请选择规格<{/if}><{/t}></h3>
+<table width="100%">
+<{foreach from=$product.spec_desc_info item=item}>
+  <tr>
+    <td width="100"><{$item.spec_info}></td>
+    <td ><span class="fontcolorRed fontbold"><{$item.price|cur}></span></td>
+    <td width="100" align="right" style="vertical-align:middle">
+    <{if $addcart_disabled != 1}>
+
+      <a type="g" href="<{link app=b2c ctl=site_cart act=addToCart arg0=goods arg1=$product.goods_id arg2=$item.product_id arg3='1'}>" buy="<{$product.goods_id}>sdfsdf" product="<{$product_id}>"<{if $setting.buytarget == 2}> target="_blank_cart"<{elseif $setting.buytarget == 3}> target="_dialog_minicart"<{/if}> title="加入购物车" rel="nofollow" class="btnbuy"><{t}>购买<{/t}></a>
+
+    <{/if}>
+    </td>
+  </tr>
+<{/foreach}>
+</table>
+</div>
+<{else}>
+  <{if $addcart_disabled != 1}>
+
+    <li class="addcart">
+<{foreach from=$product.spec_desc_info item=item}>
+    <a href="<{link app=b2c ctl=site_cart act=addToCart arg0=goods arg1=$product.goods_id arg2=$item.product_id arg3='1' }>" type="g" buy="<{$product.goods_id}>" class="listact"<{if $setting.buytarget == 2}> target="_blank_cart"<{elseif $setting.buytarget == 3}> target="_dialog_minicart"<{/if}> title="加入购物车" rel="nofollow"><{t}>加入购物车<{/t}></a>
+<{break;}>
+<{/foreach}>
+    </li>
+
+
+  <{/if}>
+<{/if}>
+</li>
+<{if $product.promotions && ($product.promotions >0) }>
+    <li <{if $login!="nologin"}>star="<{$product.goods_id}>"<{/if}>
+         title="<{$product.name|escape:html}>" class="star-off">
+         <a  <{if $login=="nologin"}> href="<{link app=b2c ctl="site_passport" act="login"}>"
+             <{else}>href="#" onclick="return false;"
+             <{/if}>
+         class="listact" title="促销优惠" rel="nofollow"><{t}>促销优惠<{/t}></a>
+    </li>
+<{/if}>
+<li <{if $login!="nologin"}>star="<{$product.goods_id}>"<{/if}> title="<{$product.name|escape:html}>" class="star-off"><a  <{if $login=="nologin"}> href="<{link app="b2c" ctl="site_passport" act="login"}>" <{else}>href="#" onclick="return false;"<{/if}> class="listact" title="加入收藏" rel="nofollow"><{t}>加入收藏<{/t}></a></li>
+<li class="vdetail zoom"><a title="<{$product.name|escape:html}>" href="<{link app=b2c ctl=site_product act=index arg0=$product.goods_id}>" pic='<{$product.big_pic|default:$env.conf.site.default_big_pic|storager}>' target="_blank" class="listact" title="查看详细"><{t}>查看详细<{/t}></a></li>

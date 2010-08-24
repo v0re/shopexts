@@ -1,0 +1,218 @@
+<div class="ItemsWarp clearfix">
+<{assign var='zindex' value='1000'}>
+<{foreach from=$products item="product"}>
+  <div class="items-list <{$mask_webslice}>" product="<{$product.goods_id}>" id="pdt-<{$product.goods_id}>">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="goodpic" valign="middle" style="<{if $image_set.S.width}> width:<{$image_set.S.width}>px;<{/if}>">
+        <{if $product.udfimg == 'true'}>
+  <{assign var="gimage" value=$product.thumbnail_pic}>
+  <{else}>
+  <{assign var="gimage" value=$product.image_default_id|default:$defaultImage}>
+  <{/if}>
+  <a target="_blank" style='<{if $image_set.S.width}> width:<{$image_set.S.width}>px;height:<{$image_set.S.height}>px;<{/if}>' href="<{link app=b2c ctl=site_product act=index arg=$product.goods_id}>">
+    <img  src="<{$gimage|storager:'s'}>"  alt="<{$product.name|escape:html}>"/>
+    <{*<span class='zoom-handle' pic='<{$product.big_pic|default:$env.conf.site.default_big_pic|storager}>'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>*}>
+  </a>
+  </td>
+  <td width='10px;'>&nbsp;</td>
+    <td class="goodinfo">
+      <h6><a href="<{link app=b2c ctl=site_product act=index arg=$product.goods_id}>" title="<{$product.name|escape:html}>" class="entry-title" target="_blank"><{$product.name|escape:"html"}></a></h6>
+      <{$product.brief}>
+    </td>
+    <td class="price_button" width="250">
+          <ul>
+            <li><span class="price1"><{$product.price|cur}></span><{if $product.mktprice && $setting.mktprice eq true}><span class="mktprice1"><{t}>市场价: <{/t}><{$product.mktprice|cur}></span><{/if}></li>
+            <{if $product.mktprice > $product.price && $setting.mktprice && $setting.saveprice > 0}>
+            <li style="padding-left:4px; padding-top:8px;"><span class="saveprice1"> <{if $setting.saveprice == 1}>节省：<{$product.mktprice-$product.price|cur}>
+                    <{elseif $setting.saveprice == 2}>优惠:<{$product.price/$product.mktprice*100|number:'2'}>%
+                    <{elseif $setting.saveprice == 3}><{$product.price/$product.mktprice*10|number:'1'}>折
+					<{/if}></span></li>
+            <{/if}>
+            <!--<li class="intro rank-<{$product.rank|default:3}>">Rank <{$product.rank|default:3}></li>-->
+          </ul>
+
+        <ul class="button">
+
+            <{goodsmenu product=$product setting=$setting login=$login zindex=$zindex-- }>
+
+            <li class="btncmp">
+                       <a href="javascript:void(0)" onclick="gcompare.add({gid:'<{$product.goods_id}>',gname:'<{$product.name|addslashes|escape:html}>',gtype:'<{$product.type_id}>'});" class="btncmp" title="商品对比">
+              <{t}>商品对比<{/t}>
+             </a>
+            </li>
+        </ul>
+
+    </td>
+  </tr>
+</table>
+
+  </div>
+<{/foreach}>
+</div>
+
+<{*
+<script>
+/*void function(){
+橱窗放大镜
+  author:litie[A]shopex.cn
+  [c]  ShopEx
+  last update : 2009年9月25日14:51:20
+
+    var getAmongPos = function(size,to){
+                 var elpSize = $(to).getSize();
+                 return {
+                    'top':Math.abs((elpSize.y/2).toInt()-(size.height/2).toInt()+to.getPosition().y+elpSize.scroll.y),
+                    'left':Math.abs((elpSize.x/2).toInt()-(size.width/2).toInt()+to.getPosition().x+elpSize.scroll.x)
+                 };
+            };
+
+   $$('.items-list .goodpic .zoom-handle').addEvent('click',function(e){
+            e.stop();
+            if(this.retrieve('active'))return;
+            var _this = this;
+            _this.store('active',true);
+            var tpic = this.getPrevious('img');
+            var bpic_src = this.get('pic');
+
+            var loading = new Element('div',{
+                 styles:{'background':'#fff url(<{$base_url}>statics/loading.gif) no-repeat 50% 50%',
+                         'width':40,
+                         'height':40,
+                         'border':'1px #e9e9e9 solid',
+                         'opacity':.5}}).inject(document.body).amongTo(tpic);
+
+            new Asset.image(bpic_src,{onload:function(img){
+
+                  loading.remove();
+                  var winsize = window.getSize();
+                  var imgSize = $(img).zoomImg(winsize.x,winsize.y,1);
+                  var fxv = $extend(getAmongPos(imgSize,window),imgSize);
+                  var imgFx = new Fx.Morph(img,{link:'cancel'});
+                  img.setStyles($extend(tpic.getCis(),{opacity:0.5})).inject(document.body).addClass('img-zoom').addEvent('click',function(){
+                      imgFx.start(tpic.getCis()).chain(function(){this.element.remove();_this.store('active',false);});
+                  });
+                  imgFx.start($extend(fxv,{opacity:1}));
+                  document.addEvent('click',function(){
+
+                       img.fireEvent('click');
+                       document.removeEvent('click',arguments.callee);
+
+                  });
+
+            },onerror:function(){
+                _this.store('active',false);
+                loading.remove();
+            }});
+
+
+   });
+
+
+   }();*/
+</script>
+*}>
+
+
+<script>
+/*
+迷你购物车
+@author litie[aita]shopex.cn
+  [c] shopex.cn
+*/
+ window.addEvent('domready',function(){
+     var miniCart={
+           'show':function(target){
+               var dialog  = this.dialog =$pick($('mini-cart-dialog'),new Element('div',{'class':'dialog mini-cart-dialog','id':'mini-cart-dialog'}).setStyles({width:300}).inject(document.body));
+                this.dialog.setStyles({
+                         top:target.getPosition().y+target.getSize().y,
+                         left:target.getPosition().x
+                    }).set('html',
+
+                  $E('#template-modal .dialog').get('html').substitute({
+
+                      title:'正在加入购物车',
+                      content:'正在加入购物车...'
+                  })
+
+               ).show();
+
+
+
+               document.addEvent('click',function(){
+                  dialog.remove();
+                  document.removeEvent('click',arguments.callee);
+               });
+
+           },
+           'load':function(){
+              var params=Array.flatten(arguments).link({
+                  'remoteURL':String.type,
+                  'options':Object.type
+              });
+              params.options.data = params.options.data?params.options.data.toQueryString()+'&mini_cart=true':'&mini_cart=true';
+              var opts=params=$extend({
+                 url:params.remoteURL,
+                 method:'post',
+                 onRequest:function(){
+                     //this.dialog.getElement('.title').set('html','正在加入购物车');
+
+                 }.bind(this),
+                 onSuccess:function(re){
+                     //this.dialog.getElement('.title').set('html','<img src="statics/icon-success.gif" />成功加入购物车');
+                     this.dialog.getElement('.dialog-content').set('html',re);
+                     $$('.cart-number').set('text',Cookie.get('S[CART_COUNT]')||0);
+
+                 }.bind(this),
+                 onFailure:function(xhr){
+                     this.dialog.remove();
+                     MessageBox.error("加入购物车失败.<br /><ul><li>可能库存不足.</li><li>或提交信息不完整.</li></ul>");
+                 }.bind(this)
+              },params.options||{});
+              if(!params.url)return false;
+              miniCart.show(opts.target);
+              new Request(opts).send();
+           }
+     };
+
+
+
+   if(formtocart=$E('form[target=_dialog_minicart]')){
+       formtocart.addEvent('submit',function(e){
+
+           e.stop();
+           miniCart.load([{
+               url:this.action,
+               method:this.method,
+               data:this,
+               target:this.getElement('input[value=加入购物车]')
+           }]);
+
+       });
+   };
+   /*for  goods which has specs*/
+   if(btnbuy=$E('#goods-viewer form[target=_dialog_minicart] .btn-buy')){
+
+      btnbuy.removeEvents('click').addEvent('click',function(e){
+          e.stop();
+          if(this.retrieve('tip:text'))return false;
+          this.blur();
+          this.form.fireEvent('submit',e);
+
+      });
+
+   };
+
+   if(linktocart=$$('a[target=_dialog_minicart]')){
+       if(linktocart.length){
+            linktocart.addEvent('click',function(e){
+                 e.stop();
+                 miniCart.load([{url:this.href,target:this}]);
+            });
+
+       }
+   };
+});
+
+</script>
+

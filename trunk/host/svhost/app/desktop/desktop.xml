@@ -1,0 +1,42 @@
+<desktop>
+    <panelgroup id="setting" icon="panel-setting.png" order="10">商店配置</panelgroup>
+    <panelgroup id="user" icon="panel-user.png" order="50">管理员和权限</panelgroup>
+<!--    <panelgroup id="network" icon="panel-network.png" order="80">联网</panelgroup>-->
+    <panelgroup id="other" icon="panel-other.png" order="100">其他</panelgroup>
+
+    <adminpanel group="desktop_setting" controller="queue" permission="performance" order="60" display='true'>队列管理</adminpanel>
+    
+    <adminpanel group="desktop_setting" controller="system" permission="performance" action="service" display='true' order="70">系统配置</adminpanel>
+    <adminpanel group="desktop_setting" controller="email" permission="performance" action="setting" display='false'>系统配置</adminpanel>
+    
+    
+    <adminpanel group="desktop_setting" controller="magicvars" permission="performance" action="index" display='true' order="40">全局变量</adminpanel>
+    <adminpanel group="desktop_user" permission="users" controller="users" display='true'>操作员管理</adminpanel>
+    <adminpanel group="desktop_user" permission="users" controller="roles" display='true'>角色管理</adminpanel>
+   <!-- <adminpanel group="desktop_other" permission="other" controller="pam" display='true'>登陆认证设置</adminpanel> -->
+    <adminpanel group="desktop_setting" controller="certificate" action="index" permission="setting" display="true" order='20'>授权证书</adminpanel>
+    <adminpanel group="desktop_setting" controller="adminpanel" action="index" permission="setting" display="false" order='20'>配送方式</adminpanel>
+
+<!--    <adminpanel group="desktop_network" controller="network">网店邻居</adminpanel> -->
+    <!--<adminpanel group="desktop_setting" permission="setting" controller="data" display='true'>数据管理</adminpanel>
+    <adminpanel group="desktop_setting" permission="setting" controller="backup" display='false'>数据备份</adminpanel>
+    <adminpanel group="desktop_setting" permission="setting" controller="comeback" display='false'>数据还原</adminpanel>
+    -->
+    
+    <adminpanel group="desktop_setting" permission="setting" controller="cachemgr" display='true' order="50">缓存管理</adminpanel>
+    <adminpanel group="desktop_setting" permission="setting" controller="cachemgr" action="status" display='false'>查看缓存</adminpanel>
+    <adminpanel group="desktop_setting" permission="setting" controller="cachemgr" action="optimize" display='false'>优化缓存</adminpanel>
+    <adminpanel group="desktop_setting" permission="setting" controller="cachemgr" action="clean" display='false'>清空缓存</adminpanel>
+    <adminpanel group="desktop_other" permission="other" controller="appmgr" display='true'>应用管理</adminpanel>
+    <adminpanel group="desktop_other" permission="other" controller="rpcnotify" display='true'>通知</adminpanel>
+    
+    <adminpanel group="desktop_other" permission="other" controller="shoprelation" display='false'>网店邻居</adminpanel>
+
+    <permissions>
+        <permission id="setting" display='true'>参数设置</permission>
+        <permission id="performance" display='true'>性能管理</permission>
+        <permission id="users" display='true'>操作员管理</permission>
+        <permission id="other" display='true'>其他</permission>
+    </permissions>
+
+</desktop>

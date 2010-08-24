@@ -1,0 +1,16 @@
+<form method="post" id="recycle_restore_form" action="index.php?app=desktop&ctl=recycle&act=recycle_restore&finder_id=<{$env.get.finder_id}>&_finder[finder_id]=<{$env.get.finder_id}>">
+<{input type=radio options=$options name="restore_type"}>
+<{foreach from=$env.post.item_id item=item key=key}>
+<input type="hidden" name="item_id[]" value="<{$item}>"/>
+<{/foreach}>
+</form>
+<{area inject=".mainFoot"}>
+<div class="table-action">
+    <{button label="保存" class="btn-primary" onclick="$('recycle_restore_form').fireEvent('submit',new Event(event))" }>
+</div>
+<{/area}>
+<script>
+$('recycle_restore_form').store('target',{onComplete:function(){
+			$('recycle_restore_form').getParent('.dialog').retrieve('instance').close();
+		}});
+</script>

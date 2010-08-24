@@ -1,0 +1,30 @@
+
+<div id="catalog-x" class="catalog">
+	<div class="cat-path">
+		<{if $cat_path}>
+		<div class="clearfix">
+			<{foreach from=$cat_path item=item key=key}> 
+			<div class="span-auto">
+				&laquo;<a pid="<{$item.parent_id}>" class="lnk subs" href="javascript:void(0);"><span><{$item.cat_name}></span></a>
+			</div>
+			<{/foreach}>
+		</div>
+		<{else}>
+		&laquo;<a class="cat-no-child subs lnk" href="javascript:void(0)"><span>分类不限</span></a>
+		<{/if}>
+	</div>
+	<div class="cat-group">
+		<{foreach from=$cats item=item key=key}>
+		<div class="clearfix" has_child="<{if $item.child_count>0}>1<{else}>0<{/if}>" type_id="<{$item.type_id}>" pid="<{$item.parent_id}>" id="<{$item.cat_id}>">
+			 <div class="span-4"><a class="cat-child lnk" href="javascript:void(0);"><span><{$item.cat_name}></span></a>
+			 </div>
+			<{if $item.child_count>0}>
+			  <div class="span-auto">
+				<a class="subs" id="<{$item.cat_id}>" title="点击选择子类" href="javascript:void(0);">&nbsp;
+				</a>
+			  </div>
+			<{/if}>
+		</div>
+		<{/foreach}>
+	</div>	
+</div>

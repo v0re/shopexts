@@ -1,0 +1,15 @@
+<desktop>
+
+	<workground controller="shell">
+		<name>命令行模拟器</name>
+	</workground>
+    
+	<panelgroup id="slowlog" icon="handlens.png" order="1000" >慢查询</panelgroup>
+    <adminpanel group="dev_slowlog" controller="dblog" action="deploy" permission='log' display='true'>慢查询</adminpanel>
+
+    <permissions>
+        <permission id="log" display='true'>慢查询</permission>
+    </permissions>
+     <adminpanel group="desktop_other" permission="other" controller="svinfo" display='true'>服务器配置</adminpanel>
+	 
+</desktop>

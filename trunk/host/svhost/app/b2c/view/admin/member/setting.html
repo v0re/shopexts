@@ -1,0 +1,11 @@
+﻿<form action="index.php?app=b2c&ctl=admin_member_shopbbs&act=setting">
+<div class="tableform"> 
+<div class="division"> <table cellspacing="0" cellpadding="2" border="0" width="100%"> <tbody>
+<tr> <th>发表时需输入验证码:</th> <td><input type="radio" <{if $verifyCode eq "on"}>checked="checked" <{/if}> value="on" id="el-8db2f-da688" separator=" " name="verifyCode[msg]"><label for="el-8db2f-da688">开启</label> <input type="radio" <{if $verifyCode eq "off"}>checked="checked" <{/if}> value="off" id="el-8db2f-da6881" separator=" " name="verifyCode[msg]"><label for="el-8db2f-da6881">关闭</label> </td> 
+</tr>
+<tr> <th>商店留言发布:</th> <td><select name="system.message.open" id="el-8db2f-b750f" required="1" default="off" type="select" namespace="setting" class="x-input-select  inputstyle"><option value="on" <{if $setting eq "on"}> selected="selected" <{/if}>>会员提交后立即发布</option><option value="off" <{if $setting eq "off"}> selected="selected" <{/if}> >管理员回复后发布</option></select></td>
+</tr>
+</tbody>
+</table>   
+</div> <div class="table-action"> <button class="btn" type="submit"><span><span>保存</span></span></button> </div> </div>
+</form>

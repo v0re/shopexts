@@ -1,0 +1,109 @@
+   
+    <form id="rolesform" action="index.php?ctl=roles&act=save">
+		<div class="division">   
+				<h4>角色名称</h4>
+	   
+       	<input type="text" vtype="required" name="role_name" value="<{$roles.role_name}>" class="x-input " autocomplete="off">
+       </div>
+     
+	   <div class='division'> 
+		  <h4>角色权限</h4> 
+		 <input type='hidden'  vtype='requiredcheckbox'/>  
+			    <{foreach from=$workgrounds item=workground name=d }> 
+                    
+					   <div class="clearfix clear" style="padding:5px;border-bottom:1px #e9e9e9 solid;">
+                        <div class="span-2"><strong><{$workground.menu_title}></strong></div> 
+						<div class="span-13" style="width:528px;"> 
+						 <div class="clearfix">
+                           <{foreach from=$workground.permissions item=permission key=key}>
+                           <div class="span-auto"> 
+							<label>
+                              <input type="checkbox" name="workground[]" value="<{$permission.permission}>" <{if $permission.checked}>checked=checked<{/if}>/>
+                              <{$permission.menu_title}>
+							</label>
+                          </div>
+                          <{/foreach}>  
+						 </div>
+						</div>
+  					   </div>
+					
+                <{/foreach}>  
+				   
+			
+					<div class="clearfix clear" style="padding:5px;"> 
+						      <div class="span-2"><strong>控制面板</strong></div>
+							  <div class="span-13" style="width:528px;">
+								<div class="clearfix">
+						<{foreach from=$adminpanels item=adminpanel key=key}>
+		                        <div class="span-auto">
+									<label>
+		                        <input  type="checkbox" name="workground[]" value="<{$adminpanel.permission}>" <{if $adminpanel.checked}>checked=checked<{/if}>/>
+								<{$adminpanel.menu_title}>
+									</label>
+                                 </div>
+		                        <{/foreach}>  
+								</div>
+							  </div>
+						</div>
+			 
+
+	   </div>
+    </form>
+
+
+<{area inject=".mainFoot"}>
+		<div class="table-action">
+                   <{button label="确定" id="rolesform-submit" class="btn-primary"}>
+	   </div>
+<{/area}>
+<script>
+function nameCheck(input){
+	id = input.value;
+	role_id = $('roleID').value;
+    if((input.checked)){
+        new Request.HTML({update:$(input).getNext(),data:'role_id='+role_id+'&name='+encodeURIComponent(input.value=input.value.trim())}).post('index.php?app=desktop&ctl=roles&act=get_permission');
+    $('workground'+id).setStyle('display','block');    
+    }
+    else{
+        $('workground'+id).setStyle('display','none').empty();;
+    }
+  
+}
+
+</script>
+<script>
+(function(){
+    var _form = $('rolesform');
+    var btn =$('rolesform-submit');
+    var finder = finderGroup['<{$env.get.finder_id}>'];
+    
+    _form.store('target',{
+        onComplete:function(){
+            
+            try{
+                var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                //console.info(btn,_dialogIns);
+             }catch(e){}
+            if(_dialogIns){
+                 //console.info(_dialogIns);
+                _dialogIns.close();
+                finder.refresh.delay(400,finder);
+            }
+            
+            
+        }
+        
+    });
+
+        btn.addEvent('click',function(){
+        
+            _form.fireEvent('submit',{stop:$empty});
+            
+        
+        
+        });
+    
+})();
+    
+    
+</script>

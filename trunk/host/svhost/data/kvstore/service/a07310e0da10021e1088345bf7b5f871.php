@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:25:"content_sidepanel_article";s:25:"content_sidepanel_article";}}s:6:"expire";i:0;}

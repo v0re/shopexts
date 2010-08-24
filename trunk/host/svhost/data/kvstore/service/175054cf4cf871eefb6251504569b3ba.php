@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:29:"b2c_cart_postfilter_promotion";s:29:"b2c_cart_postfilter_promotion";}}s:6:"expire";i:0;}

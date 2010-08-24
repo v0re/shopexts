@@ -1,0 +1,9 @@
+<{if $arr_products}>
+<{foreach from=$arr_products item=item}>
+  <div class="row-line" id="item_<{$item.goods_id}>">
+    <{img class="operater" alt="删除" src="icons/icon_delete.gif" onclick="this.getParent('div').destroy();" }>
+    <input type="hidden"  name="<{$name}>[]" value="<{$item.goods_id}>" >
+    <label ><{$item.name}></label>
+  </div>
+<{/foreach}>
+<{/if}>

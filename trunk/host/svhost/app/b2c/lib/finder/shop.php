@@ -1,0 +1,8 @@
+<?php
+/**
+ * ShopEx licence
+ *
+ * @copyright  Copyright (c) 2005-2010 ShopEx Technologies Inc. (http://www.shopex.cn)
+ * @license  http://ecos.shopex.com/license/gpl GPL License
+ */
+ class b2c_finder_shop {    public function __construct($app)    {        $this->app = $app;    }        var $column_editbutton = '操作';    public function column_editbutton($row)    {        $callback_url = urlencode(kernel::api_url('api.b2c.callback.shoprelation','callback', array('shop_id'=>$row['shop_id'])));        $api_url = kernel::base_url(1).kernel::url_prefix().'/api';        $str_operation = "";        if ($row['status'] == 'unbind')        {            $str_operation = '<a href="index.php?app=b2c&ctl=admin_shoprelation&act=showEdit&p[0]=' . $row['shop_id'] . '" target="_blank">编辑</a>';                        if ($str_operation)                $str_operation .= '&nbsp;<a href="index.php?ctl=shoprelation&act=index&p[0]=apply&p[1]=' . $this->app->app_id . '&p[2]=' . $callback_url . '&p[3]=' . $api_url .'">申请绑定</a>';            else                $str_operation .= '<a href="index.php?ctl=shoprelation&act=index&p[0]=apply&p[1]=' . $this->app->app_id . '&p[2]=' . $callback_url . '&p[3]=' . $api_url .'">申请绑定</a>';        }        else        {            $str_operation = '';                        if ($str_operation)                $str_operation .= '&nbsp;<a href="index.php?ctl=shoprelation&act=index&p[0]=accept&p[1]=' . $this->app->app_id . '&p[2]=' . $callback_url . '">解除绑定</a>';            else                $str_operation .= '<a href="index.php?ctl=shoprelation&act=index&p[0]=accept&p[1]=' . $this->app->app_id . '&p[2]=' . $callback_url . '">解除绑定</a>';        }        return $str_operation;    }}

@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:22:"content_service_router";s:22:"content_service_router";}}s:6:"expire";i:0;}

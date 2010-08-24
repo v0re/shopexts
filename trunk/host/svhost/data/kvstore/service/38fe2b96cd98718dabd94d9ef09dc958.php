@@ -1,0 +1,1 @@
+<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:4:{s:16:"b2c_order_reship";s:16:"b2c_order_reship";s:16:"b2c_order_cancel";s:16:"b2c_order_cancel";s:16:"b2c_order_finish";s:16:"b2c_order_finish";s:18:"b2c_order_delivery";s:18:"b2c_order_delivery";}}s:6:"expire";i:0;}

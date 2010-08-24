@@ -1,0 +1,29 @@
+<h4><{t}>可视化编辑<{/t}></h4>
+			<table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<th><em><font color="red">*</font></em><{t}>选择模板：<{/t}></th>
+					<td>
+					<{template_filter id="aEditor-Nodeid-input" type='page' name='node[tmpl_path]' selected=$node.tmpl_path class='x-input' }>
+					</td>
+					</td>
+				</tr>
+				<tr>
+				<th>
+				<a id="single-view" href="#" onClick="return editView(this);" >编辑视图&nbsp;</a>
+				</th>
+                <td>&nbsp;</td>
+				</tr>
+			</table>
+
+<script>
+function editView(e){
+	var id = $('aEditor-Nodeid-input').value;
+	if(id > 0){
+		$(e).set('target', '_blank');
+		$(e).set('href', 'index.php?app=content&ctl=admin_node_single&act=editor&node_id='+id);
+	}else{
+		alert('进行可视化编辑前请先保存分类');
+		return false;
+	}
+}
+</script>

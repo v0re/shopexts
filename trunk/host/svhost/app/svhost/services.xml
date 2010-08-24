@@ -1,0 +1,5 @@
+<services>
+    <service id="svhost_server">
+        <class>svhost_server</class>
+    </service>
+</services>

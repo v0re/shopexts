@@ -1,0 +1,44 @@
+<{if $payment.status == 'succ' || $payment.status == 'progress'}>
+<div class="FeedBackInfo">
+<div class="success clearfix">
+  <div class="span-1 pic"></div>
+  <div class="span-auto ">
+    <h1><{t}>订单<{/t}><{$payment.order_id}><{t}>: <{if $payment.status == 'succ'}>在线<{else}>担保交易<{/if}>付款 <{/t}><{$payment.money|cur:$payment.currency}><{t}>成功。<{/t}></h1>
+    <{if $payment.paycost > 0}><p><{t}>支付网关收取<{/t}><{$payment.paycost|cur}><{t}>作为手续费。<{/t}></p><{/if}>
+    <p><a href="<{link ctl=order act=index arg0=$payment.order_id}>"><{t}>按此查看订单详细情况<{/t}></a></p>
+    <p><div class="customMessages">订单付款成功返回页提示信息</div></p>
+  </div>
+</div>
+</div>
+
+<{elseif $payment.status=='failed'}>
+<div class="FeedBackInfo">
+<div class="error clearfix">
+  <div class="span-1 pic"></div>
+  <div class="span-auto">
+  <h1><{t}>支付失败<{/t}></h1>
+  <p><{$payment.memo}><{t}>可能由于网络传输原因。<{/t}></p>
+
+<{elseif $payment.status=='cancel'}>
+<h1><{t}>支付被取消失败<{/t}></h1>
+<{$payment.memo}>用户取消支付过程
+
+<{elseif $payment.status=='error'}>
+<h1><{t}>支付失败<{/t}></h1>
+<{$payment.memo}>支付过程发生错误
+
+<{elseif $payment.status=='invalid'}>
+<h1><{t}>请稍候<{/t}></h1>
+<{$payment.memo}>支付反馈信息发生错误，需要联系支付插件作者。
+
+<{elseif $payment.status=='timeout'}>
+<h1><{t}>支付失败<{/t}></h1>
+<{$payment.memo}>支付过程超时。
+
+<{elseif $payment.status=='ready'}>
+<h1><{t}>请返回继续支付<{/t}></h1>
+<{$payment.memo}>支付尚未提交。
+<{/if}>
+  </div>
+</div>
+</div>

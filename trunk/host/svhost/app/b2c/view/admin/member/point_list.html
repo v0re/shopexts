@@ -1,0 +1,51 @@
+<div class="tableform">
+	<form action="index.php?<{$env.server.QUERY_STRING}>" method="post">
+	<div class="division">
+	    <table width="100%" cellspacing="0" cellpadding="0" border="0">
+	      <tbody>		
+	        <tr>
+	          <th><{t}>当前积分:<{/t}></th>
+	          <td><span class="price0"><{$member.score.total}></span></td>
+	          <th></th>
+	          <td></td>
+	        </tr>
+	        <tr>
+	          <th><{t}>调整积分（增/减）:<{/t}></th>
+	          <td><{input type="number" size="20" name="modify_point" style="float:left;" }> <span class="notice-inline"><{t}>输入负值即可减少积分<{/t}></span></td>
+	          <th><{t}>备注:<{/t}></th>
+	          <td><input type="text" size="30" name="modify_remark"/></td>
+	        </tr>
+	      </tbody>
+	    </table>
+	</div>
+	<div class="table-action"><{button type="submit" label="保存" }></div>
+	</form>
+</div>
+
+<div class="tableform">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="gridlist">
+<col class="Coldate"></col>
+<col class="Coldetails"></col>
+<col class="Colamount"></col>
+<thead>
+<tr>
+  <th><{t}>日期<{/t}></th>
+  <th><{t}>摘要<{/t}></th>
+  <th><{t}>备注<{/t}></th>
+  <th><{t}>积分<{/t}></th>
+  <!--<th><{t}>过期<{/t}></th> -->
+</tr></thead><tbody>
+
+<{foreach from=$event item="event"}>
+<tr>
+   <td><{$event.time|cdate:SDATE_STIME}></td>
+   <td class="Coldetails"><{$event.reason}></td>
+   <td class="Coldetails"><{$event.remark}></td>
+  <td class="Colamount"><{$event.point}></td>
+ <!--> <td class="Colamount"><{$event.expiretime|cdate:SDATE_STIME}></td> -->
+</tr>
+<{/foreach}>
+
+</tbody>
+</table>
+</div>

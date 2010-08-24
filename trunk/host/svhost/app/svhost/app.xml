@@ -1,0 +1,18 @@
+<app>
+    <name>简单主机管理系统</name>
+	<main_app exclusion="true">false</main_app>
+    <description>简单主机管理新系统，可以管理web空间，ftp帐号，mysql帐号和企业邮箱展会共</description>
+
+    <author>
+        <name>Ken</name>
+        <email>xuqinyong@gmail.cn</email>
+        <url>http://www.zzzforever.com</url>
+    </author>
+
+    <version>0.1</version>
+    <license>shopex license</license>
+    <parent_model_class>dbeav_model</parent_model_class>
+	<depends>
+		<app>b2c</app>
+	</depends>
+</app>
