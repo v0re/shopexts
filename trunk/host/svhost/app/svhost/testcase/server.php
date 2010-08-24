@@ -6,15 +6,14 @@
  * @license  http://ecos.shopex.com/license/gpl GPL License
  */
  
-class member extends PHPUnit_Framework_TestCase{
+class server extends PHPUnit_Framework_TestCase{
     
     public function setUp() {
-
+        $this->model = kernel::service('svhost_server', array('content_path'=>'svhost_server'));
     }
 
-    public testNew(){
-        
-        
+    public function testCreate(){
+        $this->model->create('test.com',$message);
     }
 
 }

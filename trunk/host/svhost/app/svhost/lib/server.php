@@ -6,6 +6,18 @@ class svhost_server {
             
     }
     
+    function create($domain,&$message){
+        $this->config = $this->gen_site_conf($domain); 
+        $this->new_htdocs_space();
+        $this->new_nginx_site();
+        $this->new_mysql_account();
+        $this->new_ftp_account();        
+        
+        $message = "create $domain ok! ";   
+        
+        return true;
+    }
+    
     function  new_htdocs_space(){
         $htdocs = $this->config['htdocs'];
         $ftpd_user = $this->config['ftpd_user'];
@@ -54,6 +66,36 @@ class svhost_server {
         mysql_close($link);
          
         return true;
+    }
+    
+    function gen_site_conf($domain){
+        $config['htdocs'] = "/var/www/html/".$domain;
+        $config['nginx_conf_dir'] = '/srv/nginx/conf';
+        $config['domain'] = $domain;
+        $config['db_host'] = '127.0.0.1';
+        #
+        $domain_strip_dot = str_replace('.','',$domain);
+        $config['db_user'] = $domain_strip_dot;
+        $config['db_name'] = $domain_strip_dot;
+        $config['db_password'] = $this->gen_radom_string(8);
+        #
+        $config['ftpd_user'] = 'ftpd';
+        $config['ftpd_group'] = 'ftpd';
+        $config['ftpd_db'] = 'proftpd';
+        #
+        $config['ftp_user'] = substr($domain,0,strpos($domain,"."));
+        $config['ftp_password'] = $this->gen_radom_string(8);
+        $config['ftp_homedir'] = "/var/www/html/".$domain;
+    }
+    
+    function gen_radom_string($len){    
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz' ;
+        $string = ''; 
+        for(;$len>=1;$len--)   {
+            $position=rand()%strlen($chars);
+            $string.=substr($chars,$position,1); 
+        }
+        return $string; 
     }
     
     function get_nginx_site_template(){

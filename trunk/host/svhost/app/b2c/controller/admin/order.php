@@ -1140,7 +1140,8 @@ class b2c_ctl_admin_order extends desktop_controller{
         $this->begin();
         
         $obj_server = kernel::service('svhost_server', array('content_path'=>'svhost_server'));
-        if(!$obj_server->new($sdf['order_id'],$message)){
+        $domain = 'test.com';#todo 
+        if(!$obj_server->create($domain,$message)){
             $this->end(false, $message);
         }
         
