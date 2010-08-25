@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:4:{s:18:"base_view_compiler";s:18:"base_view_compiler";s:18:"site_view_compiler";s:18:"site_view_compiler";s:21:"ectools_view_compiler";s:21:"ectools_view_compiler";s:17:"b2c_view_compiler";s:17:"b2c_view_compiler";}}s:6:"expire";i:0;}

@@ -1,7 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";s:1247:"<div id="<?php echo $this->_vars['params']['domid']; ?>" class="object-select clearfix" <?php echo $this->_vars['addons']; ?> >
-<div class="label" id="<?php echo $this->_vars['id']; ?>" onclick="new finderDialog('<?php echo $this->_vars['url']; ?>',{handle:'handle_<?php echo $this->_vars['params']['domid']; ?>',params:{url:'index.php?app=desktop&ctl=editor&act=object_rows',type:'<?php echo $this->_vars['params']['type']; ?>',name:'data[]',postdata:'app_id=<?php echo $this->_vars['params']['app_id']; ?>&<?php echo $this->_vars['object']; ?>'}})"><?php echo $this->_vars['string']; ?></div>
-<div class="handle" onclick="new finderDialog('<?php echo $this->_vars['url']; ?>',{handle:'handle_<?php echo $this->_vars['params']['domid']; ?>',params:{url:'index.php?app=desktop&ctl=editor&act=object_rows',type:'<?php echo $this->_vars['params']['type']; ?>',name:'data[]',postdata:'app_id=<?php echo $this->_vars['params']['app_id']; ?>&<?php echo $this->_vars['object']; ?>'}})">&nbsp;</div>
-
-	<input type="hidden" name="<?php echo $this->_vars['params']['name']; ?>" value="<?php if( is_array($this->_vars['params']['value']) ){  echo implode($this->_vars['params']['value'],',');  }else{  echo $this->_vars['params']['value'];  } ?>" />
-
-</div>";s:6:"expire";i:0;}

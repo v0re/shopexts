@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:3:{s:25:"desktop_service_view_menu";s:25:"desktop_service_view_menu";s:22:"site_service_view_menu";s:22:"site_service_view_menu";s:21:"b2c_service_view_menu";s:21:"b2c_service_view_menu";}}s:6:"expire";i:0;}

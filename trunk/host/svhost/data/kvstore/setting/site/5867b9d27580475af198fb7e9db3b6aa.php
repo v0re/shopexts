@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:6:{i:0;s:12:"article.html";i:1;s:12:"default.html";i:2;s:10:"index.html";i:3;s:11:"member.html";i:4;s:9:"page.html";i:5;s:13:"passport.html";}s:6:"expire";i:0;}

@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";s:16:"b2c_goods_filter";s:6:"expire";i:0;}

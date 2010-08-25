@@ -1,2 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";s:170:"<iframe name="x-advertisement" width="100%" scrolling="auto" height="100%" frameborder="0" src="http://top.shopex.cn/ecos/desktop.php" allowtransparency="true"></iframe>
-";s:6:"expire";i:0;}

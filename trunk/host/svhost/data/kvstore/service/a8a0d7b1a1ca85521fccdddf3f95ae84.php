@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:20:"b2c_api_update_store";s:20:"b2c_api_update_store";}}s:6:"expire";i:0;}

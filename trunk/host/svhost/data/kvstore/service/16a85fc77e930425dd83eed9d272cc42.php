@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:3:{s:29:"b2c_desktop_widgets_workcount";s:29:"b2c_desktop_widgets_workcount";s:32:"b2c_desktop_widgets_exstatistics";s:32:"b2c_desktop_widgets_exstatistics";s:34:"stats_desktop_widgets_exstatistics";s:34:"stats_desktop_widgets_exstatistics";}}s:6:"expire";i:0;}

@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:3:{s:18:"pam_passport_basic";s:18:"pam_passport_basic";s:18:"pam_passport_oauth";s:18:"pam_passport_oauth";s:15:"pam_passport_uc";s:15:"pam_passport_uc";}}s:6:"expire";i:0;}
