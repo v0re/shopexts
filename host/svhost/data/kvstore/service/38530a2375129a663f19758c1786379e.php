@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:22:"base_rpc_service_basic";s:22:"base_rpc_service_basic";}}s:6:"expire";i:0;}

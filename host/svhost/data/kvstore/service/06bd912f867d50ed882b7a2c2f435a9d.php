@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:17:"site_finder_theme";s:17:"site_finder_theme";}}s:6:"expire";i:0;}

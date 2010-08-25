@@ -147,11 +147,3 @@ define('LOG_HEAD_TEXT', '<'.'?php exit()?'.">\n");
 #define('FILE_STORAGER','filesystem');
 #define('STORAGE_MEMCACHED','192.168.0.230:11211,192.168.0.231:11211');
 #define('HOST_MIRRORS','http://img.demo.cn,http://img1.demo.cn');
-
-define('HTDOCS','/var/www/html');
-define('HTTP_USER','apache');
-define('HTTP_GROUP','apache');
-define('FTPD_USER','ftpd');
-define('FTPD_GROUP','ftpd');
-define('FTPD_DB','ftpd');
-

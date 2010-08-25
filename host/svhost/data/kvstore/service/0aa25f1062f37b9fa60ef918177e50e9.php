@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:25:"express_finder_dly_center";s:25:"express_finder_dly_center";}}s:6:"expire";i:0;}
