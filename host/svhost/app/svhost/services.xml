@@ -2,4 +2,9 @@
     <service id="svhost_server">
         <class>svhost_server</class>
     </service>
+    
+    <service id="desktop_finder.svhost_mdl_serverlist">
+        <class>svhost_finder_serverlist</class>
+    </service>
+    
 </services>

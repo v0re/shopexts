@@ -1,12 +1,6 @@
 <?php
-/**
- * ShopEx licence
- *
- * @copyright  Copyright (c) 2005-2010 ShopEx Technologies Inc. (http://www.shopex.cn)
- * @license  http://ecos.shopex.com/license/gpl GPL License
- */
- 
-$db['servers']=array (
+
+$db['serverlist']=array (
   'columns' =>
   array (
     'server_id' =>
@@ -15,9 +9,9 @@ $db['servers']=array (
       'required' => true,
       'pkey' => true,
       'extra' => 'auto_increment',
-      'label' => '品牌id',
+      'label' => '服务器ID',
       'width' => 150,
-      'comment' => '品牌id',
+      'comment' => '服务器ID',
       'editable' => false,
       'in_list' => false,
       'default_in_list' => false,
@@ -25,56 +19,35 @@ $db['servers']=array (
     'server_name' =>
     array (
       'type' => 'varchar(50)',
-      'label' => '品牌名称',
+      'label' => '服务器名',
       'width' => 180,
       'is_title' => true,
       'required' => true,
-      'comment' => '品牌名称',
+      'comment' => '服务器名',
       'editable' => true,
       'searchtype' => 'has',
       'in_list' => true,
       'default_in_list' => true,
     ),
-    'server_url' =>
+    'server_ip' =>
     array (
       'type' => 'varchar(255)',
-      'label' => '品牌网址',
+      'label' => 'IP',
       'width' => 350,
-      'comment' => '品牌网址',
+      'comment' => 'IP',
       'editable' => true,
       'searchtype' => 'has',
       'in_list' => true,
       'default_in_list' => true,
     ),
-    'server_desc' =>
-    array (
-      'type' => 'longtext',
-      'comment' => '品牌介绍',
-      'editable' => false,
-      'label' => '品牌介绍',
-    ),
-    'server_logo' =>
+    'server_farm' =>
     array (
       'type' => 'varchar(255)',
-      'comment' => '品牌图片标识',
-      'editable' => false,
-      'label' => '品牌图片标识',
-    ),
-    'server_keywords' =>
-    array (
-      'type' => 'longtext',
-      'label' => '品牌别名',
-      'width' => 150,
-      'comment' => '品牌别名',
-      'editable' => false,
-      'searchtype' => 'has',
-      'in_list' => true,
-    ),
-    'server_setting' =>
-    array(
-        'type' => 'serialize',
-        'label' => '商品设置',
-        'deny_export' => true,
+      'comment' => '所处机房',
+      'editable' => true,
+      'label' => '所处机房',
+       'in_list' => true,
+      'default_in_list' => true,
     ),
     'disabled' =>
     array (
@@ -96,7 +69,7 @@ $db['servers']=array (
       'in_list' => true,
     ),
   ),
-  'comment' => '品牌表',
+  'comment' => '服务器列表',
   'index' =>
   array (
     'ind_disabled' =>

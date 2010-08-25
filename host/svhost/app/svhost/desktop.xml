@@ -1,5 +1,9 @@
 <desktop>
-
-
+    
+     <workground name="服务器" id="b2c.wrokground.goods" controller="admin_serverlist" action="index" order='20'>         
+        <menugroup name="服务器">
+            <menu controller='admin_serverlist' action='index' permission='order' display='true' order='150'>服务器列表</menu>  
+        </menugroup>        
+    </workground>
 
 </desktop>
