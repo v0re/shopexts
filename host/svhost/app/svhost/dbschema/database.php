@@ -30,7 +30,7 @@ $db['database']=array (
     'database_name' =>
     array (
       'type' => 'enum(\'mysql\',\'pgsql\',\'sqlite\')',
-      'sdfpath' => 'database/name',
+      'sdfpath' => 'name',
       'comment' => 'database服务器',
       'editable' => true,
       'label' => 'database服务器',
@@ -39,7 +39,7 @@ $db['database']=array (
     'database_datadir' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/datadir',
+      'sdfpath' => 'datadir',
       'comment' => '数据存放目录',
       'editable' => true,
       'label' => '数据存放目录',
@@ -49,17 +49,17 @@ $db['database']=array (
     'database_conf' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/conf',
-      'comment' => '配置文件目录',
+      'sdfpath' => 'conf',
+      'comment' => '配置文件',
       'editable' => true,
-      'label' => '配置文件目录',
+      'label' => '配置文件',
        'in_list' => true,
       'default_in_list' => true,
     ),
     'database_user' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/user',
+      'sdfpath' => 'user',
       'comment' => '运行用户',
       'editable' => true,
       'label' => '运行用户',
@@ -69,7 +69,7 @@ $db['database']=array (
     'database_group' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/group',
+      'sdfpath' => 'group',
       'comment' => '运行组',
       'editable' => true,
       'label' => '运行组',
@@ -79,7 +79,7 @@ $db['database']=array (
     'database_host' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/host',
+      'sdfpath' => 'host',
       'comment' => '服务地址',
       'editable' => true,
       'label' => '服务地址',
@@ -89,7 +89,7 @@ $db['database']=array (
     'database_port' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/port',
+      'sdfpath' => 'port',
       'comment' => '服务端口',
       'editable' => true,
       'label' => '服务端口',
@@ -99,7 +99,7 @@ $db['database']=array (
     'database_root' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/root',
+      'sdfpath' => 'root',
       'comment' => '管理员',
       'editable' => true,
       'label' => '管理员',
@@ -109,7 +109,7 @@ $db['database']=array (
     'database_password' =>
     array (
       'type' => 'varchar(255)',
-      'sdfpath' => 'database/password',
+      'sdfpath' => 'password',
       'comment' => '管理员密码',
       'editable' => true,
       'label' => '管理员密码',
@@ -132,7 +132,7 @@ $db['database']=array (
       'label' => '排序',
       'width' => 150,
       'comment' => '排序',
-      'editable' => true,
+      'editable' => false,
       'in_list' => true,
     ),
   ),
