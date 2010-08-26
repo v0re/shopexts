@@ -1,0 +1,40 @@
+<deploy>
+	
+	<licence file="license.txt" />
+
+	<product_name>ECstore</product_name>
+
+	<installer>
+		
+		<title>ECstore installer</title>
+		
+		<banner><![CDATA[
+		<h1 id="ECstore-ver">ECstore<sup style="color:red;font-size:12px">Alpha</sup></h1>
+		]]></banner>
+
+		<style><![CDATA[
+		]]></style>
+
+		<finish>
+			<message><![CDATA[
+			<h3>安装过程顺利完成。接下来：</h3>
+			<p>
+				访问前台: <a href="%BASE_URL%">%BASE_URL%/index.php</a><br />
+				管理中心: <a href="%BASE_URL%/index.php/shopadmin">%BASE_URL%/index.php/shopadmin</a><br />
+				开发者社区: <a href="http://ecos.shopex.cn/shopex">http://ecos.shopex.cn/shopex</a>
+			</p>
+			]]></message>
+		</finish>
+	</installer>
+
+	<package hidden="false" collapse="false" search_online="false" search_filter="*">
+		<app id="b2c" default="true" locked="true" hidden="false" autostart="true" />
+		<app id="express" default="true" locked="true" hidden="false" autostart="true" />
+		<app id="stats" default="true" locked="true" hidden="false" autostart="true" />
+	</package>
+	
+	<setting app="desktop" key="banner">ECstore alpha</setting>
+	<setting app="desktop" key="logo">ECstore</setting>
+	<setting app="desktop" key="logo_desc">The future of shopping</setting>
+
+</deploy>
