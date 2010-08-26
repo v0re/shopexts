@@ -3,7 +3,7 @@
 class svhost_server {
     
     function __construct(){
-            
+        $this->server_id = 1;    
     }
     
     function create($domain,&$message){
@@ -69,6 +69,12 @@ class svhost_server {
     }
     
     function gen_site_conf($domain){
+        
+      app::instance('base')->model('svhost_serverlist')->dump(  $this->server_id,'*',array('http'=>'*',             'ftp'=>'*',              'database'=>'*',)      );
+        
+        var_dump($server_setting);
+        die();
+        
         $config['htdocs'] = "/var/www/html/".$domain;
         $config['nginx_conf_dir'] = '/srv/nginx/conf';
         $config['domain'] = $domain;
