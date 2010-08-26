@@ -1,80 +1,130 @@
 <?php
-/**
- * ShopEx licence
- *
- * @copyright  Copyright (c) 2005-2010 ShopEx Technologies Inc. (http://www.shopex.cn)
- * @license  http://ecos.shopex.com/license/gpl GPL License
- */
- 
-$db['servers']=array (
+
+$db['ftp']=array (
   'columns' =>
   array (
-    'server_id' =>
+    'ftp_id' =>
     array (
       'type' => 'number',
       'required' => true,
       'pkey' => true,
       'extra' => 'auto_increment',
-      'label' => '品牌id',
+      'label' => '服务器ID',
       'width' => 150,
-      'comment' => '品牌id',
+      'comment' => '服务器ID',
       'editable' => false,
       'in_list' => false,
       'default_in_list' => false,
     ),
-    'server_name' =>
+    'server_id' =>
     array (
-      'type' => 'varchar(50)',
-      'label' => '品牌名称',
-      'width' => 180,
-      'is_title' => true,
+      'type' => 'table:serverlist',
       'required' => true,
-      'comment' => '品牌名称',
-      'editable' => true,
-      'searchtype' => 'has',
-      'in_list' => true,
-      'default_in_list' => true,
-    ),
-    'server_url' =>
-    array (
-      'type' => 'varchar(255)',
-      'label' => '品牌网址',
-      'width' => 350,
-      'comment' => '品牌网址',
-      'editable' => true,
-      'searchtype' => 'has',
-      'in_list' => true,
-      'default_in_list' => true,
-    ),
-    'server_desc' =>
-    array (
-      'type' => 'longtext',
-      'comment' => '品牌介绍',
-      'editable' => false,
-      'label' => '品牌介绍',
-    ),
-    'server_logo' =>
-    array (
-      'type' => 'varchar(255)',
-      'comment' => '品牌图片标识',
-      'editable' => false,
-      'label' => '品牌图片标识',
-    ),
-    'server_keywords' =>
-    array (
-      'type' => 'longtext',
-      'label' => '品牌别名',
+      'label' => '服务器ID',
       'width' => 150,
-      'comment' => '品牌别名',
+      'comment' => '服务器ID',
       'editable' => false,
-      'searchtype' => 'has',
-      'in_list' => true,
+      'in_list' => false,
+      'default_in_list' => false,
     ),
-    'server_setting' =>
-    array(
-        'type' => 'serialize',
-        'label' => '商品设置',
-        'deny_export' => true,
+    'ftp_name' =>
+    array (
+      'type' => 'enum(\'proftpd\',\'pureftpd\',\'vsftpd\')',
+      'sdfpath' => 'name',
+      'comment' => 'ftp服务器',
+      'editable' => true,
+      'label' => 'ftp服务器',
+       'in_list' => true,
+    ),
+    'ftp_root' =>
+    array (
+      'type' => 'varchar(255)',
+       'sdfpath' => 'root',
+      'comment' => '根目录',
+      'editable' => true,
+      'label' => '根目录',
+       'in_list' => true,
+      'default_in_list' => true,
+    ),
+    'ftp_conf' =>
+    array (
+      'type' => 'varchar(255)',
+       'sdfpath' => 'conf',
+      'comment' => '配置文件',
+      'editable' => true,
+      'label' => '配置文件',
+       'in_list' => true,
+      'default_in_list' => true,
+    ),
+    'ftp_user' =>
+    array (
+      'type' => 'varchar(255)',
+       'sdfpath' => 'user',
+      'comment' => '运行用户',
+      'editable' => true,
+      'label' => '运行用户',
+       'in_list' => true,
+      'default_in_list' => true,
+    ),
+    'ftp_group' =>
+    array (
+      'type' => 'varchar(255)',
+       'sdfpath' => 'group',
+      'comment' => '运行组',
+      'editable' => true,
+      'label' => '运行组',
+       'in_list' => true,
+      'default_in_list' => true,
+    ),
+    'ftp_db' =>
+    array (
+      'type' => 'varchar(255)',
+       'sdfpath' => 'db/name',
+      'comment' => '帐号数据库',
+      'editable' => true,
+      'label' => '帐号数据库',
+       'in_list' => true,
+      'default_in_list' => false,
+    ),
+    'database_host' =>
+    array (
+      'type' => 'varchar(255)',
+      'sdfpath' => 'db/host',
+      'comment' => '服务地址',
+      'editable' => true,
+      'label' => '服务地址',
+       'in_list' => true,
+      'default_in_list' => false,
+    ),
+    'database_port' =>
+    array (
+      'type' => 'varchar(255)',
+      'sdfpath' => 'db/port',
+      'comment' => '服务端口',
+      'editable' => true,
+      'label' => '服务端口',
+       'in_list' => true,
+      'default_in_list' => false,
+    ),
+    'database_root' =>
+    array (
+      'type' => 'varchar(255)',
+      'sdfpath' => 'db/user',
+      'comment' => '管理员',
+      'editable' => true,
+      'label' => '管理员',
+       'in_list' => true,
+      'default_in_list' => false,
+    ),
+    'database_password' =>
+    array (
+      'type' => 'varchar(255)',
+      'sdfpath' => 'db/password',
+      'comment' => '管理员密码',
+      'editable' => true,
+      'label' => '管理员密码',
+       'in_list' => true,
+      'default_in_list' => false,
     ),
     'disabled' =>
     array (
@@ -92,11 +142,11 @@ $db['servers']=array (
       'label' => '排序',
       'width' => 150,
       'comment' => '排序',
-      'editable' => true,
+      'editable' => false,
       'in_list' => true,
     ),
   ),
-  'comment' => '品牌表',
+  'comment' => '服务器列表',
   'index' =>
   array (
     'ind_disabled' =>

@@ -19,13 +19,12 @@ class serverlist extends PHPUnit_Framework_TestCase{
             'server_ip'=>'75.125.222.26',
             'server_farm'=>'美国休士顿Theplanet机房',
             'http'=>array(
-            	'setting'=>
                 array(
-                    'name'=>'nginx',
-                    'htdocs'=>'/var/www/html',
-                    'conf'=>'/svr/nginx/conf/nginx.conf',
-                    'user'=>'apache',
-                    'group'=>'apache',
+                'name'=>'nginx',
+                'htdocs'=>'/var/www/html',
+                'conf'=>'/svr/nginx/conf/nginx.conf',
+                'user'=>'apache',
+                'group'=>'apache',
                 ),
             ),
             'database'=>array(

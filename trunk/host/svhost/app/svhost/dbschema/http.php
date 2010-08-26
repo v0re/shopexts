@@ -1,80 +1,76 @@
 <?php
-/**
- * ShopEx licence
- *
- * @copyright  Copyright (c) 2005-2010 ShopEx Technologies Inc. (http://www.shopex.cn)
- * @license  http://ecos.shopex.com/license/gpl GPL License
- */
- 
-$db['servers']=array (
+
+$db['http']=array (
   'columns' =>
   array (
-    'server_id' =>
+    'http_id' =>
     array (
       'type' => 'number',
       'required' => true,
       'pkey' => true,
       'extra' => 'auto_increment',
-      'label' => '品牌id',
+      'label' => 'httpd id',
       'width' => 150,
-      'comment' => '品牌id',
+      'comment' => 'httpd id',
       'editable' => false,
       'in_list' => false,
       'default_in_list' => false,
     ),
-    'server_name' =>
+    'server_id' =>
     array (
-      'type' => 'varchar(50)',
-      'label' => '品牌名称',
-      'width' => 180,
-      'is_title' => true,
+      'type' => 'table:serverlist',
+      'default' => 0,
       'required' => true,
-      'comment' => '品牌名称',
-      'editable' => true,
-      'searchtype' => 'has',
-      'in_list' => true,
-      'default_in_list' => true,
+      'editable' => false,
     ),
-    'server_url' =>
+    'http_name' =>
+    array (
+      'type' => 'enum(\'nginx\',\'apache\',\'lighthttp\')',
+      'sdfpath' => 'name',
+      'comment' => 'http服务器',
+      'editable' => true,
+      'label' => 'http服务器',
+       'in_list' => true,
+    ),
+    'http_htdocs' =>
     array (
       'type' => 'varchar(255)',
-      'label' => '品牌网址',
-      'width' => 350,
-      'comment' => '品牌网址',
+      'sdfpath' => 'htdocs',
+      'comment' => '根目录',
       'editable' => true,
-      'searchtype' => 'has',
-      'in_list' => true,
+      'label' => '根目录',
+       'in_list' => true,
       'default_in_list' => true,
     ),
-    'server_desc' =>
-    array (
-      'type' => 'longtext',
-      'comment' => '品牌介绍',
-      'editable' => false,
-      'label' => '品牌介绍',
-    ),
-    'server_logo' =>
+    'http_conf' =>
     array (
       'type' => 'varchar(255)',
-      'comment' => '品牌图片标识',
-      'editable' => false,
-      'label' => '品牌图片标识',
+      'sdfpath' => 'conf',
+      'comment' => '配置文件',
+      'editable' => true,
+      'label' => '配置文件',
+       'in_list' => true,
+      'default_in_list' => true,
     ),
-    'server_keywords' =>
+    'http_user' =>
     array (
-      'type' => 'longtext',
-      'label' => '品牌别名',
-      'width' => 150,
-      'comment' => '品牌别名',
-      'editable' => false,
-      'searchtype' => 'has',
-      'in_list' => true,
+      'type' => 'varchar(255)',
+       'sdfpath' => 'user',
+      'comment' => '运行用户',
+      'editable' => true,
+      'label' => '运行用户',
+       'in_list' => true,
+      'default_in_list' => true,
     ),
-    'server_setting' =>
-    array(
-        'type' => 'serialize',
-        'label' => '商品设置',
-        'deny_export' => true,
+    'http_group' =>
+    array (
+      'type' => 'varchar(255)',
+       'sdfpath' => 'group',
+      'comment' => '运行组',
+      'editable' => true,
+      'label' => '运行组',
+       'in_list' => true,
+      'default_in_list' => true,
     ),
     'disabled' =>
     array (
@@ -92,11 +88,11 @@ $db['servers']=array (
       'label' => '排序',
       'width' => 150,
       'comment' => '排序',
-      'editable' => true,
+      'editable' => false,
       'in_list' => true,
     ),
   ),
-  'comment' => '品牌表',
+  'comment' => 'http服务列表',
   'index' =>
   array (
     'ind_disabled' =>
