@@ -73,7 +73,7 @@ location ~ .*\.php$
 fastcgi_pass  127.0.0.1:9000;
 set $path_info "";
 set $real_script_name $fastcgi_script_name;
-if ($fastcgi_script_name ~ "^(.+?.php)(/.+)$") {
+if ($fastcgi_script_name ~ "^(.+\.php)(.*)$") {
    set $script_name $1;
    set $path_info $2;
 }
