@@ -13,7 +13,11 @@ class svhost_finder_serverlist{
         }
         $data = $serverlist_model->dump($server_id); 
 
-        return $this->gen_html($serverlist_model,$data);
+        $html = $this->gen_html($serverlist_model,$data);
+
+        $self_html = '<b>sb d sb</b>';
+
+        return $html.$self_html; 
     }
     
     var $detail_http = ' http服务';

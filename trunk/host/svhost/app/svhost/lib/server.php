@@ -70,28 +70,39 @@ class svhost_server {
     
     function gen_site_conf($domain){
         
-      app::instance('base')->model('svhost_serverlist')->dump(  $this->server_id,'*',array('http'=>'*',             'ftp'=>'*',              'database'=>'*',)      );
-        
-        var_dump($server_setting);
-        die();
-        
-        $config['htdocs'] = "/var/www/html/".$domain;
-        $config['nginx_conf_dir'] = '/srv/nginx/conf';
+      $server_setting = app::get('svhost')->model('serverlist')->dump(  
+            $this->server_id,
+            '*',
+            array(
+                'http'=>'*',             
+                'ftp'=>'*',              
+                'database'=>'*',
+            )
+        );
+   
+        $http_setting = current($server_setting['http']);        
+        $config['htdocs'] = $http_setting['htdocs']."/".$domain;
+        $config['nginx_conf_dir'] = dirname($http_setting['conf']);
         $config['domain'] = $domain;
-        $config['db_host'] = '127.0.0.1';
         #
+        $database_setting = current($server_setting['database']);
+        $config['db_host'] = $database_setting['host'];
         $domain_strip_dot = str_replace('.','',$domain);
         $config['db_user'] = $domain_strip_dot;
         $config['db_name'] = $domain_strip_dot;
         $config['db_password'] = $this->gen_radom_string(8);
         #
-        $config['ftpd_user'] = 'ftpd';
-        $config['ftpd_group'] = 'ftpd';
-        $config['ftpd_db'] = 'proftpd';
+        $ftp_setting = current($server_setting['ftp']);
+        $config['ftpd_user'] = $ftp_setting['user'];
+        $config['ftpd_group'] = $ftp_setting['group'];
+        $config['ftpd_db'] = $ftp_setting['db']['name'];
         #
         $config['ftp_user'] = substr($domain,0,strpos($domain,"."));
         $config['ftp_password'] = $this->gen_radom_string(8);
-        $config['ftp_homedir'] = "/var/www/html/".$domain;
+        $config['ftp_homedir'] = $ftp_setting['root'].$domain;
+        
+        var_dump($http_setting,$config);
+        die();
     }
     
     function gen_radom_string($len){    
