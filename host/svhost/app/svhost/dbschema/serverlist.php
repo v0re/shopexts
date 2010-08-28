@@ -16,9 +16,10 @@ $db['serverlist']=array (
       'in_list' => false,
       'default_in_list' => false,
     ),
-    'server_name' =>
+    'name' =>
     array (
       'type' => 'varchar(50)',
+      'sdfpath'=>'server/name',
       'label' => '服务器名',
       'width' => 180,
       'is_title' => true,
@@ -29,9 +30,10 @@ $db['serverlist']=array (
       'in_list' => true,
       'default_in_list' => true,
     ),
-    'server_ip' =>
+    'ip' =>
     array (
       'type' => 'varchar(255)',
+      'sdfpath'=>'server/ip',
       'label' => 'IP',
       'width' => 350,
       'comment' => 'IP',
@@ -40,9 +42,10 @@ $db['serverlist']=array (
       'in_list' => true,
       'default_in_list' => true,
     ),
-    'server_farm' =>
+    'farm' =>
     array (
       'type' => 'varchar(255)',
+      'sdfpath'=>'server/farm',
       'comment' => '所处机房',
       'editable' => true,
       'label' => '所处机房',
@@ -62,6 +65,7 @@ $db['serverlist']=array (
     'ordernum' =>
     array (
       'type' => 'number',
+      'sdfpath'=>'server/ordernum',
       'label' => '排序',
       'width' => 150,
       'comment' => '排序',
