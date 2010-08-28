@@ -12,12 +12,8 @@ class svhost_finder_serverlist{
             $serverlist_model->save($_POST);
         }
         $data = $serverlist_model->dump($server_id); 
-
-        $html = $this->gen_html($serverlist_model,$data);
-
-        $self_html = '<b>sb d sb</b>';
-
-        return $html.$self_html; 
+        $data = $data['server'];
+        return  $this->gen_html($serverlist_model,$data);
     }
     
     var $detail_http = ' http服务';
@@ -26,12 +22,12 @@ class svhost_finder_serverlist{
         $serverlist_model = $this->app->model('serverlist');
         if($_POST){
             $sdf['server_id'] = $server_id;
-            $sdf['http'] = array($_POST);
+            $sdf['http'] = $_POST;
             $serverlist_model->save($sdf);
         }
         $data = $serverlist_model->dump($server_id,'*',array('http'=>'*'));
-        $data = current($data['http']);
-
+        $data = $data['http'];
+        
         return $this->gen_html($http_model,$data);
     }
     
@@ -41,11 +37,11 @@ class svhost_finder_serverlist{
         $serverlist_model = $this->app->model('serverlist');
         if($_POST){
             $sdf['server_id'] = $server_id;
-            $sdf['database'] = array($_POST);
+            $sdf['database'] = $_POST;
             $serverlist_model->save($sdf);
         }
         $data = $serverlist_model->dump($server_id,'*',array('database'=>'*'));
-        $data = current($data['database']);
+        $data = $data['database'];
 
         return $this->gen_html($database_model,$data);
     }
@@ -56,11 +52,11 @@ class svhost_finder_serverlist{
         $serverlist_model = $this->app->model('serverlist');
         if($_POST){
             $sdf['server_id'] = $server_id;
-            $sdf['ftp'] = array($_POST);
+            $sdf['ftp'] = $_POST;
             $serverlist_model->save($sdf);
         }
         $data = $serverlist_model->dump($server_id,'*',array('ftp'=>'*'));
-        $data = current($data['ftp']);
+        $data = $data['ftp'];
 
         return $this->gen_html($ftp_model,$data);
     }
@@ -104,7 +100,6 @@ class svhost_finder_serverlist{
             unset($input);
         }
         $html .= $this->ui->form_end();
-        
         return $html;
     }
 }

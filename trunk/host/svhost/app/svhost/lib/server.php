@@ -80,19 +80,19 @@ class svhost_server {
             )
         );
    
-        $http_setting = current($server_setting['http']);        
+        $http_setting = $server_setting['http'];        
         $config['htdocs'] = $http_setting['htdocs']."/".$domain;
         $config['nginx_conf_dir'] = dirname($http_setting['conf']);
         $config['domain'] = $domain;
         #
-        $database_setting = current($server_setting['database']);
+        $database_setting = $server_setting['database'];
         $config['db_host'] = $database_setting['host'];
         $domain_strip_dot = str_replace('.','',$domain);
         $config['db_user'] = $domain_strip_dot;
         $config['db_name'] = $domain_strip_dot;
         $config['db_password'] = $this->gen_radom_string(8);
         #
-        $ftp_setting = current($server_setting['ftp']);
+        $ftp_setting = $server_setting['ftp'];
         $config['ftpd_user'] = $ftp_setting['user'];
         $config['ftpd_group'] = $ftp_setting['group'];
         $config['ftpd_db'] = $ftp_setting['db']['name'];

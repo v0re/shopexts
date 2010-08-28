@@ -31,9 +31,9 @@ $db['database']=array (
     array (
       'type' => 'enum(\'mysql\',\'pgsql\',\'sqlite\')',
       'sdfpath' => 'name',
-      'comment' => 'database服务器',
+      'comment' => '服务器',
       'editable' => true,
-      'label' => 'database服务器',
+      'label' => '服务器',
        'in_list' => true,
     ),
     'database_datadir' =>

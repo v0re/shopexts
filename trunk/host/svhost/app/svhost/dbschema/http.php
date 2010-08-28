@@ -27,9 +27,9 @@ $db['http']=array (
     array (
       'type' => 'enum(\'nginx\',\'apache\',\'lighthttp\')',
       'sdfpath' => 'name',
-      'comment' => 'http服务器',
+      'comment' => '服务器',
       'editable' => true,
-      'label' => 'http服务器',
+      'label' => '服务器',
        'in_list' => true,
     ),
     'http_htdocs' =>

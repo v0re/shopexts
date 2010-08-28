@@ -31,9 +31,9 @@ $db['ftp']=array (
     array (
       'type' => 'enum(\'proftpd\',\'pureftpd\',\'vsftpd\')',
       'sdfpath' => 'name',
-      'comment' => 'ftp服务器',
+      'comment' => '服务器',
       'editable' => true,
-      'label' => 'ftp服务器',
+      'label' => '服务器',
        'in_list' => true,
     ),
     'ftp_root' =>
