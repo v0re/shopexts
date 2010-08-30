@@ -1,0 +1,36 @@
+<{$form_start}>
+<h3 ><{t}>数据库<{/t}></h3> 
+<div  class='tableform'>
+<table border="0" cellspacing="0" cellpadding="0" class="forform" width=50%>
+    <tr><td>数据库地址</td><td><{$server.db.host}></td></tr>
+    <tr><td>数据库端口</td><td><{$server.db.port}></td></tr>
+    <tr><td>数据库名</td><td><{$server.db.name}></td></tr>
+    <tr><td>数据库用户名</td><td><{$server.db.user}></td></tr>
+    <tr><td>数据库密码</td><td><{input type=text name='db[password]' value=$server.db.password}></td></tr>
+</table>
+</div>
+
+
+<h3 ><{t}>FTP<{/t}></h3> 
+<div  class='tableform'>
+<table border="0" cellspacing="0" cellpadding="0" class="forform" width=50%>
+    <tr><td>FTP地址</td><td><{$server.ip}></td></tr>
+    <tr><td>FTP用户</td><td><{$server.ftp.user}></td></tr>
+    <tr><td>FTP密码</td><td><{input type=text name='ftp[password]' value=$server.ftp.password}></td></tr>
+</table>
+</div>
+ 
+<{$form_end}>
+
+
+
+
+
+
+
+
+
+
+
+
+
