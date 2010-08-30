@@ -1,66 +1,107 @@
+<{capture name="header"}>
+   <!--JAVASCRIPTS SRC-->     
+    <!--JAVASCRIPTS SRC END-->
 
-<form method="POST" id='newmember-edit-form' action="index.php?app=svhost&ctl=admin_vhostlist&act=add" class="tableform">
+<{script src="coms/dropmenu.js"  app='desktop'}>
+<{script src="coms/datapicker.js" app='desktop' }>
+
+<{script src="coms/colorpicker.js" app='desktop' }>
+<{script src="coms/editor.js" app='desktop' }>
+<{script src="coms/editor_style_1.js"  app='desktop'}>
+
+<{script src="coms/finder.js" app='desktop'}>
+<{script src="coms/modedialog.js" app='desktop'}>
+
+<{/capture}>
+
+<div class="spage-main-box">
+    
+<form class="tableform" method='post' action='index.php?app=svhost&ctl=admin_serverlist&act=add_new' id="doorderpay-form">
+
 <div class="division">
-<table width="100%" >
-    <tr><th><em class="red">*</em><{t}>域名：<{/t}></th><td>
-        <{input type="text" name="domain"  size="20" vtype="required"}></td></tr>
-    <tr><th><em class="red">*</em><{t}>服务器：<{/t}></th><td>
-        <{input type="select" name=$server.name options=$server.options  required=true }></td></tr>
+    
+<h3 ><{t}>基本信息<{/t}></h3> 
+<div class="tableform" >
+<table border="0" cellspacing="0" cellpadding="0" class="forform">
+<{foreach from=$serverlist item=item name=name key=key}>
+    <{if $key%4 == 0}>
+       <tr>
+    <{/if}>
+    
+    <{if $item.type == 'select'}>
+        <td><{$item.label}></td>
+        <td><{input type='select' name=$item.name options=$item.options  required='true'}></td>
+    <{/if}>
+    <{if $item.type == 'text'}>
+        <td><{$item.label}></td>
+        <td><{input type='text' name=$item.name}></td>
+    <{/if}>
+<{/foreach}>
 </table>
+</div>
+
+<h3 ><{t}>Web服务器信息<{/t}></h3> 
+<div class="tableform" >
+<table border="0" cellspacing="0" cellpadding="0" class="forform">
+<{foreach from=$http item=item key=key}>
+    <{if $key%4 == 0}>
+       <tr>
+    <{/if}>
+    
+    <{if $item.type == 'select'}>
+        <td><{$item.label}></td>
+        <td><{input type='select' name=$item.name options=$item.options  required='true'}></td>
+    <{/if}>
+    <{if $item.type == 'text'}>
+        <td><{$item.label}></td>
+        <td><{input type='text' name=$item.name}></td>
+    <{/if}>
+<{/foreach}>
+</table>
+</div>
+
+<h3 ><{t}>数据库服务器<{/t}></h3> 
+<div class="tableform" >
+<table border="0" cellspacing="0" cellpadding="0" class="forform">
+<{foreach from=$database item=item key=key}>
+    <{if $key%4 == 0}>
+       <tr>
+    <{/if}>
+    
+    <{if $item.type == 'select'}>
+        <td><{$item.label}></td>
+        <td><{input type='select' name=$item.name options=$item.options  required='true'}></td>
+    <{/if}>
+    <{if $item.type == 'text'}>
+        <td><{$item.label}></td>
+        <td><{input type='text' name=$item.name}></td>
+    <{/if}>
+<{/foreach}>
+</table>
+</div>
+
+<h3 ><{t}>FTP服务器<{/t}></h3> 
+<div class="tableform" >
+<table border="0" cellspacing="0" cellpadding="0" class="forform">
+<{foreach from=$ftp item=item key=key}>
+    <{if $key%4 == 0}>
+       <tr>
+    <{/if}>
+    
+    <{if $item.type == 'select'}>
+        <td><{$item.label}></td>
+        <td><{input type='select' name=$item.name options=$item.options required='true'}></td>
+    <{/if}>
+    <{if $item.type == 'text'}>
+        <td><{$item.label}></td>
+        <td><{input type='text' name=$item.name}></td>
+    <{/if}>
+<{/foreach}>
+</table>
+</div>
 
 </div>
+
+<div class="table-action"><{button type="submit"  label="保存" }></div>
 </form>
-<{area inject='.mainFoot'}>
-
-
-<div class="table-action"><{button type="submit"  label="保存" id='newmember-edit-form-submit'}></div>
-
-
-<{/area}>
-
-
-<script>
-(function(){
-	var _form = $('newmember-edit-form');
-	var btn =$('newmember-edit-form-submit');
-	var finder = finderGroup['<{$env.get.finder_id}>'];
-	
-	_form.store('target',{
-		onComplete:function(){			
-			
-		},
-		onSuccess:function(response){
-			var hash_res_obj = JSON.decode(response);
-			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
-			{
-				try{
-					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
-				}catch(e){}
-				
-				if(_dialogIns)
-				{
-					_dialogIns.close();
-					finder.refresh.delay(400,finder);
-				}
-			}
-			else
-			{
-				//alert(hash_res_obj.error);
-			}			
-		}
-	});
-
-	    btn.addEvent('click',function(){
-		
-		    _form.fireEvent('submit',{stop:$empty});
-			
-		
-		
-		});
-	
-})();
-	
-	
-</script>
-
-
+</div>
