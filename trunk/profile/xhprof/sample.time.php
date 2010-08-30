@@ -1,9 +1,18 @@
 <?php
-if (mt_rand(1, 10000) == 1) {
+if (test_time()) {
 	register_shutdown_function('xhprofclose');
 	xhprof_enable(
 	    XHPROF_FLAGS_MEMORY + XHPROF_FLAGS_NO_BUILTINS
 	);
+}
+#每个小时的前10秒
+function test_time(){
+	$min = date("i");
+	$sec = date("s");
+	if($min == '01' && $sec < "10"){
+		return true;
+	}
+	return false;
 }
 function xhprofclose(){
    $xhprof_data = xhprof_disable();
