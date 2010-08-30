@@ -4,73 +4,11 @@ class svhost_server {
     
     function __construct(){
         $this->server_id = 1;    
+        $this->vhost_id = 1;
     }
     
-    function create($domain,&$message){
-        $this->config = $this->gen_site_conf($domain); 
-        $this->new_htdocs_space();
-        $this->new_nginx_site();
-        $this->new_mysql_account();
-        $this->new_ftp_account();        
-        
-        $message = "create $domain ok! ";   
-        
-        return true;
-    }
-    
-    function  new_htdocs_space(){
-        $htdocs = $this->config['htdocs'];
-        $ftpd_user = $this->config['ftpd_user'];
-        mkdir($htdocs);
-        chown($htdocs,$ftpd_user);    
-        
-        return true;
-    }
-    
-    function new_nginx_site(){
-        $conf_dir = $this->config['nginx_conf_dir'];
-        $conf_name = $this->config['domain'].".conf";
-        $conf_template =$this->get_nginx_site_template();
-        $domain = $this->config['domain'];
-        $htdocs = $this->config['htdocs'];        
-        $conf = str_replace(array('#DOMAIN#','#HTDOCS#'),array($domain,$htdocs),$conf_template);
-        file_put_contents($conf_name,$conf);
-        
-        return true;
-    }
-    
-    function new_mysql_account(){
-        $db_host = $this->config['db_host'];
-        $db_user = $this->config['db_user'];
-        $db_password = $this->config['db_password'];
-        $db_name = $this->config['db_name'];
-        $link = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
-        $sql = "create database $db_name";
-        mysql_query($sql,$link);
-        $sql = "grant all on $db_name to $db_user@$db_host identified by $db_password";
-        mysql_query($sql,$link);
-        mysql_close($link);
-        
-        return true;
-    }
-    
-    function new_ftp_account(){
-        $ftpd_db = $this->config['ftpd_db'];
-        $ftp_user = $this->config['ftp_user'];
-        $ftp_password = $this->config['ftp_password'];
-        $ftp_homedir = $this->config['ftp_homedir'];
-        $link = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
-        mysql_select_db($this->ftpd_db,$link);
-        $sql = "insert into ftpusers (`userid`,`passwd`,`homedir`) values('{$ftp_user}','{$ftp_password}','{$ftp_homedir}')";
-        mysql_query($sql,$link);
-        mysql_close($link);
-         
-        return true;
-    }
-    
-    function gen_site_conf($domain){
-        
-      $server_setting = app::get('svhost')->model('serverlist')->dump(  
+    function load_server_setting(){
+        return app::get('svhost')->model('serverlist')->dump(  
             $this->server_id,
             '*',
             array(
@@ -78,48 +16,76 @@ class svhost_server {
                 'ftp'=>'*',              
                 'database'=>'*',
             )
-        );
-   
-        $http_setting = $server_setting['http'];        
-        $config['htdocs'] = $http_setting['htdocs']."/".$domain;
-        $config['nginx_conf_dir'] = dirname($http_setting['conf']);
-        $config['domain'] = $domain;
-        #
-        $database_setting = $server_setting['database'];
-        $config['db_host'] = $database_setting['host'];
-        $domain_strip_dot = str_replace('.','',$domain);
-        $config['db_user'] = $domain_strip_dot;
-        $config['db_name'] = $domain_strip_dot;
-        $config['db_password'] = $this->gen_radom_string(8);
-        #
-        $ftp_setting = $server_setting['ftp'];
-        $config['ftpd_user'] = $ftp_setting['user'];
-        $config['ftpd_group'] = $ftp_setting['group'];
-        $config['ftpd_db'] = $ftp_setting['db']['name'];
-        #
-        $config['ftp_user'] = substr($domain,0,strpos($domain,"."));
-        $config['ftp_password'] = $this->gen_radom_string(8);
-        $config['ftp_homedir'] = $ftp_setting['root'].$domain;
-        
-        var_dump($http_setting,$config);
-        die();
+        );         
     }
     
-    function gen_radom_string($len){    
-        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz' ;
-        $string = ''; 
-        for(;$len>=1;$len--)   {
-            $position=rand()%strlen($chars);
-            $string.=substr($chars,$position,1); 
+    function load_vhost_setting(){
+        return app::get('svhost')->model('vhostlist')->dump(  $this->vhost_id );        
+    }
+    
+    function create($domain){
+        $server_setting = $this->load_server_setting();        
+        $vhost_setting = $this->load_vhost_setting();
+        #生成web空间
+        $htdocs = $server_setting['http']['htdocs'].'/'.$vhost_setting['domain'];
+        $server_setting['http']['htdocs'] = $htdocs;
+        $htdocs_owner = $server_setting['ftp']['user'];
+        mkdir($htdocs);
+        chown($htdocs,$htdocs_owner);    
+        #生成http服务配置
+        if($server_setting['http']['name'] == 'nginx'){
+            $nginx = new nginx($server_setting['http']);
+            $server_ip = $server_setting['server']['ip'];
+            $nginx->create($domain,$server_ip);
         }
-        return $string; 
+        #生成ftp帐号
+        if($server_setting['ftp']['name'] == 'proftpd'){
+            $proftpd = new proftpd($server_setting['ftp']);
+            $ftp['user'] = $vhost_setting['ftp']['user'];
+            $ftp['password'] = $vhost_setting['ftp']['password'];
+            $ftp['home'] = $htdocs;
+            $proftpd->create($ftp);
+        }
+        #生成mysql帐号
+        if($server_setting['database']['name'] == 'mysql'){
+            $database = new mysql($server_setting['database']);
+            $mysql['db_name'] = $vhost_setting['db']['name'];
+            $mysql['db_user'] = $vhost_setting['db']['user'];
+            $mysql['db_host'] = $vhost_setting['db']['host'];
+            $mysql['db_password'] = $vhost_setting['db']['password'];
+            $database->create($mysql);
+        }
+                
+        return true;
+    } 
+}
+
+class nginx{
+    function __construct($config){
+        $this->config = $config;
     }
     
-    function get_nginx_site_template(){
+    function create($domain,$ip){
+        $conf_dir = dirname($this->config['conf']);
+        $conf_name = $domain.".conf";
+        $htdocs = $this->config['htdocs'];        
+        $conf_template =$this->site_conf_template();
+        $conf = str_replace(
+            array('SERVERIP','#DOMAIN#','#HTDOCS#'),
+            array($ip,$domain,$htdocs),
+            $conf_template
+        );
+        $save_file = "$conf_dir/site/$conf_name";
+        file_put_contents($save_file,$conf);
+        
+        return true;
+    }
+    
+       function site_conf_template(){
         return <<<EOF
 server
 {
-    listen       174.133.40.226:80;
+    listen       #SERVERIP#:80;
     server_name  #DOMAIN# www.#DOMAIN#;
     index index.html index.htm index.php;
     root  #HTDOCS#;
@@ -154,5 +120,55 @@ server
 }
 EOF;
  
+    }
+}
+
+class mysql{
+        function __construct($config){
+            $this->config = $config;
+        }
+        
+        function create($mysql){            
+            $db_host = $this->config['host'];
+            $db_user = $this->config['root'];
+            $db_password = $this->config['password'];
+            $link = mysql_connect($db_host,$db_user,$db_password);
+             $sql = "CREATE DATABASE $db_name";
+            mysql_query($sql,$link);        
+            $db_name = $mysql['db_name'];
+            $db_user = $mysql['db_user'];
+            $db_host = $mysql['db_host'];
+            $db_password = $mysql['db_password'];
+            $sql = "GRANT ALL ON $db_name TO $db_user@$db_host IDENTIFIED BY $db_password";
+            mysql_query($sql,$link);
+            mysql_close($link);
+            
+            return true;
+    }
+}
+
+class proftpd{
+    
+    function __construct($config){
+        $this->config = $config;
+    }
+        
+    function create($ftp){
+        $ftp_user = $ftp['user'];
+        $ftp_password = $ftp['password'];
+        $ftp_homedir = $ftp['home'];
+        #
+        $sql = "INSERT INTO ftpusers (`userid`,`passwd`,`homedir`) 
+                    VALUES  ('{$ftp_user}','{$ftp_password}','{$ftp_homedir}')";
+        $db_host = $this->config['db']['host'];
+        $db_name = $this->config['db']['name'];
+        $db_user = $this->config['db']['user'];
+        $db_password = $this->config['db']['password'];
+        $link = mysql_connect($db_host,$db_user,$db_password);
+        mysql_select_db($db_name,$link);
+        mysql_query($sql,$link);
+        mysql_close($link);
+         
+        return true;
     }
 }
