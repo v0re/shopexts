@@ -6,5 +6,8 @@
     <service id="desktop_finder.svhost_mdl_serverlist">
         <class>svhost_finder_serverlist</class>
     </service>
+    <service id="desktop_finder.svhost_mdl_vhostlist">
+        <class>svhost_finder_vhostlist</class>
+    </service>
     
 </services>
