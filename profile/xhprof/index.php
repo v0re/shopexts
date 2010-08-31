@@ -21,7 +21,7 @@ foreach($items as $item){
 }
 echo "</table>";
 echo "<hr>";
-echo gen_pager(count($ret));
+echo gen_pager(count($ret),$p);
 
 function get_file_list($dir){
 	$dir_obj = dir($dir);
@@ -46,10 +46,14 @@ function sort_by_key(&$data,$key){
 	$data = $ret;
 }
 
-function gen_pager($count){
+function gen_pager($count,$curent){
 	$page = ceil($count / LIMIT);
 	for($i=1;$i<=$page;$i++){
-		$ret .= "<a href=?p=$i>$i&nbsp;</a>";
+		if($i == $current){
+			$ret .= "<a href=?p=$i><b>$i</b>&nbsp;</a>";
+		}else{
+			$ret .= "<a href=?p=$i>$i&nbsp;</a>";
+		}
 	}
 	return $ret;
 }
