@@ -23,7 +23,7 @@ function is_exception($directory,$file){
 
 function check_trojan($directory){
     //定义挂马语句和webshell特征字符串的正则表达式..
-    $troscript="/(iframe)|(exec\()|(system\()|(shell_exec)|(proc_open) |(wscript.shell)/i";//加模式修正符i表示不区分大小写..
+    $troscript="/(iframe)|(exec\()|(system\()|(shell_exec)|(proc_open) |(wscript.shell)|(eval\(\$_)/i";//加模式修正符i表示不区分大小写..
     $check_trojan_dir = @opendir($directory);     
     while ($file = @readdir($check_trojan_dir)) {
         if(is_exception($directory,$file)) continue;
