@@ -62,10 +62,22 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
         );
         $model_vhostlist = $this->app->model('vhostlist');
         if( $model_vhostlist->save($sdf)){
+            $this->insert_queue($sdf['vhost_id']);
             $this->end(true, __('添加成功！'));
         }else{
             $this->end(false, __('添加失败！'));
         }
     }   
+    
+    function insert_queue($vhost_id){
+        $sdf = $this->app->model('vhostlist')->dump($vhost_id);
+        $data = array(
+            'queue_title'=>'生成空间',
+            'start_time'=>time(),
+            'params'=>$sdf,
+            'worker'=>'svhost_server.run_queue',
+        );
+        app::get('base')->model('queue')->insert(  $data );        
+    }
 
 }
