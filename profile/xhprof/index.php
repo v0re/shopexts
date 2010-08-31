@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E^ALL);
+ini_set('display_errors',true);
 require "config.php";
 
 $ret = get_file_list(DATA);
@@ -45,5 +46,5 @@ function gen_pager($count){
 	for($i=1;$i<=$page,$i++){
 		$ret .= "<a href=?p=$i> &nbsp;$i &nbsp;</a>"
 	}
-	
+	return $ret;
 }
