@@ -50,7 +50,7 @@ function sort_by_key(&$data,$key){
 }
 
 function gen_pager($count,$curent){
-	$page = ceil($count / LIMIT);
+	$page = intval($count / LIMIT);
 	for($i=1;$i<=$page;$i++){
 		if($i == $current){
 			$ret .= "<a href=?p=$i><b>$i</b>&nbsp;</a>";
