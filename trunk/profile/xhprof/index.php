@@ -14,7 +14,8 @@ foreach($ret as $item){
     if($id > LIMIT) break;
 }
 echo "</table>";
-
+echo "<hr>";
+echo gen_pager(count($ret));
 
 function get_file_list($dir){
 	$dir_obj = dir($dir);
@@ -37,4 +38,12 @@ function sort_by_key(&$data,$key){
 		$ret[] = $data[$k];
 	}
 	$data = $ret;
+}
+
+function gen_pager($count){
+	$page = ceil($count / LIMIT);
+	for($i=1;$i<=$page,$i++){
+		$ret .= "<a href=?p=$i> &nbsp;$i &nbsp;</a>"
+	}
+	
 }
