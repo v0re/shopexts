@@ -23,6 +23,12 @@ class svhost_server {
         return app::get('svhost')->model('vhostlist')->dump(  $this->vhost_id );        
     }
     
+     function run_queue(&$cursor_id,$params){
+        $this->server_id= $params['server_id'];
+        $this->vhost_id= $params['vhost_id'];
+        $this->create($params['domain']);
+     }
+    
     function create($domain){
         $server_setting = $this->load_server_setting();        
         $vhost_setting = $this->load_vhost_setting();
