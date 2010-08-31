@@ -1,10 +1,15 @@
 <?php
-error_reporting(E^ALL);
-ini_set('display_errors',true);
+
 require "config.php";
 
 $ret = get_file_list(DATA);
 sort_by_key($ret,'filetime');
+if($_GET['p']){
+	$p = intval($_GET['p']);
+	$offset = $p * LIMIT;
+	$length = LIMIT;
+	$ret = array_slice($ret,$offset,$length);
+}
 echo "<table>";
 $id = 0;
 foreach($ret as $item){
@@ -43,8 +48,8 @@ function sort_by_key(&$data,$key){
 
 function gen_pager($count){
 	$page = ceil($count / LIMIT);
-	for($i=1;$i<=$page,$i++){
-		$ret .= "<a href=?p=$i> &nbsp;$i &nbsp;</a>"
+	for($i=1;$i<=$page;$i++){
+		$ret .= "<a href=?p=$i>$i&nbsp;</a>";
 	}
 	return $ret;
 }
