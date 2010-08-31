@@ -4,11 +4,14 @@ require "config.php";
 
 $ret = get_file_list(DATA);
 sort_by_key($ret,'filetime');
+
 if($_GET['p']){
 	$p = intval($_GET['p']);
 	$offset = $p * LIMIT;
 	$length = LIMIT;
 	$items = array_slice($ret,$offset,$length);
+}else{
+	$items = $ret;
 }
 echo "<table>";
 $id = 0;
