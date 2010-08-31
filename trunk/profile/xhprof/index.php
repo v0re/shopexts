@@ -2,7 +2,7 @@
 
 require "config.php";
 
-exec("ls -t ".DATA,$ret);
+$ret = get_file_list(DATA);
 echo "<table>";
 $id = 0;
 foreach($ret as $item){
@@ -13,3 +13,13 @@ foreach($ret as $item){
     if($id > LIMIT) break;
 }
 echo "</table>";
+
+
+function get_file_list($dir){
+	$dir_obj = dir($dir);
+	while(($file = $dir_obj->read()) !== null){
+		$ret[]  = $file;
+	}
+	
+	return $ret;
+}
