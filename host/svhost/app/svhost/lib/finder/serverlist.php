@@ -52,12 +52,26 @@ class svhost_finder_serverlist{
         $serverlist_model = $this->app->model('serverlist');
         if($_POST){
             $sdf['server_id'] = $server_id;
+            foreach($_POST as $key=>$value){
+                if($pos = strpos($key,'/')){
+                    $one = substr($key,0,$pos);
+                    $two = substr($key,$pos+1);
+                    $_POST[$one][$two] = $value;
+                }
+            }
             $sdf['ftp'] = $_POST;
             $serverlist_model->save($sdf);
         }
         $data = $serverlist_model->dump($server_id,'*',array('ftp'=>'*'));
         $data = $data['ftp'];
-
+        foreach($data as $key=>$val){
+            if(is_array($val)){
+                foreach($val as $k=>$v){
+                    $new_key = $key."/".$k;
+                    $data[$new_key]  = $v;   
+                }
+            }
+        }
         return $this->gen_html($ftp_model,$data);
     }
     
