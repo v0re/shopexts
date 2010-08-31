@@ -8,11 +8,11 @@ if($_GET['p']){
 	$p = intval($_GET['p']);
 	$offset = $p * LIMIT;
 	$length = LIMIT;
-	$ret = array_slice($ret,$offset,$length);
+	$items = array_slice($ret,$offset,$length);
 }
 echo "<table>";
 $id = 0;
-foreach($ret as $item){
+foreach($items as $item){
     $tmp = explode('.',$item['name']);
     $viewurl = VIEWURL."run=".$tmp[0]."&source=".$tmp[1];
     echo "<tr><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$viewurl."\" target=_blank>".$item['name']."</a></td></tr>";
