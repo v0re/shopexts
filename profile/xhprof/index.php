@@ -13,7 +13,7 @@ if($_GET['p'] && is_numeric($_GET['p'])){
 }else{
 	$items = $ret;
 }
-echo "<b>".count($ret)."</b>&nbsp;<a href=?action=clear&p=all><b>delete all</b></a><a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
+echo "<b>".count($ret)."</b>in tatal~&nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
 if($_GET['action'] == 'del'){
 	if($_GET['p'] == 'all'){
 		del_item($ret);
@@ -62,9 +62,9 @@ function gen_pager($count,$curent){
 	$page = intval($count / LIMIT);
 	for($i=1;$i<=$page;$i++){
 		if($i == $current){
-			$ret .= "<a href=?p=$i><b>$i</b>&nbsp;</a>";
+			$ret .= "<a href=?p=$i><b>$i</b></a>&nbsp;";
 		}else{
-			$ret .= "<a href=?p=$i>$i&nbsp;</a>";
+			$ret .= "<a href=?p=$i>$i</a>&nbsp;";
 		}
 	}
 	return $ret;
