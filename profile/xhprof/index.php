@@ -24,6 +24,7 @@ if($_GET['action'] == 'clear'){
 }
 echo "<hr>";
 echo "<table>";
+echo "<tr><td>id</td><td>url</td><td>time</td><td>memory</td></tr>";
 $id = 0;
 foreach($items as $item){
     $tmp = explode('.',$item['name']);
