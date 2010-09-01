@@ -27,8 +27,11 @@ echo "<table>";
 $id = 0;
 foreach($items as $item){
     $tmp = explode('.',$item['name']);
+    $file = DATA."/".$item['name'];
+    $acc = unserialize(file_get_contents($file));
+  	$acc = array_pop($acc);
     $viewurl = VIEWURL."run=".$tmp[0]."&source=".$tmp[1];
-    echo "<tr><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$viewurl."\" target=_blank>".$item['name']."</a></td></tr>";
+    echo "<tr><td>".$id."</td><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$viewurl."\" target=_blank>".$item['name']."</a></td><td>".$acc['wt']."</td><td>".$acc['pmu']."</td></tr>";
     $id++;
     if($id > LIMIT) break;
 }
