@@ -11,6 +11,7 @@ if($_GET['p'] && is_numeric($_GET['p'])){
 	$length = LIMIT;
 	$items = array_slice($ret,$offset,$length);
 }else{
+	$p = 1;
 	$items = $ret;
 }
 echo "<b>".count($ret)."</b>in tatal~&nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
