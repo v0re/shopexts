@@ -5,7 +5,7 @@ require "config.php";
 $ret = get_file_list(DATA);
 sort_by_key($ret,'filetime');
 
-if($_GET['p']){
+if($_GET['p'] && is_numeric($_GET['p'])){
 	$p = intval($_GET['p']);
 	$offset = $p * LIMIT;
 	$length = LIMIT;
@@ -13,6 +13,15 @@ if($_GET['p']){
 }else{
 	$items = $ret;
 }
+echo "<b>".count($ret)."</b>&nbsp;<a href=?action=clear&p=all><b>delete all</b></a><a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
+if($_GET['action'] == 'del'){
+	if($_GET['p'] == 'all'){
+		del_item($ret);
+	}else{
+		del_item($items);
+	}
+}
+echo "<hr>";
 echo "<table>";
 $id = 0;
 foreach($items as $item){
@@ -59,4 +68,10 @@ function gen_pager($count,$curent){
 		}
 	}
 	return $ret;
+}
+
+function del_item($items){
+	foreach($items as $item){
+		unlink($item);
+	}
 }
