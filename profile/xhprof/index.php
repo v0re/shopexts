@@ -30,6 +30,8 @@ foreach($items as $item){
     $file = DATA."/".$item['name'];
     $acc = unserialize(file_get_contents($file));
   	$acc = array_pop($acc);
+  	$acc['wt'] = number_format($acc['wt']);
+  	$acc['pmu'] = number_format($acc['pmu']);
     $viewurl = VIEWURL."run=".$tmp[0]."&source=".$tmp[1];
     echo "<tr><td>".$id."</td><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$viewurl."\" target=_blank>".$item['name']."</a></td><td>".$acc['wt']."</td><td>".$acc['pmu']."</td></tr>";
     $id++;
