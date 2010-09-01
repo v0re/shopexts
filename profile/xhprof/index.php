@@ -14,7 +14,7 @@ if($_GET['p'] && is_numeric($_GET['p'])){
 	$p = 1;
 	$items = $ret;
 }
-echo "<b>".count($ret)."</b>in tatal~&nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
+echo "<b>".count($ret)."</b> in tatal~ &nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
 if($_GET['action'] == 'clear'){
 	if($_GET['p'] == 'all'){
 		del_item($ret);
@@ -73,6 +73,7 @@ function gen_pager($count,$curent){
 
 function del_item($items){
 	foreach($items as $item){
-		unlink($item);
+		$file = DATA."/".$item['name'];
+		unlink($file);
 	}
 }
