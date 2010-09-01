@@ -15,7 +15,7 @@ if($_GET['p'] && is_numeric($_GET['p'])){
 	$items = $ret;
 }
 echo "<b>".count($ret)."</b>in tatal~&nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
-if($_GET['action'] == 'del'){
+if($_GET['action'] == 'clear'){
 	if($_GET['p'] == 'all'){
 		del_item($ret);
 	}else{
