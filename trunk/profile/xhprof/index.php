@@ -61,7 +61,7 @@ if($_GET['sort'] ){
 
 echo "<hr>";
 echo "<div class='fv'>";
-echo "<table>";
+echo "<table width=1024>";
 if($p == 1){
     $pp ='';
 }else{
