@@ -62,10 +62,10 @@ if($_GET['sort'] ){
 echo "<hr>";
 echo "<div class='fv'>";
 echo "<table>";
-echo "<tr><td>id</td><td>time</td><td width=80%><a href=?p={$p}&sort=viewurl>url</a></td><td><a href=?p={$p}&sort=wt>time cost</a></td><td><a href=?p={$p}&sort=pmu>memory</a></td></tr>";
+echo "<tr><td>id</td><td>time</td><td width=80%><a href=?p={$p}&sort=viewurl>url</a></td><td><a href=?p={$p}&sort=wt>time cost(ms)</a></td><td><a href=?p={$p}&sort=pmu>memory(byte)</a></td></tr>";
 $id = 0;
 foreach($items as $item){
-    echo "<tr><td>".$id."</td><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$item['viewurl']."\" target=_blank>".$item['name']."</a></td><td>".$item['wt']."</td><td>".$item['pmu']."</td></tr>";
+    echo "<tr><td>".$id."</td><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$item['viewurl']."\" target=_blank>".$item['name']."</a></td><td>".number_format($item['wt'])."</td><td>".number_format($item['pmu'])."</td></tr>";
     $id++;
     if($id > LIMIT) break;
 }
