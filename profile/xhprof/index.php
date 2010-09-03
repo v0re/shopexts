@@ -19,7 +19,7 @@
 require "config.php";
 
 $ret = get_file_list(DATA);
-
+sort_by_key($ret,'filetime');
 
 if($_GET['p'] && is_numeric($_GET['p'])){
 	$p = intval($_GET['p']);
@@ -59,8 +59,6 @@ foreach($items as $k=>$item){
 
 if($_GET['sort'] ){
     sort_by_key($items,$_GET['sort']);
-}else{
-    sort_by_key($ret,'filetime');
 }
 
 echo "<hr><center>";
