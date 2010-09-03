@@ -64,6 +64,25 @@ class svhost_server {
                 
         return true;
     } 
+    
+}
+
+class bash{
+    
+    function fwrite($filename,$content){
+        return "
+        cat >$filename<<'EOF'
+        $content
+        EOF
+        ";
+    }
+    
+    function mysql_query($host,$user,$password,$sql){
+        return "
+        mysql -h{$host} -u{$user} -p{$password} <<'EOF'
+        $sql
+        EOF";
+    }
 }
 
 class nginx{
