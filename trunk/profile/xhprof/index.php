@@ -60,6 +60,7 @@ if($_GET['sort'] ){
 }
 
 echo "<hr>";
+echo "<div class='fv'>";
 echo "<table>";
 echo "<tr><td>id</td><td>time</td><td width=80%><a href=?sort=viewurl>url</a></td><td><a href=?sort=wt>time cost</a></td><td><a href=?sort=pmu>memory</a></td></tr>";
 $id = 0;
@@ -69,6 +70,7 @@ foreach($items as $item){
     if($id > LIMIT) break;
 }
 echo "</table>";
+echo "</div>";
 echo "<hr>";
 echo gen_pager(count($ret),$p);
 
