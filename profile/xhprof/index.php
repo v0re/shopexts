@@ -59,9 +59,9 @@ if($_GET['sort'] ){
     sort_by_key($ret,'filetime');
 }
 
-echo "<hr>";
+echo "<hr><center>";
 echo "<div class='fv'>";
-echo "<table width=100%>";
+echo "<table width=1280>";
 if($p == 1){
     $pp ='';
 }else{
@@ -76,7 +76,7 @@ foreach($items as $item){
 }
 echo "</table>";
 echo "</div>";
-echo "<hr>";
+echo "</center><hr>";
 echo gen_pager(count($ret),$p);
 
 function get_file_list($dir){
