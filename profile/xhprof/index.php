@@ -28,7 +28,11 @@ if($_GET['p'] && is_numeric($_GET['p'])){
 	$items = array_slice($ret,$offset,$length);
 }else{
 	$p = 1;
-	$items = $ret;
+	if(count($ret) > LIMIT){
+	    $items = array_slice($ret,0,LIMIT);
+    }else{
+        $items = $ret;
+    }
 }
 echo "<b>".count($ret)."</b> in total~ &nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
 if($_GET['action'] == 'clear'){
