@@ -65,7 +65,7 @@ echo "<table>";
 if($p == 1){
     $pp ='';
 }else{
-    $pp = $p；
+    $pp = $p;
 }
 echo "<tr><td>id</td><td>time</td><td width=80%><a href=?p={$pp}&sort=viewurl>url</a></td><td><a href=?p={$pp}&sort=wt>time cost(ms)</a></td><td><a href=?p={$pp}&sort=pmu>memory(byte)</a></td></tr>";
 $id = 0;
