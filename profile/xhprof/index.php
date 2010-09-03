@@ -86,7 +86,7 @@ function get_file_list($dir){
 	while(($file = $dir_obj->read()) !== false){
 		if(substr($file,0,1) == '.' ) continue;
 		$item['name']  = $file;
-		$item['filetime'] = filemtime($dir."/".$file);
+		$item['filetime'] = filectime($dir."/".$file);
 		$ret[] = $item;
 	}
 	
