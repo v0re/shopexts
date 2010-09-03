@@ -45,8 +45,8 @@ foreach($items as $k=>$item){
     $file = DATA."/".$item['name'];
     $acc = unserialize(file_get_contents($file));
   	$acc = array_pop($acc);
-  	$item['wt'] = number_format($acc['wt']);
-  	$item['pmu'] = number_format($acc['pmu']);
+  	$item['wt'] = intval($acc['wt']);
+  	$item['pmu'] = intval($acc['pmu']);
     $item['viewurl'] = VIEWURL."run=".$tmp[0]."&source=".$tmp[1];
     $items[$k] = $item;
 }
