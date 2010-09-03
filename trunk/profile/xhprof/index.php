@@ -1,9 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">     
+    <style type=text/css>
+        .fv table{
+        	border-collapse:collapse;   
+        }
+        .fv td{
+        	background:#ffc;
+        	border:solid 1px #f90;
+        	height:22px;
+        }
+        </style>
+</head>
+<body>
 <?php
 
 require "config.php";
 
 $ret = get_file_list(DATA);
-sort_by_key($ret,'filetime');
+
 
 if($_GET['p'] && is_numeric($_GET['p'])){
 	$p = intval($_GET['p']);
@@ -22,19 +38,33 @@ if($_GET['action'] == 'clear'){
 		del_item($items);
 	}
 }
-echo "<hr>";
-echo "<table>";
-echo "<tr><td>id</td><td>time</td><td>url</td><td>time cost</td><td>memory</td></tr>";
-$id = 0;
-foreach($items as $item){
+
+#重组数据
+foreach($items as $k=>$item){
     $tmp = explode('.',$item['name']);
     $file = DATA."/".$item['name'];
     $acc = unserialize(file_get_contents($file));
   	$acc = array_pop($acc);
-  	$acc['wt'] = number_format($acc['wt']);
-  	$acc['pmu'] = number_format($acc['pmu']);
-    $viewurl = VIEWURL."run=".$tmp[0]."&source=".$tmp[1];
-    echo "<tr><td>".$id."</td><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$viewurl."\" target=_blank>".$item['name']."</a></td><td>".$acc['wt']."</td><td>".$acc['pmu']."</td></tr>";
+  	$item['wt'] = number_format($acc['wt']);
+  	$item['pmu'] = number_format($acc['pmu']);
+    $item['viewurl'] = VIEWURL."run=".$tmp[0]."&source=".$tmp[1];
+    $items[$k] = $item;
+}
+
+#排序
+
+if($_GET['sort'] ){
+    sort_by_key($items,$_GET['sort']);
+}else{
+    sort_by_key($ret,'filetime');
+}
+
+echo "<hr>";
+echo "<table>";
+echo "<tr><td>id</td><td>time</td><td width=80%><a href=?sort=viewurl>url</a></td><td><a href=?sort=wt>time cost</a></td><td><a href=?sort=pmu>memory</a></td></tr>";
+$id = 0;
+foreach($items as $item){
+    echo "<tr><td>".$id."</td><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$item['viewurl']."\" target=_blank>".$item['name']."</a></td><td>".$item['wt']."</td><td>".$item['pmu']."</td></tr>";
     $id++;
     if($id > LIMIT) break;
 }
@@ -65,6 +95,7 @@ function sort_by_key(&$data,$key){
 	$data = $ret;
 }
 
+
 function gen_pager($count,$curent){
 	$page = intval($count / LIMIT);
 	for($i=1;$i<=$page;$i++){
@@ -83,3 +114,7 @@ function del_item($items){
 		unlink($file);
 	}
 }
+
+?>
+</body>
+</html>
