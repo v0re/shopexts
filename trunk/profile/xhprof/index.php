@@ -30,7 +30,7 @@ if($_GET['p'] && is_numeric($_GET['p'])){
 	$p = 1;
 	$items = $ret;
 }
-echo "<b>".count($ret)."</b> in tatal~ &nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
+echo "<b>".count($ret)."</b> in total~ &nbsp;<a href=?action=clear&p=all><b>delete all</b></a>&nbsp;&nbsp;<a href=?action=clear&p={$p}><b>delete page {$p}</b></a>";
 if($_GET['action'] == 'clear'){
 	if($_GET['p'] == 'all'){
 		del_item($ret);
@@ -62,7 +62,12 @@ if($_GET['sort'] ){
 echo "<hr>";
 echo "<div class='fv'>";
 echo "<table>";
-echo "<tr><td>id</td><td>time</td><td width=80%><a href=?p={$p}&sort=viewurl>url</a></td><td><a href=?p={$p}&sort=wt>time cost(ms)</a></td><td><a href=?p={$p}&sort=pmu>memory(byte)</a></td></tr>";
+if($p == 1){
+    $pp ='';
+}else{
+    $pp = $p
+}
+echo "<tr><td>id</td><td>time</td><td width=80%><a href=?p={$pp}&sort=viewurl>url</a></td><td><a href=?p={$pp}&sort=wt>time cost(ms)</a></td><td><a href=?p={$pp}&sort=pmu>memory(byte)</a></td></tr>";
 $id = 0;
 foreach($items as $item){
     echo "<tr><td>".$id."</td><td>".date("Y-m-d H:i:s",$item['filetime'])."</td><td><a href=\"".$item['viewurl']."\" target=_blank>".$item['name']."</a></td><td>".number_format($item['wt'])."</td><td>".number_format($item['pmu'])."</td></tr>";
@@ -105,6 +110,10 @@ function gen_pager($count,$curent){
 			$ret .= "<a href=?p=$i><b>$i</b></a>&nbsp;";
 		}else{
 			$ret .= "<a href=?p=$i>$i</a>&nbsp;";
+		}
+		if($i > 30){
+		    $ret .= "……<a href=?p=$page>$page</a>&nbsp;";
+		    break;
 		}
 	}
 	return $ret;
