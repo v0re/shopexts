@@ -38,7 +38,7 @@ $result = $httpsqs->psynctime($host, $port, $charset, $name, $num); //9. Change 
 
 $GLOBAL_HTTPSQS_PSOCKET = false;
 
-class httpsqs
+class svhost_httpsqs
 {
     function http_get($host, $port, $query)
     {

@@ -71,13 +71,13 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
     
     function insert_queue($vhost_id){
         $sdf = $this->app->model('vhostlist')->dump($vhost_id);
-        $data = array(
-            'queue_title'=>'生成空间',
-            'start_time'=>time(),
-            'params'=>$sdf,
-            'worker'=>'svhost_server.run_queue',
-        );
-        app::get('base')->model('queue')->insert(  $data );        
+        $server = kernel::service('svhost_server', array('content_path'=>'svhost_server'));
+        $bash = $server->get_bash($sdf);
+        $httpsqs = kernel::single('svhost_httpsqs'); 
+        $queue_name = $sdf['ip'];
+        $message = $bash;
+        $result = $httpsqs->put("127.0.0.1", 1218, "utf-8", $queue_name, $message);
+        return $result;
     }
 
 }
