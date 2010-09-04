@@ -276,7 +276,7 @@ class mysql{
             $db_host = $mysql['db_host'];
             $db_password = $mysql['db_password'];
             $sql = "GRANT ALL ON $db_name TO $db_user@$db_host IDENTIFIED BY $db_password";
-            $bash->mysql_query($db_host,$db_user,$db_password,$sql,);  
+            $bash->mysql_query($db_host,$db_user,$db_password,$sql);  
                 
             return true;
     }
