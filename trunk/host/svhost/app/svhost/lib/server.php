@@ -29,10 +29,10 @@ class svhost_server {
         $this->create($params['domain']);
      }
      
-    function run_bash($params){
+    function get_bash($params){
         $this->server_id= $params['server_id'];
         $this->vhost_id= $params['vhost_id'];
-        $this->bash_create($params['domain']);
+        return $this->bash_create($params['domain']);
      }
     
     function create($domain){
@@ -105,8 +105,7 @@ class svhost_server {
             $database->bash_create($bash,$mysql);
         }
         
-        echo $bash->get();        
-        return true;
+        return $bash->get();        
     } 
     
 }
