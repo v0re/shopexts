@@ -177,7 +177,7 @@ class nginx{
         $htdocs = $this->config['htdocs'];        
         $conf_template =$this->site_conf_template();
         $conf = str_replace(
-            array('SERVERIP','#DOMAIN#','#HTDOCS#'),
+            array('#SERVERIP#','#DOMAIN#','#HTDOCS#'),
             array($ip,$domain,$htdocs),
             $conf_template
         );
