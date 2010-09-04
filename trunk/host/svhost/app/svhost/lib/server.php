@@ -263,7 +263,7 @@ class mysql{
              $sql = "CREATE DATABASE $db_name";
             $bash->mysql_query($root_db_host,$root_db_user,$root_db_password,$sql);        
   
-            $sql = "GRANT ALL ON $db_name TO $db_user@$db_host IDENTIFIED BY $db_password";
+            $sql = "GRANT ALL ON {$db_name}.* TO {$db_user}@{$db_host} IDENTIFIED BY {$db_password}";
             $bash->mysql_query($root_db_host,$root_db_user,$root_db_password,$sql);  
                 
             return true;
