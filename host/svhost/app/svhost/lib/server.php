@@ -136,28 +136,15 @@ class bash{
     }    
     
     function fwrite($filename,$content){
-        $this->put( "
-        cat >$filename<<'EOF'
-        $content
-        EOF
-        ");
+        $this->put( "cat >$filename<<'EOF'\n$content\nEOF");
     }
     
     function mysql_query($host,$user,$password,$sql){
-        $this->put("
-        mysql -h{$host} -u{$user} -p{$password} <<'EOF'
-        $sql;
-        EOF
-        ");
+        $this->put("mysql -h{$host} -u{$user} -p{$password} <<'EOF'\n$sql;\nEOF");
     }
     
     function mysql_query_on_db($host,$user,$password,$db_name,$sql){
-        $this->put("
-        mysql -h{$host} -u{$user} -p{$password} <<'EOF'
-        USE {$db_name};
-        $sql;
-        EOF
-        "); 
+        $this->put("mysql -h{$host} -u{$user} -p{$password} <<'EOF'\nUSE {$db_name};\n$sql;\nEOF"); 
     }
     
     
