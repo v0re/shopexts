@@ -1,7 +1,0 @@
-<site>
-	<module id='express' controller='site_deliverycenter' >
-        <name>express</name>
-        <title>快递单管理</title>
-        <disable>false</disable>
-    </module>
-</site>

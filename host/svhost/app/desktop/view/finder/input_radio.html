@@ -1,7 +1,0 @@
-<div id="<{$params.domid}>" class="object-select clearfix" <{$addons}> >
-<div class="label" id="<{$id}>" onclick="new finderDialog('<{$url}>',{handle:'handle_<{$params.domid}>',params:{url:'index.php?app=desktop&ctl=editor&act=object_rows',type:'<{$params.type}>',name:'data[]',postdata:'app_id=<{$params.app_id}>&<{$object}>'}})"><{$string}></div>
-<div class="handle" onclick="new finderDialog('<{$url}>',{handle:'handle_<{$params.domid}>',params:{url:'index.php?app=desktop&ctl=editor&act=object_rows',type:'<{$params.type}>',name:'data[]',postdata:'app_id=<{$params.app_id}>&<{$object}>'}})">&nbsp;</div>
-
-	<input type="hidden" name="<{$params.name}>" value="<{if is_array($params.value)}><{$params.value|implode:','}><{else}><{$params.value}><{/if}>" />
-
-</div>

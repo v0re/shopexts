@@ -1,9 +1,0 @@
-<ul class="clearfix">
-	<{foreach from=$data item=item key=key name=pdata}>
-	<{if $item.addon>0}> 
-	<li class="<{if ($env.get.view && $env.get.view==$key)||(!$env.get.view&&$env.foreach.pdata.iteration==1)}>current<{/if}><{if $env.foreach.pdata.last}> last<{/if}>"><a href="<{$item.href}>">
-		<span><{$item.label}>(<{$item.addon}>)</span></a>
-	</li> 
-	<{/if}>
-	<{/foreach}>  
-</ul>

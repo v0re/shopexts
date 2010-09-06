@@ -1,1 +1,0 @@
-<?php exit(); ?>a:2:{s:5:"value";a:1:{s:4:"list";a:1:{s:30:"base_application_cache_expires";s:30:"base_application_cache_expires";}}s:6:"expire";i:0;}

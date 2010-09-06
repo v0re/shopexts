@@ -1,3 +1,0 @@
-<{foreach from=$styles item=item name="item" key=key}>
-<a style="background-color: <{$item['color']}>; <{if $current.value == $item.value}>border:2px solid rgb(159, 197, 232);margin-left:-3px;padding:1px; <{/if}>"  onclick="W.page('index.php?app=site&ctl=admin_theme_manage&act=set_style&theme=<{$theme}>&style_id=<{$key}>')"  onmouseover="$('<{$theme}>_img').src='<{$preview_prefix}>/<{$item['preview']}>';$(this).setStyle('cursor','pointer')" title="<{$item['label']}>" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><br />
-<{/foreach}>

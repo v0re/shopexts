@@ -1,9 +1,0 @@
-<span class='lnk box-edit'>[编辑]</span><br/>
-<table>
-<{foreach from=$order.products item=gItem}>
-  <tr>
-    <th><{$gItem.name}><{if $gItem.spec_info}>[<{$gItem.spec_info}>]<{/if}> × <{$gItem.num}></th>
-    <td><{$gItem.price|cur}></td>
-  </tr>
-<{/foreach}>
-</table>

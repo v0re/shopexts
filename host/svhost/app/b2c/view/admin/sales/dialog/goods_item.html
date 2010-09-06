@@ -1,9 +1,0 @@
-<{if $arr_products}>
-<{foreach from=$arr_products item=item}>
-  <div class="row" id="item_<{$item.id}>">
-    <{img class="imgbundle operater" alt="删除" src="bundle/delecate.gif" onclick="this.getParent('div').destroy();" }>
-    <input type="hidden"  name="<{$name}>[]" value="<{$item.id}>" >
-    <label ><{$item.name}></label>
-  </div>
-<{/foreach}>
-<{/if}>
