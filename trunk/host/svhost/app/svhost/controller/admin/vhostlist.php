@@ -16,7 +16,8 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
             'title'=>'虚拟空间列表',
             'allow_detail_popup'=>false,
             'actions'=>array(                           array('label'=>'生成虚拟空间','icon'=>'add.gif','href'=>'index.php?app=svhost&ctl=admin_vhostlist&act=add_page','target'=>"dialog::{title:'生成虚拟空间',width:560,height:200}"),
-            ),'use_buildin_set_tag'=>true,'use_buildin_recycle'=>true,'use_buildin_filter'=>false,'use_view_tab'=>false,
+            array('label'=>'删除虚拟空间','icon'=>'add.gif','submit'=>'index.php?app=svhost&ctl=admin_vhostlist&act=delete_page','target'=>'_blank'),
+            ),'use_buildin_set_tag'=>true,'use_buildin_recycle'=>true,'use_buildin_filter'=>true,'use_view_tab'=>true,
             ));
     }
     
@@ -30,6 +31,19 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
         $this->pagedata['server']['options'] = $options;
         $this->display('admin/vhostlist/new.html');
     }
+    
+    public function delete_page(){
+        if(is_array($_POST['vhost_id'])){
+            $obj_vhostlist = $this->app->model('vhostlist');
+            $server = kernel::service('svhost_server', array('content_path'=>'svhost_server'));
+            foreach($_POST['vhost_id'] as $vhost_id){
+                $sdf = $obj_vhostlist->dump($vhost_id);
+                $bash = $server->get_delete_bash($sdf);
+                echo "<pre>$bash</pre>";
+            }
+        }
+    }
+    
     
     public function add(){
         $this->begin();
