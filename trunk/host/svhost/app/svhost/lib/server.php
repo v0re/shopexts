@@ -146,4 +146,18 @@ class svhost_server {
         return $bash->get();        
     } 
     
+    function is_exists($domain){
+        $filter['domain'] = $domain;
+        if(app::get('svhost')->model('vhostlist')->getList($filter)){
+            return true;
+        }
+        return false;
+    }
+    
+    function virtual_add($domain){
+        
+    }
+    
+    
+    
 }
