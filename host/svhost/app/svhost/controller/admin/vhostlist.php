@@ -30,7 +30,7 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
         $this->pagedata['server']['name'] = 'server';
         $this->pagedata['server']['options'] = $options;
         $this->display('admin/vhostlist/new.html');
-    }
+    }    
     
     public function delete_page(){
         if(is_array($_POST['vhost_id'])){

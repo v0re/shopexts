@@ -16,6 +16,7 @@ class svhost_ctl_admin_serverlist extends desktop_controller{
             'title'=>'服务器列表',
             'allow_detail_popup'=>true,
             'actions'=>array(                           array('label'=>'添加服务器','icon'=>'add.gif','href'=>'index.php?app=svhost&ctl=admin_serverlist&act=add_page','target'=>'_blank'),
+            array('label'=>'检查服务器','icon'=>'add.gif','submit'=>'index.php?app=svhost&ctl=admin_serverlist&act=check','target'=>"dialog::{title:'检查服务器',width:600,height:400}"),
             ),'use_buildin_set_tag'=>true,'use_buildin_recycle'=>true,'use_buildin_filter'=>false,'use_view_tab'=>false,
             ));
     }
@@ -57,6 +58,52 @@ class svhost_ctl_admin_serverlist extends desktop_controller{
             $this->end(false, __('添加失败！'));
         }
     }
+    
+    public function check(){
+        $this->begin();        
+        $server_id = intval($_POST['server_id'][0]);
+        $server_setting = $this->app->model('serverlist')->dump(  
+            $server_id,
+            '*',
+            array(      
+                'database'=>'*',
+                'http'=>'*',
+                'ftp'=>'*',
+            )
+        );        
+        $htdocs = $server_setting['http']['htdocs'];
+        $obj_dir = dir($htdocs);
+        $server = kernel::service('svhost_server', array('content_path'=>'svhost_server'));
+        $model_vhostlist = $this->app->model('vhostlist');
+        while(($domain = $obj_dir->read()) !== false){
+            if(substr($domain ,0,1) == '.') continue;
+            $site_root = "$htdocs/$domain"; 
+            if(is_file($site_root)) continue;
+            if(!strstr($domain,'.')) continue;
+            if($server->is_exists($domain)) continue;
+            $domain_strip_dot = str_replace('.','',$domain);
+            $sdf = array(
+                'domain'=>$domain,
+                'server_id'=>$server_id,
+                'ip'=>$server_setting['server']['ip'],
+                'db'=>array(
+                    'host'=>$server_setting['database']['host'],
+                    'port'=>$server_setting['database']['port'],
+                    'name'=>$domain_strip_dot,
+                    'user'=>$domain_strip_dot,
+                    'password'=>'',
+                ),
+                'ftp'=>array(
+                    'user'=>$domain_strip_dot,
+                    'password'=>'',
+                ),
+            );
+            $model_vhostlist->save($sdf);
+        }
+
+        $this->end(true, __('检查完成！'));     
+    }
+    
     
     private function gen_input_from_schema($model_name,$parent=null){
         
