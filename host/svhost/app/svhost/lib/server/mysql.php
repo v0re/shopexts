@@ -62,7 +62,7 @@ class svhost_server_mysql{
             $root_db_password = $this->config['password'];
             $db_user = $mysql['db_user'];
             $db_host = $mysql['db_host'];
-            $db_pass = $mysql['db_password']
+            $db_pass = $mysql['db_password'];
             $sql = "SET PASSWORD FOR {$db_user}@{$db_host} = password('{$db_pass}')";
             $bash->mysql_query($root_db_host,$root_db_user,$root_db_password,$sql);  
                 
