@@ -17,7 +17,7 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
             'allow_detail_popup'=>false,
             'actions'=>array(                           array('label'=>'生成虚拟空间','icon'=>'add.gif','href'=>'index.php?app=svhost&ctl=admin_vhostlist&act=add_page','target'=>"dialog::{title:'生成虚拟空间',width:560,height:200}"),
             array('label'=>'删除虚拟空间','icon'=>'add.gif','submit'=>'index.php?app=svhost&ctl=admin_vhostlist&act=delete_page','target'=>'_blank'),
-            ),'use_buildin_set_tag'=>true,'use_buildin_recycle'=>false,'use_buildin_filter'=>false,'use_view_tab'=>false,
+            ),'use_buildin_set_tag'=>true,'use_buildin_recycle'=>true,'use_buildin_filter'=>false,'use_view_tab'=>false,
             ));
     }
     
