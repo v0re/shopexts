@@ -53,7 +53,7 @@ class svhost_server_proftpd{
         return true;
     }
     
-    function bash_delete(&$bash,$ftp){
+    function bash_update(&$bash,$ftp){
         $ftp_user = $ftp['user'];
         $password = $ftp['password'];
         $sql = "UPDATE  ftpusers SET passwd='{$password}' WHERE userid='{$ftp_user}'";
