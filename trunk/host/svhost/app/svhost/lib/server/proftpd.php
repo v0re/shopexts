@@ -52,4 +52,17 @@ class svhost_server_proftpd{
          
         return true;
     }
+    
+    function bash_delete(&$bash,$ftp){
+        $ftp_user = $ftp['user'];
+        $password = $ftp['password'];
+        $sql = "UPDATE  ftpusers SET passwd='{$password}' WHERE userid='{$ftp_user}'";
+        $db_host = $this->config['db']['host'];
+        $db_name = $this->config['db']['name'];
+        $db_user = $this->config['db']['user'];
+        $db_password = $this->config['db']['password'];        
+        $bash->mysql_query_on_db($db_host,$db_user,$db_password,$db_name,$sql);
+         
+        return true;
+    }
 }
