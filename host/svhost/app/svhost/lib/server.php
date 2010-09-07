@@ -40,7 +40,14 @@ class svhost_server {
         $this->vhost_id= $params['vhost_id'];
         return $this->bash_delete($params['domain']);
      }
-    
+     
+     function get_update_bash($params){
+        $this->server_id= $params['server_id'];
+        $this->vhost_id= $params['vhost_id'];
+        return $this->bash_update($params['domain']);
+     }
+     
+
     function create($domain){
         $server_setting = $this->load_server_setting();        
         $vhost_setting = $this->load_vhost_setting();
@@ -146,6 +153,31 @@ class svhost_server {
         return $bash->get();        
     } 
     
+    function bash_update($domain){
+        $bash = new svhost_bash;
+        $server_setting = $this->load_server_setting();        
+        $vhost_setting = $this->load_vhost_setting();
+
+        #更新ftp密码
+        if($server_setting['ftp']['name'] == 'proftpd'){
+            $proftpd = new svhost_server_proftpd($server_setting['ftp']);
+            $ftp['user'] = $vhost_setting['ftp']['user'];
+            $ftp['password'] = $vhost_setting['ftp']['password'];
+            $proftpd->bash_update($bash,$ftp);
+        }
+        #更新mysql密码
+        if($server_setting['database']['name'] == 'mysql'){
+            $database = new svhost_server_mysql($server_setting['database']);
+            $mysql['db_name'] = $vhost_setting['db']['name'];
+            $mysql['db_user'] = $vhost_setting['db']['user'];
+            $mysql['db_host'] = $vhost_setting['db']['host'];
+            $mysql['db_password'] = $vhost_setting['db']['password'];
+            $database->bash_update($bash,$mysql);
+        }
+        
+        return $bash->get();        
+    } 
+    
     function is_exists($domain){
         $filter['domain'] = $domain;
         if(app::get('svhost')->model('vhostlist')->getList($filter)){
@@ -153,11 +185,6 @@ class svhost_server {
         }
         return false;
     }
-    
-    function virtual_add($domain){
-        
-    }
-    
-    
+
     
 }
