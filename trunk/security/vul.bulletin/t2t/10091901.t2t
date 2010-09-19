@@ -1,0 +1,86 @@
+ShopEx助理api接口过滤不严
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+2010-09-19
+ 
+====系统编号====
+ 
+SEC10091901
+ 
+====影响版本====
+ 
+ShopEx48系列 <= 45144 
+ 
+====漏洞危害====
+ 
+不需要后台帐号就可以查到订单列表内容。
+ 
+====漏洞原理====
+ 
+在助理api接口/core/api/include/api_link.php
+
+```
+
+             'search_order_list'=>array(
+                  '1.0'=>array('ctl'=>'api/order/api_1_0_order','act'=>'search_order_list','columns'=>'*','n_varify'=>'true'
+                  )
+             ),
+
+
+```
+中是否跳过验证'n_varify'设置为true,导致不需要验证也可以获取用户订单列表
+
+====检测方法====
+下载这个程序
+
+http://shopexts.googlecode.com/files/shopex.api.ordersearch.vul.rar
+
+ 输入网店地址/api.php，勾选“下载全部订单”，点击“开始导出csv”如果下载数据说明系统有漏洞。
+
+====解决方案====
+
+1）补丁下载地址
+
+http://downtcom.shopex.cn/update/sec10091901.zip
+
+2）如果要自行修复，请将/core/api/include/api_link.php
+
+```
+
+             'search_order_list'=>array(
+                  '1.0'=>array('ctl'=>'api/order/api_1_0_order','act'=>'search_order_list','columns'=>'*','n_varify'=>'true'
+                  )
+             ),
+
+
+```
+
+去掉“'n_varify'=>'true'”，改成
+
+```
+
+             'search_order_list'=>array(
+                  '1.0'=>array('ctl'=>'api/order/api_1_0_order','act'=>'search_order_list','columns'=>'*'
+                  )
+             ),
+
+
+```
+
+
+
+====信息来源====
+
+客户反馈
+
+
+
+

@@ -15,3 +15,4 @@ last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
  - [SPGDIF函数身份验证不严 10061501.html]
  - [ShopEx485订单留言XSS漏洞 10072601.html]
  - [ECshop礼包id未过滤漏洞 10082301.html]
+ - [ShopEx助理api接口过滤不严 10091901.html]
