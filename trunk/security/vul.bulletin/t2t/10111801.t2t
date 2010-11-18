@@ -28,12 +28,15 @@ ShopEx48所有版本
 获取用户的收获地址时,未根据传入的addr_id 来匹配查找是否是该会员的地址。而是直接显示,导致用户地址信息泄露
 
 ====检测方法====
-
+```
 http://www.s.cn/?cart-getAddr.html&addr_id=2758
+```
+
 
 ====解决方案====
 根据传入的addr_id找到对应的member_id然后与 $this->member中的member_id做匹配,相等则显示
 
+```
 if($_GET['addr_id']){
     $oMem = &$this->system->loadModel('member/member');
     $data = $oMem->getAddrById($_GET['addr_id']);
