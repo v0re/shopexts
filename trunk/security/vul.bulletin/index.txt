@@ -5,3 +5,4 @@
  - [ECshop礼包id未过滤漏洞 10082301.html]
  - [ShopEx助理api接口过滤不严 10091901.html]
  - [Ecshop2.7.2个人资料输入过滤不严 10091902.html]
+ - [ShopEx48版本用户地址信息泄露 10111801.html]
