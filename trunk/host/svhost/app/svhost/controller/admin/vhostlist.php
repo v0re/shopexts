@@ -58,6 +58,11 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
         );        
         
         $domain_strip_dot = str_replace('.','',$domain);
+        $db_name = str_replace("-","_",$domain_strip_dot);
+        $db_user = $db_name;
+        if(strlen($db_user) > 16 ){
+            $db_user = substr($db_user,0,15);
+        }
         $sdf = array(
             'domain'=>$domain,
             'server_id'=>$server_id,
@@ -65,8 +70,8 @@ class svhost_ctl_admin_vhostlist extends desktop_controller{
             'db'=>array(
                 'host'=>$server_setting['database']['host'],
                 'port'=>$server_setting['database']['port'],
-                'name'=>$domain_strip_dot,
-                'user'=>$domain_strip_dot,
+                'name'=>$db_name,
+                'user'=>$db_user,
                 'password'=>svhost_utils::gen_radom_string(8),
             ),
             'ftp'=>array(
