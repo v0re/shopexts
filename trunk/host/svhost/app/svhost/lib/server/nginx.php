@@ -55,11 +55,6 @@ server
     index index.html index.htm index.php;
     root  #HTDOCS#;
         
-    location / {
-        if (!-e \$request_filename) {
-            rewrite ^/(.+\.(html|xml|json|htm|php|jsp|asp|shtml))$ /index.php?$1 last;
-        }
-    }
     
     location ~ /(home|themes|images)/
     {
