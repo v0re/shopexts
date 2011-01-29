@@ -6,7 +6,7 @@ require_once('oauth.php');
 require_once('opent.php');
 
 $o = new MBOpenTOAuth( MB_AKEY , MB_SKEY  );
-$keys = $o->getRequestToken('http://h.t.net/sdk/callback.php');//这里填上你的回调URL
+$keys = $o->getRequestToken('http://pg.app.yiyiee.com/callback.php');//这里填上你的回调URL
 $aurl = $o->getAuthorizeURL( $keys['oauth_token'] ,false,'');
 $_SESSION['keys'] = $keys;
 ?>
