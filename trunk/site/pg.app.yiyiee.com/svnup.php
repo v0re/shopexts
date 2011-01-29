@@ -4,6 +4,6 @@ $work_dir = dirname(__FILE__);
 
 if($ret = svn_update ($work_dir)){
     echo "update to rev $ret";
-}esle{
+}else{
     echo "update fail!";
 }
