@@ -1,0 +1,58 @@
+<form>
+	
+	<subtitle>Search Results</subtitle>
+
+	<fields>
+		<_count header="No" suffix="." width="30" align="center" />
+		<call_first_name header="Name" align="left" />
+
+		<call_status type="relation" align="center">
+			<header>Status</header>
+			<options>
+				<option name="0">active</option>
+				<option name="1">closed</option>
+			</options>
+		</call_status>
+
+		<call_department header="Department" type="relation" align="right">
+			<relation table="types" id="type_id" text="type_name" />
+		</call_department>
+
+		<call_request header="Type" type="relation" align="right">
+			<relation table="types" id="type_id" text="type_name" />
+		</call_request>
+
+		<call_date header="Date" type="date" params="m/d/Y g:i a" width="80" align="center" />
+	</fields>
+
+	<header>
+		<titles>true</titles>
+		<buttons>
+			<delete onclick="" button="addnew" >
+				<location>index.php?sub=help&action=add&returnurl={CURRENT_PAGE}</location>
+			</delete>
+		</buttons>
+	</header>
+
+	<buttons>
+		<details onclick="" button="edit_small" >
+			<location>index.php?sub=help&action=details&call_id={CALL_ID}&returnurl={CURRENT_PAGE}</location>
+		</details>
+
+	</buttons>
+
+	<sql>
+		<vars>
+			<sql_page type="page"/>
+			<sql_items type="form" var="items" />
+			<sql_table import="$this->tables[calls]" type="eval"/>
+
+			<sql_condition import='"WHERE call_first_name LIKE \"%" . $_GET[call_first_name] . "%\"  AND call_details LIKE \"%" . $_GET[call_details] . "%\" AND call_solution LIKE \"%" . $_GET[call_solution] . "%\" AND call_department LIKE \"%" . $_GET[call_department] . "%\" AND call_request LIKE \"%" . $_GET[call_request] . "%\" AND call_device LIKE \"%" . $_GET[call_device] . "%\" AND call_staff LIKE \"%" . $_GET[call_staff] . "%\" " . ($_GET["call_date_start_month"] && $_GET["call_date_start_day"] && $_GET["call_date_start_year"] ? " AND call_date ] " . mktime(0,0,0,$_GET["call_date_start_month"],$_GET["call_date_start_day"],$_GET["call_date_start_year"]) . " and call_date [ " . mktime(23,59,59,$_GET["call_date_end_month"],$_GET["call_date_end_day"],$_GET["call_date_end_year"]) : "" ) ' type="eval" />
+		</vars>
+		<query>SELECT * FROM {SQL_TABLE} {SQL_CONDITION} ORDER BY call_date desc LIMIT {SQL_PAGE},{SQL_ITEMS} </query>
+		<count table="{SQL_TABLE}" condition="{SQL_CONDITION}"/>
+	</sql>
+
+	<items>100</items>
+
+</form>

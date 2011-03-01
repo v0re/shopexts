@@ -1,0 +1,53 @@
+body {
+	background:#159BD0;
+	color:#fff;
+	text-align: center;
+	font:12px Arial, Helvetica, sans-serif;
+}
+
+
+input {
+	border:1px solid #fff;
+	}
+
+a {
+	color:#ffff66;
+	}
+form {
+	margin:0px;
+}
+a:hover {
+	color:#ffff66;
+	}
+.button {
+	font:12px Arial, Helvetica, sans-serif;
+	padding: 0 6px;
+	color: #000;
+	background: #bedeff url(bg_button.gif) repeat-x;
+
+	/*for Mozilla*/
+ 	outline: 1px solid #296c89 ;
+	border: 1px solid #FFF !important;
+	height: 24px !important;
+	line-height: 22px !important;
+
+	/*for IE*/
+	border: 1px solid #296c89 ;
+	height: 26px;
+	line-height: 20px;
+}
+
+#message {
+	width: 320px;
+	margin: 0 auto;
+	margin-top: 160px;
+	text-align: center;
+	background-color: #42BEEF;
+	border: solid 4px #10CBEF;
+	font: 12px;
+}
+
+.altbg{
+  font: 12px;
+}
+

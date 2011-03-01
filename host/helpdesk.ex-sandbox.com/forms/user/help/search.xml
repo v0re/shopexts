@@ -1,0 +1,75 @@
+<form>
+	<title>To add a request click Add New</title>
+	<action>index.php</action>
+	<name>edit</name>
+	<width>580</width>
+	<method>get</method>
+
+	<formtag>true</formtag>
+	<border>true</border>
+	
+	<buttons>		
+		<set>
+			<header>true</header>
+		</set>
+
+	</buttons>
+
+	<redirect>index.php?sub=units</redirect>
+
+	<fields>
+
+		<sub type="hidden" default="$_GET['sub']" action="eval"/>
+
+		<call_first_name type="textbox" size="35">
+			<title>Name</title>
+		</call_first_name>
+
+		<call_solution type="textbox" size="60">			
+			<title>Solution</title>			
+		</call_solution>
+
+		<call_department type="droplist" empty="true">
+			<title>Department</title>
+			<relation table="types" id="type_id" text="type_name" condition="type=1" order="type_name" ordermode="ASC"/>
+		</call_department>
+
+		<call_request type="droplist" empty="true">
+			<title>Request Type</title>
+			<relation table="types" id="type_id" text="type_name" condition="type=2" order="type_name" ordermode="ASC"/>
+		</call_request>
+
+		<call_device type="droplist" empty="true">
+			<title>Device Type</title>
+			<relation table="types" id="type_id" text="type_name" condition="type=3" order="type_name" ordermode="ASC"/>
+		</call_device>
+
+		<call_staff type="droplist" empty="true">
+			<title>Assigned Staff</title>
+			<relation table="types" id="type_id" text="type_name" condition="type=''" order="type_name" ordermode="ASC"/>
+		</call_staff>
+
+		<call_date_start type="date" now="true">
+			<title>Start Date Range</title>
+			<fields>
+				<month format="int" empty="true"/>
+				<day format="int" empty="true"/>
+				<year from="2004" to="2014" empty="true"/>
+			</fields>
+
+		</call_date_start>
+
+		<call_date_end type="date" now="true">
+			<title>End Date Range</title>
+			<fields>
+				<month format="int" empty="true"/>
+				<day format="int" empty="true"/>
+				<year from="2004" to="2014" empty="true"/>
+			</fields>
+		</call_date_end>
+
+		<save type="button" onclick="" button="search">
+			<location>javascript:document.forms[0].submit();</location>
+		</save>
+	</fields>
+</form>

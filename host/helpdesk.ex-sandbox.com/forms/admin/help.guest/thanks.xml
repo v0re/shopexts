@@ -1,0 +1,10 @@
+<form>
+	<title>Posted!</title>
+	<width>580</width>
+
+	<border>true</border>
+
+	<fields>
+		<comment type="comment" padding="20"><description>Your request was successfuly posted.</description></comment>
+	</fields>
+</form>

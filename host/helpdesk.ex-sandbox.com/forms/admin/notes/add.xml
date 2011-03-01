@@ -1,0 +1,45 @@
+<form>
+	<title>{PRIVATE.FORM_ACTION_TITLE} Note</title>
+	<action>index.php?sub=notes&action=store</action>
+	<name>edit</name>
+	<width>580</width>
+
+	<formtag>true</formtag>
+	<border>true</border>
+	
+	<buttons>		
+		<set>
+			<footer>true</footer>
+			<header>true</header>
+		</set>
+
+		<return onclick="" button="return">
+			<location>{PRIVATE.FORM_PREVIOUS_PAGE}</location>
+		</return>
+
+		<save onclick="" button="saveall">
+			<location>javascript:document.forms[0].submit();</location>
+		</save>
+
+	</buttons>
+
+	<redirect>index.php?sub=accounts</redirect>
+
+	<fields>
+		<note_id type="hidden" hidden="true"/>
+		<note_post_date type="hidden" default="time()" action="eval"/>
+		<note_post_user type="hidden" default="$_SESSION[minibase][raw][user_id]" action="eval"/>
+		<note_post_ip type="hidden" default="$_SERVER[REMOTE_ADDR]" action="eval"/>
+		<note_relation type="hidden" default="$_GET[note_relation]" action="eval"/>
+		<note_type type="hidden" default="$_GET[note_type]" action="eval"/>
+
+		<note_title type="textbox" size="35" required="true" validate="A:2:200">			
+			<title>Title</title>			
+		</note_title>
+
+		<note_body type="textarea" size="60:5" required="true" validate="A:1:100000">			
+			<title>Body</title>			
+		</note_body>
+
+	</fields>
+</form>
