@@ -1,0 +1,28 @@
+<form>
+
+	<forms>
+		<add>notes/add.xml</add>
+		<details>notes/details.xml</details>
+		<edit>notes/add.xml</edit>
+		<list>notes/list.xml</list>
+	</forms>
+
+	<table>notes</table>
+	<table_uid>note_id</table_uid>
+
+
+	<URIdata>
+		<action>action</action>
+
+		<add>add</add>
+		<details>det</details>
+		<delete>delete</delete>
+		<edit>edit</edit>
+		<list>details</list>
+		<search>search</search>
+
+		<store>store</store>
+	</URIdata>
+
+
+</form>

@@ -1,0 +1,42 @@
+<form>
+	<title>{PRIVATE.FORM_ACTION_TITLE} {TITLE}</title>
+	<action>index.php?sub=types&action=store</action>
+	<name>edit</name>
+	<width>580</width>
+
+	<formtag>true</formtag>
+	<border>true</border>
+	
+	<buttons>		
+		<set>
+			<footer>true</footer>
+			<header>true</header>
+		</set>
+
+		<return onclick="" button="return">
+			<location>{PRIVATE.FORM_PREVIOUS_PAGE}</location>
+		</return>
+
+		<save onclick="" button="saveall">
+			<location>javascript:document.forms[0].submit();</location>
+		</save>
+
+	</buttons>
+
+	<vars>
+		<type import="$_GET['type']" type="eval" />
+		<title type="eval" import="$_GET['type'] == 1 ? 'Departments' : ($_GET['type'] == 2 ? 'Request Types' : 'Device Type')" />
+	</vars>
+
+	<redirect>index.php?mod=myprofile&sub=accounts</redirect>
+
+	<fields>
+		<type_id type="hidden" hidden="true"/>
+		<type type="hidden" default="$_GET[type]" action="eval"/>
+
+		<type_name type="textbox" size="35" required="true" validate="A:2:200">			
+			<title>Title</title>			
+			<description>Enter an unique name for this {TITLE}.</description>
+		</type_name>
+	</fields>
+</form>

@@ -1,0 +1,29 @@
+<form>
+
+	<forms>
+		<add>workers/add.xml</add>
+		<details>workers/details.xml</details>
+		<edit>workers/add.xml</edit>
+		<list>workers/list.xml</list>
+	</forms>
+
+	<table>users</table>
+	<table_uid>user_id</table_uid>
+
+
+	<URIdata>
+		<action>action</action>
+
+		<add>add</add>
+		<details>details</details>
+		<delete>delete</delete>
+		<edit>edit</edit>
+		<brief>brief</brief>
+		<list>list</list>
+		<search>search</search>
+
+		<store>store</store>
+	</URIdata>
+
+
+</form>

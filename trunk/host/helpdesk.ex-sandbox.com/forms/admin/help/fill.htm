@@ -1,0 +1,12 @@
+<script>
+	function FillCurrentDate() {
+		if ( document.forms[0].call_status.value == "1") {
+			var date = new Date();
+			SelectElement(document.forms[0].call_date2_month,date.getMonth() + 1);
+			SelectElement(document.forms[0].call_date2_day,date.getDate());
+			SelectElement(document.forms[0].call_date2_year,( date.getYear() < 200 ? date.getYear() + 1900 : date.getYear() ));
+			SelectElement(document.forms[0].call_date2_hour,date.getHours());
+			SelectElement(document.forms[0].call_date2_minute,date.getMinutes());
+		}
+	}
+</script>

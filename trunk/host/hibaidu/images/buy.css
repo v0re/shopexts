@@ -1,0 +1,28 @@
+
+#EntShowBox {
+	height: auto!important;
+	height: 38px;
+	min-height: 38px;
+	padding:10px;
+	width:680px;
+	float: left;
+}
+.EntShowBox h2 {
+	background: url(../images/tag_showbox2.png) no-repeat left top;
+	height: 38px;
+	line-height: 38px;
+	padding-left: 40px;
+	font-size: 16px;
+	font-weight: bolder;
+	color: #003f5f;
+	width:93%;
+}
+
+#TabMain{width:98%;background-color:#C0C0C0;}
+#TabMain td{height:24px;}
+.TabTitle{background-color:#E1E1E1;font-weight: bold;text-align:center;}
+.TabConTitle{background-color:#FFFFD2;font-weight: bold;padding-left:10px}
+.TabCon{background-color:#FFFFFF;text-align:center;}
+.TabCon .x{color:#FF0000;font-weight: bold;text-align:center;}
+.TabCon .y{color:#008000;font-weight: bold;text-align:center;}
+.TabCon .g{color:#DDB000;font-weight: bold;text-align:center;}
