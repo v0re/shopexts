@@ -1,0 +1,57 @@
+/* CSS Style Sheet for the PHP Helpdesk Wizzard gloabl and specific definicions (it is the only stylesheet used for the wizzard)
+/* Layout and Elements by Christian Heitkamp -- Please leave this notice here if you are going to use this design --- */
+
+/* link design */
+a:link {color: #1B1B17; text-decoration: none}
+a:visited {color: #1B1B17; text-decoration: none}
+a:hover {color: #4A4A41; text-decoration: none}
+a:active {color: #1B1B17; text-decoration: none}
+/* design for all text and background */
+.main {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8px;
+	background-color: #6B9A9E;
+	padding:0px;
+	margin-top:0px;	
+}
+TABLE { 	border: 1px solid #123453;
+	padding: 5px;
+	background-color:#6B9A9E; /*  bg for the header of the main tables */ 
+}
+TR { 	border:0px;
+	padding: 0px;
+	background-color:#6B9A9E;
+}
+TD {
+	border: 0px solid #1B4F7E;
+	padding: 2px; 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	}
+H1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+}	
+	
+/* button design */
+.Button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	background-color:#C1C1C1; color:#1B4F7E; 
+}
+/* input form design */
+.input {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	border: 1px solid #000000;
+}
+/* whenever an Error is displayed, here is descibed how to format it */
+div.errortxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: red;
+	text-align:left;
+}
+

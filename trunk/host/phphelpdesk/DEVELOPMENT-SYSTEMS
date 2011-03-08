@@ -1,0 +1,13 @@
+PHP Helpdesk was developed under the follwoing System configuration:
+SERVER I:
+- Red Hat Linux 8.0
+- Apache 1.3.5
+- PHP 4.3.0
+- MySQL 4.0.1
+
+
+SERVER II:
+- Windows 2000 Advanced Server / Windows 2000 Professional
+- Apache 1.3.28
+- PHP 4.3.2
+- MySQL 4.0.13

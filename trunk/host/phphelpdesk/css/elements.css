@@ -1,0 +1,71 @@
+/* CSS Style Sheet for the main page and admin section (design elemens and/or positiong of elements)
+/* Layout and Elements by Christian Heitkamp -- Please leave this notice here if you are going to use this design --- */
+
+div.noticias {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;	color: #6B9A9E;
+	font-style:italic;font-weight:bold;
+	position:absolute; top:143px; left:125px; z-index:2;
+	z-index:1; }
+div.sidemenu1 { position:absolute; top:177px; left:13px; z-index:1; }
+div.sidemenu2 { position:absolute; top:346px; left:13px; z-index:1; }
+div.mainmenutable { position:absolute; top:152px; left:220px; z-index:1; }
+div.mainmenutext {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;	color: #123453;
+	font-style:italic; font-weight:500;
+	text-decoration:none;
+	z-index:1; 	}
+/*  CSS for the Login elements */
+#loginbox { position:absolute; top:240px; left:13px; width:167px; height:109px; z-index:2; }
+div.loginname {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;	color: white;
+	font-style:italic;font-weight:bold;
+	position:absolute;top:245px; left:23px; z-index:2; 
+	}
+div.password {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;	color: white;
+	font-style:italic;font-weight:bold;
+	position:absolute;top:290px; left:23px; z-index:2; 
+	}
+div.leftmenutext {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;	color: #1B4F7E;
+	font-style:normal; font-weight:600;
+	text-decoration:none;
+	z-index:1; 	}
+/* design elements (lines, etc) */
+#greenline { position:absolute; top:177px; left:0px; width:100%; height:5px; z-index:0; font-size:1pt;}
+#blueline { position:absolute; top:565px; left:0px; width:100%; height:8px; z-index:2; font-size:1pt;}
+#shortgreenline { position:absolute; top:363px; left:0px; width:13px; height:5px; z-index:2; font-size:1pt;}
+div.mainphoto { position:absolute; top:182px; left:180px; z-index:1; }
+div.noticias { position:absolute; top:374px; left:180px; z-index:1; }
+div.title { position:absolute; top:50px; left:300px; z-index:1; 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;	color: white;
+	}
+div.version { position:absolute; top:10px; left:550px; z-index:1; 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;	color: white;
+	font-weight: bold;
+	}	
+div.fotomotiv1 { position:absolute; top:410px; left:255px; z-index:1; }
+div.fotomotiv2 { position:absolute; top:410px; left:375px; z-index:1; }
+div.fotomotiv3 { position:absolute; top:410px; left:495px; z-index:1; }
+div.fotomotiv4 { position:absolute; top:410px; left:615px; z-index:1; }
+#greenmenubox  { position:absolute; top:379px; left:13px; width:167px; height:180px; z-index:1; }
+#bluemenubox  { position:absolute; top:555px; left:13px; width:167px; height:50px; z-index:1; }
+#footer  { position:absolute; top:544px; left:185px; width:615px; height:20px; z-index:1; }
+div.footerbar  { position:absolute; top:547px; left:186px; width:615px; height:20px; z-index:2; }
+div.footerbartext {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;	color: white;
+	font-style:normal; font-weight:600;
+	z-index:1; 	}
+/* -------------------------------- restricted part */
+#greenline2 { position:absolute; top:146px; left:0px; width:100%; height:5px; z-index:1; font-size:1pt;}
+div.menubar { position:absolute; top:143px; left:0px; z-index:1; }
+div.logoutbox { position:absolute; top:146px; left:13px; z-index:1; }
+div.leftmenu { position:absolute; top:177px; left:13px; z-index:1; }

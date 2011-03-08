@@ -1,0 +1,248 @@
+CHANGELOG (This is probably not everything.  I've neglected to keep a good log) 
+
+20-08-2003
+since a long break the system was new build using the old code. The main changes are:
+
+-Complete new layout and GUI, based on CSS and layout structure
+which makes it easier to adapt the system to a different layout. 
+(single layout elements almost without PHP)
+- The Sessionmanagement is now done with PHP sessionvariables
+- An wizzard was added to add jobs and requests.
+- The departmentcategories where replaced by a more user  orientated
+system with request and problem categories and items where the user can
+chosse from. New dialogs where addedto administrate requests and the request categories.
+- Possibilites to preassign jobs. A feature which was much
+asked for, to predefine a user to which are task directly assigned when
+they are created (based on categories)
+- Additional eMail notifications. Up to 2 extra persons can be notified
+in addtition. (Administracion over the admin GUI)
+- Some filed where added as Proposed Solution, Staff number, etc...
+- Some extra code documentation
+- Currency changes implemented
+
+/* STILL TO DO */
+- Update the stock management 
+- Translation of the languages files
+- Update report section (currently they are not availbale)
+- Print "Last On" somewhere
+- 
+
+- 2001-08-01 -
+	- modified the helpdesk-install script to include language files
+	James E. Hicks III pointed this out.  Thanks James.
+	- modified the header to have a background image so that is looks
+	nicer.
+	- updated italian.lang.php from Luca Berlinghieri [luca.berlinghieri@itline.it]
+	- updated german.lang.php from Daniel Götz [info@daniel-goetz.de]
+
+- 2001-07-17 -
+	- modified the vj_showtickets.scp.php and viewjobs.scp.php scripts
+	so that the user needs to have $s_delete_tickets = 1 in order to
+	be allowed to delete tickets instead of $is_manager.
+
+- 2001-07-16 -
+        - Began work on new language variables (for recently added
+	functions).  Now, the english version is always loaded, so
+	if a variable is missing in a language file, the user will
+	at least see the english version instead of nothing.  Added
+	file languages/README where we will list new variables which
+	must be added by translators.
+
+- 2001-07-12 -
+        - Added delete ticket feature -- user must have security 
+	"Is Manager" to see this option (to avoid adding a field
+	to the database).
+	- Various bug fixes in user stats report and search feature.
+
+- 2001-07-11 -
+        - Added timestampToUnix() function to inculdes/functions, this
+	makes it easy to convert MySQL timestamps to Unix format.
+	- Added date range entry to user stats report.
+	- Implemented basic Search feature.
+
+- 2001-07-10 -
+        - Added User Stats Report.
+	- Added CGI variable $rpt.  If this is set, the headings,
+	footers and menu will not print.  This should be set for
+	screens that are intended to be printed.
+
+- 2001-07-09 -
+        - Made text areas slightly larger when adding events and
+	adding/changing the long description in a ticket.
+	- Added subdirectory scripts/reports where all the
+	various report scripts will go.  Moved the existing
+	report there, and added a reporting menu.
+	- Made minor cosmetic changes
+	- Added heading() function to includes/functions.inc.php.
+	This can be used to make consistant headings on all
+	the pages.  Right now it simply puts 2 horizontal lines
+	and the heading text in a larger font.
+
+- 2001-07-08 - 
+        - Added change password feature.
+	- Chaned all SQL calls to use query() function from 
+	includes/functions.inc.php.  This is a step towards the
+	database abstraction layer.  The next step is to make
+	the query function return an array or object  rather than
+	a mysql_result variable.
+	- Added some ORDER BY clauses to various SQL statements
+	to make list boxes in forms be in alphabetical order.
+
+- 2001-07-03 -
+        Added new file includes/functions.inc.php for global functions.
+	Added 2 functions to this file:
+	 - showSummary() which displays 2 lines; qty tickets open, and 
+ 	    qty tickets open and assigned to current user.   I also added a 
+	    call to showSummary() in the file config/header.conf.php so it 
+	    appears in the blue status bar at the top.
+	 - query( $q ) which executes mysql queries ($q is the query to
+	    execute), checks and prints errors, and returns the result set.
+	    If debugging is turned on ($debug=1 in config/general.conf.php)
+	    it will also print the SQL which was sent to MySQL.
+	Added a second sql file (empty.mysql) to create empty tables
+	for a fresh PHP Helpdesk installation.  I found a problem with
+	phphelpdesk.mysql, it adds events for tickets which don't exist.
+	We should clean it up at some point, it's nice to have for demo
+	purposes.
+	  --Andrew
+
+- 2001-07-01 -
+        Modified includes/cookie.inc.php to fix a problem with some
+	versions of MS Internet Explorer.
+
+- 2001-06-26 -
+	Added a spanish.lang.php file
+
+- 2001-06-21 -
+	Added a german.lang.php file
+
+- 2001-06-17 -
+	Modified all the language files to get rid of the white space at the end
+	of the files.  The white space was creating header errors.
+	Modified the character set to a Latin1 character set instead of windows.
+	Added a few more language files to CVS.
+	Released a new version of PHPHelpdesk v0.6.1.
+
+- 2001-05-23 -
+	Finished changing all the scripts to use the language files in /languages/
+
+- 2001-05-22 -
+	Continued to change the scripts for language module
+	Finished the language module use.
+	Users can finally start adding language files
+
+- 2001-05-21 -
+	Added more variables to the language files
+	added language module capability to adduser.scp.php and deletecategory.scp.php
+
+- 2001-05-17 -
+	Added some more variables to the language files
+	added language module capability to the addjob.scp.php and addparts.scp.php
+
+- 2001-05-16 -
+	Added languages/swedish.lang.php
+	Added languages/english.lang.php
+	Modified all code except many script files to reflect the new language module.
+	Have only modified addcategory.scp.php, adddepartment.scp.php in the scripts/
+	directory to use language files.  I will try to finish up the other script files 
+	by the end of the week.
+
+- 2001-05-11 -
+	I think I may have fixed the cookie issue.
+
+- 2001-05-09 -
+	added a language folder with english.lang.php in it.  This will be the 
+	folder where all language files will reside.  
+
+- 2001-05-06 -
+	added g_domainmailfrom variable in case you are using a virtual server
+	and need email to look like it is being sent from another machine.  Updated
+	scripts/addjob.scp.php so that this variable can be used.
+
+- 2001-04-26 -
+	modified scripts/deletedepartments to stripslashes so it displays correctly
+
+- 2001-04-25 -
+	modified scripts/deletedepartments.scp.php and the adddepartments to handle
+	the g_dept_or_comp variable.
+	modified scripts/adddepartments.scp.php to addslashes and stripslashes from
+	the newly added department.
+	modified includes/permissions.inc.php to include s_email.
+	modified scripts/addjob.scp.php so that when a user adds a ticket, if $s_email
+	has an email address then an email will be sent to that address.  If it is empty
+	then no email will be sent to that user.  So, if you have a user created for
+	the Sales department, for example, you would include the email address of an
+	authorizing person in their users' profile so that whenever someone inputs a 
+	ticket, that authorizing person will get an email.
+	Also, this has been in the database tables for awhile now, but there is a 
+	field called s_isroot in the security table.  If that is set to 1 for any
+	given user, then that user will have root on the phphelpdesk and get access
+	to all departments.
+
+- 2001-04-23 -
+	commented out the MSIE 4.01 fixes from includes/cookie.inc.php and
+	includes/logout.inc.php.  You can enable them by uncommenting the comments,
+	but when I tried leaving it in, I still had the login problem.  I will try
+	to implement sessions shortly, but this problem will still exist until we
+	can find a way to eliminate the cookie problems.
+
+- 2001-04-20 -
+	modified vj_viewtickets.scp.php to do a second sort on date opened so that you 
+	would not only get the list of tickets by priority, but also sorted on oldest
+	first.  Also, bumped up the default refresh time for the viewjobs to 10 minutes.
+	Added a nice little javascript for highlighting each ticket.  It can be turned
+	off by doing javascript_enable = 0.
+
+- 2001-04-17 -
+	fixed the scripts/adduser.scp.php so that <?echo $g_base_url?> would take
+	the user to the correct page.
+
+- 2001-04-15 -
+	added html_alt_color config variables so that the alternating colors can be
+	changing when viewing tickets.  I will start working on a preferences for each
+	user at some point.
+
+- 2001-04-14 -
+	added a few fields to security and ticket.  Added a computer ID field so
+	that you can track how many times a computer gets serviced.  Added a
+	reports section.  Modified the time fields so that the time is human readable.
+	Made the "assigned to" field visible during View Jobs.  Added upgrade scripts.
+	Fixed a section in Add Parts so that the parts are added and subtracted
+	correctly.  Changed some things in the config file as to accomidate those
+	who were having problems using a virtual host.  Date Opened field is now 
+	sorting correctly. Tried fixing the cookie problem using code from 
+  	somebody who posted it on the phphelpdesk.sourceforge.net site on
+	01-03-29 04:52 in response to Eric Jolents post in Support Requests.  Added
+	some style sheets to make it look nice.
+
+- 5.18.00 -
+	some code cleanup, addition of a "Mail To Assigned User" 
+	on Add Job form, bug fix before the INSERT query on the add job
+	form (It would bomb out when the detail included "'`~@#$(*&%" types
+	of characters), and the addition of a logout link.
+
+- 12.6.00 -
+	So much has changed since v.03.  Basically, I through up the last version
+	because my company really needed a program quickly.  I didn't give a lot
+	of thought to the code and pretty much just through it together quickly.  
+	This new version, on the other hand, was thought out a lot better.  Security
+	is still a very big issue.  This program is by _NO MEANS_ secure.  It has
+	code for authentication, but a user might be able to simple throw some 
+	variables into the url and be able to access certain areas.  This will
+	be my main focus on the next version.  Version .04 is to be considered
+	useable, but insecure and still alpha/beta.. whatever you want to call it.
+
+	In any case, the following has changed:
+	- groups have been eliminated in exchange for a permission based on rights
+	to certain things.  In the future, phphelpdesk may have the ability to define
+	groups that have certain permissions.  But not right now.
+	- tickets now have events associated with them, among other things.
+	- users can be a member of many different departments.
+	- users now have preferences.  Only one thing is in there at the moment.
+	Eventually themes will be available in this section.
+	- there is a duration associated with each event (which is associated with a ticket #).
+	This duration is the amount of time spent on each ticket.
+	- A printable version of the ticket shows up after you close the ticket.  You
+	can also press a button while viewing the ticket and it will show a printable
+	version.
+	- code has been cleaned up a little bit.

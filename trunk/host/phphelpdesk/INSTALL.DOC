@@ -1,0 +1,51 @@
+ REQUIREMENTS
+
+    For basic functionality you need the following:
+
+	A web server (Apache is recommended)
+	MySQL
+	PHP 4.0 or greater with MySQL support enabled
+
+INSTALLATION AND CONFIGURATION
+
+1)  You can simply move directory that contains this document to the place
+    where you would like to run this program. 
+
+2)  There are a few files that you should examine (and probably edit),
+    they can be found in the config directory.  There are only 2 files
+    that you must edit (general.conf.php and db.conf.php):
+
+   *general.conf.php       	- This is where you configure certain
+                                  global settings.
+   *db.conf.php      	        - This is where you configure certain
+                                  database settings.
+    html.conf.php	        - this is the default settings to use for html in addition to the CSS
+
+
+3)  Once all of the above is setup, you need to create the database and
+    tables on your server.  You can find the SQL for this in 
+    phphelpdesk.mysql, for example.  Presently only MySQL is supported.
+    You can do this by doing something similar to the following:
+
+  [johnuser@somehost helpdesk]$mysql -u root -p < phphelpdesk.mysql
+  Enter password: (password is only required if you have a password set)
+
+  * NOTE: you will need the root password to create this database
+
+    This will create a database called phphelpdesk, grant all privileges
+    on this database to a user "phphdadmin" with a password "phphdpasswd", create
+    the tables for this database, and create a user "admin" with the
+    password "admin".
+	
+	Beside that you can also use MySQL packages as for instance PHPmyAdmin to create 
+	the Database and insert the data. 
+
+4)  The final step is to go to the $g_base_url that you set in general.conf.php
+    and login with the username "admin" and password "admin".  Once
+    you've done that, you will see more options.  Choose "Add Department".
+    Create a department.  Then Choose "Add User".  Create a user for yourself
+    with all privileges GRANTED.  This will ensure that you have root privileges
+    on the system.  Logoff, and try the username and password that you just made.
+    If everything works ok and you get in, then delete the "admin" user.
+
+5)  You're all set!  Enjoy!

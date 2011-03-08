@@ -1,0 +1,344 @@
+# phpMyAdmin MySQL-Dump
+# version 2.5.1
+# http://www.phpmyadmin.net/ (download page)
+#
+# Host: localhost
+# Generation Time: Aug 27, 2003 at 09:46 AM
+# Server version: 4.0.13
+# PHP Version: 4.3.2
+# Database : `phphelpdesk`
+# --------------------------------------------------------
+
+#
+# Table structure for table `department`
+#
+# Creation: Aug 23, 2003 at 08:18 AM
+# Last update: Aug 25, 2003 at 10:33 AM
+#
+
+CREATE TABLE `department` (
+  `d_name` varchar(150) binary NOT NULL default '',
+  `d_depkey` varchar(6) NOT NULL default '0',
+  `d_email_notification1` varchar(50) NOT NULL default 'none',
+  `d_email_notification2` varchar(50) NOT NULL default 'none',
+  PRIMARY KEY  (`d_name`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `department`
+#
+
+INSERT INTO `department` VALUES ('Development', 'DEV', 'none', 'none');
+INSERT INTO `department` VALUES ('Management', 'MMT', 'none', 'none');
+INSERT INTO `department` VALUES ('Sales', 'SAL', 'none', 'none');
+INSERT INTO `department` VALUES ('IT', 'IT', 'none', 'none');
+# --------------------------------------------------------
+
+#
+# Table structure for table `events`
+#
+# Creation: Aug 25, 2003 at 09:10 AM
+# Last update: Aug 27, 2003 at 09:39 AM
+#
+
+CREATE TABLE `events` (
+  `e_id` int(7) unsigned NOT NULL auto_increment,
+  `t_id` int(7) unsigned NOT NULL default '0',
+  `e_description` blob,
+  `e_timestamp` timestamp(14) NOT NULL,
+  `e_duration` float(6,2) unsigned zerofill NOT NULL default '000.00',
+  `s_user` varchar(50) binary NOT NULL default '',
+  `e_status` varchar(20) NOT NULL default 'registered',
+  `e_assignedto` varchar(50) binary default 'Not Assigned',
+  PRIMARY KEY  (`e_id`)
+) TYPE=MyISAM AUTO_INCREMENT=8 ;
+
+#
+# Dumping data for table `events`
+#
+
+INSERT INTO `events` VALUES (1, 1, 0x5469636b65742052656769737465726564, 20030825091135, '000.00', 'assistente', 'REGISTERED', 'Not Assigned');
+INSERT INTO `events` VALUES (2, 2, 0x5469636b65742052656769737465726564, 20030825104421, '000.00', 'assistente', 'REGISTERED', 'Not Assigned');
+INSERT INTO `events` VALUES (3, 2, 0x28312920202d202061646465643c42523e0a, 20030825104446, '000.00', '', 'OPEN', 'admin');
+INSERT INTO `events` VALUES (4, 2, 0x28312920202d202061646465643c42523e0a6e65772061737369676e6d65740d0a, 20030825104649, '000.00', '', 'OPEN', 'User');
+INSERT INTO `events` VALUES (5, 3, 0x5469636b65742052656769737465726564, 20030825104811, '000.00', 'assistente', 'REGISTERED', 'Not Assigned');
+INSERT INTO `events` VALUES (6, 4, 0x5469636b65742052656769737465726564, 20030825104931, '000.00', 'assistente', 'REGISTERED', 'Not Assigned');
+# --------------------------------------------------------
+
+#
+# Table structure for table `parts`
+#
+# Creation: Aug 23, 2003 at 08:24 AM
+# Last update: Aug 23, 2003 at 08:24 AM
+#
+
+CREATE TABLE `parts` (
+  `p_description` varchar(50) default NULL,
+  `p_price` float(7,2) unsigned zerofill default NULL,
+  `p_stock_quantity` int(10) unsigned default NULL,
+  `p_id` varchar(20) NOT NULL default '',
+  PRIMARY KEY  (`p_id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `parts`
+#
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `request`
+#
+# Creation: Aug 23, 2003 at 08:23 AM
+# Last update: Aug 25, 2003 at 11:03 AM
+#
+
+CREATE TABLE `request` (
+  `r_id` int(10) unsigned NOT NULL auto_increment,
+  `r_department` varchar(150) NOT NULL default '',
+  `r_name` varchar(150) NOT NULL default '',
+  `r_assignto` varchar(50) NOT NULL default 'none',
+  `r_category` varchar(100) NOT NULL default '',
+  PRIMARY KEY  (`r_id`)
+) TYPE=MyISAM AUTO_INCREMENT=38 ;
+
+#
+# Dumping data for table `request`
+#
+
+INSERT INTO `request` VALUES (26, 'IT', 'General', 'none', 'Intranet');
+INSERT INTO `request` VALUES (24, 'IT', 'Shared Network Drive', 'none', 'Intranet');
+INSERT INTO `request` VALUES (6, 'IT', 'Intranet Space', 'none', 'Intranet');
+INSERT INTO `request` VALUES (25, 'IT', 'Website Support', 'none', 'Intranet');
+INSERT INTO `request` VALUES (23, 'Development', 'General', 'none', 'Development');
+INSERT INTO `request` VALUES (27, 'Sales', 'General', 'none', 'Sales');
+INSERT INTO `request` VALUES (28, 'Sales', 'Sales Statistics', 'none', 'Sales');
+INSERT INTO `request` VALUES (29, 'Sales', 'Sales Report', 'none', 'Sales');
+INSERT INTO `request` VALUES (30, 'Management', 'General', 'none', 'Management');
+INSERT INTO `request` VALUES (31, 'Management', 'Anual Report', 'none', 'Management');
+INSERT INTO `request` VALUES (32, 'Management', 'Escalation', 'none', 'Management');
+INSERT INTO `request` VALUES (33, 'Development', 'Request of Development Procedure', 'none', 'Development');
+INSERT INTO `request` VALUES (34, 'IT', 'Software Installation', 'none', 'Software');
+INSERT INTO `request` VALUES (37, 'IT', 'Installation of Apache Server', 'none', 'Software');
+# --------------------------------------------------------
+
+#
+# Table structure for table `requestcategories`
+#
+# Creation: Aug 23, 2003 at 08:24 AM
+# Last update: Aug 25, 2003 at 10:33 AM
+#
+
+CREATE TABLE `requestcategories` (
+  `rc_id` int(5) NOT NULL auto_increment,
+  `rc_r_id` int(5) NOT NULL default '0',
+  `rc_department` varchar(150) NOT NULL default '',
+  `rc_name` varchar(150) NOT NULL default '',
+  PRIMARY KEY  (`rc_id`)
+) TYPE=MyISAM AUTO_INCREMENT=25 ;
+
+#
+# Dumping data for table `requestcategories`
+#
+
+INSERT INTO `requestcategories` VALUES (4, 6, 'IT', 'Intranet');
+INSERT INTO `requestcategories` VALUES (23, 0, 'Management', 'Management');
+INSERT INTO `requestcategories` VALUES (24, 34, 'IT', 'Software');
+INSERT INTO `requestcategories` VALUES (21, 0, 'Development', 'Development');
+INSERT INTO `requestcategories` VALUES (22, 0, 'Sales', 'Sales');
+# --------------------------------------------------------
+
+#
+# Table structure for table `security`
+#
+# Creation: Aug 25, 2003 at 09:51 AM
+# Last update: Aug 27, 2003 at 09:26 AM
+#
+
+CREATE TABLE `security` (
+  `s_user` varchar(50) binary NOT NULL default '',
+  `s_firstname` varchar(30) NOT NULL default '',
+  `s_lastname` varchar(30) NOT NULL default '',
+  `s_password` varchar(30) NOT NULL default '',
+  `s_timestamp_laston` datetime default NULL,
+  `s_email` varchar(75) default NULL,
+  `s_register_new_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_authorize_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_assign_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_update_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_delete_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_open_closed_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_view_unauthorized_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_view_department_tickets` tinyint(1) unsigned NOT NULL default '0',
+  `s_add_requests` tinyint(1) unsigned NOT NULL default '0',
+  `s_delete_requests` tinyint(1) unsigned NOT NULL default '0',
+  `s_add_departments` tinyint(1) unsigned NOT NULL default '0',
+  `s_delete_departments` tinyint(1) unsigned NOT NULL default '0',
+  `s_manage_users` tinyint(1) unsigned NOT NULL default '0',
+  `s_pref_viewall` tinyint(1) unsigned NOT NULL default '0',
+  `s_add_parts` tinyint(1) unsigned NOT NULL default '0',
+  `s_isroot` tinyint(1) unsigned NOT NULL default '0',
+  `s_pref_viewjobs_first` tinyint(1) unsigned NOT NULL default '1',
+  `s_generate_reports` tinyint(1) unsigned NOT NULL default '0',
+  `s_ismanager` tinyint(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`s_user`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `security`
+#
+
+INSERT INTO `security` VALUES ('User', '', '', 'user', NULL, '', 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0);
+INSERT INTO `security` VALUES ('admin', '', '', 'admin', '2003-08-27 09:31:00', '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `security` VALUES ('Fritz', '', '', 'fritz', NULL, '', 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0);
+# --------------------------------------------------------
+
+#
+# Table structure for table `ticket`
+#
+# Creation: Aug 25, 2003 at 09:10 AM
+# Last update: Aug 27, 2003 at 09:39 AM
+#
+
+CREATE TABLE `ticket` (
+  `t_id` int(7) unsigned NOT NULL auto_increment,
+  `t_request` varchar(50) NOT NULL default '',
+  `t_detail` blob,
+  `t_priority` smallint(1) unsigned default NULL,
+  `t_user` varchar(50) NOT NULL default '',
+  `t_timestamp_opened` datetime default NULL,
+  `t_timestamp_closed` datetime default NULL,
+  `t_department` varchar(150) NOT NULL default '',
+  `t_location` varchar(20) NOT NULL default '',
+  `t_summary` varchar(60) NOT NULL default '',
+  `t_userfirstname` varchar(30) default NULL,
+  `t_userlastname` varchar(30) default NULL,
+  `t_usertelephone` varchar(30) default NULL,
+  `t_useremail` varchar(30) default NULL,
+  `t_computerid` varchar(50) default NULL,
+  `t_staffid` varchar(30) NOT NULL default '',
+  `t_proposedsolution` blob NOT NULL,
+  `t_et_id` varchar(150) NOT NULL default '0',
+  PRIMARY KEY  (`t_id`)
+) TYPE=MyISAM AUTO_INCREMENT=6 ;
+
+#
+# Dumping data for table `ticket`
+#
+
+INSERT INTO `ticket` VALUES (1, 'Intranet Space', 0x504c656173652070726f76696465206d652077697468207765627370616365, 2, 'assistente', '2003-08-25 09:11:00', NULL, 'IT', 'Xalapa', 'Intranet Space', 'Tamo', 'XX', '81872115', 'fishi@gmx.de', '123', '1236', 0x476574206d652077656220737061636521, 'IT-1');
+INSERT INTO `ticket` VALUES (2, 'Installation of Apache Server', 0x44455441494c, 3, 'assistente', '2003-08-25 10:44:00', NULL, 'IT', '321', 'Installation of Apache Server', 'Tamo', 'XX', '8181', 'tamo2000@sf.net', '123', '123', 0x534f4c5554494f4e3f21, 'IT-2');
+INSERT INTO `ticket` VALUES (3, 'Sales Statistics', '', 1, 'assistente', '2003-08-25 10:48:00', NULL, 'Sales', '2132', 'Request of Sales Statistics', 'Chef', 'Douglas', '86156', 'chef55135@hotmail.com', '213', '213', '', 'SAL-1');
+INSERT INTO `ticket` VALUES (4, 'Request of Development Procedure', '', 0, 'assistente', '2003-08-25 10:49:00', NULL, 'Development', '45654', 'Request of Development Procedure', 'Arnolf', 'Schwarzenegger', '56456', 'schwarzegg@mail.com', '564', '5465', '', 'DEV-1');
+# --------------------------------------------------------
+
+#
+# Table structure for table `ticketparts`
+#
+# Creation: Aug 23, 2003 at 08:24 AM
+# Last update: Aug 25, 2003 at 10:46 AM
+#
+
+CREATE TABLE `ticketparts` (
+  `tp_id` int(7) unsigned NOT NULL auto_increment,
+  `t_id` int(7) unsigned NOT NULL default '0',
+  `p_id` varchar(20) NOT NULL default '',
+  `p_quantity` int(3) default NULL,
+  PRIMARY KEY  (`tp_id`)
+) TYPE=MyISAM AUTO_INCREMENT=11 ;
+
+#
+# Dumping data for table `ticketparts`
+#
+
+INSERT INTO `ticketparts` VALUES (1, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (2, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (3, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (4, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (5, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (6, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (7, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (8, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (9, 2, '', 1);
+INSERT INTO `ticketparts` VALUES (10, 2, '', 1);
+# --------------------------------------------------------
+
+#
+# Table structure for table `tmpeid`
+#
+# Creation: Aug 23, 2003 at 08:24 AM
+# Last update: Aug 27, 2003 at 09:39 AM
+#
+
+CREATE TABLE `tmpeid` (
+  `e_id` int(7) default NULL
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `tmpeid`
+#
+
+INSERT INTO `tmpeid` VALUES (1);
+INSERT INTO `tmpeid` VALUES (4);
+INSERT INTO `tmpeid` VALUES (5);
+INSERT INTO `tmpeid` VALUES (6);
+# --------------------------------------------------------
+
+#
+# Table structure for table `tmpviewtickets`
+#
+# Creation: Aug 23, 2003 at 08:18 AM
+# Last update: Aug 23, 2003 at 08:18 AM
+#
+
+CREATE TABLE `tmpviewtickets` (
+  `t_id` int(7) unsigned NOT NULL default '0',
+  `t_summary` varchar(60) NOT NULL default '',
+  `t_category` varchar(50) NOT NULL default '',
+  `t_user` varchar(50) NOT NULL default '',
+  `t_priority` smallint(1) NOT NULL default '0',
+  `t_timestamp_opened` varchar(14) default NULL,
+  `t_department` varchar(50) NOT NULL default '',
+  `e_status` varchar(20) NOT NULL default '',
+  `e_assignedto` varchar(50) binary NOT NULL default '',
+  `e_timestamp` varchar(14) default NULL,
+  `e_id` int(7) NOT NULL default '0',
+  PRIMARY KEY  (`e_id`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `tmpviewtickets`
+#
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `userdepartments`
+#
+# Creation: Aug 23, 2003 at 08:18 AM
+# Last update: Aug 25, 2003 at 11:33 AM
+#
+
+CREATE TABLE `userdepartments` (
+  `ud_id` int(10) unsigned NOT NULL auto_increment,
+  `s_user` varchar(50) binary NOT NULL default '',
+  `d_name` varchar(150) binary NOT NULL default '',
+  PRIMARY KEY  (`ud_id`)
+) TYPE=MyISAM AUTO_INCREMENT=101 ;
+
+#
+# Dumping data for table `userdepartments`
+#
+
+INSERT INTO `userdepartments` VALUES (94, 'admin', 'Sales');
+INSERT INTO `userdepartments` VALUES (68, 'admin', 'IT');
+INSERT INTO `userdepartments` VALUES (93, 'admin', 'Development');
+INSERT INTO `userdepartments` VALUES (95, 'admin', 'Management');
+INSERT INTO `userdepartments` VALUES (96, 'User', 'Development');
+INSERT INTO `userdepartments` VALUES (97, 'User', 'IT');
+INSERT INTO `userdepartments` VALUES (98, 'User', 'Management');
+INSERT INTO `userdepartments` VALUES (99, 'User', 'Sales');
+INSERT INTO `userdepartments` VALUES (100, 'Fritz', 'IT');
+
+    
+
