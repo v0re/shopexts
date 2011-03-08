@@ -1,0 +1,21 @@
+Note to translators:
+   I want to list everybody in here but don't have all of your names/email's.  So if
+you would like to be included in the CREDITS section (I would like you to be :), please
+send an email to me at joe@networkpenguin.com.
+
+
+CREDITS:
+
+german.lang.php		done by Daniel Götz [info@daniel-goetz.de]
+italian.lang.php	done by Luca Berlinghieri [luca.berlinghieri@itline.it]
+
+
+Here are new fields added July 16, 2001 which need to be added
+to the language files:
+
+// GENERAL
+$l_search      Menu option for searching
+$l_help        Menu option for help
+
+// PREFERENCES
+

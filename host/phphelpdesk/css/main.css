@@ -1,0 +1,64 @@
+/* CSS Style Sheet for the main page and admin section (colors and global definicions)
+/* Layout and Elements by Christian Heitkamp -- Please leave this notice here if you are going to use this design --- */
+
+/* link design */
+a:link {color: #1B1B17; text-decoration: none}
+a:visited {color: #1B1B17; text-decoration: none}
+a:hover {color: #4A4A41; text-decoration: none}
+a:active {color: #1B1B17; text-decoration: none}
+
+/* design for all text and background */
+.main {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: white;
+	padding:0px;
+	margin-top:0px;	
+}
+/* general tabel information */
+TABLE { 	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+TH { 	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: white;
+	background-color:#1B4F7E;
+}
+TR { 	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+TD {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+/* button design */
+.Button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	background-color:#C1C1C1; color:#1B4F7E; 
+}
+/* input form design */
+input {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	border: 1px solid #000000;
+}
+/* whenever an Error is displayed, here is descibed how to format it */
+div.errortxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: red;
+	text-align:center;
+}
+div.successtxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: green;
+	text-align:center;
+	font-weight: bold;
+}
