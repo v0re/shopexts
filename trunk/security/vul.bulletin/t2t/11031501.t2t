@@ -1,0 +1,69 @@
+ECshop XSS脚本跨站漏洞
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+2011-03-15
+ 
+====系统编号====
+ 
+
+ 
+====影响版本====
+ 
+ECShop  <= 2.7.2
+ 
+====漏洞危害====
+ 
+成功利用该漏洞的攻击者可以在网站中插入恶意代码
+ 
+====漏洞原理====
+
+search.php页面,第108行
+$_REQUEST['keywords']   = !empty($_REQUEST['keywords'])   ? trim($_REQUEST['keywords'])     : '';
+
+没有在最初始时过滤htmlspecialchars($_REQUEST['keywords']),只是在后面使用中过滤，造成漏洞。
+
+
+pick_out.php页面，第135行
+ $picks[] = array('name'=>'<strong>'.$row['attr_name'].':</strong><br />'. urldecode($_GET['attr'][$row['attr_id']]), 'url'=>'pick_out.php?cat_id='.$cat_id.search_url($attr_picks, $row['attr_id']));
+
+将urldecode($_GET['attr'][$row['attr_id']])没有进行过滤严格，造成漏洞。
+
+
+message.php页面，第53行
+$filter_attr_str = isset($_REQUEST['filter_attr']) ? trim($_REQUEST['filter_attr']) : '0';
+
+filter_attr_str过滤不严，造成漏洞。
+
+brand.php、category.php、exchange.php页面对$display变量过滤不严造成漏洞。
+
+Includes/init.php功能对$_SERVER['PHP_SELF']变量过滤不严造成漏洞。
+
+article_cat.php页面，第50行
+$page  = !empty($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+过滤不严格造成sql注入漏洞。
+
+====检测方法====
+
+无
+
+====解决方案====
+
+ecshop团队发布安全补丁，补丁下载地址
+
+http://bbs.ecshop.com/thread-148082-1-2.html
+
+====信息来源====
+
+ http://www.fengblog.org/
+
+
+
+
