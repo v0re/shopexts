@@ -1,0 +1,43 @@
+ECshop XSS脚本跨站漏洞
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+2011-03-18
+ 
+====系统编号====
+ 
+
+ 
+====影响版本====
+ 
+ECShop  <= 2.7.2
+ 
+====漏洞危害====
+ 
+成功利用该漏洞的攻击者可以在网站中插入恶意代码
+ 
+====漏洞原理====
+
+用户中心留言中上传非图片格式的文件，在服务器设置为 magic_quotes_gpc = Off 时，利用文件calendar.php过滤不严,执行在用户中心上传文件。
+if (!file_exists('../languages/' . $lang . '/calendar.php') ) 修改为if (!file_exists('../languages/' . $lang . '/calendar.php') || strrchr($lang,'.'))
+
+====检测方法====
+
+无
+
+====解决方案====
+
+ecshop团队发布安全补丁，补丁下载地址
+
+http://bbs.ecshop.com/thread-148282-1-1.html
+
+====信息来源====
+
+http://hi.baidu.com/3hack_yesu/blog/item/fa763c40b4926f0172f05db6.html
