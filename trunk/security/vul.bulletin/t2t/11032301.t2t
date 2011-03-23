@@ -1,0 +1,44 @@
+ECshop XSS脚本跨站漏洞
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+2011-03-23
+ 
+====系统编号====
+ 
+
+ 
+====影响版本====
+ 
+ECShop  <= 2.7.2
+ 
+====漏洞危害====
+ 
+成功利用该漏洞的攻击者可以在网站中插入恶意代码
+ 
+====漏洞原理====
+
+在includes/cls_template.php 287行
+return preg_replace("/{([^\}\{\n]*)}/e", "\$this->select('\\1');", $source);
+模板中没过滤php标签，在编译模板的时候执行了模板中的php代码。
+
+====检测方法====
+
+无
+
+====解决方案====
+
+ecshop团队发布安全补丁，补丁下载地址
+
+http://bbs.ecshop.com/thread-148571-1-3.html
+
+====信息来源====
+
+http://www.wooyun.org/bug.php?action=view&id=1636
