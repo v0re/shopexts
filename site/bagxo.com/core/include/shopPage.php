@@ -40,9 +40,6 @@ class shopPage extends pageFactory{
 
         $this->system->controller = &$this;
         $this->path = array();
-        if( !$this->is_login() && $this->system->request['action']['controller'] != 'passport' ){
-            $this->system->location('http://www.bagxo.com/?passport-login.html');
-        }
     }
 
     function header($header){
