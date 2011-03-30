@@ -40,6 +40,9 @@ class shopPage extends pageFactory{
 
         $this->system->controller = &$this;
         $this->path = array();
+        if(!$this->is_login()){
+            $this->system->location($this->system->mkUrl('passport','login',array(base64_encode(str_replace(array('+','/','='),array('_',',','~'),$this->system->mkUrl($this->system->request['action']['controller'],$this->system->request['action']['method'],$this->system->request['action']['args']))))));
+        }
     }
 
     function header($header){
