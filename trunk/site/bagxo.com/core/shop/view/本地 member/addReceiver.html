@@ -1,0 +1,60 @@
+<style type="text/css">
+<!--
+.STYLE1 {
+	color: #CE5C64;
+	font-style: italic;
+}
+-->
+</style>
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Add New Address</span></div>
+<form method="post" action="<{link ctl="member" act="insertRec"}>" class="section" extra="subMemAddr" id="member_addr">
+<div class="FormWrapc">
+<div class="division">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform" style="width:777px; background:#EDECEA;">
+  <tr>
+    <th><span class="STYLE1">*</span><{t}>Name：<{/t}></th>
+    <td><{input class="inputstyle" name="name" type="text" required="true" id="name" size="30" vtype="name" value=$name|escape:'html'}></td>
+  </tr>
+    <tr>
+    <th><span class="STYLE1">*</span><{t}>E-mail：<{/t}></th>
+    <td><{input class="inputstyle" name="zip" size="30" required="true" value="$zip"}></td>
+  </tr>
+  <tr>
+    <th><span class="STYLE1">*</span><{t}>Address：<{/t}></th>
+    <td><{input class="inputstyle" type="textarea" required="true" name="addr" id="addr"  rows="2" cols="30" value=$addr|escape:'html'}></td>
+  </tr>
+  <tr>
+    <tr>
+     <th><span class="STYLE1">*</span><{t}>State：<{/t}></th>
+     <td><{input type="region" name="area" required="true" value=''}></td>
+  </tr>
+    <th><span class="STYLE1">*</span><{t}>Phone Number：<{/t}></th>
+    <td><{input class="inputstyle" name="tel" type="order_tel" size="30" value=$tel}><span class="infotips"><{t}><{/t}></span></td>
+  </tr>
+  </table>
+
+</div>
+<div class="division">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform" style="width:777px; background:#EDECEA;">
+  <tr>
+    <th></th>
+    <td><input  type="image" name="submit" value="保存"  src="../../../../themes/zqzyb/images/member/addnewaddress.jpg"/></td>
+  </tr>
+</table>
+</div>
+</form>
+<script>
+if(!extra_validator['subMemAddr']){
+  extra_validator['subMemAddr'] ={
+    'order_tel':['请至少输入联系电话和联系手机中的一项',function(f,i){
+        var tel = $('member_addr').getElement('input[name=tel]').getProperty('value');
+        var mob = $('member_addr').getElement('input[name=mobile]').getProperty('value');
+        if(tel.trim() == '' && mob.trim() == ''){
+          return false;
+        }else{
+            return true;
+        }
+      }]
+  };
+}
+</script>

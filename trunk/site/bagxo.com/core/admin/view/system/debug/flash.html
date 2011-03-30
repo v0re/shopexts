@@ -1,0 +1,29 @@
+
+<table width=100% class="tableform">
+<tr>
+  <td>
+  <div id="flashchk" style="display:none"><{t}>ShopEx网上商店后台的多项功能如多图上传等需要安装Flash9插件支持，<{/t}><br><{t}>系统检测到您未安装Falsh9插件，请安装Flash9插件<{/t}></div></td>
+<tr>
+</tr>
+  <td>
+  <div id="flashcontent"></div>
+  <script type="text/javascript">
+  (function(){
+   if(Browser.Plugins.Flash.version<9){
+      return $('flashchk').style.display='block';
+    }  
+    new Swiff('so_tester.swf', {
+        id: 'sotester',
+        width: 300,
+        height: 300,
+      container:$("flashcontent"),
+        params: {
+            bgcolor: '#FF6600'
+        }
+    });
+  
+  })();
+  </script>
+  </td>
+</tr>
+</table>

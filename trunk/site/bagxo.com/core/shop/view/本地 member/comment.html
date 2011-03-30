@@ -1,0 +1,41 @@
+<h1 class="title"><{t}>商品咨询/评论<{/t}></h1>
+<div class="Comments FormWrap" style="border:none" id="shop-message">
+
+<{foreach from=$commentList item=items}>
+  <div class="division boxBrown">
+    <div class="mainReply"><strong><span class="author fontcolorOrange"><{t}>我<{/t}><{if $items.object_type == 'ask'}><{t}>咨询：<{/t}><{else}><{t}>评论说：<{/t}><{/if}></span></strong><span class="timpstamp font10px fontcolorGray replies prepend-1">(<{$items.time|cdate:FDATE_STIME}>)</span> | <a href="<{link ctl=product act=index arg0=$items.goods_id}>" class="lnk"><{t}>点击去该商品页<{/t}></a>
+      <!--<h4><{$comment.title|escape:'html'}></h4>-->
+      <div>
+        <{$comment.title}>
+        <div class="boxBlue" style="margin:10px 0 10px 0;">
+        <{$items.comment}>
+        </div>
+        </div>
+    </div>
+    
+      <{if $items.items}>
+  
+  <div>
+<{foreach item=rep from=$items.items}>
+    <div style=" border-bottom:1px dotted #aec3cf;"><span style="color:#003399;" class="author fontcolorOrange"><{$rep.reply_name}></span><{t}> 回复：<{/t}><span class="timpstamp font10px fontcolorGray replies prepend-1"><{$rep.time|cdate:'FDATE_FTIME'}></span>
+      <div><{$rep.comment|escape:'html'}></div>
+    </div>
+    <{/foreach}>
+    </div>
+   <{/if}>
+    
+    
+  </div>
+  
+  
+  
+
+    
+    
+    
+    
+    
+   
+  <{/foreach}>
+  <{pager data=$pager}> </div>
+  

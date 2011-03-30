@@ -1,0 +1,12 @@
+<div class="actionItems">
+  <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td class="functop"><a  class="sysiconBtn addorder" href="index.php?ctl=member/member&act=showNew"><{t}>添加会员<{/t}></a></td>
+    </tr>
+  <tr>
+    <td class="func"> <{foreach from=$messenger item=item key=key}>
+      <span class="<{$item.iconclass}>" submit="index.php?ctl=member/messenger&act=write&p[0]=<{$key}>"><{$item.name_show}></span>
+      <{/foreach}> </td>
+  </tr>
+  </table>
+</div>

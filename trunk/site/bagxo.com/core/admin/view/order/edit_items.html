@@ -1,0 +1,44 @@
+<div style="border: 1px solid #efefef;" class="table-grid">  
+  <input type="hidden" name="order_id" value="<{$order.order_id}>">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2" class="finderInform">
+  <colgroup class="Colsn"></colgroup>
+  <colgroup></colgroup>
+  <colgroup class="Colamount"></colgroup>
+  <colgroup class="Colamount"></colgroup>
+  <colgroup class="Colamount"></colgroup>
+  <colgroup class="Coloption_1b"></colgroup>
+    <thead>
+      <tr>
+        <th><{t}>货号<{/t}></th>
+        <th><{t}>商品名称<{/t}></th>
+        <th><{t}>价格<{/t}></th>
+        <th><{t}>购买数量<{/t}></th>
+        <th><{t}>小计<{/t}></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <{foreach from=$order.items item=aItems key=iLoop}>
+    <{assign var="itemid" value=$aItems.item_id}>
+    <{assign var="itemprice" value=$aItems.price}>
+    <{assign var="itemnums" value=$aItems.nums}>
+    <tr>
+      <input type="hidden" name='aItems[<{$aItems.item_id}>]' value='<{$aItems.product_id}>'>
+      <td><{$aItems.bn}></td>
+      <td><{$aItems.name}></td>
+      <td><{input type="positive" required="true" class="itemPrice-$iLoop itemrow" name=aPrice[$itemid] value=$itemprice size=8 }></td>
+      <td><{input type="positive" required="true" class="itemNum-$iLoop itemrow" name=aNum[$itemid] value=$itemnums size=4 }></td>
+      <td class="itemSub-<{$iLoop}> itemCount Colamount"><{$aItems.amount}></td>
+      <td><span class="sysiconBtnNoIcon" onClick="delgoods(this)"><{t}>删除<{/t}></span></td>
+    </tr>
+    <{/foreach}>
+    </tbody>
+  </table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2" class="finderInform">
+    <tr>
+      <td style="text-align:left">输入商品货号：<{input type="text" name=newbn }>
+         <input type="button" name="newbtn" onclick="if(confirm('确认添加订单商品？')) W.page('index.php?ctl=order/order&act=addItem', {method:'post',data:$('orderItemList'),update:'orderItemList'});" value="添加" ></td>
+    </tr>
+  </table>
+<{$order.alertJs}>
+</div>

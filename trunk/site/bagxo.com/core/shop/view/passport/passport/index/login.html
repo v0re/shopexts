@@ -1,0 +1,53 @@
+<form method="post" action="<{link ctl="passport" act="verify"}>" class='loginform'>
+  <div class="RegisterWrap">
+
+    
+     
+      <{if $err_msg != ''}>
+      <div class="error"><{$err_msg}></div>
+      <{/if}>
+      <div class="form">
+        <input name="forward" type="hidden" value="<{$options.url}>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th><div align="left"><i>*</i><{t}>username：<{/t}></div></th>
+            <td><{input name="login" class="inputstyle"  required="true" id="in_login" tabindex="1" value=$loginName}><a style="margin-left:6px; " href="<{link ctl='passport' act='signup'}>"><{t}>Register<{/t}></a></td>
+          </tr>
+          <tr>
+            <th><div align="left"><i>*</i><{t}>password：<{/t}></div></th>
+            <td><{input name="passwd" class="inputstyle" type="password" required="true" id="in_passwd" tabindex="2"}><a style="margin-left:6px;" href="<{link ctl='passport' act='lost'}>"><{t}>Forget the code？<{/t}></a></td>
+          </tr>
+          <{if $valideCode}>
+          <tr>
+            <th><div align="left"><i>*</i><{t}>verifycode：<{/t}></div></th>
+            <td id='verifyCodebox'><{input size="8" class="inputstyle"  type="digits" required="true" name="loginverifycode" id="iptlogin"  tabindex="3"}>
+               <span class='verifyCode' style='display:none;'><img src="#" border="1" id="LoginimgVerifyCode"/><a href="javascript:changeimg()">&nbsp;change the image of code!</a>
+               </span>
+            </td>
+          </tr>
+          <{/if}>
+          <tr>
+            <th></th>
+            <td ><input class="memlogin_btn" type="image" value="" tabindex="4" src="../../../../../statics/btn-login.gif" />
+      <input type="hidden" name="forward" value="<{$forward}>">
+            </td>
+          </tr>
+        </table>
+        <{$redirectInfo}> </div>
+
+    
+    
+  </div>
+  <input type='hidden' name='ref_url' value='<{$ref_url}>'/>
+</form>
+<script>
+$$('.loginform input').addEvent('focus',function(){
+      if(this.form.retrieve('showvcode',false))return;
+      $('verifyCodebox').getElements('span').show();
+      changeimg();
+      this.form.store('showvcode',true);
+});
+function changeimg(){
+    $('LoginimgVerifyCode').set('src','<{link ctl="passport" act="verifyCode" arg0="l"}>?'+$time());
+}
+</script>

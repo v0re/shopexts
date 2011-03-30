@@ -1,0 +1,28 @@
+<table>
+  <tr>
+    <td rowspan="2" width="180px">
+      <div style="text-align:center;width:150px;height:150px;overflow:hidden">
+      <a href="<{$url}>" target="_blank"><img src="<{$goods.thumbnail_pic|gimage:'thumbnail'}>" /></a>
+      </div>
+    </td>
+    <td colspan="2">
+      <div class='division' style='margin:4px 0 0 0'>
+      <strong><{t}>前台访问地址 (<{/t}><{if $is_pub}><{t}>已发布<{/t}><{else}><{t}>未发布<{/t}><{/if}>)：</strong><br />
+      <input type='text' value='<{$url}>' class='shadow' style='color:<{if $is_pub}>#060<{else}>#900<{/if}>;font-size:10px;font-family:Arial;width:55%;' onclick='this.focus();this.select();'/>
+       <{if $is_pub}>
+        &nbsp;<a class="sysiconBtnNoIcon" href="<{$url}>" target="_blank"><{t}>访问此链接<{/t}></a>
+        <{/if}>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong><{t}>本周访问 <{/t}><{$view_w_count}><{t}> 次 总 <{/t}><{$view_count}><{t}> 次<{/t}></strong><{t}>(5分钟缓存)<{/t}><br />
+    <img src="http://chart.apis.google.com/chart?<{$view_chart}>" />
+    </td>
+    <td>
+    <strong><{t}>本周购买 <{/t}><{$buy_w_count}><{t}> 次 ,总 <{/t}><{$buy_count}><{t}> 次<{/t}></strong><br />
+    <img src="http://chart.apis.google.com/chart?<{$buy_chart}>" />
+    </td>
+  </tr>
+</table>

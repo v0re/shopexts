@@ -1,0 +1,173 @@
+<{if $childnode}>
+<div class="boxBrown stb">
+<table>
+	
+       <tr>
+        <td class="textright" style="padding-right:6px; border-bottom:1px solid #F2D4D6; width:100px; white-space:nowrap">分类名称：</td>
+        <td style=" border-bottom:1px solid #F2D4D6; line-height:22px;"><{foreach from=$childnode item="item" key=value}>
+        <a href="<{$item.link}>"><{$item.cat_name}></a> 
+        <{/foreach}>
+        </td>
+      </tr>
+	
+    </table>
+</div>
+<{/if}>
+<{if $selector}>  
+    <div class="stb">
+    <table width="100%">
+
+      <{foreach from=$selector item="column" key=column_id}>
+      <{if count($column.options)>0 && !$column.value}>
+      <tr>
+        <td class="textright" style="padding-right:6px; width:100px; border-bottom:1px solid #F2D4D6; white-space:nowrap"><{$column.name}>：</td>
+        <td style=" border-bottom:1px solid #F2D4D6; line-height:22px;"><{foreach from=$column.options item="item" key=value}> <a href="<{selector key=$column_id value=$value}>"><{$item}></a> <{/foreach}> </td>
+      </tr>
+      <{/if}>
+      <{/foreach}>
+    </table>
+    </div>
+<{/if}>
+<{if $SpecFlatList}>
+<div class="stb">
+  <table class='goods-spec' width='100%'>
+    <{foreach from=$SpecFlatList key=FlatKey item=FlatSpec}>
+    <tr>
+        <td class="textright" style="padding-right:6px; border-bottom:1px solid #F2D4D6;width:auto; white-space:nowrap"><{$FlatSpec.name}>：</td>
+        <td style=" border-bottom:1px solid #F2D4D6; line-height:22px;" class="flatshow">
+            <ul>
+            <{foreach from=$SpecFlatList[$FlatKey].spec_value item=FlatSpecval key=FlatSkey}>
+                <{if $FlatSpec.spec_type=="image"}>
+                    <li>
+                    <a href="<{selector key=$FlatSpec.type value=$FlatKey|$FlatSkey}>" <{if $FlatSpecval.selected}>class="selected"<{/if}>>
+                    <img src="<{$FlatSpecval.spec_image|storager}>" alt="<{$FlatSpecval.spec_value}>" title="<{$FlatSpecval.spec_value}>" width="20" height="20">
+                    </a>
+                   </li>
+                <{else}>
+                    <li <{if $FlatSpecval.selected}>class="selected"<{/if}>>
+                    <a href="<{selector key=$FlatSpec.type value=$FlatKey|$FlatSkey}>" <{if $FlatSpecval.selected}>class="selected"<{/if}>>
+                      <span><{$FlatSpecval.spec_value}></span>
+                    </a>
+                    </li>
+                <{/if}>
+            <{/foreach}>
+            </ul>
+        </td>
+    </tr>
+    <{/foreach}>
+  </table>
+</div>  
+<{/if}>
+
+
+
+<{if $SpecSelList || $searchSelect}>
+<div class="stb g_b">
+  <div class="goods-spec">
+    <ul>
+      <{if $SpecSelList}>
+      <{foreach from=$SpecSelList key=SelKey item=SelSpec}>
+        <li class="handle <{if $SelSpec.selected}>selected<{/if}>">
+        <em><{$SelSpec.name}></em>
+        <{foreach from=$SpecSelList[$SelKey].spec_value key=SelSKey item=SelSpecval}>
+            <{if $SelSpecval.selected}>
+                <{assign var="selectValue" value=$SelSpecval.spec_value}>
+            <{/if}>
+        <{/foreach}>
+        <span class="select" style="display:none;"><{$selectValue|default:'请选择'}></span>
+        <{assign var="selectValue" value=''}>
+        </li>
+      <{/foreach}>
+      <{/if}>
+      <{if $searchSelect}>
+      <{foreach from=$searchSelect item=prop key=key}>
+           <li class="handle <{if $prop.options[$prop.value]}>selected<{/if}>">
+             <em><{$prop.name}></em>
+             <span class="select" style="display:none;"><{$prop.options[$prop.value]|default:'请选择'}></span>
+           </li>
+      <{/foreach}>
+      <{/if}>
+      <{if $SpecSelList}>
+      <{foreach from=$SpecSelList key=SelKey item=SelSpec}>
+        <li class="content">
+            <ul>
+          <{foreach from=$SpecSelList[$SelKey].spec_value item=SelSpecval key=SelSkey}>
+              <{if $SelSpec.spec_type=="image"}>
+                  <li>
+                  <a href="<{selector key=$SelSpec.type value=$SelKey|$SelSkey}>">
+                      <img src="<{$SelSpecval.spec_image|storager}>" alt="<{$SelSpecval.spec_value}>" title="<{$SelSpecval.spec_value}>" width="20" height="20">
+                   </a>
+                 </li>
+              <{else}>
+                  <li>
+                      <a href="<{selector key=$SelSpec.type value=$SelKey|$SelSkey}>">
+                        <span><{$SelSpecval.spec_value}></span>
+                      </a>
+                  </li>
+              <{/if}>
+          <{/foreach}> 
+          </ul>
+          </li>
+      <{/foreach}>
+      <{/if}>
+      
+      <{if $searchSelect}>
+      <{foreach from=$searchSelect item=prop key=key}>
+        <li class="content">
+        <ul>
+        <{foreach from=$searchSelect[$key].options key=skey item=suboptions}>
+            <li><a href='<{selector key=$key value=$skey}>'><span><{$suboptions}></span></a></li>
+        <{/foreach}>
+        </ul>
+        </li>
+      <{/foreach}>
+      <{/if}>
+    </ul>
+   </div> 
+  <script>
+  
+  /*处理规格下拉模式的换行*/
+  
+  
+  
+  
+  void function(){
+      var handles=$ES('.goods-spec .handle');
+      var tempSelectLineTop=handles[0].getPosition().y;
+      var tempSlipIndex=0;
+      var tempCurrentIndex=-1;
+      
+
+      var contents=$ES('.goods-spec .content');
+      handles.each(function(select,index,selects){
+      
+         var top=select.getPosition().y;
+         
+         if(top>tempSelectLineTop+10){
+             $$(contents.slice(tempSlipIndex,index)).injectBefore(select);
+             tempSlipIndex=index;
+             tempSelectLineTop=top;
+         }
+         
+         select.addEvent('click',function(e){
+               e.stop();         
+               if(tempCurrentIndex>=0&&tempCurrentIndex!=index){
+                  selects[tempCurrentIndex].removeClass('curr');
+                  contents[tempCurrentIndex].removeClass('content-curr');
+               }
+               tempCurrentIndex=index;
+               this.toggleClass('curr');
+               contents[index].toggleClass('content-curr');
+
+         });
+         
+         
+      });
+      }();
+    
+
+
+
+</script>
+</div>
+<{/if}>

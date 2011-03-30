@@ -1,0 +1,69 @@
+
+<form action="<{link ctl=search act=result extname='html'}>" method="post">
+  <div class="SearchMoreWrap">
+  <div style="background:#FBA4D9; height:40px;"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Advanced Search</span></div>
+  <div  style="background:#EDECEA; margin-top:5px; padding:10px 0 20px 60px;">
+  <div style="padding-left:30px;">
+  
+    <table border="0" cellspacing="0" cellpadding="0" class="forform">
+      <tr>
+        <td valign="middle" style="width:auto;"><{t}>Key Words：<{/t}></td>
+        <td><input value="" name="name[]" size="25" class="inputstyle"/></td>
+    </tr>
+      <tr style="display:none;">
+        <td valign="middle" style="width:auto;">货号：</td>
+        <td><input value="" name="bn[]" size="10" class="inputstyle"/></td>
+      </tr>
+      <tr>
+        <td valign="middle" style="width:auto;"><{t}>Price Range：<{/t}></td>
+        <td><!--<{t}>从<{/t}>&nbsp;--><{input value="" name="price[0]" size="8" class="inputstyle" type="number" }>&nbsp;&nbsp;-&nbsp;&nbsp;<!--<{t}>到<{/t}>&nbsp;--><{input value="" name="price[1]" size="8" class="inputstyle" type="number" }></td>
+      </tr>
+    </table>
+  </div>
+  <div style="padding-left:30px;">
+    <table border="0" cellspacing="0" cellpadding="0" class="forform">
+      <tr>
+        <td style=" width:80px;"><{t}>Category：<{/t}></td>
+        <td><select name="cat_id" style="font-size:12px;" onchange="new Ajax('<{link ctl="search" act="showCat"}>',{update:'search_cat_view',data:'cat_id='+escape(this.value)}).request(); m_toggleOpts('m_search_cat_view', true);" class="inputstyle" size="1">
+            <option selected="" value=""><{t}>-All Categories-<{/t}></option>
+            <{foreach from=$categorys item=cat}>
+            <option value="<{$cat.cat_id}>"><{$space|paddingleft:$cat.step*4-4:'&nbsp;'}><{if $cat.pid }>└<{/if}><{$cat.cat_name}></option>
+            <{/foreach}>
+          </select></td>
+      </tr>
+      <tr><td colspan="2"><a href="#" id="m_search_cat_view" class="lnk" onclick="m_toggleOpts(this); return false;">Advanced Options</a></td></tr>
+    </table>
+  </div>
+  
+<div id="search_cat_view" class="clearfix" style="display:none;">
+  <h4><{t}>Brand：<{/t}></h4>
+  <div  >
+          <{foreach from=$brand item=aItems}>
+              <span style=" display:block; float:left; width:30%;">
+              <input type="checkbox" name="brand_id[]" value="<{$aItems.brand_id}>" id="ipt_brand_<{$aItems.brand_id}>"><label for="ipt_brand_<{$aItems.brand_id}>"><{$aItems.brand_name}></label>
+              </span> 
+          <{/foreach}>
+  </div>
+  </div>
+
+<input  type="submit" value="Sumbit" style="margin-bottom:20px; margin-left:93px; margin-top:10px;" />
+
+</form>
+</div>
+</div>
+
+
+
+<script>
+function m_toggleOpts(el, st){
+  el = $(el);
+  var opts = $('search_cat_view');
+  if(opts.getStyle('display') == 'none' || st){
+    opts.show();
+    el.set('html', 'Advanced Options');
+  }else{
+    opts.hide();
+    el.set('html', 'Advanced Options');
+  }
+}
+</script>

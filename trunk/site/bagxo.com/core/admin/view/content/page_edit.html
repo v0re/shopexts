@@ -1,0 +1,124 @@
+<div id='contentEdit' class="mce_style_1 mainHead">
+<span class='sysiconBtn addorder addWidget'><{t}><strong><{t}>添加版块<{/t}></strong><{/t}></span>
+<span class='sysiconBtnNoIcon changelayout' style='padding-left:25px;background:url(images/bundle/layout.gif) no-repeat 2px 2px;'><{t}>选择布局<{/t}></span>
+<span class='sysiconBtn buttonsave'><{t}>保存编辑<{/t}></span>
+</div>
+<div id='wd_add_tip' class='success' style='visibility:hidden;position:absolute;zIndex:65535;'>
+            <span class='message'>
+            </span>
+            <span onclick='_hideWidgets_tip()' style='cursor:pointer;'>
+                <font color=red>
+                <strong><{t}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关闭提示<{/t}></strong>
+                </font>
+            </span>
+            <span><input name='noshownext' type='checkbox'/><{t}>下次不提示.<{/t}></span>
+</div>
+<iframe src="index.php?ctl=content/pages&act=editor&p[0]=<{$ident}>&theme=<{$themes}>" style="width:100%;height:95%;" frameborder=0 id="themeFrame" name="themeFrame">
+</div>
+<input type="hidden" name="ident" value="<{$ident}>">
+<input type="hidden" name="node_id" value="<{$node_id}>">
+<script>
+   (function(){
+       var shopWidgetsOBJ=$('themeFrame').contentWindow.shopWidgets;
+       var addWidget=$E('.addWidget','contentEdit');
+       var cl=$E('.changelayout','contentEdit');
+       var saveBtn=$E('.buttonsave','contentEdit');
+       cl.addEvent('click',function(){
+         if(confirm('选择布局前需要先保存当前页面编辑状态,保存吗?')){
+            _saveWidgets();
+         }else{
+            return;
+         }
+         this.store('dialog',new Dialog('index.php?ctl=content/pages&act=layout&p[0]='+encodeURIComponent('<{$ident}>'),{title:'设置布局',modal:true,width:500,height:350}))
+       });
+       addWidget.addEvent('click',function(){
+         _showWidgetsDialog('index.php?ctl=system/template&act=addWidgetsPage&p[0]=<{$themes}>');
+       });
+       saveBtn.addEvent('click',function(){
+        if(confirm("确定保存您对当前页面的修改吗?"))_saveWidgets()
+       })
+      
+   })();
+</script>
+<script>
+
+   function _addWeigets(args){
+
+      var themeFrame=$('themeFrame').contentWindow;
+      var shopWidgetsOBJ=themeFrame.shopWidgets;
+
+    _widgetsDialog?_widgetsDialog.close():'';
+
+    _widgetsDialog=null;
+
+    shopWidgetsOBJ.ghostDrop(args[0],args[1]);
+
+    themeFrame.focus();
+
+   }
+
+   function _showWidgets_tip(message){
+
+ 
+if($E('input[name=noshownext]','wd_add_tip').checked)return;
+     var tip=$('wd_add_tip');
+
+   var msg=$E('.message',tip);
+
+   msg.setText(message);
+
+   var pos=$("themeFrame").getPosition();
+
+   tip.setStyles({
+
+      left:pos.x,
+
+    top:pos.y
+
+   }).setStyle('visibility','visible');
+
+   }
+
+   function _showWidgetsDialog(url){
+
+    _widgetsDialog=new Dialog(url,{width:770,height:500,title:'增加页面版块',modal:true,resizeable:false,onShow
+
+:function(e){
+
+     this.dialog_body.id='dialogContent';
+
+  }});
+
+   }
+
+   function _hideWidgets_tip(){
+
+      return $('wd_add_tip').setStyle('visibility','hidden');
+
+   }
+
+   function _saveWidgets(){
+
+    return $("themeFrame").contentWindow.shopWidgets.saveWidgets();
+
+   }
+
+   
+
+   function _infoTrigger(){
+
+     var el = $('save_info');
+
+  if(el.getStyle('display') == 'none'){
+
+    el.setStyles('display', 'inline');
+
+  }else{
+
+    el.setStyle('display', 'none');
+
+  }
+
+   }
+
+</script>

@@ -1,0 +1,19 @@
+<div class="actionItems">
+<table >
+  <tr>
+    <td colspan="2" class="functop"><a class="sysiconBtn addorder" href="index.php?ctl=order/order&act=showAdd"><{t}>添加新订单<{/t}></a><a class="sysiconBtn useorder" href="index.php?ctl=order/order&act=showOrderFlow" title="点击设置启用的订单处理单据"><{t}>启用单据<{/t}></a></td>
+  </tr>
+  <tr>
+    <td class="func"><span submit="index.php?ctl=order/order&act=toPrint" class="sysiconBtn print" target="_blank"><{t}>打印选定订单<{/t}></span><a class="sysiconBtn printtyle" href="index.php?ctl=order/order&act=showPrintStyle" title="点击设置购物清单、配货单打印模版"><{t}>打印样式<{/t}></a><!-- <span submit="index.php?ctl=order/order&act=toPrint" class="sysiconBtn print" target="_blank"><{t}>物流分配<{/t}></span>--></td>
+    <td></td>
+  </tr>
+</table>
+  </div>
+</div>
+<script>
+function orderPrint(el,type){
+    $(el).className='p_prted';
+    var id = $(el).getParent('div.row').getAttribute('item-id');
+    window.open('index.php?ctl=order/order&act=printing&p[0]='+type+'&p[1]='+id);
+}
+</script>

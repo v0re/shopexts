@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=7" >
+<title><{$title}></title>
+<link rel="shortcut icon" href="../favicon.gif" type="image/gif" />
+<{if defined('DEBUG_CSS') && DEBUG_CSS}>
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="css/grid.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="css/forms.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="css/struct.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="css/typography.css" type="text/css" media="screen, projection">
+<{elseif defined('GZIP_CSS') && GZIP_CSS }>
+<link rel="stylesheet" href="css/admin.zcss" type="text/css" media="screen, projection">
+<{else}>
+<link rel="stylesheet" href="css/admin.css" type="text/css" media="screen, projection">
+<{/if}>
+
+<script>
+var SHOPADMINDIR='<{$shopadmin_dir}>';
+var SHOPBASE='<{$shop_base}>';
+</script>
+</head>
+<body class="closeLeft" id='shopadmin'>
+  <div class="container" style='visibility:hidden'>
+    <div class="header" id='header'>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="hd1" > 
+  <tr>
+    <td style="padding-right:10px;"><h1 id="logo" class="shopname"><a href="index.php?ctl=system/setting&act=basicinfo" id="shop_title_block"><{$shopname}></a>
+<{if $saas_mode != true}>
+<span class="certiinfo" id="CertificateInfo">&nbsp;</span>
+<{else}>
+<span class="certiinfo" id="CertificateInfo" style="display:none">&nbsp;</span>
+<span class="certiinfo"><{$shop_service_info}></span>
+<{/if}>
+</h1></td>
+    <td>
+     <div id="msgRunner" dropMenu='msgStorage' style='visibility:hidden;'><div class='runner'></div></div>
+     <ul class="dropMenu" id="msgStorage" style='display:none'></ul>
+    </td>
+    <td align="right" style="vertical-align:top;">
+    <div class="toplinkmenu">
+  <div>
+  <a href='http://www.shopex.cn/help/ShopEx48' target="_blank" ><{img src="images/bundle/ico_help.gif"}>帮助</a>&nbsp;&nbsp;
+  <a href='javascript:void(0);' class='user_guide'><{img src="images/bundle/opguide_ico.gif"}>向导</a>&nbsp;&nbsp;
+  <a href="http://www.shopex.cn/ServiceBar/user_contact_greenchannel.php" target="_blank"><{img src="images/bundle/ico-chat.gif"}><{t}>客户服务<{/t}></a>&nbsp;&nbsp;
+  <a href="http://www.shopex.cn/ServiceBar/user_contact_buy.php" target="_blank" ><{img src="images/bundle/ico-buy.gif"}><{t}>购买咨询<{/t}></a>
+  </div></div>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="hd2">
+  <tr>
+    <td>&nbsp;</td>
+    <td><div id="mainMenus" class="topmenu">
+          <{foreach from=$menu item=item key=key}>
+          <{if !$item.hidden}>
+          <div name="<{$key}>">
+            <span><a href="<{$item.link}>"><{$item.label}></a></span></div>
+          <{/if}>
+          <{/foreach}>
+          
+          <{role require="7,8" mode="or"}><div class="blankbutton"><span><{role require="7"}><a href="index.php?ctl=system/setting&act=welcome"><{t}>商店配置<{/t}></a><{/role}><{role require="8"}><a href="index.php?ctl=system/tools&act=welcome"><{t}>工具箱<{/t}></a><{/role}></span></div><{/role}>
+            
+            <div class="greenbutton"><span><a  href="../" target="_blank"><{t}>浏览商店<{/t}></a></span></div></div></td>
+    <td align="right"><div class="topmenu" style="margin-right:5px;"><span style="color:#f90;"><{$uname}></span>&nbsp;<span style="cursor: pointer;" onClick="new Dialog('index.php?ctl=admin/profile&act=operator',{title:'我的账号',modal:false,singlon:false})"><{t}>(帐号设置)<{/t}></span>&nbsp;| &nbsp;<a href="index.php?ctl=dashboard&act=index"><{t}>桌面<{/t}></a>&nbsp;|&nbsp;<span style="cursor: pointer;" onClick="new Dialog('index.php?ctl=system/about&act=index',{width:590,title:'关于ShopEx'})"><{t}>关于<{/t}></span><span id="authinfo"></span>&nbsp;|&nbsp;<a href="index.php?ctl=passport&act=logout" target="_top"><{t}>退出<{/t}></a>
+            </div></td>
+  </tr>
+</table>
+</div>    
+
+<div id="sidecontent">
+      <div id="sideBody">
+      </div>
+      <div id="task">
+      </div>
+    </div>
+    <div id="leftToggler" title="开启或关闭侧边栏">&nbsp;</div>
+    <div id="workground">        
+    
+      <div id="headBar" class='head_content'></div>
+      <div id="main" class='main_content'></div>
+      <div id="footBar" calss='foot_content'>&nbsp;</div>
+    </div>
+  </div>
+
+<div id="shopkits-pannel" class="close">
+  <{include file="shopkits/notebook.html"}>
+  <div class="ctlTools">&nbsp;</div>
+</div>
+    <!--begin LoadMask-->
+        <div id='loadMask' class='loading' style='z-index:65535;display:block;'>
+            <span class='loading_msg'>
+        正在加载...
+            </span>
+        </div>
+     <!--END loadMask-->   
+     
+<iframe name="download" style="display:none" src='about:blank'></iframe>
+<div id='elTempBox' style='display:none'></div>
+
+<div id='tabernacle'></div>
+
+<div id="dialogProtoType" style='display:none'>
+<div class='dialog_box'>
+    <div class='head'>
+    <div class='title'></div>
+      <{img src='images/bundle/close_btn.gif' class='closeBtn' }>
+  </div>
+    <div class='headContent'></div>
+              <div class='body dialogContent' container='true'>
+                正在加载... 
+              </div>
+    <div class='footContent'></div>
+  <img class='resizeBtn' src='images/resize-btn.gif' style='cursor: nw-resize;position: absolute;bottom: 1px;right:1px;' />
+  </div>
+</div>
+
+<!--Script begin-->
+        <script language="javascript">
+            var Setting = {};
+            var Menus = "json from=$mlist";
+            var sess_id = '<{$session_id}>';
+            var DEBUG_JS=false;
+            <{$script}>
+          <{if $statusId}>
+          window.statusId = <{$statusId}>;
+          <{/if}>
+            <{if defined('DEBUG_JS') && DEBUG_JS}>
+              DEBUG_JS=true;
+            <{/if}>
+        </script>
+        <{if defined('DEBUG_JS') && DEBUG_JS}>
+        <{foreach from=$scripts item=script}>
+            <script type="text/javascript" src="js<{$script}>"></script>
+        <{/foreach}>
+        <{elseif defined('GZIP_JS') && GZIP_JS }>
+        <script type="text/javascript" src="admin.jgz"></script>
+        <{else}>
+        <script type="text/javascript" src="admin.js"></script>
+        <{/if}>
+<!--[if lte IE 6]>
+<script type="text/javascript" src="fix-ie6.js"></script>
+<![endif]-->
+ 
+   <script>
+   /*向导弹出*/
+       <{if $guide==''||$guide=='false'}>
+      addEvent('load',function(){
+         $E('#header .user_guide').store('checked',false).fireEvent('click');
+      });
+      <{else}>
+       $E('#header .user_guide').store('checked',true);
+      <{/if}>
+      
+      
+      
+      /*顶部滚动提示*/
+       addEvent('load',function(){
+         var synMsgRemoete=new Request({onSuccess:function(re){
+                
+                  
+                    
+                var msgStorage=$('msgStorage').set('html',re);
+                var msgRunner=$E('#msgRunner .runner').empty().scrollTo(0,0);
+                  $clear(msgRunner.retrieve('timer'));
+                  var els=msgStorage.getElements('li');
+            if(!els||!els.length){
+               return msgRunner.setStyle('visibility','hidden');
+            }else{
+               msgRunner.setStyle('visibility','visible');
+            }
+            els.each(function(el){
+               new Element('span').set('text',el.get('text')).inject(msgRunner);
+            });
+            var runnerSpans=msgRunner.getElements('span');
+                runnerSpans.addEvents({
+                'mouseenter':function(){
+                    this.getParent().store('stopScroll',true);
+                },
+                'mouseleave':function(){
+                    this.getParent().store('stopScroll',false);
+                }
+            });
+
+
+            try{
+            
+            if(runnerSpans.length<2)return;
+            
+            var msgRunnerFxScroll= new Fx.Scroll(msgRunner);
+            msgRunner.store('timer',(function(){
+                if(!this.element.retrieve('stopScroll')){
+                this.start(0,this.element.getScrollTop()+this.element.getFirst().offsetHeight);
+                if(this.element.getScrollSize().y<=(this.element.getScrollTop()+this.element.getSize().y)){
+                    this.stop();
+                    this.set(0,0);
+                }
+    
+                }
+            }).periodical(2500, msgRunnerFxScroll));
+
+              }catch(e){}
+              
+            
+            
+            }});
+            
+            
+            
+            void function(){
+               synMsgRemoete.get("index.php?ctl=default&act=status",{sess_id:'<{$session_id}>'});
+               arguments.callee.delay(60000);/*1分钟同步一下最新状态.*/
+            }();
+            
+       
+            
+       
+       });
+      
+   </script>
+   
+   <!--Script end-->
+      </body>
+</html>

@@ -1,0 +1,176 @@
+<div class="CartWrap" id="cart-index">
+<div class="CartNav clearfix"><div class="floatLeft"><img src="statics/cartnav-step1.gif" alt="购物流程--查看购物车" /></div><div class="floatRight"><img src="statics/cartnav-cart.gif"  /></div></div>
+<{if count($trading.products)>0 || count($trading.package)>0 || count($trading.gift_e)>0 }>
+  <div class="section" id="cart-items">
+  <form id="form-cart" action="<{link ctl="cart" act="checkout"}>" method="post" extra="cart">
+  <div class="FormWrap" id="cartItems">
+    <{if count($trading.products) > 0}>
+    <h3><{t}>购买的商品<{/t}></h3>
+    <div id="goodsbody" class="division">
+    <table width="100%" cellpadding="3" cellspacing="0" class="liststyle">
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-auto"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 ColColorOrange"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <thead>
+        <tr>
+          <th><{t}>图片<{/t}></th>
+          <th><{t}>商品名称<{/t}></th>
+          <th><{t}>商品积分<{/t}></th>
+          <th><{t}>销售价格<{/t}></th>
+          <th><{t}>优惠价格<{/t}></th>
+          <th><{t}>数量<{/t}></th>
+          <th><{t}>小计<{/t}></th>
+          <th><{t}>删除<{/t}></th>
+        </tr>
+      </thead>
+      <tbody >
+      <{foreach from=$trading.products item="item" key="key"}>
+      <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=g arg1=$item.key}>" urlremove="<{link ctl=cart act=removeCart arg0=g}>" >
+        <td><img src="<{$item.thumbnail_pic|gimage:'thumbnail'}>" /></td>
+        <td ><{$item.name}><{if $item.spec}> (<{$item.spec}>)<{/if}><{$item.addon.adjname}>
+          <{if $item._pmt.describe}><div class="ht1"><{$item._pmt.describe}></div><{/if}></td>
+        <td><{$item._pmt.score|string_format:"%d"}></td>
+        <td class=" mktprice1"><{$item.sale_price|cur}></td>
+        <td><{$item._pmt.price|cur}></td>
+        <td>
+          <div class="Numinput">
+            <input type="text" class="_x_ipt textcenter" value="<{$item.nums}>" onchange="Cart.inputUpdate(event)" size="3" name="cartNum[g][<{$item.key}>]" /><span class="numadjust increase" price="<{$item._pmt.price}>"></span><span class="numadjust decrease" price="<{$item._pmt.price}>"></span></div><{if !is_null($item.store) && $item.nums > $item.store}><h3 class="t"><{t}>(No stock)<{/t}></h3><{/if}></td>
+        <td class="itemTotal"><{$item._pmt.amount|cur}></td>
+        <td><span class="lnk quiet"><{t}>删除<{/t}></span></td>
+      </tr>
+      <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+
+    <{if $trading.gift_e}>
+    <h3><{t}>赠品<{/t}></h3>
+    <div id="giftbody"  class="division" >
+    <table width="100%" cellpadding="0" cellspacing="0" class="liststyle" >
+      <colgroup class="span-2"></colgroup>
+      <colgroup></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 ColColorOrange"></colgroup>
+      <colgroup class="span-2"></colgroup>            
+      <thead>
+        <tr>
+          <th><{t}>图片<{/t}></th>
+          <th><{t}>赠品名称<{/t}></th>
+          <th><{t}>所需积分<{/t}></th>
+          <th><{t}>限购数量<{/t}></th>
+          <th><{t}>数量<{/t}></th>
+          <th><{t}>小计<{/t}></th>
+          <th><{t}>删除<{/t}></th>
+        </tr>
+      </thead>
+      <tbody >
+      <{foreach from=$trading.gift_e item="item" key="key"}>
+        <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=f arg1=$item.gift_id}>" urlremove="<{link ctl=cart act=removeCart arg0=f}>">
+          <td><a href="<{link ctl=gift act=index arg0=$item.gift_id}>"><img src="<{$item.thumbnail_pic|gimage:'thumbnail'}>"  <{if $env.thumbnail_pic_width >0 && $env.thumbnail_pic_height >0}>width="<{$env.thumbnail_pic_width}>" height="<{$env.thumbnail_pic_height}>"<{/if}> /></a></td>
+          <td><{$item.name}></td>
+          <td><{$item.point}></td>
+          <td><{if $item.limit_num=='0'}><{t}>不限制<{/t}><{else}><{$item.limit_num}><{/if}></td>
+          <td><div class="Numinput"><input type="text" class="_x_ipt textcenter" onchange="Cart.inputUpdate(event)" value=<{$item.nums}> size="3" name="cartNum[f][<{$item.gift_id}>]" ><span class="numadjust increase" point="<{$item.point}>"></span><span class="numadjust decrease" point="<{$item.point}>"></span></div></td>
+          <td class="itemTotal"><{$item.amount}></td>
+          <td><span class="lnk quiet"><{t}>删除<{/t}></span></td>                    
+        </tr>
+      <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+    
+    <{if $trading.package}>
+    <h3><{t}>捆绑商品<{/t}></h3> 
+    <div id="pkgbody"  class="division"> 
+    <table width="100%" cellpadding="0" cellspacing="0" class="liststyle">
+      <colgroup class="span-2"></colgroup>
+      <colgroup style="width:auto;"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 ColColorOrange"></colgroup>
+      <colgroup class="span-2"></colgroup>                
+      <thead>
+        <tr>
+          <th><{t}>货号<{/t}></th>
+          <th><{t}>捆绑名称<{/t}></th>
+          <th><{t}>优惠价格<{/t}></th>
+          <th><{t}>数量<{/t}></th>
+          <th><{t}>小计<{/t}></th>
+          <th><{t}>删除<{/t}></th>                        
+        </tr>
+      </thead>
+      <tbody>
+      <{foreach from=$trading.package item=item key=key}>
+        <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=p arg1=$item.goods_id}>" urlremove="<{link ctl=cart act=removeCart arg0=p}>">
+          <td><{$item.bn}></td>
+          <td><{$item.name}> <{$item.addon.adjname}></td>
+          <td><{$item.price|cur}></td>
+          <td><div class="Numinput"><input type="text" class="_x_ipt textcenter" onchange="Cart.inputUpdate(event)" value=<{$item.nums}> size="3" name="cartNum[p][<{$item.goods_id}>]" ><span class="numadjust increase" price="<{$item.price}>"></span><span class="numadjust decrease" price="<{$item.price}>"></span></div></td>
+          <td class="itemTotal"><{$item.amount|cur}></td>
+          <td><span class="lnk quiet"><{t}>删除<{/t}></span></td>    
+        </tr>
+      <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+    
+    <div class="division" id="cartTotal">
+    <{require file="cart/cart_total.html"}>
+    </div>
+  </div>
+  
+  <div class="CartBtn clearfix" style="margin-bottom:5px;">
+  <div class="span-auto"><input type="button" class="btn-return actbtn" style="width:90px" onclick="window.location='<{link ctl=index}>'" value="<{t}>&laquo;继续购物<{/t}>"></div>
+  <div class="span-auto"><input id="clearCart" url="<{link ctl=cart act=removeCart arg0=all}>" class="btn-clearcat actbtn" style="width:90px"  type="button" value="" /></div>
+  <div class="span-auto floatRight"><input class="btn-next actbtn" type="submit" value="<{t}>下单结算&raquo;<{/t}>" /></div>
+  </div>
+  </form>
+  </div>
+<form action="<{link ctl="cart" act="applycoupon"}>" method="post" id="cart-coupon">
+<div class="FormWrap">
+<h3 ><{t}>使用优惠券<{/t}></h3>
+<div class="division">
+  <{if count($trading.coupon_u)>0}>
+  <div class="promotion"><{t}>Coupon used：<{/t}><{foreach from=$trading.coupon_u item="item" key="key"}><strong><{$key}></strong><{/foreach}><a href="<{link ctl=cart act=removeCoupon}>" class="lnk" style="margin:0 0 0 20px;"><{t}>取消优惠券<{/t}></a></div>
+  <{else}>
+  <{input type="text" name="coupon" id="-s-ipt-coupon" size="30"}> <input type="submit" value="<{t}>输入优惠券号码<{/t}>" />
+  <{/if}>
+</div>
+</div>
+</form>
+<{/if}>
+<p id="cart-none-msg"<{if count($trading.products)>0 || count($trading.package)>0 || count($trading.gift_e)>0 }> style="display:none"<{/if}>><{t}>对不起，您的购物车中无商品。<{/t}></p>
+</div>
+<script language="javascript">
+window.focus();
+if(!extra_validator['cart']){
+  extra_validator['cart'] ={
+    'cartnum':['请录入大于0的整数',function(f,i){
+        return (i>0)&&(!/[^\d]/.test(i));
+      }]
+    };
+}
+var moneyFormat = <{$currency|default:'null'}>;
+         $$('#cartItems .numadjust').addEvents({
+             'mousedown':function(){
+                this.addClass('active');
+             },
+             'mouseup':function(){
+               this.removeClass('active');
+             }
+         });
+
+
+
+
+</script>

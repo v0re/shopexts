@@ -1,0 +1,119 @@
+<{$searchInfo}>
+<{if $tabs}>
+<ul class="GoodsSearchTabs">
+  <li<{if $args.3 eq ''}> class="current"<{/if}>><a href="<{link args=$args arg3=''}>"><span><{t}>全部商品<{/t}></span></a></li>
+  <{section name=tabs loop=$tabs}>
+  <li<{if is_numeric($args.3) && $args.3 eq $smarty.section.tabs.index}> class="current"<{/if}>><a href="<{link args=$args arg3=$smarty.section.tabs.index}>"><span><{$tabs[tabs].label}></span></a></li>
+  <{/section}>
+  <li></li>
+</ul>
+<{/if}>
+<div class="clear"></div>
+<div class="GoodsSearchWrap">
+
+  <{if count($selector)>0 or count($searchInput)>0}>
+  <form method="post" action="<{link ctl=search act=result}>" class="GoodsSelector division boxGray">
+  <input type="hidden" name="filter" value="<{$args[1]}>" />
+  <{if $cat_id}><input type="hidden" name="cat_id" value="<{$cat_id}>"><{/if}>
+    <{if count($selector)>0}>
+    <div id="selectorBox">
+      <{require file="gallery/selector/default.html"}></div>
+    <{/if}>
+    <{if count($searchInput)>0}>
+        <div class="stb clearfix" style="padding-left:3px;">
+    <{foreach from=$searchInput item=prop key=key}>
+    <div class="span-3">
+      <span style="margin:2px 0;"><{$prop.name}></span>
+      <{input type=$prop.type name="p_$key[]" value=$prop.value options=$prop.options id="sel-prop-$key" style="width:148px"}>
+    </div>
+    <{/foreach}>
+
+      
+
+        </div>
+        <div style=" text-align:left; padding-left:3px;"><input type="submit" style="width:115px;" value="Go..." /></div>
+    <{/if}>
+  </form>
+  <{/if}>
+
+
+
+
+<div class="title">
+ <div class="filtmode">
+    <select onchange="if(this.value!='_')window.location=this.value">
+    <option value="_"><{t}>Please Choose 。。。<{/t}></option>
+      <optgroup label="Sort by">
+      <{foreach from=$orderBy item=item key=order}>
+        <option value="<{link args=$args arg2=$order}>"<{if $order eq $args.2}> class="selected" selected="selected"<{/if}>><{$item.label}></option>
+      <{/foreach}>
+      </optgroup>
+      <optgroup label="Display 。。。">
+      <{foreach from=$views key=label item=view}>
+        <option value="<{link act=$view  args=$args}>"<{if $curView==$view}> class="selected"<{/if}>><{$label}></option>
+      <{/foreach}>
+      </optgroup>
+
+    </select></div>
+	<div class="gallerytopr">
+  <{if $searchtotal}><div class="searchTotal" style="text-align:right;padding-right:12px!important; padding-right:23px;">Total <font color='red'><{$searchtotal}></font> items</div><{/if}>
+     <div class="pagemode"><{pager data=$pager type=mini}></div>
+	 </div>
+      <div class="clear"></div>
+    </div>
+    <{if !count($products)}>
+	<{if $emtpy_info}>
+
+	
+	
+    <div class="FeedBackInfo" style="margin:30px">
+	<div class="lineheight-free"><{$emtpy_info}></div>
+	<{else}>
+      <h1 class="error" style=""><{t}>非常抱歉，没有找到相关商品<{/t}></h1>
+        <p style="margin:15px 1em;"><strong><{t}>建议：<{/t}></strong><br /><{t}>适当缩短您的关键词或更改关键词后重新搜索，如：将 “索尼手机X1” 改为 “索尼+X1”<{/t}></p>
+		<{/if}>
+	</div>
+	<div align='center'><a href="javascript:history.back(1)"><{t}>Back<{/t}></a><a href="<{link ctl='index' act='home'}>" style="padding-left:20px"><{t}>Back to home<{/t}></a></div>
+    <{/if}>
+  <{include file=$_PDT_LST_TPL}>
+ <div > <{pager data=$pager type=drjmp }></div>
+</div>
+
+<script>
+/*关键字高亮*/
+window.addEvent('domready', function(){
+try{
+(function(replace_str){
+    var replace=replace_str.split("+");
+    if(replace.length){
+      $ES('.entry-title').each(function(r){
+        for(i=0;i<replace.length;i++){
+          if(replace[i]){
+            var reg=new RegExp("("+replace[i]+")","gi");
+            r.setText(r.get('text').replace(reg,function(){            
+              return "{0}"+arguments[1]+"{1}";
+            }));
+          }
+        }
+        r.set('html',r.get('text').format("<font color=red>","</font>"));
+      });
+    }
+  })('<{$search_array}>');
+  
+  if($('selectorBox').get('text')==''){
+	$('selectorBox').setStyle('display','none');
+	}
+
+   if($E('.GoodsSelector').get('text')==''){
+	$E('.GoodsSelector').setStyle('display','none');
+	}
+  
+  
+}catch(e){}
+
+
+
+});
+
+</script>
+

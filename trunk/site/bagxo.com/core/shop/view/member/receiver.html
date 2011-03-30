@@ -1,0 +1,57 @@
+<style type="text/css">
+<!--
+.STYLE1 {color: #000000}
+-->
+</style>
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Shipping Address</span></div>
+
+
+<div style="background:#EDECEA; margin-top:5px; width:768px; padding-bottom:30px;">
+<{if $is_allow}>
+<div style="margin:5px 0;">
+<table width="770" cellspacing="0" cellpadding="0" class="liststyle_option">
+    <colgroup class=" textright"></colgroup>
+		<tr>
+       <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="16%"><span style=" color:#CC334F; font-weight:bold; padding-left:10px;">Address Book</span></td>
+    <td width="84%"><input  type="image" src="../../../../themes/zqzyb/images/member/addnewaddress.gif" onclick="location.href='<{link ctl="member" act="addReceiver"}>'" value="add" /></td>
+  </tr>
+</table>
+</td>
+		</tr>
+  </table>
+</div>
+<{/if}>
+<table width="100%" cellpadding="3" cellspacing="0"  style="margin-left:20px;">
+    <col class="span-2"></col>
+
+    <col class="span-2"></col>
+
+
+
+<{foreach from=$receiver item=items key=key}>
+<tr>
+  <td><div align="left" class="STYLE1"><a href="<{link ctl=member act=modifyReceiver arg0=$items.addr_id}>"><{$items.name|escape:'html'}></a></div></td>
+  <td></td>
+</tr>
+<tr><td class="textwrap" style="text-align:left;"><div align="left" class="STYLE1"><{$items.addr|escape:'html'}><{$items.area|region}> </div></td><td></td></tr>
+<tr><td><div align="left" class="STYLE1"><{$items.zip|escape:'html'}></div></td><td></td></tr>
+<tr><td><div align="left" class="STYLE1"><{$items.tel|escape:'html'}></div></td><td></td></tr>
+<tr><td><div align="left" class="STYLE1"><{$items.mobile|escape:'html'}></div></td><td></td></tr>
+<tr style="display:none;"><td><div align="left" class="STYLE1"><{if $items.def_addr == 1}><{t}>是<{/t}><{else}><{t}>否<{/t}><{/if}></div></td><td></td></tr>
+<tr><td colspan="2" align="left">
+<div style=" padding-left:0px; width:320px; border-bottom:1px solid  #666666; padding-bottom:5px; margin-bottom:15px;">
+<{if $items.def_addr == 1}><a style="text-decoration:underline; color:#666666" href="<{link ctl=member act=setDefault arg0=$items.addr_id arg1=1}>" ><{t}>Cancel default<{/t}><{else}><a href="<{link ctl=member act=setDefault arg0=$items.addr_id arg1=2}>" style="text-decoration:underline; color:#666666"  ><{t}>Change default<{/t}><{/if}></a><a style="margin-left:10px;" href="<{link ctl=member act=delRec arg0=$items.addr_id}>" ><{t}><img src="../../../../statics/del.jpg"/><{/t}></a><a style="margin-left:10px;"  href="<{link ctl=member act=modifyReceiver arg0=$items.addr_id}>" ><{t}><img src="../../../../statics/editchange.jpg"/><{/t}></a></div>
+</td></tr>
+<{/foreach}>
+</table>
+<{if $is_allow}>
+<table width="100%" cellspacing="0" cellpadding="0" class="liststyle_option">
+  <col class="textright"></col>
+	<!--<tr>
+      <td><input  type="button" onclick="location.href='<{link ctl="member" act="addReceiver"}>'" value="添加收货地址" /></td>
+	</tr>-->
+</table>
+<{/if}>
+</div>

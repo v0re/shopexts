@@ -1,0 +1,17 @@
+<div class="FeedBackInfo">
+<div class="error clearfix">
+  <div class="span-1 pic"></div>
+  <div class="span-auto ">
+  <h1><{t}>Sorry，you have to loing or login has timed out ，please login again... <{/t}></h1>
+      <p class="jumpurl">
+        <a href="<{$nexturl}>"><{t}>After 3 seconds the system will automatically return, but also can click here to ruturn <{/t}></a>      </p>
+  </div>
+</div>
+</div>
+<script>
+function jumpurl(){
+  location='<{$nexturl}>';
+}
+setTimeout('jumpurl()',3000);
+
+</script>

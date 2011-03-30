@@ -1,0 +1,25 @@
+<{if $shippings}>
+
+<table width="100%" cellpadding="0" cellspacing="0" class="liststyleg data" style="padding-top:5px;" >
+            <colgroup class="span-6 ColColorGray"></colgroup>
+            <colgroup class="span-auto textleft"></colgroup>
+  <tbody>
+  <{foreach from=$shippings item="shipping" key="key"}>
+  <tr>
+    <th style="text-align:left; padding-top:7px;"><label style="width:auto;"><input type="radio" name="delivery[shipping_id]" id="shipping_<{$shipping.dt_id}>" value="<{$shipping.dt_id}>" class="toCheck" onclick="Cart.checkout.setShipping(this, 0)" has_cod="<{$shipping.has_cod}>" />
+     
+      </th>
+      <td style="text-align:left; width:95%" > <{$shipping.dt_name}> 
+(<span class="fontcolorRed">+<{$shipping.price|cur}></span>)</label><br />  <{if $shipping.protect}><div style="border-bottom:1px solid #ccc; padding:5px 0; margin:0 0 5px 0; color:#000;"><input onclick="Cart.checkout.setShipping(this,1)" type="checkbox" name="delivery[is_protect][<{$shipping.dt_id}>]" value="1" id="protect_<{$shipping.dt_id}>">
+            <strong><{t}>保价费率<{/t}></strong><{t}>(商品价格的<{/t}><{$shipping.protect_rate*100}><{t}>% ，不足<{/t}><{$shipping.minprice|cur}><{t}>按<{/t}><{$shipping.minprice|cur}><{t}>计算)。<{/t}></div><{/if}>
+            <{$shipping.detail}></td>
+  </tr>
+  <tr><td  height="15" colspan="2"></td></tr>
+  <{/foreach}>
+  </tbody>
+  
+</table>
+<{else}>
+
+<div class='notice'>不支持您当前所在地区的物流配送，请直接与我们联系</div>
+<{/if}>

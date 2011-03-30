@@ -1,0 +1,66 @@
+<form method="POST" action="index.php?ctl=member/level&act=addMemLevel" class="tableform">
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+<tr>
+  <th><{t}>等级名称：<{/t}></th>
+  <td><{input type="text" name="lv_name" size="20" required="true"}></td>
+</tr>
+</table>
+</div>
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0"id='member_level'>
+<tr>
+  <th><{t}>优惠百分比：<{/t}></th>
+  <td><{input type="unsigned" name="dis_count" style="width:50px" size="20" required="true"}>%
+    <span class="notice_inline"><{t}>如果输入80，表示该会员等级以销售价80%的价格购买。<{/t}></span></td>
+</tr>
+<tr>
+  <th><{t}>是否为会员默认等级：<{/t}></th>
+  <td><label><input type="radio" name="default_lv" value="1"><{t}>是<{/t}></label> &nbsp; &nbsp; <label><input type="radio" name="default_lv" value="0" checked><{t}>否<{/t}></label> &nbsp; <{help}>如果选择“是”，顾客注册商店会员成功时，初始等级为当前等级<{/help}></td>
+</tr>
+<tr>
+  <th><{t}>等级类型：<{/t}></th>
+  <td><label><input type="radio" name="lv_type" value="retail" checked id='retail'><{t}>普通零售会员等级<{/t}></label> &nbsp; &nbsp; <label><input type="radio" name="lv_type" value="wholesale" id='wholesale'><{t}>批发代理会员等级<{/t}></label></td>
+</tr>
+<tr>
+  <th><{t}>所需积分：<{/t}></th>
+  <td><{input type="unsigned" name="point" style="width:50px" size="20" required="true"}> &nbsp; <{help}>会员累计积分达到此标准后会自动调整为当前会员等级<{/help}></td>
+</tr>
+
+
+</table>
+
+</div>
+
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+      <tr>
+        <td><b class="submitBtn"><input  type="submit" value="保存"  /></b></td>
+      </tr>
+    </table>
+</form>
+
+
+
+<script>
+	var show = function(){
+		var nRow=$('member_level').rows.length;
+		if(nRow==3){
+			var objTheRow=$('member_level').insertRow(nRow);
+			var obj = $(objTheRow).adopt([new Element('th'),new Element('td')]);
+			var otr=objTheRow.getElements('*').filter(function(i){return i.getTag()=='th'||i.getTag()=='td';});
+			otr[0].setText('所需积分：');
+			otr[1].setHTML("<input type='unsigned' vtype='unsigned' class='_x_ipt unsigned' style='' required='true' size='20' name='point' style='width:50px' autocomplete='off'/><span class='notice_inline'>会员累计积分达到此标准后会自动调整为当前会员等级</span>");
+		}
+    }
+	var disabled = function(){
+	    var nRow2=$('member_level').rows.length;
+		if(nRow2==4){
+			$('member_level').deleteRow(3);
+		}
+	}
+
+	window.addEvent('domready',function(){
+		$('retail').addEvent('click',show);
+		$('wholesale').addEvent('click',disabled);
+	});
+</script>

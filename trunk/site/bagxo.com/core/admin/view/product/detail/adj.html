@@ -1,0 +1,9 @@
+<h5 class="sec-title"><{t}>配件<{/t}></h5>
+<span class="sysiconBtn addorder" onclick="goodsEditor.adj.addGrp.bind(goodsEditor)('goods-adj')"><{t}>添加配件<{/t}></span>
+<div class="adjs" id="goods-adj">
+<{foreach from=$goods.adjunct item=adjunct key=key}>
+<{if $adjunct.type}>
+<{include file="product/adjunct/row.html"}>
+<{/if}>
+<{/foreach}>
+</div>

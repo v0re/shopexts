@@ -1,0 +1,129 @@
+<h5 class="sec-title"><{t}>基本信息<{/t}></h5>
+<div id="x-g-basic" class="GoodsDetails">
+ <div class="division">
+ <table border="0" cellpadding="0" cellspacing="0">
+<tr>
+        <th><{t}>所属分类：<{/t}></th>
+        <td>
+        <select name='goods[cat_id]' id='gEditor-GCat-input' class='_x_ipt' vtype='positive' caution='请为商品指定一个分类'>
+          <option value='-1' >请选择所属分类</option>
+           <{foreach from=$cats item=cat}>
+               <option class="optionlevels optionlevel_<{math equation="x" x=$cat.step|default:1}>" value='<{$cat.cat_id}>'  depth="<{$cat.step}>" type_id="<{$cat.type}>"  <{if $cat.cat_id==$goods.cat_id}>selected<{/if}>>
+                 <{$space|paddingleft:$cat.step:'　'}><{$cat.cat_name}>
+               </option>
+           <{/foreach}>
+        </select><em><font color='red'>*</font></em>
+        </td>
+        
+        <td rowspan='10'>
+      <div class='GoodsPicArea division' style='margin:4px 0 0 0;padding:0' id='action-pic-bar'>
+          <div class='actionBar'>
+                    <{uploader  button_text="上传新图片"}>
+                    <span class="sysiconBtn edit" onclick="$('imageuparea').toggleDisplay();$('udfimg').value = ($('udfimg').value=='false')?'true':'false'">
+                        <{t}>商品列表页图片设置<{/t}>
+                    </span>        
+          </div>
+          <br style="clear:both" />
+          <div class='pic-area'>
+          <{include file="product/gimage_goods.html"}>
+          </div>
+      </div>
+      
+    </div>
+        </td>
+
+      </tr> 
+      <tr>
+        <th><{t}>所属类型：<{/t}></th>
+        <td>
+        <select name='goods[type_id]' id='gEditor-GType-input'>
+           <!--<option value='1'>通用商品类型</option>-->
+           <{foreach from=$gtype item=type}>
+              <option class="optionlevels" value='<{$type.type_id}>' <{if $type.type_id==$goods.type_id}>selected<{/if}>><{$type.name}></option>
+           <{/foreach}>
+        </select>
+        </td>
+      </tr>
+      <tr>
+        <th><{t}>商品名称：<{/t}></th>
+        <td><{input type="text" id="id_gname" name="goods[name]" required="true" value=$goods.name }><em><font color='red'>*</font></em></td>
+      </tr>
+
+<{if $goodsbn_display_switch}>
+      <tr>
+        <th><{t}>商品编号：<{/t}></th>
+        <td><{input type="text" name="goods[bn]" value=$goods.bn }></td>
+      </tr>
+<{else}>
+    <input type='hidden' name="goods[bn]" value="<{$goods.bn}>">
+<{/if}>
+      <tr>
+        <th><{t}>商品关键词：<{/t}></th>
+        <td><{input type="text" name="keywords[keyword]" value=$goods.keywords maxlength="100"}><span class="notice_inline ">仅用于在前台、后台筛选商品，多个关键词用半角竖线"|"分开</span> <{help docid="73" type="link-small"}>点击查看帮助<{/help}></td>
+      </tr>
+      <{if $prototype.setting.use_brand}>
+      <tr>
+        <th><{t}>品牌：<{/t}></th>
+        <td><{input type="select" name="goods[brand_id]" nulloption="1" rows=$brandList valueColumn="brand_id" labelColumn="brand_name" value=$goods.brand_id}></td>
+      </tr>
+      <{/if}> 
+      <{if $prototype.is_physical}>
+      <tr>
+        <th><{t}>计量单位：<{/t}></th>
+        <td><{input type="text" value=$goods.unit name="goods[unit]" maxlength="25" }></td>
+      </tr>
+      <{/if}>
+      <tr>
+        <th><{t}>简介：<{/t}></th>
+        <td>
+           <{input type="textarea" value=$goods.brief name="goods[brief]" cols="50" rows="2" maxth="255" }>
+           <span class='brief-input-state notice_inline'>简短的商品介绍,请不要超过255字节.</span>
+        </td>
+      </tr>
+      <tr>
+        <th><{t}>是否上架销售：<{/t}></th>
+        <td><input type="radio" name="goods[marketable]"<{if $goods.marketable!='false'}> checked="checked"<{/if}> value="true" >是 &nbsp; <input type="radio" name="goods[marketable]"<{if $goods.marketable=='false'}> checked="checked"<{/if}> value="false" ><{t}>否<{/t}></td>
+      </tr>
+      <tr>
+            <th><{t}>市场价：<{/t}></th>
+            <td><{input type="money" value=$goods.mktprice name="goods[mktprice]" style="width:60px" maxlength="25" }></td>
+      </tr>      
+    </table>
+</div>
+<{if $prototype.setting.use_props}>
+   <h5><{t}>商品扩展属性：<{/t}></h5>
+<{/if}>
+    <div class="division">  
+        <table border="0" cellpadding="0" cellspacing="0">
+          <{if $prototype.setting.use_props}>
+          <{foreach from=$prototype.props key=key item=aProp}>
+          <tr class="prop">
+            <th><{$aProp.name}>：</th>
+            <td><{assign var="p_col" value=p_$key}>
+              <{if $aProp.type eq 'select'}>
+              <{input name="goods[p_$key]" type="select" nulloption="1" options=$aProp.options value=$goods.$p_col }>
+              <{else}>
+              <{input type="text" value=$goods.$p_col name="goods[p_$key]" maxlength="25"}>
+              <{/if}></td>
+            
+          </tr>
+          <{/foreach}>
+          <{/if}>
+          <{if $point_setting == 2}>
+          <tr class="advui">
+            <th><{t}>积分：<{/t}></th>
+            <td><{input type="digits" value=$goods.score name="goods[score]" maxlength="25" }></td>
+          </tr>
+          <{/if}>
+        </table>
+<div id="goods-spec">
+      
+              <{if !$prototype.setting.use_spec or count($goods.products)==0}> 
+                   <{include file="product/nospec.html"}>
+              <{else}>
+                    <{include file="product/spec.html"}>
+              <{/if}>
+         </div>
+      </div>
+      
+</div>

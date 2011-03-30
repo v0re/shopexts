@@ -1,0 +1,88 @@
+<script>
+  {literal}
+  function $(el){
+    return document.getElementById(el);
+  }
+  function do_install(str){
+    if(!$('ipt_uname').value){
+      alert('管理员用户名不能为空。');
+      return false;
+    }
+    if($('ipt_passwd').value !== $('ipt_re_passwd').value){
+      alert('两次输入密码不一致。');
+      return false;
+    }
+    if(!$('ipt_passwd').value){
+      return confirm('确定密码为空吗？这样系统管理帐号的安全性比较低。');
+    }
+    return true;
+  }
+  {/literal}
+</script>
+<center><h5 class="success">数据库已配置并连接成功，数据前缀为&nbsp;"<i>{$db_pre}</i>"</h5></center>
+
+<div style="width:590px;margin:0;padding:10px;margin:10px;border:1px solid #666;border-style:solid none;">
+<!-- <img style="float:right" src="svinfo.php?img=rank_{$svinfo.rank}.gif" />
+<h2 style="font-size:36px;margin:0;padding:0;line-height:100%">{$svinfo.level}</h2>
+<h3 style="margin:0;padding:0">服务器特性得分:<span style="font-family: Georgia;font-size:24px;margin:0 10px;color:#090">{$svinfo.score}</span>&nbsp;&nbsp;<a href="svinfo.php?db_host=config" target="_blank" style="color:#009">更多信息&raquo;</a></h3>-->
+<table width="100%">
+{foreach from=$svinfo.basic item=value key=key name=basic}
+<tr{if $smarty.foreach.basic.iteration is odd} style="background:#E0EAF2"{/if}>
+  <td width="60%">{$key}</td><td>{$value}</td>
+</tr>
+{/foreach}
+</table>
+{if !$svinfo.allow_install && !(defined('SHOP_DEVELOPER') && SHOP_DEVELOPER)}
+<center><h2 style="background:#FAD163">系统无法继续安装，缺少必要的服务器环境</h2></center>
+{foreach from=$svinfo.require item=value key=key name=basic}
+<table width="100%">
+<tr{if !$value.result} style="background:#A4141D;color:#fff;font-weight:bold"{else}{if $smarty.foreach.basic.iteration is odd} style="background:#E0EAF2"{/if}{/if}>
+  <td width="60%">{$key}</td><td>{$value.value}</td>
+</tr>
+{/foreach}
+</table>
+</div>
+{else}
+</div>
+<div style="padding-left:45px;"><h5 class="success"><br>请在下面建立商店管理员帐户：</h5></div>
+<div id="show">
+<form id="install" method="post" action="index.php?step=install" onsubmit="return do_install()">
+<table>
+  <tr>
+    <th width="150px" align="right" scope="row"><label for="ipt_uname">管理员用户名：</label></th>
+    <td width="200px"><input type="text" name="uname" id="ipt_uname" value="admin" tabindex="1"></td>
+    <th align="right">服务器时区：</th>
+    <td>
+      {$stimezone}
+    </td>
+  </tr>
+  <tr>
+    <th align="right" scope="row"><label for="ipt_passwd">管理员密码：</label></th>
+    <td><input type="password" name="password" id="ipt_passwd" tabindex="2"></td>
+    <th align="right">您当前时间：</th>
+    <td>
+      <select style="width:200px" name="localtime" tabindex="6">
+        {html_options options=$timelist selected=$defaultHour}
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th align="right" scope="row"><label for="ipt_re_passwd">再输入一次密码：</label></th>
+    <td colspan="3"><input type="password" name="re_passwd" id="ipt_re_passwd" tabindex="3"></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top"><input type="checkbox" id="use_demo" checked="checked" name="use_demo" value="yes" tabindex="4"></td>
+    <td colspan="3"><label for="use_demo">安装体验数据</label>
+    <br /><span style="color:#666">装载体验数据后，您不必进行任何系统设置，可以用模拟数据体验ShopEx网店系统的各项功能</span></td>
+  </tr>
+</table>
+</div>
+
+
+
+<div class="button"><input type="image" src="images/btn-install.gif" tabindex="5" /></div>
+<div id="runner" style="text-align:center;display:none">
+  <h1 id="runmsg">Installing...</h1>
+  <img src="../shopadmin/images/progress-bar.gif" />
+</div>
+{/if}

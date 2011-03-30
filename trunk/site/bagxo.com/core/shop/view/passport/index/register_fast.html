@@ -1,0 +1,48 @@
+
+ <form method="post" action="<{link ctl="passport" act="create"}>" class="signupform">
+  <input type="hidden" name="regType" value="buy">
+     <input name="forward" type="hidden" value="<{$options.url}>">
+      <{$redirectInfo}>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform" style="line-height:15px;">
+          <tr>
+            <th width="100"><div align="left"><i style="color:#FF6600; padding-right:5px;">*</i><{t}>User name：<{/t}></div></th>
+            <td><{input class="inputstyle" name="uname" required="true" id="reg_user" maxlength="50" onchange="nameCheck(this.value)"}><span id="reg_user_info"></span></td>
+            <script>
+function nameCheck(name){
+      
+  new Ajax('<{link ctl=passport act=namecheck}>',{method:'post',update:'reg_user_info',data:'name='+encodeURIComponent(name)}).request();
+}
+</script>
+          </tr>
+          <tr>
+            <th><div align="left"><i style="color:#FF6600; padding-right:5px;">*</i><{t}>E-mial：<{/t}></div></th>
+            <td><{input class="inputstyle" name="email" type="email" required="true" id="reg_email" maxlength="200"}></td>
+          </tr>
+
+          <tr>
+            <th><div align="left"><i style="color:#FF6600; padding-right:5px;">*</i><{t}>Password：<{/t}></div></th>
+            <td><{input class="inputstyle" name="passwd" type="password" required="true" id="reg_passwd"}></td>
+          </tr>
+          <tr>
+            <th><div align="left"><i style="color:#FF6600; padding-right:5px;">*</i><{t}>Type again：<{/t}></div></th>
+            <td><{input class="inputstyle" name="passwd_r" type="password" required="true" id="reg_passwd_r"}></td>
+          </tr>
+          <{if $SignUpvalideCode}>
+          <tr>
+            <th><div align="left"><i style="color:#FF6600; padding-right:5px;">*</i><{t}>Verifycode：<{/t}></div></th>
+            <td id='SignupverifyCodebox'><{input size="8" class="inputstyle"  type="digits" required="true" name="signupverifycode" id="iptsingup"}>
+          <span class='verifyCode' style='display:none;'><img src="#" border="1" id="SingupimgVerifyCode"/><a href="javascript:changeimg('signup')">&nbsp;&nbsp;Change </a>               </span>          </tr>
+          <{/if}>
+          <tr>
+            <th><div align="right"></div></th>
+            <td style="display:none;"><label for="license" class="nof" style="width:auto; text-align:left; font-weight:normal;">
+          <input type="checkbox" id="license" name="license" value="agree" checked="checked"/>
+          <span class="nof" style="width:auto; text-align:left; font-weight:normal;">I  agree </span><a href="<{link ctl=page act=license}>" id="terms_error" class="lnk" target='_blank'><span class="FormText" id="terms_error_sym"><{t}>Member Registration Agreement<{/t}></span></a> <{t}>&amp;<{/t}> <a href="<{link ctl=page act=privacy}>" id="privacy_error" class="lnk" target='_blank'><span class="FormText" id="privacy_error_sym"><{t}>Privacy policy<{/t}></span></a>。
+          </label></td>
+          </tr>          
+          <tr>
+            <th><div align="right"></div></th>
+            <td><input class="actbtn " style="background:url(../../../../../statics/re.jpg) no-repeat;" type="submit" value="注册新用户" />              </td>
+          </tr>
+        </table>
+</form>       

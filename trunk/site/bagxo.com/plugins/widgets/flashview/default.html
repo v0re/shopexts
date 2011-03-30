@@ -1,0 +1,21 @@
+<div id="flashcontent_<{$widgets_id}>">&nbsp;</div>
+<script>
+window.addEvent('domready', function(){
+  var obj = new Swiff('images/1.swf', {
+    width:  <{$setting.width}>,
+    height: <{$setting.height|default:350}>,
+    container: $('flashcontent_<{$widgets_id}>'),
+    events: {
+      load:function() {
+        alert("Flash is loaded!");
+      }
+    },
+	vars:{
+		bcastr_flie:"<{$setting.allimg}>",
+		bcastr_link:"<{$setting.allurl}>",
+		duration_color:"<{$setting.color|default:'0xff0000'}>",
+		dur_time:"<{$setting.duration|default:2}>"
+	}
+  });
+});
+</script>

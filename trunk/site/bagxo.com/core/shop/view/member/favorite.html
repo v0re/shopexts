@@ -1,0 +1,47 @@
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Wish List</span></div>
+<div class="GoodsSearchWrap" id="mbc-my-fav" style="width:770px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:5px;"><tr bgcolor="#FFF0FB"  height="40"  ><td  style=" vertical-align:middle; text-align:center; width:110px; color:#C73D5E; font-size:16px;"> Product</td>
+	<td style=" vertical-align:middle; text-align:center; color:#C73D5E; font-size:16px; padding-left:10px; width:260px;">&nbsp;</td>
+	<td  style=" vertical-align:middle; text-align:center; color:#C73D5E; font-size:16px;">Remove</td>
+	<td  style=" vertical-align:middle; text-align:center; color:#C73D5E; font-size:16px;">Price</td>
+	<td  style=" width:100px;"></td>
+</tr></table>
+ <{foreach from=$favorite item=good key=key}>
+  <div  style="padding:0;" product="<{$good.goods_id}>" id="goods_<{$good.goods_id}>">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr height="6"><td colspan="5"></tr>
+      <tr bgcolor="#EDECEA">
+        <td  width="110"><a style="display:block;<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:110px;height:133px;<{/if}>" href="<{link ctl="product" act="index" arg0=$good.goods_id}>" title="<{$good.name}>"><img  style="width:110px; height:133px;" src="<{$good.thumbnail|gimage:'thumbnail'}>"  alt="&lt;{$good.name}&gt;"/></a></td>
+        <td class="goodinfo" width="230" style="vertical-align:middle; text-align:left; padding-left:10px;"><a href="<{link ctl="product" act="index" arg0=$good.goods_id}>" title="<{$good.name}>"><{$good.name}></a>
+          <{$good.brief}> </td>
+        <td width="30%" class="goodinfo" style="vertical-align:middle;" align="center"><a class="lnk"  onClick="doDelFav('<{$good.goods_id}>')"><{t}><img src="../../../../themes/zqzyb/images/member/remove.gif"/><{/t}></a></td>
+        <td style="padding:0 10px; vertical-align:middle;"><ul>
+            <li><span class="price2"><{$good.price|cur}></span><{if $good.mktprice && $setting.mktprice}><span class="mktprice1"><{t}>市场价: <{/t}><{$good.mktprice|cur}></span><{/if}></li>
+            <{if $product.mktprice > $good.price && $setting.mktprice && $setting.saveprice > 0}>
+            <li style="padding-left:4px; padding-top:8px;">
+			<span class="saveprice1"> <{if $setting.saveprice == 1}>节省:<{$good.mktprice-$good.price|cur}>
+              <{elseif $setting.saveprice == 2}>优惠:<{$good.price/$product.mktprice*100|number:'2'}>%
+              <{elseif $setting.saveprice == 3}><{$good.price/$product.mktprice*10|number:'1'}>折
+			  <{/if}></span></li>
+            <{/if}>
+            <!--<li class="intro rank-<{$good.rank|default:3}>">Rank <{$good.rank|default:3}></li>-->
+          </ul></td>
+        <td style=" white-space:nowrap; vertical-align:middle;" width="100">
+   		  <div class=" price_button">
+			 <ul class="button">
+				<{goodsmenu product=$good compare=true  zindex=10 showtextbuy=true}>
+			 </ul>
+		  </div>		  </td>
+      </tr>
+    </table>
+  </div>
+  <{/foreach}> </div>
+<{pager data=$pager}>
+<script>
+  function doDelFav(gid){
+    new Ajax('index.php?member-'+ gid +'-ajaxDelFav.html',{method:'post',update:'',data:'t='+new Date().getTime()}).request();
+    $('goods_'+gid).style.display='none';
+    var cls = gStore.remove('FAV',gid);
+	return false;
+  }
+</script>

@@ -1,0 +1,45 @@
+<form action="<{link ctl="member" act="downloadAdvanceLog"}>" method="post"/>
+<h1 class="title"><{t}>预存款交易记录（预存款余额：<{/t}><{$advance|cur}>）<input type="submit" value="下载交易记录"/></h1>
+</form>
+
+<table width="100%" cellpadding="3" cellspacing="0" class="liststyle">
+    <colgroup class=" textleft"></colgroup>
+    <colgroup class="span-3 ColColorOrange"></colgroup>
+    <colgroup class="span-4"></colgroup>
+<thead>
+<tr>
+  <th><{t}>事件<{/t}></th>
+  <th><{t}>存入金额<{/t}></th>
+  <th><{t}>支出金额<{/t}></th>
+  <th><{t}>当前余额<{/t}></th>
+  <th><{t}>时间<{/t}></th>
+</tr>
+</thead>
+<tbody>
+<{if count($advlogs)>0}>
+<{foreach from=$advlogs item=adv}>
+<tr>
+  <td class="textleft">
+  <{if $adv.order_id}>
+  <a href="<{link ctl="member" act="orderdetail" arg0=$adv.order_id}>"><{$adv.memo}></a>
+  <{else}>
+  <{$adv.memo}>
+  <{/if}>
+  </td>
+  <td><{if $adv.import_money > 0}><{$adv.import_money|cur}><{else}>-<{/if}></td>
+  <td><{if $adv.explode_money > 0}><{$adv.explode_money|cur}><{else}>-<{/if}></td>
+  <td><{$adv.member_advance|cur}></td>
+  <td><{$adv.mtime|cdate:FDATE_STIME}></td>
+</tr>
+<{/foreach}>
+<{else}>
+<tr>
+<td height="60" colspan="6">
+  尚无交易历史
+</td>
+</tr>
+<{/if}>
+</tbody>
+</table>
+
+<{pager data=$pager}>

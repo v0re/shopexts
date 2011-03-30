@@ -1,0 +1,29 @@
+<form method='post' action='index.php?ctl=order/order&act=saveFlow' class="tableform">
+<div class="division">
+<h5><{t}>如果您需要在订单处理过程中创建相应的单据，请在下面打勾选择。<{/t}></h5>如打勾选择创建收款单，则会在订单设置为已付款状态时，系统弹出创建收款单的对话框允许您进行输入创建收款单。
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><{t}>创建收款单：<{/t}></th>
+    <td><{input type="bool" name="aFlow[payed]" value=$flow.payed}> &nbsp; &nbsp; <{help}>收款单用于店主手工记录顾客每次为订单付款的详细信息<br /><br />如果启用此功能，则店主收到顾客付款通知并点击“付款”按钮时，系统会弹出付款信息窗口供店主确认填写，方便日后查询<{/help}></td>
+  </tr>
+  <tr>
+    <th><{t}>创建发货单：<{/t}></th>
+    <td><{input type="bool" name="aFlow[consign]" value=$flow.consign}> &nbsp; &nbsp; <{help}>发货单用于店主手工记录订单发货的详细信息，包括物流公司、运单号、时间等<br /><br />如果启用此功能，则店主并点击订单“发货”按钮时，系统会弹出发货信息窗口供店主确认填写<{/help}></td>
+  </tr>
+  <tr>
+    <th><{t}>创建退款单：<{/t}></th>
+    <td><{input type="bool" name="aFlow[refund]" value=$flow.refund}> &nbsp; &nbsp; <{help}>退款单用于店主手工记录为顾客订单退款的详细信息，包括退款银行、退款金额、积分影响等<br /><br />如果启用此功能，则店主并点击订单“退款”按钮时，系统会弹出退款信息窗口供店主确认填写<{/help}></td>
+  </tr>
+  <tr>
+    <th><{t}>创建退货单：<{/t}></th>
+    <td><{input type="bool" name="aFlow[reship]" value=$flow.reship}> &nbsp; &nbsp; <{help}>退货单用于店主手工记录为顾客处理订单退货的详细信息，包括退货原因、退货物流方式、费用等<br /><br />如果启用此功能，则店主并点击订单“退货”按钮时，系统会弹出退货信息窗口供店主确认填写<{/help}></td>
+  </tr>
+</table></div>
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+  <tr>
+    <td><b class="submitBtn"><input type="submit" value="保存"></b></td>
+
+  </tr>
+</table>
+
+  

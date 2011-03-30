@@ -1,0 +1,55 @@
+<{$searchInfo}>
+<{if $tabs}>
+<ul class="GoodsSearchTabs">
+  <li<{if $args.3 eq ''}> class="current"<{/if}>><a href="<{link args=$args arg3=''}>"><span><{t}>全部商品<{/t}></span></a></li>
+  <{section name=tabs loop=$tabs}>
+  <li<{if is_numeric($args.3) && $args.3 eq $smarty.section.tabs.index}> class="current"<{/if}>><a href="<{link args=$args arg3=$smarty.section.tabs.index}>"><span><{$tabs[tabs].label}></span></a></li>
+  <{/section}>
+  <li></li>
+</ul>
+<{/if}>
+<div class="clear"></div>
+<div class="GoodsSearchWrap">
+
+
+
+
+
+
+<div class="title">
+ <div class="filtmode">
+    <select onchange="if(this.value!='_')window.location=this.value">
+    <option value="_"><{t}>选择排序/显示方式<{/t}></option>
+      <optgroup label="排序">
+      <{foreach from=$orderBy item=item key=order}>
+        <option value="<{link args=$args arg2=$order}>"<{if $order eq $args.2}> class="selected" selected="selected"<{/if}>><{$item.label}></option>
+      <{/foreach}>
+      </optgroup>
+
+
+    </select></div>
+	<div class="gallerytopr">
+  <{if $searchtotal}><div class="searchTotal span-4">总共找到<font color='red'><{$searchtotal}></font>个商品</div><{/if}>
+     <div class="pagemode"><{pager data=$pager type=mini}></div>
+	 </div>
+      <div class="clear"></div>
+    </div>
+    <{if !count($products)}>
+	<{if $emtpy_info}>
+
+	
+	
+    <div class="FeedBackInfo" style="margin:30px">
+	<div class="lineheight-free"><{$emtpy_info}></div>
+	<{else}>
+      <h1 class="error" style=""><{t}>We are sorry.  Your search did not match any documents.<{/t}></h1>
+        <p style="margin:15px 1em;"><strong><{t}>Suggestions<{/t}></strong><br /><{t}>Make sure all words are spelled correctly.Try different keywords.Try more general keywords.<{/t}></p>
+		<{/if}>
+	</div>
+	<div align='center'><a href="javascript:history.back(1)"><{t}>Back<{/t}></a><a href="<{link ctl='index' act='home'}>" style="padding-left:20px"><{t}>Back to home<{/t}></a></div>
+    <{/if}>
+  <{include file=$_PDT_LST_TPL}>
+ <div class="gallerypage"> <{pager data=$pager}></div>
+</div>
+
+

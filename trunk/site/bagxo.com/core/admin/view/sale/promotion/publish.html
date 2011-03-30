@@ -1,0 +1,49 @@
+<{assign var="disabledElement" value=true}>
+<form id='PublishForm' method='post' action='index.php?ctl=sale/promotion&act=doPublish'>
+<div class="tableform">
+<h2><{t}>活动信息<{/t}></h2>
+<div class="division">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><{t}>促销活动:<{/t}></th>
+    <td><{input type='text' value=$pmta.pmta_name name='pmta_name'}></td>
+  </tr>
+  <tr>
+    <th><{t}>开始时间:<{/t}></th>
+    <td><{input type='date' value=$pmta.pmta_time_begin name='pmta_time_begin'}></td>
+  </tr>
+  <tr>
+    <th><{t}>结束时间:<{/t}></th>
+    <td><{input type='date' value=$pmta.pmta_time_end name='pmta_time_end'}></td>
+  </tr>     
+</table>
+</div>
+<h2><{t}>规则信息<{/t}></h2>
+<div class="division">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+  <tr>
+    <th><{t}>开始时间:<{/t}></th>
+    <td><{input type='text' value=$pmt.pmt_time_begin name='pmt_time_begin'}></td>
+  </tr>
+  <tr>
+    <th><{t}>结束时间:<{/t}></th>
+    <td><{input type='text' value=$pmt.pmt_time_end name='pmt_time_end'}></td>
+  </tr>     
+</table>
+</div>
+<div class="division">
+<h2><{t}>规则描述<{/t}></h2>
+
+<{input type='textarea' name='pmta_describe' cols="60" rows="6" value=$pmt.pmt_describe}></textarea><br /><span class="fontcolorGray">此描述会显示在前台相关页面展示给顾客
+</div><table border="0" align="center" cellpadding="0" cellspacing="0" class="tableAction">
+  <tr>
+    <td><b class="submitBtn" ><a href="index.php?ctl=sale/promotion&act=selectProduct"><{t}>上一步<{/t}></a></b></td>
+    <td><b class="submitBtn" ><input type='submit' value='完成' /></b></td>
+  <td><b class="submitBtn" ><a  href="index.php?ctl=sale/activity&act=index"><{t}>取消<{/t}></a></b></td>
+  </tr>
+</table>
+</div>
+  
+</form>
+</fieldset>

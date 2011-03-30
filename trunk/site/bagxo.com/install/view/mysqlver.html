@@ -1,0 +1,9 @@
+{if $type=='less'}
+您的版本小于4.1.1，请在config.php文件内加入 defined('DB_OLDVERSION',true);
+{/if}
+{if $type=='more'}
+您的版本大于4.1.1，为了更好的使用请修改config.php中的defined('DB_OLDVERSION',false);
+{/if}
+<div>
+<a href="index.php?step=ready">请点击此处返回重新配置。</a>
+</div>

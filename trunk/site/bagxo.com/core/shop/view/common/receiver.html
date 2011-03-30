@@ -1,0 +1,135 @@
+<{if $trading.receiver.addrlist}>
+<div class="CartWrap">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#edecea" style="border:1px solid #DDDDDD; ">
+  <tr>
+    <td width="10"></td>
+    <td class="cartfont"><{t}>Confirm receipt addresss<{/t}></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><{foreach from=$trading.receiver.addrlist key=iloop item=addr}>
+        <label>
+        <input type="radio" name="delivery[addr_id]" value="<{$addr.addr_id}>"<{if $addr.def_addr}> checked="checked"<{/if}>><{$addr.addr_region|region}> <{$addr.addr_label}>
+        </label>
+        <a href="javascript:void(0)" class="addredit"><{t}>Edit<{/t}></a><br>
+        <{/foreach}></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td style="padding-bottom:5px;"> <label>
+        <input type="radio" name="delivery[addr_id]" value="0">
+        The other address 
+        </label></td>
+  </tr>
+</table>
+
+</div>
+<{/if}>
+<div class="cartwarp" id="checkout-recaddr" style=" margin-top:5px; margin-bottom:5px;"><{include file="shop:common/rec_addr.html"}></div>
+<div >
+<{if !$trading.receiver.addrlist}>
+	<script>
+		void function(){
+			var areaSel = $$('#checkout-select-area select').getLast();
+			if( areaSel.get('value') != '' && areaSel.get('value') != '_NULL_' )
+				areaSel.onchange();
+		}();
+	</script>
+<{/if}>
+<div class="cartwarp" style="background:#edeaec;border:1px solid #DDDDDD; padding:10px; margin-top:5px;">
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="cartliststyle" style=" margin-top:5px; margin-bottom:5px;">
+            <colgroup class="span-4 ColColorGray"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+<tbody>
+    <tr style="display:none;">
+    <th><{t}>Date：<{/t}></th>
+    <td><select class="inputstyle" name="delivery[day]" onchange="$('specal_day').style.display=(this.value=='specal')?function(){$('specal_day').getFirst().makeCalable(); return '';}():'none'">
+            <option selected="selected" value="Arbitrary"><{t}>Arbitrary date<{/t}></option>
+            <option value="Just Working days"><{t}>Just Working days<{/t}></option>
+            <option value="Just holiday"><{t}>Just holiday<{/t}></option>
+            <option value="specal"><{t}>Agreement<{/t}></option>
+          </select>&nbsp;
+          <span id="specal_day" style="display:none">
+        <{input type="text" name="delivery[specal_day]" class="cal" value="$dlytime" style="width:80px" readonly=true}><span class="notice_inline"><{t}>Don't choose the time brfore deafault date!<{/t}></span></span>  </td>
+    <th style="background-color:#efefef;"><{t}>Time：<{/t}></th>
+    <td><select class="inputstyle" name="delivery[time]" style="float:left;">
+            <option><{t}>Arbitrary times<{/t}></option>
+            <option><{t}>Morring<{/t}></option>
+            <option><{t}>Afternoon<{/t}></option>
+            <option><{t}>Night<{/t}></option>
+          </select></td>
+    </tr>
+    
+  </tr>
+  <tr>
+    <th width="140"><{t}>Massage：<{/t}></th>
+    <td colspan="3" width="83%"><{input class="inputstyle" name="delivery[memo]" type="textarea" value="" cols="40" rows="2"}></td>
+  </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<{if $trading.receiver.addrlist}>
+<script>
+window.addEvent('domready',function(){
+<{if $trading.receiver.addrlist}>
+    var addrnum = 1;
+<{if $trading.admindo}>
+    var url_area = 'index.php?ctl=order/order&act=getAddr';
+<{else}>
+    var url_area = '<{link ctl="cart" act="getAddr"}>';
+<{/if}>
+
+    $('checkout-recaddr').style.display='none';
+
+    var addlistRadios=$$('input[name^=delivery[addr_id]','receiver');
+    if(addlistRadios.length){
+        addlistRadios.addEvent('click', function(e){
+                var ipt =this;
+                var iptValue=ipt.value;
+                $('checkout-recaddr').style.display=(iptValue!='0')?'none':'block';
+                new Request.HTML({url:url_area,
+                    update:'checkout-recaddr',
+                    onRequest:function(){
+                      $('checkout-recaddr').set('text','loading...');
+                    },
+                    onComplete:function(){
+                            if(iptValue!='0'){
+                                if(!$E('input[name^=delivery[ship_name]','receiver').get('value').trim()
+                                    || (!$E('input[name^=delivery[ship_tel]','receiver').get('value').trim()
+                                    && !$E('input[name^=delivery[ship_mobile]','receiver').get('value').trim())
+                                    || !$E('input[name^=delivery[ship_addr]','receiver').get('value').trim()
+                                    || !$E('input[name^=delivery[ship_zip]','receiver').get('value').trim()){
+                                            MessageBox.error('Consignee information is incomplete, please improve!');                           
+                                            return $('checkout-recaddr').style.display='block';
+                                    }
+                           }
+						    var areaSels=$ES("#checkout-select-area select");
+                            var lastareaSel=areaSels.getLast();
+                            selectArea(lastareaSel,lastareaSel.value,areaSels.length+1);
+                      
+                    }}).get({'addr_id':ipt.value});
+            });
+       
+       addlistRadios[0].fireEvent('click').set('checked',true);
+   }
+
+  $$('.addredit','receiver').addEvent('click', function(e){
+            e.stop();
+            var ipt =this;
+            var addrRow = ipt.getPrevious('label');
+            var addrObj = addrRow.getElement('input[name^=delivery[addr_id]');
+            addrObj.checked = true;
+            addrObj.fireEvent('click',e);
+            $('checkout-recaddr').style.display='';
+        });
+
+<{else}>
+    var addrnum = 0;
+    <{if !$trading.member_id}>
+    $('receiver').getElement('.recsave').remove();
+    <{/if}>
+<{/if}>
+});
+</script>
+<{/if}>

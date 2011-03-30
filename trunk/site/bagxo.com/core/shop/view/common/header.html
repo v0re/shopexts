@@ -1,0 +1,20 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$title}></title>
+<{$headers|replace:"\n":' '}>
+<link rel="shortcut icon" href="<{$base_url}>favicon.gif" type="image/gif" />
+<link rel="bookmark" href="<{$base_url}>favicon.gif" type="image/gif" />
+<{if defined('DEBUG_CSS') && DEBUG_CSS}>
+<link rel="stylesheet" href="<{$base_url}>statics/framework.css" type="text/css" />
+<link rel="stylesheet" href="<{$base_url}>statics/shop.css" type="text/css" />
+<link rel="stylesheet" href="<{$base_url}>statics/widgets.css" type="text/css" />
+<{elseif defined('GZIP_CSS') && GZIP_CSS }>
+<link rel="stylesheet" href="<{$base_url}>statics/style.zcss" type="text/css" />
+<{else}>
+<link rel="stylesheet" href="<{$base_url}>statics/style.css" type="text/css" />
+<{/if}>
+<script type="text/javascript">
+var Shop = <{$shopDefine}>;
+</script>
+<{foreach from=$scripts item=js}>
+<script type="text/javascript" src="<{$base_url}><{$js}>"></script>
+<{/foreach}>

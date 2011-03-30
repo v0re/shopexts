@@ -1,0 +1,57 @@
+<script>
+var getPayment = function(obj){
+  if(obj.value != "0"){
+    W.page('index.php?ctl=trading/payment&act=getPayOpt&p[0]=' + obj.value + '&p[1]=<{$pay_name}>',{update:'eidt-paylist-item'});
+    W.page('index.php?ctl=trading/payment&act=infoPad&p[0]=' + obj.value,{update:'payInfoPad'});
+  }else{
+    $('eidt-paylist-item').innerHTML = '';
+  }
+}
+</script>
+<div style="text-align:right;padding-right:10px"><{help docid="68" type="link"}>点击查看帮助<{/help}></div>
+<{if $html}>
+<div id="payInfoPad" class="division"><{$html}></div>
+<{/if}>
+<div id='pay_edit_form_<{$pay_id}>' >
+  <form action="index.php?ctl=trading/payment&act=savePayment" method="post">
+  <input type="hidden" name="pay_type" value="<{$old_pay_type}>" />
+  <input type="hidden" name="old_pay_type" value="<{$old_pay_type}>" />
+  <input type="hidden" name="pay_id" value="<{$pay_id}>" />
+  <div class="tableform">
+    <div class="division">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <th ><{t}>支付方式：<{/t}></th>
+          <td><{foreach from=$paylist item=list}> <{if $old_pay_type == $list.0}><{assign var=payname value=$list.1}><{$list.1}><{/if}>
+              <{/foreach}><{if $payname==''}>支付宝<{/if}></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="division">
+      <div id="eidt-paylist-item"><{$pay_info}></div></div>
+    <div class="division">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <th ><{t}>排序：<{/t}></th>
+      <td><{input style="width:50px;" type="unsigned" name="orderlist" value=$order}></td>
+    </tr>
+  </table>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <th ><{t}>描述：<{/t}></th>
+      <td><{input type="html" name="des" value="$pay_des"}></td>
+    </tr>
+  </table></div>
+  <table border="0" align="center" cellpadding="0" cellspacing="0" class="tableAction">
+    <tr>
+      <td><b class="submitBtn" >
+        <!--<input type="button" value="保存" onclick='$ES("textarea[ishtml=true]",$("pay_edit_form_<{$pay_id}>")).getValue();W.page("index.php?ctl=trading/payment&act=savePayment",{method:"post",data:$("pay_edit_form_<{$pay_id}>")},this)'>-->
+        <input type="submit" value="保存">
+        </b></td>
+    </tr>
+  </table></div>
+  </form>
+</div>
+
+

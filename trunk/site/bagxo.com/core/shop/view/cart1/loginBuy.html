@@ -1,0 +1,85 @@
+<table width="980" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="196" valign="top"><table width="196" height="80" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="cartstepother">Step1: Shopping bag</td>
+      </tr>
+      <tr>
+        <td class="cartstep">Step2: Sing</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step3: Order</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step4: Checkout</td>
+      </tr>
+    </table></td>
+    <td width="784"><{if $mustMember}>
+<p class="highlight">Just our member to buy , please register! </p>
+<{/if}>
+
+
+<div class="RegisterWrap clearfix">
+    <div class="leftpart" style="width:47%; margin-right:10px; margin-top:10px;">
+       <h3 style="background:#ff8484; height:32px; color:#FFFFFF" >&nbsp;&nbsp;<{t}>Login<{/t}></h3>
+       <div class="intro"><{t}>If you are our member，login please <{/t}></div>
+       <div class="form" style="border:1px solid #ff8484">
+      <{require file="passport/index/login_fast.html"}>
+      </div>
+    </div>
+    <div class="righttop" style="width:47%; height:auto; margin-top:10px;">
+
+      <h3 style="background:#ff8484; height:32px; color:#FFFFFF">&nbsp;&nbsp;<{t}>Register<{/t}></h3>
+      <div class="intro"><{t}>Wellcom and please register join us!<{/t}></div>
+      <div class="form" style="height:260px; border:1px solid #ff8484">
+      <{require file="passport/index/register_fast.html"}>
+      </div>      
+      
+      
+      
+      
+      </div>
+    <div class="rightbottom" style=" float:left; width:47%; height:auto; margin-top:3px;"> 
+       <h3 style="background:#ff8484; height:32px; color:#FFFFFF">&nbsp;&nbsp;<{t}>Direct purchase<{/t}></h3>
+ <div class="form" style="border:1px solid #ff8484">
+       <{t}>If you don't want to register,
+       <a class="lnk" href="<{link ctl=cart act=checkout}>" id="anonymityBuy">lick here to buy<{/t}></a>
+       </div>
+       </div>
+  </div>
+
+
+
+
+
+
+
+<div class="clear"></div>
+<script>
+$$('.loginform input').addEvent('focus',function(){
+    if (this.form.retrieve('showvcode',false))return;
+    changeimg("login");
+    $('LoginverifyCodebox').getElements('span').show();
+    this.form.store('showvcode',true);
+}); 
+$$('.signupform input').addEvent('focus',function(){
+    if (this.form.retrieve('showvcode',false))return;
+    changeimg("signup");
+    $('SignupverifyCodebox').getElements('span').show();
+    this.form.store('showvcode',true);
+});
+function changeimg(t){
+    if (t=='signup'){
+        $('SingupimgVerifyCode').set('src','<{link ctl="passport" act="verifyCode" arg0="s"}>?'+$time());
+    }
+    else if (t=='login'){
+        $('LogInImgverifycode').set('src','<{link ctl="passport" act="verifyCode" arg0="l"}>?'+$time());
+    }
+}
+</script></td>
+  </tr>
+</table>
+
+
+
+

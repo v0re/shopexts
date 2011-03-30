@@ -1,0 +1,285 @@
+<table width="980" border="0" cellspacing="0" cellpadding="0">
+  <tr><td>
+
+<table width="980" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="196" valign="top"><table width="196" height="80" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="cartstepother">Step1: Shopping bag</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step2: Sing</td>
+      </tr>
+      <tr>
+        <td class="cartstep">Step3: Order</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step4: Checkout</td>
+      </tr>
+    </table></td>
+    <td><div class="CartWrap" id="log"><div id="carttittle">Order</div>
+
+<form method="post" action="<{link ctl="order" act="create"}>" id="order-create" extra="subOrder">
+<div style="display:none"><{input type="checkForm" }></div>
+<{require file="cart/checkout_base.html"}>
+<div class="signWrap" style=" margin-top:5px; ">
+
+
+
+    <div id="smalltittleb">
+Order detail</div>
+
+    
+  
+ <div class="FormWrapd">
+<div class="orderbottom">
+  <div class="ordertitle">Items Ordered</div>
+  <{if $trading.products}>
+     
+       <div class="division">
+  <table width="100%" cellpadding="0" cellspacing="0" class="liststyleh">
+            <colgroup></colgroup>
+            <colgroup class="span-auto"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+            <colgroup class="span-auto "></colgroup>
+    <thead>
+      <tr>
+        <th class="product" width="196"><{t}>Product<{/t}></th>
+        <th class="price"><{t}>Shopping Points<{/t}></th>
+        <th class="price"><{t}>Price<{/t}></th>
+        <th class="number"><{t}>VIP Price<{/t}></th>
+        <th class="number"><{t}>Quantity<{/t}></th>
+        <th class="price"><{t}>Total<{/t}></th>
+      </tr>
+    </thead>
+    <tbody>
+    <{foreach from=$trading.products item="item" key="key"}>
+    <tr>
+      <td class="product;" style="text-align:left; padding-left:10px; width:196px;"><{$item.name}><{$item.addon.adjname}><{if $item._pmt.describe}><div class="ht1"><{$item._pmt.describe}></div><{/if}>
+      <input type="hidden" name="cart[g][cart][<{$item.key}>]" value="<{$item.nums}>" />
+      <input type="hidden" name="cart[g][pmt][<{$item.goods_id}>]" value="<{$item.pmt_id}>" /></td>
+      <td class="price"><{$item._pmt.score|string_format:"%d"}></td>
+      <td class="price"><{$item.sale_price|cur}></td>
+      <td class="cost"><{$item._pmt.price|cur}></td>
+      <td class="number"><{$item.nums}><{if !is_null($item.store) && $item.nums > $item.store}><h3 class="t"><{t}>(No stock)<{/t}></h3><{/if}></td>
+      <td class="cost"><{$item._pmt.amount|cur}></td>
+    </tr>
+    <{/foreach}>
+    </tbody>
+  </table>
+    </div>
+  <{/if}>
+  <{if $trading.gift_e}>
+
+    <div class="ordertitle">Gifts</div>
+
+    <div class="division">
+  <table width="100%" cellpadding="3" cellspacing="0" class="liststyleh">
+            <colgroup class="span-auto"></colgroup>
+            <colgroup class="span-2"></colgroup>
+            <colgroup class="span-2"></colgroup>
+            <colgroup class="span-1"></colgroup>
+            <colgroup class="span-2 "></colgroup>
+    <thead>
+        <tr>
+          <th><{t}>Item<{/t}></th>
+          <th><{t}>Poins<{/t}></th>
+          <th><{t}>Quota<{/t}></th>
+          <th><{t}>Quantity<{/t}></th>
+          <th><{t}>Total<{/t}></th>
+        </tr>
+      </thead>
+      <tbody>
+      <{foreach from=$trading.gift_e item="item" key="key"}>
+        <tr>
+          
+          <td style="padding-left:10px;"><{$item.name}></td>
+          <td><{$item.point}></td>
+          <td ><{if $item.limit_num=='0'}><{t}>不限制<{/t}><{else}><{$item.limit_num}><{/if}></td>
+          <td><{$item.nums}></td>
+          <td><{$item.amount}></td>
+        </tr>
+        <{/foreach}>
+      </tbody>
+  </table>
+    </div>
+  <{/if}>
+  <{if $trading.package}>
+  
+<div class="ordertitle">Package</div>
+
+    <div class="division">
+  <table width="100%" cellpadding="3" cellspacing="0" class="liststyleh">
+            <colgroup class="span-auto"></colgroup>
+            <colgroup class="span-2"></colgroup>
+            <colgroup class="span-1"></colgroup>
+            <colgroup class="span-2 ColColorOrange"></colgroup>
+      <thead>
+        <tr>
+          <th class="product" width="53%"><{t}>Item<{/t}></th>
+          <th class="price" width="12%"><{t}>Price<{/t}></th>
+          <th class="number" width="4%"><{t}>Quantity<{/t}></th>
+          <th class="price" width="9%"><{t}>Total<{/t}></th>
+        </tr>
+      </thead>
+      <tbody>      <{foreach from=$trading.package item="item" key="key"}>
+      <tr>
+        <td class="product" style="padding-left:10px;"><div align="left"><{$item.name}> <{$item.addon.adjname}></div></td>
+        <td class="price"><{$item.price|cur}></td>
+        <td class="number"><{$item.nums}></td>
+        <td class="cost"><{$item.amount|cur}></td>
+      </tr>
+      <{/foreach}>
+      </tbody>
+  </table>
+    </div>
+  <{/if}>
+    <{if  count($trading.pmt_o.list)>0 || count($trading.gift_p)>0 || count($trading.coupon_p)>0}>
+	<{if count($trading.pmt_o.list)>0}>
+	<div class="ordertitle">VIP Privilege</div>
+    <div class="division">
+  <table width="100%" cellpadding="0" cellspacing="0" class="liststylek data">
+        <colgroup class="span-4 ColColorGray"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+
+        
+      <tr>
+         <td style="padding-left:10px;">
+                     <ol style="text-align:left;">
+            <{foreach from=$trading.pmt_o.list item=item}>
+            <li><{$item.pmt_describe}></li>
+            <{/foreach}>
+                    </ol>
+        </td>
+      </tr>
+           
+			
+			</table>
+			</div> 
+			<{/if}>
+			
+			
+			
+		 <{if count($trading.gift_p)>0}>
+			<div class="ordertitle">获得赠品</div>
+    <div class="division">
+  <table width="100%" cellpadding="0" cellspacing="0" class="liststylek data">
+        <colgroup class="span-4 ColColorGray"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+
+    
+      <tr>
+         <td style="padding-left:10px;">
+                    <ol style="text-align:left;">
+              <{foreach from=$trading.gift_p item="item" key="key"}>
+          <li><{$item.name}> <{$item.nums}><{t}> 件&nbsp;&nbsp;<{/t}></li>
+        <{/foreach}>
+                </ol>
+        </td>
+      </tr>
+   			
+			</table>
+			</div>	
+			  <{/if}>
+			
+	 <{if count($trading.coupon_p)>0}>
+			<div class="ordertitle">Coupons gained</div>
+    <div class="division">
+  <table width="100%" cellpadding="0" cellspacing="0" class="liststylek data">
+        <colgroup class="span-4 ColColorGray"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+
+      <tr>
+         <td style="padding-left:10px;">
+                     <ol style="text-align:left;">
+                  <{foreach from=$trading.coupon_p item="item" key="key"}>
+                  <li><{$item.cpns_name}> <{$item.nums}><{t}> 张<{/t}></li>
+                  <{/foreach}>
+              </ol>
+        </td>
+      </tr>
+   			
+			</table>
+			</div>	
+			  <{/if}>	
+	
+	
+			
+			
+			
+           
+          
+   
+    <{/if}>
+   </div>
+</div>
+   
+</div>
+<{require file="cart/checkout_total.html"}>
+<div class="CartBtn clearfix">
+<input type="hidden" name="fromCart" value="true" />
+
+
+
+<div class="span-auto floatRight last"><input class="actbtn btn-order" type="submit" value="确认无误，下订单" /></div>
+<div class="span-auto floatRight"><a  style="width:auto; display:block; cursor:pointer; height:33px; color:#7F4C53;line-height:33px; margin-top:0; text-decoration:underline;" onClick="history.back()"  value="返回购物车" />< Back</a></div>
+</div>
+
+</form>
+<script>
+if(!extra_validator['subOrder']){
+  extra_validator['subOrder'] ={
+    'checkForm':['',function(f,i){
+        
+        var addr_num = 0;
+        var checkTag = false;
+        $$('input[name^=delivery[addr_id]','receiver').each(function(item){
+            addr_num++;
+            if(item.checked){
+                checkTag = true;
+            }
+        });
+        if(checkTag==false && addr_num>0){
+            alert('Choose your address, please！');
+            return false;
+        }
+        
+        
+        if($('checkout-recaddr').getElement('input[name^=delivery[ship_tel]').getProperty('value').trim() == '' && $('checkout-recaddr').getElement('input[name^=delivery[ship_mobile]').getProperty('value').trim() == ''){
+          alert('Please enter at least telephone or mobile to contact！');
+          return false;
+        }
+        
+        var checkNum = 0;
+        $ES('input[name^=delivery[shipping_id]',"shipping").each(function(item){
+          if(item.checked == true) checkNum++;
+        });
+        if(checkNum == 0){
+          alert('You do not choose distribution methods！');
+          return false;
+        }
+        
+        checkNum = 0;
+        $ES('input[name^=payment[payment]',"payment").each(function(item){
+          if(item.checked == true) checkNum++;
+        });
+        if(checkNum == 0){
+          alert('You do not choose Payment methods！');
+          return false;
+        }else{
+          return true;
+        }
+      }]
+  };
+}
+</script>
+</div></td>
+  </tr>
+</table>
+</td></tr>
+  
+  <tr><td height="35"><div class="mailhelp">Need more answer? <a href="#">Contact: custom@bagxo.com</a></div></td></tr>
+</table>
+

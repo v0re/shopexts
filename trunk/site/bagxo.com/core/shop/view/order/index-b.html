@@ -1,0 +1,80 @@
+<form target="_blank" action="<{link ctl="paycenter" act="order"}>" method="post">
+  
+  
+<div class="CartWrap">
+<div class="FormWrap " style="background:#F5F4EC; border:1px solid #E5DDC7;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="liststyle data">
+  <colgroup class="span-auto ColColorBlue"></colgroup>
+  <colgroup class="span-8 ColColorGray"></colgroup>
+  <tr>
+    <td width="50%"><strong><{t}>订单编号：<{/t}><{$order.order_id}></strong><br />
+
+      <a href="<{link ctl=order act=detail arg0=$order.order_id}>"><{t}>查看详细<{/t}></a>
+    </td>
+    <td><div style="padding:3px 6px ;"><{t}>共需支付<{/t}></div><h1 style="font-size:30px; color:#FF0000; margin:0 0 15px 0"><span class="hueorange" id="span_amount"><{$order.amount.total-$order.amount.payed|cur:$order.currency}></span></h1></td>
+  </tr>
+</table>
+</div>
+</div>
+  
+  
+  <input type="hidden" name="order_id" value="<{$order.order_id}>" />
+  <input type="hidden" name="money" value="<{$order.amount.total-$order.amount.payed}>" id="hidden_money"/>
+  <input type="hidden" name="currency" value="<{$order.currency}>" />
+  <input type="hidden" name="cur_money" value="<{$order.cur_money }>" id="hidden_cur_money"/>
+  <input type="hidden" name="cur_rate" value="<{$order.cur_rate }>" />
+  <input type="hidden" name="cur_def" value="<{$order.cur_def }>" />
+<{if $order.selecttype}>
+  <div class="division">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="liststyle data">
+      <tr>
+        <td valign="top">
+          <{require file="common/paymethod.html"}>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="division textcenter" style="margin:10px;">
+    <input type="submit" style=" padding:4px 20px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:16px;" value="Pay now" />
+  </div>
+<{else}>
+  <input type="hidden" name="payment[payment]" value="<{$order.payment}>" />
+  <div class="FormWrap ">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="liststyle data">
+      <colgroup class="span-8 ColColorBlue"></colgroup>
+      <colgroup class="span-auto ColColorGray textcenter"></colgroup>
+      <tr>
+        <td width="50%">
+          <{if $order.amount.total > $order.amount.payed}>
+            <{if $order.paytype=="OFFLINE"}>
+              <strong><{t}>You choose the payment mehtod is &quot;out line&quot;, so follow the payment instructions to pay and when you finished contcat us in our website, please.。<{/t}></strong>
+              <br />
+              <a class="lnk" href="<{link ctl=order act=index arg0=$order.order_id arg1=true}>"><{t}>Choose the other payment mehtod &raquo;<{/t}></a>
+            <{elseif $order.payment==-1 || $order.paytype=="PAYAFT"}>
+              <strong><{t}>you choosed pay when got the goods <{/t}></strong>
+              <br />
+              <a class="lnk" href="<{link ctl=order act=index arg0=$order.order_id arg1=true}>"><{t}>Choose the other payment mehtod&raquo;<{/t}></a>
+            <{else}>
+              <{if $order.paytype=="DEPOSIT"}>
+                <strong><{t}>you choosed pay by the Pre-deposits<{/t}></strong>
+              <{else}>
+                <strong><{t}>You choosed：<{/t}><{$order.paymethod}></strong>
+              <{/if}>
+              <br />
+        <a class="lnk" href="<{link ctl=order act=index arg0=$order.order_id arg1=true}>"><{t}>Choose the other payment mehtod&raquo;<{/t}></a>        </td>
+        <td>
+            <input type="submit" style=" width:100px; padding:5px 10px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:14px; cursor:pointer;" value="Pay now" /> 
+            <{/if}>
+          <{else}>That order don't need to pay,just waiting us to processing, thanks! <{/if}>        </td>
+      </tr>
+    </table>
+  </div>
+<{/if}>
+</form>
+ <script>
+    function changePrice(money,fmoney){
+        $('hidden_money').set('value',money);
+        $('hidden_cur_money').set('value',money);
+        $('span_amount').set('text',fmoney);
+    }
+ </script>

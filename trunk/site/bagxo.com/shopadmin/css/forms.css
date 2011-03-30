@@ -1,0 +1,328 @@
+/* -------------------------------------------------------------- 
+   
+   forms.css
+   * Sets up some default styling for forms
+   * Gives you classes to enhance your forms
+   
+   Usage:
+   * For text fields, use class .title or .text
+   
+-------------------------------------------------------------- */
+fieldset    { padding:1.4em; margin: 0 0 1.5em 0; border: 1px solid #ccc; }
+legend      { font-weight: bold; font-size:1.2em; }
+
+
+/* Form fields
+-------------------------------------------------------------- */
+
+input.text, 
+input.title   { width: 200px; padding:2px; font-size:1em; }
+textarea      { padding:5px;font-size:1em; }
+input.shadow{
+background:#FFFFFF url(../images/inputbox-bg.gif) no-repeat 0 0;
+border-color:#7C7C7C #CECECE #C3C3C3 #7C7C7C;
+border-style:solid;
+border-width:1px;
+font-family:verdana;
+padding:2px;
+}
+select option{ border-bottom:1px solid #ccc;}
+
+
+/*----------------------------------------------------------------
+ 表格form
+ ------------------------------------------------------------------*/
+.tableform {
+    background: #efefef;
+    margin: 10px;
+	padding:5px;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #bec6ce;
+    border-bottom: 1px solid #bec6ce;
+}
+
+.tableform h2 span {
+    color: #777;
+    font-weight: normal;
+}
+
+.tableform h3 span {
+    font-weight: normal;
+    float: right;
+}
+
+.tableform h3 .assis {
+    font-weight: normal;
+    color: #000;
+}
+
+.tableform h3 span a {
+    color: #777;
+    font-weight: normal;
+}
+
+.tableform .division td a {
+    padding: 2px 5px 0 5px;
+    margin: 0 3px;
+    color: #000;
+    line-height: 20px;
+}
+
+.tableform .intro {
+    color: #369;
+    padding-left: 15px;
+}
+
+.widgetconfig {
+    1margin: 10px 0;
+}
+
+.widgetconfig .division {
+    margin: 0 0 10px 0;
+}
+
+.widgetconfig th {
+    width: 20%;
+    padding: 0.3em 0 0 0;
+}
+
+.widgetconfig h4 {
+    padding: 5px;
+    color: #003366;
+    font-size: 1em;
+}
+
+.FloatForm ul li {
+    float: left;
+    margin: 3px 20px 3px 0;
+}
+
+.FloatTableData {
+    border: 1px solid #ccc;
+    float: left;
+    width: 170px;
+    margin: 5px;
+}
+
+.FloatTableData th, .FloatTableData td {
+    padding: 3px;
+    white-space: nowrap;
+}
+
+.FloatTableData th {
+    text-align: right;
+}
+
+.FloatTableData .image {
+    height: 120px;
+    text-align: center;
+}
+
+.tableAction {
+    margin: 5px auto;
+    clear: both;
+	width:auto;
+}
+
+.tableAction td a {
+	line-height:19px;
+}
+
+.submitBtn {
+    float: left;
+    margin: 0;
+	padding:0;
+    white-space: nowrap;
+    text-decoration: none;
+	background:#4E6A81;
+    border-top: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+	cursor:pointer;
+
+}
+.submitBtn.blue {
+	background:#6A8AA5;
+}
+.submitBtn input, .submitBtn a, .submitBtn button, td .submitBtn a {
+	height:24px;
+	line-height:24px;
+    color: #fff;
+	font-size:14px;
+	background:#4E6A81;
+    display: block;
+    float: left;
+    font-family: Arial;
+    text-align: center;
+    border: 0;
+	text-decoration:none;
+	padding:0 5px;
+	font-weight:700;
+	cursor:pointer;
+	margin:0;
+}
+.submitBtn.blue input, .submitBtn.blue a, .submitBtn.blue button, td .submitBtn.blue a {
+	background:#6A8AA5;
+}
+.submitBtn .iconbutton{ background-repeat:no-repeat; background-position:0 0; padding-left:20px;}
+.submitBtn .iconbutton.savereturn{ background-image:url(../images/savereturn.gif)}
+.submitBtn .iconbutton.savetolist{ background-image:url(../images/savetolist.gif)}
+.submitBtn .iconbutton.savebutton{background:url(../images/sysicon.gif) no-repeat 0px -622px;}
+.submitBtn .iconbutton.saveaddsame{ background-image:url(../images/saveaddsame.gif)}
+.tableAction td .submitBtn input {
+    border: 0;
+}
+
+
+
+
+.division {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 2px solid #bec6ce;
+    border-bottom: 2px solid #bec6ce;
+    background: #fff;
+    margin: 10px;
+	padding:5px;
+    line-height: 150%;
+	white-space:normal;
+}
+.division table{
+	margin:0;
+	padding:0;
+}
+
+.division label{
+    text-align: right;
+    white-space: nowrap;
+    width: 150px;
+	display:block;
+	float:left;
+}
+.division th, .division td {
+    padding: 5px;
+	vertical-align:top;
+	border-right:1px solid #DBE2E7;
+	border-left:1px solid #fff;
+	border-bottom:1px solid #ddd;
+	border-top:1px solid #fff;
+}
+.division  th{
+    text-align: right;
+    white-space: nowrap;
+	width:140px;
+	background:#E2E8EB;
+	font-size:14px;
+	border-right:1px solid #ccc;
+}
+.division .shopping_setting th{
+	width:190px;
+	
+}
+.division td {
+	white-space:normal;
+}
+
+.division td label,
+.division div label {
+	display:inline;
+	float:none;
+}
+
+.division ul,
+.division ul li{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.division fieldset label{
+  	white-space:normal;
+}
+
+.division ul li{
+	border-bottom:1px solid #efefef;
+	padding:2px;
+}
+table.finderInform {
+    border: 1px solid #efefef;
+	width:100%;
+	margin:0;
+}
+.division td .finderInform{
+	width:auto;
+}
+
+.finderInform thead th {
+	background:url(../images/functionareabg.gif);
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #fff;
+	border-right:1px solid #DBE2E7;
+	border-left:1px solid #fff;
+	padding:1px 3px;
+	width:auto;
+	text-align:center;
+	white-space:nowrap;
+	font-size:12px;
+	font-weight:700;
+}
+.finderInform td {
+	text-align:center;
+	
+}
+.finderInform tbody td, .finderInform tbody th {
+	border-right:1px solid #DBE2E7;
+	border-left:1px solid #fff;
+	border-bottom:1px solid #ddd;
+	border-top:1px solid #fff;
+}
+.finderInform tbody td{
+white-space:normal;
+}
+.finderInform.tabledata th,
+.finderInform.tabledata td {
+	text-align:left;
+}
+
+.helptips{ font-size:14px; border-bottom:1px dotted #f90; cursor:pointer;}
+
+
+
+/* Success, notice and error boxes
+-------------------------------------------------------------- */
+
+.error,
+.notice,
+.note,
+.success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; font-size:1em; }
+
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; background-position:10px -94px; }
+.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; background-position:10px -192px }
+.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; background-position:10px 8px;}
+.note       { background: #efefef; color: #666; border-color: #ccc; }
+.error a    { color: #8a1f11; }
+.notice a   { color: #514721; }
+.success a  { color: #264409; } 
+.note a     { color: #000; } 
+.notice_inline { no-repeat 0 0; padding-left:5px; color:#666; margin-left:10px;}
+.notice_inline_icon { background:url(../images/notice_inline.gif) no-repeat 0 0 ;padding-left:15px; color:#666; margin-left:5px; font-weight:normal; font-size:12px;}
+.notice-tip { background-image:url(../images/notice_ico.gif); padding:5px 25px 5px 50px; background-repeat:no-repeat; white-space:nowrap;}
+
+
+/* tables items
+-------------------------------------------------------------- */
+colgroup{ white-space:nowrap;}
+.Colsn{ width:36px; background:#efefef; }
+.Colauto{ width:auto; }
+.Colordernum{width:100px; background:#efefef; }
+.Colgoodsid{ width:120px; background:#efefef;  }
+.Coldate{ width:100px;background:#eef4fb}
+
+.Colamount ,td.Colamount{ width:60px; text-align:right; font-weight:700;background:#F8FAFC; text-align:right;}
+.Coloption_1b{background:#f4fdf6; width:55px;}
+.Coloption_2b{background:#f4fdf6; width:150px;}
+.Coloption_3b{background:#f4fdf6; width:200px;}
+.Colname, .Colcategory{width:120px;}
+.Collongname{width:220px;}
+.Coldetails,.finderInform tbody td.Coldetails{ text-align:left; white-space:normal;}

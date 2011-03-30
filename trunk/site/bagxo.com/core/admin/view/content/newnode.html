@@ -1,0 +1,101 @@
+<form action="index.php?ctl=content/sitemaps&act=doAdd&p[0]=<{$parent_id}>" method="post" class="tableform" id='contentaddForm'>
+<div class="division">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><{t}>位置<{/t}></th>
+    <td><{if count($path)>0 && $path.0.title}><{foreach from=$path item=item name="nav"}><{$item.title}><{if not $smarty.foreach.nav.last}> &gt; <{/if}><{/foreach}><{else}><{t}>顶级<{/t}><{/if}></td>
+  </tr>
+</table>
+</div>
+<div class="division">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  
+  <tr>
+    <th><{t}>栏目类型<{/t}></th>
+
+    <td>        <input type="radio" name="type" value="page" id="type_page" checked="checked" newtitle="单独页面"><label for="type_page">
+        <{img src="images/bundle/sidemaps-page.gif" }>
+        单独页面
+      </label>&nbsp;&nbsp;<input type="radio" name="type" value="articles" id="type_articles" newtitle="新文章栏目"><label for="type_articles">
+        <{img src="images/bundle/sidemaps-articles.gif" }>
+        文章栏目
+      </label>&nbsp;&nbsp;<input type="radio" name="type" value="goodsCat" id="type_goodsCat" newtitle="商品分类"><label for="type_goodsCat">
+        <{img src="images/bundle/sidemaps-goodsCat.gif" }>
+        商品分类链接
+      </label>&nbsp;&nbsp;<input type="radio" name="type" value="pageurl" id="type_url" newtitle="链接"><label for="type_url">
+        <{img src="images/bundle/sidemaps-pageurl.gif"}>
+        链接地址
+      </label>
+            
+
+
+    <{foreach from=$actions item=item key=key name="action"}>
+    <div style="float:left;width:40%;margin-bottom:10px">
+      <input type="radio" name="type" id="type_action_<{$smarty.foreach.action.iteration}>" value="action_<{$key}>" newtitle="<{$item}>" />
+      <label for="type_action_<{$smarty.foreach.action.iteration}>">
+        <{img src="images/bundle/sidemaps-action.gif" height="12px"}>
+        <{$item}>
+      </label>
+    </div>
+    <{/foreach}>
+    </td>
+  </tr>
+  <tr>
+    <th><{t}>栏目标题<{/t}></th>
+    <td><input type="text" name="title" class='_x_ipt newNodeTitle' vtype='required&&strbengin&&shopex' /></td>
+  </tr>
+</table>
+</div>
+  
+  <table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+    <tbody>
+      <tr>
+        <td>
+          <b class="submitBtn">
+            <input type="submit" value="添加栏目" />
+          </b>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+<script>
+void function(){
+    var newNodeTitle=$E('#contentaddForm .newNodeTitle');
+    var types=$ES('#contentaddForm input[name=type]');
+    types.addEvent('click',function(e){
+      var e = this;
+      var title=e.get('newtitle');
+      if(title.trim()=='单独页面'){
+        title=title+"-"+(Native.UID+1);
+      }
+      newNodeTitle.set('value',title);
+    });
+    types[0].fireEvent('click',types[0]);
+    
+    validatorMap.set('strbengin',['不能以数字开始',function(el,v){
+          return isNaN(v.substr(0,1));
+    }]);
+    
+   validatorMap.set('shopex',['I Love ShopEx too!',function(el,v){
+         if('iloveshopex'==v.toLowerCase().replace(/(\s)+/g,'').trim()){
+              var el = new Element('div');
+              new Swiff('index.php?ctl=system/about&act=toy', {
+                id: 'ohShopex',
+                width: 400,
+                height: 300,
+                container:el
+            });
+           new Dialog(el,{title:'I Love ShopeEx',onLoad:function(){
+                  el.focus();
+           }});
+           return false;         
+         }
+         return true;
+    }]);
+    
+
+}();
+
+
+</script>

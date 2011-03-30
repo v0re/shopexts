@@ -1,0 +1,35 @@
+<div id="order_create" class="tableform">
+<h4><{t}>第一步：选择顾客用户名和订单中商品<{/t}></h4>
+<div class="division">
+<form action="index.php?ctl=order/order&act=create" method="post" target="{update:'c_order_detail'}">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><{t}>请输入用户名：<{/t}></th>
+    <td><input type="text" name="username" style="width:120px" value=""> &nbsp; <{help}>此处填写订单客户的前台会员用户名，如果该顾客没有注册过会员请留空<{/help}></td>
+  </tr>
+  <tr>
+    <th><{t}>添加订单商品：<{/t}></th>
+    <td><{finder_result type="products" view="order/new_items.html" select="checkbox"}><label><input type="checkbox" id="package_controller_box">添加捆绑销售商品</label></td>
+  </tr>
+  <tr id="package_tr">
+    <th><{t}>添加捆绑销售商品：<{/t}></th>
+    <td><{finder_result type="package" view="order/new_pkgitems.html" select="checkbox"}></td>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <td><b class="submitBtn"><INPUT TYPE="submit" value="下一步"></b></td>
+  </tr>   
+</table>
+</form>
+</div>
+<div id="c_order_detail">
+</div>
+</div>
+<script>
+var changepackage=function(){
+    $('package_tr').style.display=($('package_controller_box').checked)?"":"none";
+}
+$('package_controller_box').addEvent('click',changepackage);
+changepackage();
+</script>

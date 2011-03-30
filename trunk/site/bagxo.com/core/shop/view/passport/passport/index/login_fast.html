@@ -1,0 +1,28 @@
+<form method="post" action="<{link ctl="passport" act="verify"}>" class="loginform">
+        <input name="forward" type="hidden" value="<{$options.url}>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th><i>*</i><{t}>用户名：<{/t}></th>
+            <td><{input name="login" class="inputstyle" required="true" id="in_login"}></td>
+          </tr>
+          <tr>
+            <th><i>*</i><{t}>密码：<{/t}></th>
+            <td><{input name="passwd" class="inputstyle" type="password" required="true" id="in_passwd"}><a style="margin-left:6px;" href="<{link ctl='passport' act='lost'}>"><{t}>忘记密码？<{/t}></a></td>
+          </tr>
+           <{if $LogInvalideCode}>
+          <tr>
+            <th><i>*</i><{t}>验证码：<{/t}></th>
+            <td id='LoginverifyCodebox'><{input size="8" class="inputstyle"  type="digits" required="true" name="loginverifycode" id="iptlogin" }>
+                <span class='verifyCode' style='display:none;'><img src="#" border="1" id="LogInImgverifycode"/><a href="javascript:changeimg('login')">&nbsp;看不清楚?换个图片</a>
+               </span>
+            </td>
+          </tr>
+          <{/if}>
+          <tr>
+            <th></th>
+            <td><input class="actbtn btn-login" type="submit" value="登录" />
+              </td>
+          </tr>
+        </table>
+        <{$redirectInfo}>
+</form>

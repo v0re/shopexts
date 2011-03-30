@@ -1,0 +1,56 @@
+<title>Gift</title><div style=" background:#FBA4D9; height:40px; margin-bottom:6px; width:770px; overflow:hidden;"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Exchange Gift</span></div>
+<div style="background:#FFF0FB;  margin-bottom:6px;width:770px; overflow:hidden;">
+<{pager data=$pager}>
+</div>
+<div class="GoodsSearchWrap">
+<table width="760" border="0" cellpadding="0" cellspacing="0" style="margin-left:12px;  overflow:hidden;">
+ 
+  <tr valign="top"> <{foreach from=$giftList item=item key=key name=goods}>
+    <td  width="184" id="pdt-<{$product.goods_id}>" product="<{$product.goods_id}>" >
+   
+   <div class="items-gallery<{$mask_webslice}>">
+    <div class="goodpic" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:178px; overflow:hidden;height:215px;<{/if}>
+     text-align:left;margin:0; padding:0;'>
+    <a style="<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}>width:176px; height:213px; overflow:hidden; margin:0;<{/if}>" href="<{link ctl=gift act=index arg0=$item.gift_id}>"><img src="<{$item.thumbnail_pic|gimage:'thumbnail'}>"  alt="<{$item.name}>"/></a></div>
+      <div class="goodinfo" style="margin-top:10px;">
+	         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="entry-content">
+          <tr >
+            <td colspan="2" style="text-align:left; "><ul style="line-height:15px;" >
+                
+				<li><a href="<{link ctl=gift act=index arg0=$item.gift_id}>"><{$item.name}></a></li>
+				<li>Points：<span style="color:#CD3F34;"><{$item.point}></span></li>
+              </ul></td>
+          </tr>
+                  </table>
+      </div>
+    </div>  
+      
+      </td>
+	   <{if !($smarty.foreach.goods.iteration%4)}> </tr>
+  <{if !$smarty.foreach.goods.last}>
+  <tr valign="top"> <{/if}>
+    
+    <{elseif $smarty.foreach.goods.last}>
+    <td colspan="<{math equation='4 - y' y=$smarty.foreach.goods.iteration%4}>">&nbsp;</td>
+    </tr>
+	<{/if}>
+<{/foreach}>
+  
+
+</table>
+
+</div>
+<div style="background:#FFF0FB;  margin-bottom:6px;width:770px; overflow:hidden;">
+<{pager data=$pager}>
+</div>
+</div>
+<script>
+
+
+window.addEvent('load',function(){
+         var gift_showlistImg=$$('.gift_showlist a img');
+        try{
+         fixProductImageSize($$(gift_showlistImg),'a');
+         }catch(e){}
+    });
+</script>

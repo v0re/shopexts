@@ -1,0 +1,46 @@
+<table cellspacing="0" cellpadding="0" style="width:100%;" border="0">
+<col class="Colauto"></col>
+<col class="Coloption_2b"></col>
+<col class="Coloption_1b"></col>
+<col class="Coloption_1b"></col>
+<col class="Coloption_1b"></col>
+<col class="Coloption_1b"></col>
+<col class="Coloption_1b"></col>
+<{foreach from=$tree item=item key=iLoop name="item"}>
+<tr parentid="<{$item.pid}>">
+  <td style=" text-align:left; width:300px; overflow:hidden;">
+<div style="padding-left:<{$item.step*50}>px">
+     <span class="quiet"><{t}>排序:<{/t}></span> <{img class="imgTree" onclick="clickTree(this)" id=$item.cat_id src="images/menu-sub.png" }>
+    <a style="font-weight:700; color:#000; text-decoration:none;padding-right:15px;" href='index.php?ctl=goods/category&act=edit&p[0]=<{$item.cat_id}>'><{$item.cat_name}></a>
+	<input  style="width:40px;" class="orderTextStyle" type="number" size="2"  name="p_order[<{$item.cat_id}>]" value="<{$item.p_order}>">
+    </div>
+	</td>
+  <td style="text-align:left;width:150px;"><span class="quiet" style="font-weight:normal;padding:0 5px"><{if $item.type_name}>[<{$item.type_name}>]<{/if}></span></td>
+  <td style="width:50px;"><{assign var="cat_id" value=$item.cat_id}>
+    <a href='index.php?ctl=goods/category&act=addNew&p[0]=<{$item.cat_id}>'><{img src="images/bundle/addcate.gif" border="0" alt="添加子分类"}></a>
+    </td>
+    <td style="width:50px;"><a class="i" href='index.php?ctl=goods/category&act=edit&p[0]=<{$item.cat_id}>'><{img src="images/bundle/editcate.gif" border="0" alt="编辑"}></a></td>
+    <td style="width:50px;"><span onclick="deleteRow('index.php?ctl=goods/category&act=toRemove&p[0]=<{$item.cat_id}>',event)" style="cursor:pointer"><{img src="images/bundle/delecate.gif" border="0" alt="删除"}></span></td>
+    <td style="width:50px;border-right:none;"><a href='index.php?ctl=goods/product&act=index&p[0]=<{$item.cat_id}>'><{img src="images/bundle/showcate.gif" border="0" alt="查看此分类下商品"}></a></td>
+	<td><a href='<{$item.url}>' target="_blank"><{img src="images/bundle/zoom_btn.gif" border="0" alt="跳转前台查看该"}></a></td>
+</tr>
+<{/foreach}>
+</table>
+<script>
+function deleteRow(act,event){
+    e=$(new Event(event).stop().target);
+    var row=e.getParent('tr');
+    
+    if(confirm('您确定要删除该分类？')){ 
+        W.page(act,{
+        method:'get',
+        update:'messagebox',
+        onComplete:function(re){
+            
+            if(re.contains('successSplash')){row.remove();}
+        
+            }
+        });
+    }
+}
+</script>

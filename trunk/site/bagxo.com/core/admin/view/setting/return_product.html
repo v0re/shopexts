@@ -1,0 +1,34 @@
+<form action="index.php?ctl=order/return_product&act=string_save" method="post" id="x-return_product" >
+<div class="tableform">  
+  <h4><{t}>售后服务<{/t}></h4> 
+      
+   
+
+<div class="division"> 
+<table cellspacing="0" cellpadding="0" border="0">
+  <tr>
+  	<th><{t}>售后服务状态：<{/t}></th>
+    <td>
+	<{if $is_open}>
+		<label><input type=radio name="return_is_open" value="true" checked />开启</label> &nbsp; &nbsp; 
+		<label><input type=radio name="return_is_open" value="false" />关闭</label>
+	<{else}>
+		<label><input type=radio name="return_is_open" value="true" />开启</label> &nbsp; &nbsp; 
+		<label><input type=radio name="return_is_open" value="false" checked />关闭</label>
+	<{/if}> &nbsp; &nbsp; <{help}>服务开启后，商店顾客可以用此功能方便地提交退货信息，商店管理员可以对退货商品进行管理、留言处理<{/help}>
+	</td>
+	
+  </tr>
+  <tr>
+  	<th><{t}>服务须知：<{/t}></th>
+    <td> 
+		<{input type="html" name="conmment" value="$data"}>
+	</td>
+  </tr>
+</table>
+</div>  
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">  
+  <tr>  
+    <td><b class="submitBtn"><input id="x-submit" type="submit" value="保存"/></b></td>  
+  </tr>  
+</table></form>

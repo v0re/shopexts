@@ -1,0 +1,74 @@
+
+<{if $type == ''}>
+<form method="post" action="<{link ctl="member" act="saveSecurity"}>" class="section">
+
+<div class="FormWrap">
+
+
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Update Password</span></div>
+<div class="membertopb"><span style="margin-left:20px; font-size:16px; color:#CF5E64; line-height:40px; font-weight:bold;">Modify your setting below on our secure server</span></div>
+<div class="division" >
+<table width="777" border="0" cellspacing="0" cellpadding="0" class="forform"  style="background:#EDECEA;">
+<tr ><th style="color:#DE616F;"></th><td></td></tr> 
+<tr ><th style="color:#DE616F;">Change password</th><td></td></tr>
+  <tr>
+    <th><{t}>Old password：<{/t}></th>
+    <td><{input class="inputstyle" type="password" required="true" name="old_passwd" }></td>
+  </tr>
+  <tr>
+    <th><{t}>New  password：<{/t}></th>
+    <td><{input class="inputstyle" type="password" required="true" name="passwd" }></td>
+  </tr>
+  <tr>
+    <th><{t}>Type again：<{/t}></th>
+    <td><{input class="inputstyle" type="password" required="true" name="passwd_re" }></td>
+  </tr>
+  <tr>
+    <th></th>
+    <td><input type="image" value="Save"  src="../../../../themes/zqzyb/images/member/save.gif"/></td>
+  </tr>    
+  <tr ><th style="color:#DE616F;"></th><td></td></tr> 
+</table>
+</div>  
+
+</div>
+</form>
+
+<{else}>
+
+<form method="post" action="<{link ctl="member" act="saveSecurityIssue"}>" class="section">
+
+<div class="FormWrap">
+
+<table width="180" border="0" cellspacing="0" cellpadding="0" style="text-align:center;margin-left:10px;padding:2px">
+<tr>
+    <td style="padding:2px">
+        <a href="<{link ctl="member" act="security"}>"><{t}>Change password<{/t}></a>
+    </td>
+    <td style="background:#666;padding:2px">
+        <{t}><a href="<{link ctl="member" act="security" arg0="1"}>"><strong style="color:#fff"><{t}>Questions fot security<{/t}></strong></a><{/t}>
+    </td>
+</tr>
+</table>
+
+<div class="division" style="border-top:1px solid #666">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform">
+  <tr>
+    <th><{t}>Question：<{/t}></th>
+    <td>
+      <{input class="inputstyle" type="text" required="true" id="pw_question" name="pw_question" }>
+    </td>
+  </tr>
+  <tr>
+    <th><{t}>Answer：<{/t}></th>
+    <td><{input class="inputstyle" type="text" required="true" name="pw_answer"}></td>
+  </tr>
+  <tr>
+    <th></th>
+    <td><input type="submit" value="Save" /></td>
+  </tr>         
+</table>
+</div>  
+</div>
+</form>
+<{/if}>

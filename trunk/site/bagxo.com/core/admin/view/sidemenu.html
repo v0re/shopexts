@@ -1,0 +1,27 @@
+<div id="submenu_<{$workground}>" style="display:none"><div>
+<{foreach from=$menus item=item key=key}>
+  <{if $item.type=='group'}>
+  <{assign var="isgroup" value=ture}>    
+    
+  <div class="grouplevel_1 grouplevel_1_withchild"><img  src="images/transparent.gif" class="tnode_handle" toggle="m_d_<{$key}>" /><span class="title"><{$item.label}></span></div>
+  <div class="grouplevel_2"  id="m_d_<{$key}>">
+    <{foreach from=$item.items item=item}>
+    <a <{if $item.onclick}> onclick="<{$item.onclick}>"<{/if}> href="<{$item.link}>"<{if $item.target}> target="<{$item.target}>"<{/if}>><{$item.label}></a>
+    <{/foreach}>
+  </div>  
+    
+  <{elseif $item.type=='tree' ||  $item.type=='sectiontree'}>
+  <div class="grouplevel_1"><img  src="images/transparent.gif" class="tnode_handle" toggle="t_<{$key}>" /><a  href="<{$item.link}>"><{$item.label}></a><{if $item.append}> [<{$item.append}>]<{/if}></div>
+  <div class="grouplevel_2" id="t_<{$key}>">
+  <{include file="treeNode.html" depth="1" base_dom="t_$key"}>
+  </div>
+  <{elseif $item.type=='html'}>
+  <{$item.code}>
+  <{else}>
+  <div><a class="grouplevel_1" style="color:#369"href="<{$item.link}>"<{if $item.target}> target="<{$item.target}>"<{/if}>><{$item.label}></a></div><{/if}>
+<{/foreach}>
+</div></div>
+
+<script>
+W.sideRender.bind(W)('<{$workground}>','submenu_<{$workground}>');
+</script>

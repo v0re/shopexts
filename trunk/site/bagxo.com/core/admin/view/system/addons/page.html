@@ -1,0 +1,38 @@
+<div style="padding:30px">
+<table><tr>
+<{foreach from=$type key=key item=item}>
+<{if $smarty.get.p[0] eq $key}>
+<td style="background:#ffd;width:75px;border:1px solid #333;border-style:solid solid none solid"><{$item.text}></td>
+<{else}>
+<td style="width:75px;border:1px solid #333;border-style:none none solid none"><a href="index.php?ctl=system/addon&act=<{$smarty.get.act}>&p[0]=<{$key}>" style='margin:5px;'><{$item.text}></a></td>
+<{/if}>
+<{/foreach}>
+<td style="border:1px solid #333;border-style:none none solid none">&nbsp;</td>
+</tr></table>
+
+<div style="padding:10px;background:#ffd;border:1px solid #333;border-top-style:none"><{include file=$infoPage}></div>
+<{if count($items)>0}>
+<{foreach from=$items key=key item=item name="addon"}>
+<div class="<{if $item.disabled}>part-disabled<{else}>part<{/if}>" style="<{if $smarty.foreach.addon.iteration is not odd}>background:#f0f0f0;<{/if}>padding:10px">
+  <{if $item.icon}>
+  <img src="<{$item.icon}>" style="float:right" />
+  <{/if}>
+  <div>
+  <b style="font-size:18px;margin-right:10px;color:#009"><{$smarty.foreach.addon.iteration}></b><strong style="font-size:16px;margin-right:20px"><{$item.name}></strong><em style="color:#060;"><{$item.file}></em>
+  </div>
+  <pre style="color:#333"><{$item.desc}></pre>
+  <{if $allow_disable}>
+  <div style="text-align:right">
+    <{if $item.disabled}>
+    <button><{t}>启用<{/t}></button>&nbsp;<button disabled="disabled"><{t}>禁用<{/t}></button>
+    <{else}>
+    <button disabled="disabled"><{t}>启用<{/t}></button>&nbsp;<button><{t}>禁用<{/t}></button>
+    <{/if}>
+  </div>
+  <{/if}>
+</div>
+<{/foreach}>
+<{else}>
+<div class="notice"><{t}>系统没有安装本类型插件。<{/t}></div>
+<{/if}>
+</div>

@@ -1,0 +1,282 @@
+<form action="index.php?ctl=goods/product&act=toAdd" method="post" name="gEditor" id="gEditor">
+  <input type="hidden" name="goods[goods_id]" value="<{$goods.goods_id}>" id="gEditor-GId-input"/>
+  <div class="mainHead handles" style='border-bottom:none;padding-top:5px;' id='gEditor-tabs'>
+           <table style='width:100%' cellpadding="0" border="0">
+           <tr>
+           <td width='95%' style='color:#000;'>
+             </td>
+             <td width='5%'><{help docid="70" type="link"}>点击查看帮助<{/help}></td>
+           </tr>          
+          </table>
+  </div>
+  
+  <div id="gEditor-Body"><{include file="product/detail/page.html"}></div>
+  <div class="mainFoot " style="text-align:center; background:#efefef; border-top:1px solid #ccc;padding-bottom:15px;">
+  <{if $pop}>
+   <table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction" style=" margin:0 auto;">
+      <tr>
+        <td>
+          <b class="submitBtn">
+            <button onClick="subGoodsForm(2,this)"/>
+            <span class="iconbutton savetolist">保存并返回列表</span>
+            </button>
+          </b>
+		  
+        </td>
+        <td>
+          <b class="submitBtn blue">
+            <button onClick="subGoodsForm(1,this)"/>
+             <span class="iconbutton saveaddsame">保存并添加相似商品</span>
+            </button>
+          </b>
+        </td>
+		<td>
+			<b class="submitBtn blue">
+            <button onClick="subGoodsForm(3,this)" />
+            <span class="iconbutton savebutton">保存当前</span>
+            </button>
+          </b>
+        </td>
+        <td>
+         <b class="submitBtn blue" isCloseDialogBtn='true'>
+            <button/>
+            <span class="">关闭</span>
+            </button>
+          </b>
+        </td>
+        </tr>
+        </table>
+    <{else}>
+       <table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction" style=" margin:0 auto;">
+      <tr>
+        <td>
+          <b class="submitBtn">
+            <button onClick="subGoodsForm(2,this)" />
+            <span class="iconbutton savetolist">保存并返回列表</span>
+            </button>
+          </b>
+        </td>
+        <{*
+		<td>
+          <b class="submitBtn blue">
+            <button onClick="subGoodsForm(4,this)"/>
+             <span class="iconbutton saveaddsame">保存并添加同类商品</span>
+            </button>
+          </b>
+        </td>*}>
+         <td>
+          <b class="submitBtn blue">
+            <button onClick="subGoodsForm(1,this)"/>
+             <span class="iconbutton saveaddsame">保存并添加相似商品</span>
+            </button>
+          </b>
+        </td>
+        <td>
+          <b class="submitBtn blue">
+            <button onClick="subGoodsForm(3,this)" />
+            <span class="iconbutton savebutton">保存当前</span>
+            </button>
+          </b>
+      </td>
+      </tr>
+    </table>
+    <{/if}>
+  
+  </div>
+</form>
+<script>
+function chainImgLoader(call){
+        var el=$(call);
+        var _src=el.get('lsrc');
+        var _sn=el.get('sn');
+        var _span=el.getParent('span');
+        new Asset.image(_src,{
+           onload:function(img){
+               var _img=img.zoomImg(50,50);
+               _span.empty().adopt(_img.set('sn',_sn));             
+               _img.setStyles({
+                  
+                  'margin-top':Math.abs((51-_img.height.toInt())/2)
+                 
+               });               
+               
+            },onerror:function(){
+                
+                _span.empty();
+            
+            }
+        });
+};
+
+window.goodsEditor = new ShopExGoodsEditor('gEditor',{imgtype:'<{$uploader}>',url:'<{$url}>',goods_id:'<{$goods.id}>'});
+(function(){
+    
+        Uploader.init({
+                        url:'<{$url}>/index.php?ctl=goods/product&act=newPic&p[0]=<{$goods.id}>&p[1]=add&sess_id='+sess_id,
+                        fileDesc:isNaN('<{$max_upload.desc}>'.toInt())?'图片文件':'小于<{$max_upload.desc}>的图片文件',
+						error_size_explian:'<{$max_upload.desc}>',
+                        fileExt:'<{$uploader}>',
+                        MuliUpload:true,
+                        maxSize:<{$max_upload.size}>,
+                        handles:{
+                            upload:function(e){
+                            
+                               $(this.el).setHTML('<span><em style="font-size:13px;font-family:Georgia;">0%</em></span>',
+                                                  '<div class="picdelete"><div class="progress-bar" style="width:45px"><i>&nbsp;</i></div></div>');
+                            },
+                            progress:function(e){
+                             var pt=Number( e.bytesLoaded*100/e.bytesTotal).toFixed()+'%';
+                             $(this.el).getElement('i').setStyle('width',pt);
+                             $(this.el).getElement('em').set('text',pt);
+                            },
+                            complete:function(e){
+                             $(this.el).getElement('em').set('text','');
+                            },
+                            uploadCompleteData:function(e){
+                      
+                                if(!e.data.trim()){
+                                  MessageBox.error('图片上传失败.');
+                                  $(this.el).remove();
+                                }else{
+                                    $(this.el).setHTML(e.data);
+                                    if(!$('x-main-pic').retrieve('cururl')){
+                                                $E('#all-pics .gpic-box span').onclick();
+                                    }
+                                }
+                            },
+                            error:function(e){
+                                MessageBox.error(e);
+                            },
+                            select:function(e){
+                                e.list.each(
+                                    function(f){
+                                       new Element('div',{'class':'gpic-box','id':f.el}).inject($('all-pics'));
+                                    }
+                                );    
+                            }
+                        }
+                    });
+
+
+    var _form=$('gEditor');
+    var _formActionURL=_form.get('action');
+    _form.set('target',"{ure:'messagebox',update:'messagebox'}");
+    var _goodsIdHidden=_form.getElement('input[name^=goods[goods_id]');
+    
+    
+    var reloadPicAction=function(){
+        	if( !$E('#action-pic-bar input[name^=goods[image_file]'))return;
+            new XHR({
+                /*data:$E('#action-pic-bar .pic-area').toQueryString(),,*/
+                onSuccess:function(picrs){
+                    $E('#action-pic-bar .pic-area').set('html',picrs);
+                    //$E('#all-pics .current').onclick();
+                }
+            }).send('index.php?ctl=goods/product&act=clone_goods_img');
+									
+    };
+    
+      
+    
+
+    
+
+    subGoodsForm = function (sign,submitBtn){
+        
+         /*
+         *  sign:{
+               1:保存并增加相似商品,
+               2:保存并返回列表,
+               3:保存当前不返回，
+               
+         *    }
+         *
+         */
+         $('loadMask').amongTo(window).show();
+         window.MessageBoxOnShow=function(box,success){
+                                 if(!success)return;
+                                     try{
+                                      var goodsid=box.getElement('input[type=hidden]').getValue();
+                                      _goodsIdHidden.set('value',goodsid);
+                                      switch (sign){
+                                            case 1:
+                                         
+                                             _goodsIdHidden.set('value','');
+                                               $E('input[name^=goods[name]',_form).value='';
+                                               $E('input[name^=goods[bn]',_form).set('value','');
+                                               if(pbn=$E('input[name^=goods[product_bn]',_form)){
+                                                    pbn.value='';
+                                               }
+                                               if(pbns=$$('input[name^=bn[]',_form)){
+                                                  if(pbns.length){
+                                                   pbns.set('value','');
+                                                   }
+                                               }
+                                              
+                                               
+                                               reloadPicAction();
+                                               
+                                            break;
+                                            case 2:
+                                            if(dlg=$('gEditor').getParent('.dialog')){
+                                               dlg.retrieve('instance').close();
+                                               window.finder[dlg.retrieve('fid')].refresh();
+                                               return;
+                                            }
+                                            W.page('index.php?ctl=goods/product&act=index');
+                                            break;
+                                            case 3:
+                                            default:
+                                            break;
+                                      }
+                                  }catch(e){console.info(e)}
+                                  
+                                  MODALPANEL.hide();
+          };
+          
+        _form.set('action',_formActionURL+'&but='+sign).fireEvent('submit');
+               
+    };
+    
+    
+    
+    
+    /*设置商品增加的时的功能TAB*/
+    $('gEditor').retrieve('setTabs',function(){
+        
+         var sections=$ES('#gEditor .GoodsEditSection');
+         var tabs=[];
+         $ES('#gEditor .GoodsEditSection').getElements('.sec-title').each(function(h){
+              var tabtext=h.get('text');
+              var tab;
+              if(tabtext=='基本信息'){
+                tab=new Element('span',{'class':'t-handle all'}).setText("商品总览");
+              }else{
+                tab=new Element('span',{'class':'t-handle'}).setText(tabtext);
+              }
+              tabs.push(tab);
+         });
+         
+         $E('#gEditor-tabs td').empty().adopt(tabs);
+         new ItemAgg(tabs,$ES('#gEditor .GoodsEditSection'),{activeName:'t-handle-current',onActive:function(tab,item){
+                  var anotherItems=$$($A(this.items).remove(item));
+                  if(tab.hasClass('all')){
+                     anotherItems.show();
+                  }else{
+                     anotherItems.hide();
+                  }
+                  
+                  
+        
+        },onBackground:function(tab){
+             tab.style.cssText='';
+             tab.removeClass('t-handle-current');
+        }});
+    
+    })();
+    
+			
+	
+    
+})();
+</script>

@@ -1,0 +1,17 @@
+<h5 class="sec-title"><{t}>属性参数<{/t}></h5>
+<div class="division">
+<br>
+<table>
+<{foreach from=$prototype.params item=param key=group}>
+<tr>
+<th colspan="2" style="text-align:left; background:none;"><{$group}></th>
+</tr>
+<{foreach from=$param item=value key=item}>
+<tr>
+<th><{$item}></th>
+<td><{input type="text" name="goods[params][$group][$item]" value=$goods.params.$group.$item }></td>
+</tr>
+<{/foreach}>
+<{/foreach}>
+</table>
+</div>

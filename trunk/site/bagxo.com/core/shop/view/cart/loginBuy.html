@@ -1,0 +1,97 @@
+<table width="980" border="0" cellspacing="0" cellpadding="0" >
+  <tr>
+    <td><table width="980" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:10px;">
+  <tr>
+    <td width="196" valign="top"><table width="196" height="80" border="0" cellpadding="0" cellspacing="0" >
+      <tr>
+        <td class="cartstepother">Step1: Shopping bag</td>
+      </tr>
+      <tr>
+        <td class="cartstep">Step2: Sing</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step3: Order</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step4: Checkout</td>
+      </tr>
+    </table></td>
+    <td width="784" ><div class="SignWrap">
+    <div id="carttittle"><img src="../../../../images/sign.gif" width="120" height="40" /></div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#EDECEA; margin-top:5px;	">
+  <tr>
+    <td style="border-right:5px solid #FFFFFF;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="50%" style=" border-bottom:5px solid #FFFFFF;"><div class="intro" style=" padding:5px 0 0 10px;font-size:14px; color:#ED707E; font-weight:bold;padding-bottom:5px;"><{t}>If you are our member，login please! <{/t}></div>
+       <div class="form" >
+      <{require file="passport/index/login_fast.html"}>
+      </div></td>
+  </tr>
+  <tr>
+    <td><div style=" width:95%; padding:5px 5px 5px 10px; height:auto;color:#ED707E;font-size:14px; font-weight:bold;"> 
+       
+       <{t}>Non-VIP Shopping Chanel
+	  
+	   <ol>
+	   <li style="font-weight:normal;">We also provide Non-VIP service. You may enter Non-VIP Chanel for payment arrangement after order confirmation.</li>
+	   <li  style="font-weight:normal;">As Non-VIP customer does not have cumulative points, not be able to check order either, we strongly suggest you spend few minutes on registration, so that you may enjoy the whole service we provide. </li>
+	   <li style="font-weight:normal;">IF you don't want to register.<a class="lnk" href="<{link ctl=cart act=checkout}>" id="anonymityBuy" style="color:#ED707E;font-size:14px; font-weight:bold; ">click here to buy<{/t}></a></li>
+	   </ol>
+       
+       </div></td>
+  </tr>
+</table>
+</td>
+    <td width="50%"><div class="intro" style="color:#ED707E; font-size:14px; font-weight:bold; padding:5px;"><{t}>Wellcom and please register to join us!<{/t}></div>
+      <div class="form" style="height:260px;">
+      <{require file="passport/index/register_fast.html"}>
+      </div>      </td>
+  </tr>
+</table>
+
+	
+	
+	
+	
+	
+   
+
+
+
+
+
+<div class="clear"></div>
+<script>
+$$('.loginform input').addEvent('focus',function(){
+    if (this.form.retrieve('showvcode',false))return;
+    changeimg("login");
+    $('LoginverifyCodebox').getElements('span').show();
+    this.form.store('showvcode',true);
+}); 
+$$('.signupform input').addEvent('focus',function(){
+    if (this.form.retrieve('showvcode',false))return;
+    changeimg("signup");
+    $('SignupverifyCodebox').getElements('span').show();
+    this.form.store('showvcode',true);
+});
+function changeimg(t){
+    if (t=='signup'){
+        $('SingupimgVerifyCode').set('src','<{link ctl="passport" act="verifyCode" arg0="s"}>?'+$time());
+    }
+    else if (t=='login'){
+        $('LogInImgverifycode').set('src','<{link ctl="passport" act="verifyCode" arg0="l"}>?'+$time());
+    }
+}
+</script></td>
+  </tr>
+</table></td>
+  </tr>
+</tr>
+  
+  <tr><td height="35"><div class="mailhelp">Need more answer? <a href="#">Contact: custom@bagxo.com</a></div></td></tr>
+</table>
+
+
+
+
+

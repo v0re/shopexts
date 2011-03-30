@@ -1,0 +1,12 @@
+<div class='division'>
+  <form method="post" action="index.php?ctl=content/content&act=urllinkSave">
+  <table>
+      <tr><td width='20%'><strong><{t}>链接地址:<{/t}></strong></td><td width='80%'><input style='font-family:verdana;font-weight:bold;width:95%'  type='text' name="url_address" value="<{$urladdress|default:'http://'}>" /></td></tr>
+      <tr><td width='20%'><strong><{t}>此链接在新窗口打开?<{/t}></strong></td><td width='80%'><input type="checkbox" name="url_set" value="1" <{if $url_set=='1'}>checked<{/if}> /></td></tr>
+      <tr>
+      <td colspan=2 align='center' style='text-align:center!important'><input type="submit" class='submitBtn' value="提交" style='color:#fff'/>
+        <input type="hidden" name="ident" value="<{$ident}>"/>
+      </td></tr>
+  </table>
+  </form>
+</div>

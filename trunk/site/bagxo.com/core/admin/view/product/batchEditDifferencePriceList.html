@@ -1,0 +1,104 @@
+
+<textarea name="filter" style="display:none"><{$filter}></textarea>
+<table border="0" cellpadding="0" cellspacing="0" style="width:97%">
+
+<tr>
+<th>商品名称</th>
+<th>货号</th>
+<th>成本价</th>
+<th>销售价</th>
+<{foreach from=$levelList item=levelItem}>
+<th><{$levelItem.name}>价</th>
+<{/foreach}>
+</tr>
+
+
+<{foreach from=$goodsList item=item name="_list" }>
+
+    <tr <{if $smarty.foreach._list.index%2 === 0}> style="background-Color:#f0f6fa" <{/if}>>
+      <th><strong>
+      <{$item.name}></strong>
+      </th>
+      <th>
+      <{$item.bn}>
+      </th>
+      <{if count($productList[$item.goods_id]) == 1 }>
+      
+      <{assign var=proId  value=$productList[$item.goods_id].0.product_id}>
+      <{assign var=goodsId  value=$item.goods_id}>
+
+      <th>
+      <{input name=price[cost][$goodsId][$proId] value=$item.cost  maxlength="30" size="8"}>
+      </th>
+
+      <th>
+      <{input name=price[price][$goodsId][$proId] value=$item.price  maxlength="30" size="8"}>
+      </th>
+<{foreach from=$levelList item=levelItem}>
+<th>
+<{assign var=lvName  value=[$goodsId][$proId]}>
+<{assign var=lvId  value=$levelItem.member_lv_id}>
+<{input  name=price[$lvId]$lvName value=$productList[$item.goods_id][0].lv_price[$levelItem.member_lv_id]  maxlength="30" size="8"}>
+</th>
+<{/foreach}>
+
+      <{else}>
+        <th>
+        <{$item.cost}>
+        </th>
+      <th>
+      <{$item.price}>
+      </th>
+
+<{foreach from=$levelList item=levelItem}>
+<th>&nbsp;</th>
+<{/foreach}>
+
+      <{foreach from=$productList[$item.goods_id] item=proItem name="proitems"}>
+      <tr <{if $smarty.foreach._list.index%2 === 0}> style="background-Color:#f0f6fa" <{/if}>>
+      <th>
+      &nbsp;&nbsp; &nbsp;&nbsp; <{$proItem.pdt_desc}>
+      </th>  
+      <th>
+      <{$proItem.bn}>
+      </th>  
+      
+      <{assign var=proId  value=$proItem.product_id}>
+      <{assign var=goodsId  value=$item.goods_id}>
+      <th>
+      <{input name=price[cost][$goodsId][$proId] value=$proItem.cost maxlength="30" size="8"}>
+      </th>
+      <th>
+      <{input name=price[price][$goodsId][$proId] value=$proItem.price maxlength="30" size="8"}>
+      </th>  
+
+<{foreach from=$levelList item=levelItem}>
+<{assign var=lvName  value=[$goodsId][$proId]}>
+<{assign var=lvId  value=$levelItem.member_lv_id}>
+<th><{input  name=price[$lvId]$lvName value=$proItem.lv_price[$levelItem.member_lv_id]  maxlength="30" size="8"}></th>
+<{/foreach}>
+
+
+      </tr>
+      <{/foreach}>
+
+      <{/if}>
+    </tr>
+<{/foreach}>
+
+</table>
+<br/><br/>
+<div style="text-align:center">
+ <{pager data=$pager}>
+
+<{if $pager.total > 1}>
+ <br/>
+<span class="notice" ><{t}> 修改后可直接翻页，翻页的同时完成保存<{/t}></span>
+<{/if}>
+
+</div>
+<br/><br/>
+<input type="hidden" name="pagenum" value="<{$page}>" id="pagenum"/>
+<input type="hidden" name="updateAct" value="differencePrice"/>
+<input type='hidden' id='fixDialogBody'/>
+<script>$('fixDialogBody').getParent('.dialogContent').setStyle('overflow-x','scroll');</script>

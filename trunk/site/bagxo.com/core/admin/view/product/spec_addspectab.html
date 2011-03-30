@@ -1,0 +1,55 @@
+<div class='item' style='display:none;' id="spec-tab-<{$spec.spec_id}>">
+ <table>
+	<tr>
+     <td width='20%' style='vertical-align:middle;text-align:center'>
+     <span class="fontcolorGray" style="line-height:18px">请点击右侧<br />添加本商品需要的<{$spec.spec_name}></span>
+     </td>
+	   <td width='80%'>
+			   <div>&nbsp; <span class='lnk add-spec-all' specid="<{$spec.spec_id}>">添加全部<{$spec.spec_name}></span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="fontcolorGray">没有您需要的<{$spec.spec_name}>？立刻 </span><span class="lnk editspec" specid="<{$spec.spec_id}>">编辑<{$spec.spec_name}></span></div>
+			   <ul class='spec_box spec-name' specid="<{$spec.spec_id}>" specType="<{$spec.spec_type}>"> 
+			   
+			   <{if $spec.spec_type == 'text'}>
+
+			   <{foreach from=$specValue item=oItem}>
+				  <li onmouseover="this.style.background='#ff9900';" onmouseout="this.style.background='#ffffff';" specValueId="<{$oItem.spec_value_id}>" specValue="<{$oItem.spec_value}>">
+				  <span><{$oItem.spec_value}></span><span class="spec_add"><label>添加</label></span>
+				  <input type="hidden" name="spec_value_image[<{$oItem.spec_value_id}>]" id="spec_value_image_<{$oItem.spec_value_id}>" value="<{$oItem.spec_image}>"/>
+				  </li>
+				  <{/foreach}>
+				  
+				  <{else}>
+
+			   <{foreach from=$specValue item=oItem}>
+				  <li onmouseover="this.style.background='#ff9900';" onmouseout="this.style.background='#ffffff';" specValueId="<{$oItem.spec_value_id}>" specValue="<{$oItem.spec_value}>">
+				  <img src='<{if $oItem.spec_image}><{$oItem.spec_image|storager}><{else}><{$spec_default_pic|storager}><{/if}>' width=20 height=20 alt="<{$oItem.spec_value}>"><span class="spec_add"><label>添加</label></span>
+				  <input type="hidden" name="spec_value_image[<{$oItem.spec_value_id}>]" id="spec_value_image_<{$oItem.spec_value_id}>" value="<{$oItem.spec_image|storager}>"/>
+				  </li>
+				  <{/foreach}>
+
+				  <{/if}>
+
+			   </ul>
+	   </td>
+	</tr>
+ </table>
+ 
+ <div class='tableform'>
+ <div class="division">
+	  <table class="finderInform"  cellspacing="0" cellpadding="0" border="0" width="100%">
+		 <thead>
+		  <tr>
+			<th style="width:15%">系统规格</th>
+			<th>自定义规格值</th>
+			   <{if $spec.spec_type == 'image'}>
+			<th style="width:20%">自定义规格图片</th>
+			<{/if}>
+			<th style="width:25%">关联商品相册图片</th>
+			<th style="width:25%">操作</th>
+		  </tr>
+		</thead>
+		<tbody class='spec-body'></tbody>
+	  </table>
+  </div>
+ </div>
+ 
+</div>
