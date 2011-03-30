@@ -81,11 +81,7 @@ function smarty_function_footer($params, &$smarty)
        
     }
 
-    
-    var_dump($_COOKIE);
-    die();
-    
-    
+   
     
     return $html.$themeFoot.$PoweredStr.$js;
 }
