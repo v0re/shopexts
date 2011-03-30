@@ -1,0 +1,89 @@
+<div class="actionBar clearfix">
+<div class="span-auto"><h4><{t}><{$templetename}><{/t}></h4></div><div class="span-10"><a target="download" href="index.php?ctl=system/template&act=dlpkg&p[0]=<{$theme}>" class="sysiconBtnNoIcon"><{t}>下载模板<{/t}></a><span class="sysiconBtnNoIcon"  onClick="
+    if(window.confirm('确认恢复模板默认状态么？')){
+      W.page('index.php?ctl=system/template&act=reset&p[0]=<{$theme}>');
+    }"><{t}>恢复默认<{/t}></span><a class="sysiconBtnNoIcon" href="index.php?ctl=system/tmpimage&act=index&p[0]=<{$theme}>"><{t}>图片管理<{/t}></a><a class="sysiconBtnNoIcon" href="index.php?ctl=system/tmpimage&act=index&p[0]=<{$theme}>&p[1]=css"><{t}>样式管理<{/t}></a></div>
+ 
+</div>
+<div class="templateedit">
+  <div class="clearfix"> <{foreach from=$template item=item}>
+    <{if $item.available}>
+    <ul class="page">
+      <li class="pager"></li>
+      <li class="name"><{$item.name}></li>
+      <li class="button"><a class="sysiconBtnNoIcon" href="javascript:{void popPanel('index.php?ctl=system/template&act=widgetsSet&p[0]=<{$theme}>&p[1]=<{$item.file}>',{data:'a=a'})}"><{t}>可视编辑<{/t}></a><a class="sysiconBtnNoIcon" href="index.php?ctl=system/template&act=editor&p[0]=<{$theme}>&p[1]=<{$item.file}>"><{t}>源码编辑<{/t}></a><span class="sysiconBtnNoIcon" onClick="if(window.confirm('删除后将无法恢复，请在删除前下载备份模版，确认要删除吗？'))W.page('index.php?ctl=system/template&act=removePage&p[0]=<{$theme}>&p[1]=<{$item.file}>');"><{t}>删除<{/t}></span></li>
+    </ul>
+    <{/if}>
+    <{foreach from=$item.items item=act}>
+    <{if $act.available}>
+    <ul class="page">
+      <li class="pager"></li>
+      <li class="name"><{$act.name}></li>
+      <li class="button"><a class="sysiconBtnNoIcon" href="javascript:{void popPanel('index.php?ctl=system/template&act=widgetsSet&p[0]=<{$theme}>&p[1]=<{$act.file}>',{data:'a=a'})}"><{t}>可视编辑<{/t}></a><a class="sysiconBtnNoIcon" href="index.php?ctl=system/template&act=editor&p[0]=<{$theme}>&p[1]=<{$act.file}>"><{t}>源码编辑<{/t}></a><span class="sysiconBtnNoIcon" onClick="if(window.confirm('删除后将无法恢复，请在删除前下载备份模版，确认要删除吗？'))W.page('index.php?ctl=system/template&act=removePage&p[0]=<{$theme}>&p[1]=<{$item.file}>');"><{t}>删除<{/t}></span></li>
+    </ul>
+    <{/if}>
+    <{/foreach}>
+    <{/foreach}> </div>
+  <div class="tableform" style=" padding:0;border:1px solid #ddd; margin:10px 0;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        
+        <td valign="top" style="padding:5px"><span style="color:#f90;"><{t}>如果你想单独创建这些页面而不再使用“默认页面”的统一样式，可以在下面操作区内进行创建：<{/t}></span>
+          <div class="division" style="margin:5px; padding:15px;">请选择要创建的页面：
+            <select name="toCreate" id="toCreate">
+              <option value="--"><{t}>--请选择--<{/t}></option>
+              <{foreach from=$template item=item}> <{if !$item.available}>
+              <option value="index.php?ctl=system/template&act=editor&p[0]=<{$theme}>&p[1]=<{$item.file}>"><{$item.name}></option>
+              <{/if}> <{/foreach}>
+            </select>
+            <span class="sysiconBtnNoIcon" onClick="if($('toCreate').value=='--'){alert('请先选择页面')}else{W.page($('toCreate').value,'')}"><{t}>创建<{/t}></span></div></td>
+      </tr>
+    </table>
+  </div>
+  <div class="tableform" style=" padding:0 10px;border:1px solid #ddd; margin:10px 0;"> 
+  
+  <h4 style="color:#369"><{t}>信息提示：此处备份和应用功能只为模板设计师在制作模板时使用，一般用户无需使用。<{/t}></h4>
+  <div class="division">
+    <form action="index.php?ctl=system/template&act=backTemplate&template=<{$theme}>" method="post">
+      <div class="clearfix">
+       备份模板： <input type="submit" value="备份">
+      </div>
+    </form></div>
+   <div class="division">   
+    <form action="index.php?ctl=system/template&act=doBak&p[0]=<{$theme}>" method="post">
+      <div class="clearfix"> 应用模板：
+        <select name="validtemplate">
+          <{foreach from=$themeslist item=item}>
+          <option value='<{$item}>'><{if $item=='theme.xml'}><{t}>默认<{/t}><{/if}><{if $item=='theme-bak.xml'}><{t}>备份<{/t}><{/if}></option>
+          <{/foreach}>
+        </select>
+        <input type="submit"  value="应用">
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<{if $config}>
+<form class="tableform" action="index.php?ctl=system/template&act=saveConfig&p[0]=<{$theme}>" method="post" >
+  <h5><{t}>模板全局参数设置<{/t}></h5>
+  <div class="division">
+    <table>
+      <{foreach from=$config item=item}>
+	  <{if $item.label}>
+      <tr>
+        <th><{$item.label}>：</th>
+        <td><input type='text' name='config[<{$item.key}>]' value='<{$item.value}>' style='width:300px'></td>
+      </tr>
+	  <{/if}>
+      <{/foreach}>
+    </table>
+  </div>
+  <table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+    <tr>
+      <td><b class="submitBtn">
+        <input type="submit" value="保存配置信息">
+        </b></td>
+    </tr>
+  </table>
+</form>
+<{/if}> 

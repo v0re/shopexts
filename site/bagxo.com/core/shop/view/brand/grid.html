@@ -1,0 +1,90 @@
+<script>
+
+
+function changeTableing(pos,length){
+	var i;
+	var firehole;
+	for(i=0;i<=length;i++){
+		tag = document.getElementById('tab_'+i);
+		goods_list = document.getElementById('goods_list_'+i);
+		if(pos == i){
+			tag.className='current';
+			goods_list.style.display='block';
+		}else{
+			tag.className='';
+			goods_list.style.display='none';
+		}
+	}
+}
+
+
+</script>
+
+<div  class="GoodsList-Tabs tabsb">
+<{if count($taglist) > 0}>
+	<{foreach from=$taglist key=tagno item=tagname}>
+		<{if $tagno== 0 }>
+			<div class="current" style="margin-top:5px;" onClick=changeTableing(<{$tagno}>,3) id=tab_<{$tagno}>><span><{$tagname}></span>&nbsp;</div>
+		<{else}>
+			<div style="float:left;margin-top:5px;"  onClick=changeTableing(<{$tagno}>,3)  id=tab_<{$tagno}>><span><{$tagname}></span>&nbsp;</div>
+		<{/if}>
+	<{/foreach}>
+<{/if}>
+<h1 class="tabsbrand"><{$data.brand_name}></h1>
+</div>
+
+<{foreach from=$taggoods key=tagno item=tagproducts}>
+
+<{if $tagno == 0 }>
+<div id=goods_list_<{$tagno}> style='display:block; padding-left:5px;'>
+<{else}>
+<div id=goods_list_<{$tagno}> style='display:none;padding-left:5px;'>
+<{/if}>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+
+ <{foreach from=$tagproducts.products item=product name=goods}>
+    <td  id="pdt-<{$product.goods_id}>" product="<{$product.goods_id}>" width="25%">
+   
+   <div class="items-gallery<{$mask_webslice}>">
+    <div class="goodpic" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}>  width:<{$env.thumbnail_pic_width}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>
+     text-align:center;vertical-align: middle;margin:0px auto;'>
+    <a target="_blank" href="<{link ctl="product" act="index" arg0=$product.goods_id}>" style=" margin:0 auto;overflow:hidden;<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> height:<{$env.thumbnail_pic_height}>px;<{/if}>" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:<{$env.thumbnail_pic_width}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>
+     overflow:hidden;text-align:center;vertical-align: middle;margin:0px auto; line-height:<{$env.thumbnail_pic_height}>px;'>
+    <img src="<{$product.thumbnail_pic|gimage:'thumbnail'}>" alt="<{$product.name}>" />
+    </a></div>
+      <div class="goodinfo">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="entry-content">
+          <tr>
+            <td colspan="2"><ul style="line-height:15px; text-align:left">
+			<li><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name}>" class="entry-title"><{$product.name|escape:"html"}></a></li>
+			<li>General Price:<span class="mktprice1"><{$product.mktprice|cur}></span></li>
+                <li>VIP Price:<span  style="color:#FF0000;"><{$product.price|cur}></span></li>
+              </ul></td>
+          </tr>
+           </table>
+      </div>
+    </div>  
+      
+      </td>
+    <{if !($smarty.foreach.goods.iteration%4)}> </tr>
+  <{if !$smarty.foreach.goods.last}>
+  <tr valign="top"> <{/if}>
+    
+    <{elseif $smarty.foreach.goods.last}>
+    <td colspan="<{math equation='4 - y' y=$smarty.foreach.goods.iteration%4}>">&nbsp;</td>
+  </tr>
+  <{/if}>
+  <{/foreach}>  
+</table>
+
+
+</div>
+
+
+
+
+<{/foreach}>
+
+

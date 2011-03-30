@@ -1,0 +1,301 @@
+<table width="980" border="0" cellspacing="0" cellpadding="0">
+  <tr><td>
+  <table width="980" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="196" valign="top"><table width="196" height="80" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="cartstep">Step1: Shopping bag</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step2: Sing</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step3: Order</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step4: Checkout</td>
+      </tr>
+    </table></td>
+    <td width="784"><div class="CartWrap" id="cart-index">
+
+<{if count($trading.products)>0 || count($trading.package)>0 || count($trading.gift_e)>0 }>
+  <div id="cart-items cartsection"><div id="carttittle">Shopping Bag</div>
+  <div id="cartinfo">BagXO only sale on web </div>
+  <form id="form-cart" action="<{link ctl="cart" act="checkout"}>" method="post" extra="cart">
+    <div class="cartwrap" id="cartItems">
+    <{if count($trading.products) > 0}>
+	
+    <div id="goodsbody" class="">
+    <table width="100%" cellpadding="3" cellspacing="0" id="cartstyle">
+      <colgroup class="span-2 "></colgroup>
+      <colgroup ></colgroup>
+      <colgroup class="span-auto"></colgroup>
+      <colgroup class="span-auto"></colgroup>
+      <colgroup class="span-auto"></colgroup>
+	  <colgroup class="span-auto"></colgroup>
+	  <colgroup class="span-auto"></colgroup>
+
+      <thead>
+        <tr>
+          <th><{t}>Image<{/t}></th>
+          <th  width="196"><{t}>Product<{/t}></th>
+      	  <th><{t}>Code No.<{/t}></th>
+          <th><{t}>Price<{/t}></th>
+       
+          <th><{t}>Quantity<{/t}></th> 
+		   <th><{t}>Total<{/t}></th>
+		   <th><{t}>Removeg<{/t}></th> 
+          
+        </tr>
+		<tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+      </thead>
+      <tbody >      <{foreach from=$trading.products item="item" key="key"}>
+      <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=g arg1=$item.key}>" urlremove="<{link ctl=cart act=removeCart arg0=g}>" >
+        <td><div align="left"><img src="<{$item.thumbnail_pic|gimage:'thumbnail'}>" /></div></td>
+        <td  width="196"><div align="left" style="padding-top:7px; padding-left:10px;"><{$item.name}><{if $item.spec}> (<{$item.spec}>)<{/if}><{$item.addon.adjname}>
+          <{if $item._pmt.describe}><div align="left"><{$item._pmt.describe}></div><{/if}></div></td>
+		  <td style="padding-top:7px; " align="center"><{$item.bn}></td>
+      <td valign="top"><div align="center" style="padding-top:7px; "><{$item._pmt.price|cur}></div></td>
+       
+    
+        <td><div align="center"  style="padding-top:7px; ">
+              <input type="text" class="_x_ipt textcenter" value="<{$item.nums}>" onchange="Cart.inputUpdate(event)" style=" width:50px;" size="3" name="cartNum[g][<{$item.key}>]" />
+              <span class="numadjust increase" price="<{$item._pmt.price}>"></span><span class="numadjust decrease" price="<{$item._pmt.price}>"></span><{if !is_null($item.store) && $item.nums > $item.store}></div>
+            <h3 align="center" class="t"><{t}>(Tips:need to wait)<{/t}></h3>
+            <div align="center"><{/if}></div></td> 
+			  <td valign="top" class="itemTotal"><div align="center"  ><{$item._pmt.amount|cur}></div></td>
+			 <td valign="top"><div align="center" style="padding-top:7px;"><span class="lnk quiet" style="display:block; width:20px; height:19px; background:url(../../../../themes/zqzyb/images/goods/del.jpg) no-repeat;"><{t}><{/t}></span></div></td> 
+			
+        
+      </tr>
+     
+	  <tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+		 <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+
+    <{if $trading.gift_e}>
+	<div style="padding:15px 0 5px 0; font-weight:bold; background:#FFFFFF; font-size:16px; width:100%;"><{t}>Gift<{/t}></div>
+    <div id="pkgbody"  style=" border-bottom:5px solid #FFFFFF;" >
+    <table width="100%" cellpadding="0" cellspacing="0" class="cartstyle" >
+      <colgroup class="span-2"></colgroup>
+      <colgroup></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-2"></colgroup>            
+      <thead>
+        <tr>
+          <th style="background:#FFF0FB;color:#AC3751;font-size:14px;text-align:center;padding-top:5px"><{t}>Image<{/t}></th>
+          <th style="background:#FFF0FB;color:#AC3751;font-size:14px;text-align:center;padding-top:5px; width:260px;"><{t}>Gift<{/t}></th>
+          <th style="background:#FFF0FB;color:#AC3751;font-size:14px;text-align:center;padding-top:5px"><{t}>Poins<{/t}></th>
+          <th style="background:#FFF0FB;color:#AC3751;font-size:14px;text-align:center;padding-top:5px"><{t}>Quota<{/t}></th>
+          <th style="background:#FFF0FB;color:#AC3751;font-size:14px;text-align:center;padding-top:5px"><{t}>Quantity<{/t}></th>
+          <th style="background:#FFF0FB;color:#AC3751;font-size:14px;text-align:center;padding-top:5px"><{t}>Tatal<{/t}></th>
+          <th style="background:#FFF0FB;color:#AC3751;font-size:14px;text-align:center;padding-top:5px"><{t}>Removeg<{/t}></th>
+        </tr>
+      </thead>
+      <tbody >
+	  	  <tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+      <{foreach from=$trading.gift_e item="item" key="key"}>
+        <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=f arg1=$item.gift_id}>" urlremove="<{link ctl=cart act=removeCart arg0=f}>">
+          <td><a href="<{link ctl=gift act=index arg0=$item.gift_id}>"><img style="border:1px solid #000000" src="<{$item.thumbnail_pic|gimage:'thumbnail'}>"  <{if $env.thumbnail_pic_width >0 && $env.thumbnail_pic_height >0}>width="110" height="133"<{/if}> /></a></td>
+          <td style="padding-top:7px; padding-left:10px;"><{$item.name}></td>
+          <td><div align="center" style="padding-top:7px; "><{$item.point}></div></td>
+          <td><div align="center" style="padding-top:7px; "><{if $item.limit_num=='0'}><{t}>不限制<{/t}><{else}><{$item.limit_num}><{/if}></div></td>
+          <td><div class="Numinput" align="center" style="padding-top:7px; "><input type="text" class="_x_ipt textcenter" onchange="Cart.inputUpdate(event)" value=<{$item.nums}> size="3" name="cartNum[f][<{$item.gift_id}>]" ><span style="display:none" class="numadjust increase" point="<{$item.point}>"></span><span style="display:none" class="numadjust decrease" point="<{$item.point}>"></span></div></td>
+          <td class="itemTotal" style="padding-top:7px; "><div align="center"><{$item.amount}></div></td>
+          <td><div align="center" style="padding-top:7px; "><span class="lnk quiet" style="width:20px; display:block; height:19px; border:0;background:url(../../../../themes/zqzyb/images/goods/del.jpg) no-repeat;"><{t}><{/t}></span></div></td>                    
+        </tr>
+			  <tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+      <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+    
+    <{if $trading.package}>
+    <div style="padding:10px 0 5px 0; font-weight:bold; background:#FFFFFF; font-size:16px; width:100%;"><{t}>Package<{/t}></div>
+    <div id="pkgbody"  style=" border-bottom:5px solid #FFFFFF;" > 
+    <table width="100%" cellpadding="0" cellspacing="0" id="cartstyle">
+      
+      <colgroup style="width:auto;"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-2"></colgroup>                
+      <thead>
+        <tr>
+         
+          <th><{t}>Name<{/t}></th>
+          <th><{t}>Price<{/t}></th>
+          <th><{t}>Quantity<{/t}></th>
+          <th><{t}>Tatal<{/t}></th>
+          <th><{t}>Removeg<{/t}></th>                        
+        </tr>
+      </thead>
+      <tbody>
+	   <tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+      <{foreach from=$trading.package item=item key=key}>
+        <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=p arg1=$item.goods_id}>" urlremove="<{link ctl=cart act=removeCart arg0=p}>">
+          
+          <td><div style="padding:4px 0 0 10px;"><{$item.name}> <{$item.addon.adjname}></div></td>
+          <td valign="top"><div align="center" style="padding-top:4px;"><{$item.price|cur}></div></td>
+          <td valign="top"><div class="Numinput" style="padding-top:4px;"><input type="text" class="_x_ipt textcenter" onchange="Cart.inputUpdate(event)" value=<{$item.nums}> size="3" name="cartNum[p][<{$item.goods_id}>]" ><span class="numadjust increase" style="display:none;" price="<{$item.price}>"></span><span class="numadjust decrease" style="display:none;"  price="<{$item.price}>"></span></div></td>
+          <td class="itemTotal" valign="top"><div align="center" ><{$item.amount|cur}></div></td>
+          <td valign="top"><div align="center" style="padding-top:4px;"><span class="lnk quiet" style="display:block; width:20px; height:19px; background:url(../../../../themes/zqzyb/images/goods/del.jpg) no-repeat;"><{t}><{/t}></span></div></td>    
+        </tr>
+		 <tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+      <{/foreach}>
+      </tbody>
+    </table>
+    </div> 
+    <{/if}>
+    
+    <div align="right" style="padding-right:10px;" id="cartTotal">
+    <{require file="cart/cart_total.html"}>
+    </div>
+  </div>
+  
+  <div class="CartBtn clearfix" >
+   <div class="span-auto floatRight"><input class="btn-next" style="width:94px; display:block; height:36px; text-indent:-9999px; margin-top:5px; cursor:pointer; border:0;" type="submit" value="<{t}>下单结算&raquo;<{/t}>" /></div>
+  <div class="span-auto floatRight"><input id="clearCart" url="<{link ctl=cart act=removeCart arg0=all}>" class="btn-clearcat actbtn" style="width:97px"  type="button" value="" /></div>
+ <div class="span-auto floatRight"><a  style="width:120px; display:block; height:33px;margin-top:15px; color:#8A3C4A; text-decoration:underline; cursor:pointer;" onclick="window.location='<{link ctl=index}>'" value="<{t}>&laquo;继续购物<{/t}>">< Continue Shopping</a></div>
+  </div>
+  </form>
+  </div>
+  <div>
+<form action="<{link ctl="cart" act="applycoupon"}>" method="post" id="cart-coupon">
+<div id="coupontittle">
+<div id="couponwrap">
+<div style="color:#FF6666; font-size:14px; padding:5px 0 10px 10px; font-weight:bold;"> Using coupon </div>
+  <{if count($trading.coupon_u)>0}>
+  <div class="promotion" style="padding-left:26px;"><{t}>Used Coupon ：<{/t}><{foreach from=$trading.coupon_u item="item" key="key"}><strong><{$key}></strong><{/foreach}><a href="<{link ctl=cart act=removeCoupon}>" class="lnk" style="margin:0 0 0 20px;"><{t}>cancel<{/t}></a></div>
+  <{else}>
+  &nbsp;&nbsp;<{input type="text" name="coupon" id="-s-ipt-coupon" size="30"}> <input type="submit" value="Submit" />
+  <{/if}>
+</div>
+</div>
+</form>
+</div>
+<{/if}>
+<p id="cart-none-msg"<{if count($trading.products)>0 || count($trading.package)>0 || count($trading.gift_e)>0 }> style="display:none"<{/if}>><{t}>sorry,your bag is empty!<{/t}></p>
+</div></td>
+  </tr>
+  </table>
+  </td></tr>
+  
+  <tr><td height="35"><div class="mailhelp">Need more answer? <a href="#">Contact: custom@bagxo.com</a></div></td></tr>
+</table>
+<script language="javascript">
+window.addEvent('domready',function(){
+ 
+  var cart_product_img_viewer=new Element('div',{styles:{'position':'absolute','zIndex':500,'opacity':0,'border':'1px #666 solid'}}).inject(document.body);
+  
+  var cpiv_show=function(img,event){
+       
+      if(!img)return;
+      cart_product_img_viewer.empty().adopt($(img).clone().removeProperties('width','height').setStyle('border','1px #fff solid')).fade(1);
+      
+      var size = window.getSize(), scroll = window.getScroll();
+        var tip = {x: cart_product_img_viewer.offsetWidth, y: cart_product_img_viewer.offsetHeight};
+        var props = {x: 'left', y: 'top'};
+        for (var z in props){
+            var pos = event.page[z] + 10;
+            if ((pos + tip[z] - scroll[z]) > size[z]) pos = event.page[z] - 10 - tip[z];
+            cart_product_img_viewer.setStyle(props[z], pos);
+        }
+  
+  };
+  
+  
+   $ES('#cart-index .cart-product-img').each(function(i){
+       new Asset.image(i.get('isrc'),{onload:function(img){
+	   if(!img)return;
+           var _img=img.zoomImg(50,50);
+		     if(!_img)return;
+           _img.setStyle('cursor','pointer').addEvents({
+              'mouseenter':function(e){
+                 cpiv_show(_img,e);
+              },
+              'mouseleave':function(e){
+                cart_product_img_viewer.fade(0);
+              }
+           });
+           i.empty().adopt(_img);                 
+       },onerror:function(){
+            i.empty();
+		
+       }});
+   
+   });
+   
+   
+});
+
+if(!extra_validator['cart']){
+  extra_validator['cart'] ={
+    'cartnum':['请录入大于0的整数',function(f,i){
+        return (i>0)&&(!/[^\d]/.test(i));
+      }]
+    };
+}
+var moneyFormat = <{$currency|default:'null'}>;
+         $$('#cartItems .numadjust').addEvents({
+             'mousedown':function(){
+                this.addClass('active');
+             },
+             'mouseup':function(){
+               this.removeClass('active');
+             }
+         });
+</script>

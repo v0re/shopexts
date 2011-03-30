@@ -1,0 +1,170 @@
+<div class="CartWrap" id="cart-index"><table width="980" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="196" valign="top"><table width="196" height="80" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="cartstep">Step1: Shopping bag</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step2: Sing</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step3: Order</td>
+      </tr>
+      <tr>
+        <td class="cartstepother">Step4: Checkout</td>
+      </tr>
+    </table></td>
+    <td width="784">
+<{if count($trading.products)>0 || count($trading.package)>0 || count($trading.gift_e)>0 }>
+  <div id="cart-items cartsection"><div id="carttittle"><img src="../../../../images/carttittle1.gif" /></div>
+  <div id="cartinfo">BagXO only sale on web </div>
+  <form id="form-cart" action="<{link ctl="cart" act="checkout"}>" method="post" extra="cart">
+  <div class="cartwrap" id="cartItems">
+    <{if count($trading.products) > 0}>
+    
+    <div id="goodsbody" class="">
+    <table width="100%" cellpadding="3" cellspacing="0" id="cartstyle">
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-auto"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 ColColorOrange"></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <thead>
+        <tr>
+          <th><{t}>&nbsp;&nbsp;Image<{/t}></th>
+          <th><{t}>&nbsp;&nbsp;Product<{/t}></th>
+      
+          
+       
+          <th><{t}>&nbsp;&nbsp;Quantity<{/t}></th> 
+		  <th><{t}>&nbsp;&nbsp;Remove<{/t}></th> 
+		   <th><{t}>&nbsp;&nbsp;Price<{/t}></th>
+           <th><{t}>&nbsp;&nbsp;Total<{/t}></th>
+           
+        </tr>
+		<tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+      </thead>
+      <tbody >
+      <{foreach from=$trading.products item="item" key="key"}>
+      <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=g arg1=$item.key}>" urlremove="<{link ctl=cart act=removeCart arg0=g}>" >
+        <td><img src="<{$item.thumbnail_pic|gimage:'thumbnail'}>" /></td>
+        <td >&nbsp;&nbsp;<{$item.name}><{if $item.spec}> (<{$item.spec}>)<{/if}><{$item.addon.adjname}>
+          <{if $item._pmt.describe}><div align="left">&nbsp;&nbsp;<{$item._pmt.describe}></div><{/if}></td>
+      
+       
+       
+        <td>
+          <div align="left">
+            &nbsp;&nbsp;<input type="text" class="_x_ipt textcenter" value="<{$item.nums}>" onchange="Cart.inputUpdate(event)" size="3" name="cartNum[g][<{$item.key}>]" /><span class="numadjust increase" price="<{$item._pmt.price}>"></span><span class="numadjust decrease" price="<{$item._pmt.price}>"></span></div><{if !is_null($item.store) && $item.nums > $item.store}><h3 class="t"><{t}>(Tips:need to wait)<{/t}></h3>
+            <{/if}></td>
+			 <td><span class="lnk quiet"><{t}>Del.<{/t}></span></td> 
+			<td>&nbsp;&nbsp;<{$item._pmt.price|cur}></td>
+        <td class="itemTotal">&nbsp;&nbsp;<{$item._pmt.amount|cur}></td>
+       
+      </tr>
+     
+	  <tr>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		<td height="5" bgcolor="#FFFFFF"></td>
+		</tr>
+		 <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+
+    <{if $trading.gift_e}>
+    <h3><{t}>Gift<{/t}></h3>
+    <div id="giftbody"  class="division" >
+    <table width="100%" cellpadding="0" cellspacing="0" class="liststyle" >
+      <colgroup class="span-2"></colgroup>
+      <colgroup></colgroup>
+      <colgroup class="span-2"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 ColColorOrange"></colgroup>
+      <colgroup class="span-2"></colgroup>            
+      <thead>
+        <tr>
+          <th><{t}>Img.<{/t}></th>
+          <th><{t}>Gift<{/t}></th>
+          <th><{t}>Need Poins <{/t}></th>
+          <th><{t}>Quota<{/t}></th>
+          <th><{t}>Quantity<{/t}></th>
+          <th><{t}>Tatal<{/t}></th>
+          <th><{t}>DEL<{/t}></th>
+        </tr>
+      </thead>
+      <tbody >
+      <{foreach from=$trading.gift_e item="item" key="key"}>
+        <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=f arg1=$item.gift_id}>" urlremove="<{link ctl=cart act=removeCart arg0=f}>">
+          <td><a href="<{link ctl=gift act=index arg0=$item.gift_id}>"><img src="<{$item.thumbnail_pic|gimage:'thumbnail'}>"  <{if $env.thumbnail_pic_width >0 && $env.thumbnail_pic_height >0}>width="<{$env.thumbnail_pic_width}>" height="<{$env.thumbnail_pic_height}>"<{/if}> /></a></td>
+          <td><{$item.name}></td>
+          <td><{$item.point}></td>
+          <td><{if $item.limit_num=='0'}><{t}>不限制<{/t}><{else}><{$item.limit_num}><{/if}></td>
+          <td><div class="Numinput"><input type="text" class="_x_ipt textcenter" onchange="Cart.inputUpdate(event)" value=<{$item.nums}> size="3" name="cartNum[f][<{$item.gift_id}>]" ><span class="numadjust increase" point="<{$item.point}>"></span><span class="numadjust decrease" point="<{$item.point}>"></span></div></td>
+          <td class="itemTotal"><{$item.amount}></td>
+          <td><span class="lnk quiet"><{t}>Del.<{/t}></span></td>                    
+        </tr>
+      <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+    
+    <{if $trading.package}>
+    <h3><{t}>Bundle of goods<{/t}></h3> 
+    <div id="pkgbody"  class="division"> 
+    <table width="100%" cellpadding="0" cellspacing="0" class="liststyle">
+      <colgroup class="span-2"></colgroup>
+      <colgroup style="width:auto;"></colgroup>
+      <colgroup class="span-2 "></colgroup>
+      <colgroup class="span-1"></colgroup>
+      <colgroup class="span-2 ColColorOrange"></colgroup>
+      <colgroup class="span-2"></colgroup>                
+      <thead>
+        <tr>
+          <th><{t}>Number<{/t}></th>
+          <th><{t}>Name<{/t}></th>
+          <th><{t}>Price<{/t}></th>
+          <th><{t}>Quantity<{/t}></th>
+          <th><{t}>Tatal<{/t}></th>
+          <th><{t}>DEL<{/t}></th>                        
+        </tr>
+      </thead>
+      <tbody>
+      <{foreach from=$trading.package item=item key=key}>
+        <tr number="<{$item.nums}>" urlupdate="<{link ctl=cart act=updateCart arg0=p arg1=$item.goods_id}>" urlremove="<{link ctl=cart act=removeCart arg0=p}>">
+          <td><{$item.bn}></td>
+          <td><{$item.name}> <{$item.addon.adjname}></td>
+          <td><{$item.price|cur}></td>
+          <td><div class="Numinput"><input type="text" class="_x_ipt textcenter" onchange="Cart.inputUpdate(event)" value=<{$item.nums}> size="3" name="cartNum[p][<{$item.goods_id}>]" ><span class="numadjust increase" price="<{$item.price}>"></span><span class="numadjust decrease" price="<{$item.price}>"></span></div></td>
+          <td class="itemTotal"><{$item.amount|cur}></td>
+          <td><span class="lnk quiet"><{t}>Del.<{/t}></span></td>    
+        </tr>
+      <{/foreach}>
+      </tbody>
+    </table>
+    </div>
+    <{/if}>
+    
+    <div class="" id="cartTotal" align="right">
+    <{require file="cart/cart_total.html"}>
+    </div>
+  </div>
+  
+  <div class="CartBtn clearfix" style="margin-bottom:5px;">

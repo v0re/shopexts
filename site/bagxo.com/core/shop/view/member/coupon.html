@@ -1,0 +1,49 @@
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">My Account</span></div>
+<div class="membertopb"><span style="margin-left:20px; font-size:16px; color:#CF5E64; line-height:40px; font-weight:bold;">My coupon</span></div>
+
+<table width="100%" cellpadding="3" cellspacing="0" class="liststyleb">
+    <colgroup class="span-2 "></colgroup>
+    <colgroup ></colgroup>
+    <colgroup class="span-4"></colgroup>
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="span-3"></colgroup>
+<thead>
+<tr>
+  <th><{t}>Code No.<{/t}></th>
+  <th><{t}>Campaign Event<{/t}></th>
+  <th><{t}>Expiry Date<{/t}></th>
+  <th><{t}>Valid Times<{/t}></th>
+  <th><{t}>Status<{/t}></th>
+<!--  <th><{t}>限用商品<{/t}></th>-->
+</tr>
+</thead>
+<tbody><{if count($coupons)>0}>
+<{foreach from=$coupons item=item}>
+<tr  style=" background:url(../../../../statics/Line.gif) repeat-x left bottom #EDECEA; height:30px;">
+  <td  style=" vertical-align:middle;"><{$item.memc_code}></td>
+  <td class=" textleft"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><strong><{$item.cpns_name}></strong></td>
+  </tr>
+  <tr>
+    <td><span style="color:#666;"><{$item.pmt_describe}></span></td>
+  </tr>
+</table>
+
+</td>
+
+  <td style=" vertical-align:middle;"><{$item.pmt_time_begin|cdate}> ~ <{$item.pmt_time_end|cdate}></td>
+  <td  style=" vertical-align:middle;"><{$item.memc_used_times}>/<{$mc_use_times}></td>
+  <td  style=" vertical-align:middle;"><{$item.memc_status}></td>
+</tr>
+
+<{/foreach}>
+<{else}>
+<tr>
+<td height="60" colspan="6">
+  No items owned by you.</td>
+</tr>
+<{/if}>
+</tbody>
+</table>
+<{pager data=$pager}>

@@ -1,0 +1,115 @@
+<span id="foobar_<{$widgets_id}>" style="position: relative; z-index:65535;">
+<div style="display:none;">
+  <span id="loginBar_<{$widgets_id}>" style="visibility:hidden; display:none;">
+    <{t}>您好,<{/t}>&nbsp;
+    <a href="<{link ctl=passport act=login}>"><{t}>[请登录]<{/t}></a>&nbsp;&nbsp;
+    <a href="<{link ctl=passport act=signup}>"><{t}>[免费注册]<{/t}></a>
+  </span>
+  <span id="memberBar_<{$widgets_id}>" style="display:none;">
+    <{t}>您好,<{/t}><span id="uname_<{$widgets_id}>"></span>!&nbsp;
+    <a href="<{link ctl=member act=index}>"><{t}>[会员中心]<{/t}></a>&nbsp;&nbsp;
+    <a href="<{link ctl=passport act=logout}>"><{t}>[退出]<{/t}></a>
+  </span>
+  </div>
+   <{if $setting.show_cur}>
+  &nbsp;
+  <span  style="color:#272727;">Select Currency</span><br>
+  <span id="Cur_sel_<{$widgets_id}>" style="cursor: default;" >
+  <strong></strong>
+  <{img src="statics/bundle/arrow-down.gif"}>
+  </span>
+  <{/if}>
+  <{if $setting.show_cart}>
+  &nbsp;
+  <a href="<{link ctl=cart act=index}>" target="_blank" class="cart-container">
+    <span class="inlineblock CartIco" ><{t}>Shopping Bag<{/t}></span>
+  [<span id="Cart_<{$widgets_id}>" class="cart-number">0</span>]
+  <{img  src="statics/bundle/arrow-down.gif"}> Items
+  </a>
+  <a style=" position:relative;left:5px;top:3px;" href="<{link ctl=cart act=index}>" target="_blank" class="cart-container"><img src="../../../themes/zqzyb/images/checkouta.gif""/></a>
+  <{/if}>
+</span>
+<script>
+window.addEvent('domready',function(){
+window.updateFooBar=arguments.callee;
+var foobar = function(){
+		this.el = $('foobar_'+this.id);
+
+		/* 会员 */
+		var uname = Cookie.get('S[UNAME]');
+        
+        if(uname){
+			$('uname_'+this.id).setText(uname);
+		}
+		if(Cookie.get('S[MEMBER]')){
+			$('loginBar_'+this.id).hide();
+			$('memberBar_'+this.id).show();
+		}else{
+          $('loginBar_'+this.id).setStyle('visibility','visible');
+        }
+
+		
+		/* 货币 */
+		this.curEl = $('Cur_sel_'+this.id);
+		if(this.curEl){
+			this.curList = new Element('div',{'class':'huo'})
+			.setStyles({'display':'none',
+			            'top':30,
+						'left':this.curEl.getPosition(this.curEl.getParent()).x})
+			.inject(this.el);
+			new QMenu(this.curEl,this.curList);
+
+			var curNow = Cookie.get('S[CUR]');
+			for(var i=0;i<this.cur.length;i++){
+				if(curNow == this.cur[i].cur_code){
+					$E('strong',this.curEl).setText(this.cur[i].cur_sign+' '+this.cur[i].cur_name);
+				}
+				new Element('div',{'class':'item','style':'text-align:left'}).setText(this.cur[i].cur_sign+' '+this.cur[i].cur_name).inject(this.curList).addEvent('click',function(e){
+					Cookie.set('S[CUR]',this.cur_code);
+					window.location.reload()
+				}.bind(this.cur[i]));
+			}
+		}
+		/* 购物车 */
+		this.cartEl = $('Cart_'+this.id);
+		if(this.cartEl){
+			Cart.bindView(this.cartEl);
+		}
+		if($('Cart_<{$widgets_id}>')){
+			$('Cart_<{$widgets_id}>').setText(Cookie.get('S[CART_COUNT]')?Cookie.get('S[CART_COUNT]'):0);
+		}
+		/* 显示 */
+		if(this.stick){
+			var foobar_el=this.el;
+            var feCis=foobar_el.getCis();
+            var foobarFix=new Element('div',{styles:{'background':'#e9e9e9',
+                                                      'line-height':25,
+                                                      'position':'absolute',
+                                                      'zIndex':65535,
+                                                      'width':'100%',
+                                                      'text-align':'center',
+                                                      'border':'1px #ccc solid'}})
+                                                      .inject(document.body)
+                                                      .setStyle('visibility','hidden');
+			var temp_foobar_el=new Element('span').setStyles({'width':foobar_el.getSize().x,'height':foobar_el.getSize().y,'position':'relative'}).setHTML('&nbsp;').injectAfter(foobar_el).hide();
+            var fixbar=function(){
+              var st=window.getScrollTop();
+				if(st>feCis.top){
+                    foobarFix.adopt(foobar_el).setStyle('top',st+20).setStyle('visibility','visible');
+					temp_foobar_el.show()
+				}else{
+                   foobar_el.injectAfter(temp_foobar_el.hide());
+                   foobarFix.setStyle('visibility','hidden');
+                }
+			};
+            window.addEvent('scroll',fixbar);
+            window.addEvent('resize',fixbar);
+		}
+
+};
+  if(foobar){
+	foobar.call({id:'<{$widgets_id}>',cur:<{$data.cur|default:'null'}>,alwayShow:true,cartUrl:'<{link ctl="cart" act="view"}>',stick:<{if $setting.stick}>true<{else}>false<{/if}>});
+   
+  }
+});
+</script>

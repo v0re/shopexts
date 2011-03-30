@@ -1,0 +1,22 @@
+您好<span id="uname_<{$widgets_id}>"></span>！
+<span id="loginBar_<{$widgets_id}>">
+  <a href="<{link ctl=passport act=login}>"><{t}>[请登录]<{/t}></a>&nbsp;&nbsp;
+  <a href="<{link ctl=passport act=signup}>"><{t}>[免费注册]<{/t}></a>
+</span> 
+<span id="memberBar_<{$widgets_id}>" style="display:none">
+  <a href="<{link ctl=member act=index}>"><{t}>[会员中心]<{/t}></a>&nbsp;&nbsp;
+  <a href="<{link ctl=passport act=logout}>"><{t}>[退出]<{/t}></a>
+</span>
+
+<script>
+(function(id){
+  var uname = Cookie.get('S[UNAME]');
+  if(uname){
+    $('uname_'+id).setText('，'+uname);
+  }
+  if(Cookie.get('S[MEMBER]')){
+    $('loginBar_'+id).setStyle('display','none');
+    $('memberBar_'+id).setStyle('display','');
+  }
+})('<{$widgets_id}>')
+</script>

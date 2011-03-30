@@ -1,0 +1,55 @@
+<script>
+var getPayment = function(obj){
+  if(obj.value != "0"){
+    W.page('index.php?ctl=trading/payment&act=getPayOpt&p[0]=' + obj.value+'&p[1]='+encodeURIComponent(obj.options[obj.selectedIndex].text),{update:'paylist-item',autoCancel:false});
+    W.page('index.php?ctl=trading/payment&act=infoPad&p[0]=' + obj.value,{update:'payInfoPad',autoCancel:false});
+  }else{
+    $('paylist-item').innerHTML = '';
+    $('payInfoPad').innerHTML = '';
+  }
+}
+</script>
+<div style="padding:10px">
+<div style="text-align:right;"><{help docid="68" type="link"}>点击查看帮助<{/help}></div>
+<div class="note">
+<div id="payInfoPad">请点击支付方式选择需要添加的支付接口类型</div></div></div>
+<form method="POST" action="index.php?ctl=trading/payment&act=addPayment" class="tableform">
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <th><{t}>支付方式：<{/t}></td>
+  <td><select name="pay_type" onchange="getPayment(this);">
+    <option value="0"><{t}>-请选择-<{/t}></option>
+    <{foreach from=$paylist item=list}>
+    <option value="<{$list.0}>"><{$list.1}></option>
+    <{/foreach}>
+  </select></td>
+</tr>
+</table>
+</div>
+<div class="division">
+<div id="paylist-item"></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <th><{t}>排序：<{/t}></td>
+  <td><{input style="width:50px;" type="unsigned" name="orderlist" value=0}></td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <th><{t}>介绍：<{/t}></th>
+  <td><{input type="html" name="des"}></td>
+</tr>
+</table>
+
+</div>
+
+<table border="0" align="center" cellpadding="0" cellspacing="0" class="tableAction">
+  <tr>
+    <td><b class="submitBtn" ><input type="submit" value="保存"></b></td>
+  </tr>
+</table>
+</form>

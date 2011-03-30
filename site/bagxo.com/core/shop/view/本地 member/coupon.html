@@ -1,0 +1,42 @@
+<h1 class="title"><{t}>我的优惠券<{/t}></h1>
+
+<table width="100%" cellpadding="3" cellspacing="0" class="liststyle">
+    <colgroup class="span-2 "></colgroup>
+    <colgroup ></colgroup>
+    <colgroup class="span-4"></colgroup>
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="span-3"></colgroup>
+<thead>
+<tr>
+  <th><{t}>号码<{/t}></th>
+  <th><{t}>名称<{/t}></th>
+  <th><{t}>有效期<{/t}></th>
+  <th><{t}>可用次数<{/t}></th>
+  <th><{t}>状态<{/t}></th>
+<!--  <th><{t}>限用商品<{/t}></th>-->
+</tr>
+</thead>
+<tbody><{if count($coupons)>0}>
+<{foreach from=$coupons item=item}>
+<tr>
+  <td rowspan="2"><{$item.memc_code}></td>
+  <td class=" textleft"><strong><{$item.cpns_name}></strong><br />
+</td>
+
+  <td rowspan="2"><{$item.pmt_time_begin|cdate}> ~ <{$item.pmt_time_end|cdate}></td>
+  <td rowspan="2"><{$item.memc_used_times}>/<{$mc_use_times}></td>
+  <td rowspan="2"><{$item.memc_status}></td>
+</tr>
+<tr>
+  <td class=" textleft"><span style="color:#666;"><{$item.pmt_describe}></span></td>
+</tr>
+<{/foreach}>
+<{else}>
+<tr>
+<td height="60" colspan="6">
+  尚无任何优惠券</td>
+</tr>
+<{/if}>
+</tbody>
+</table>
+<{pager data=$pager}>

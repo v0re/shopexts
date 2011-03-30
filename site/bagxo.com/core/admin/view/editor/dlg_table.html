@@ -1,0 +1,82 @@
+<div class="division">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th><{t}>行数：<{/t}></th>
+      <td><input id="txtRows" type="text" maxlength="3" size="2" value="3" name="txtRows" /></td>
+      <th><{t}>表格宽度：<{/t}></th>
+      <td><input id="txtWidth" type="text" maxlength="4" size="3" value="200" name="txtWidth" /></td>
+    </tr>
+    <tr>
+      <th><{t}>列数：<{/t}></th>
+      <td><input id="txtColumns" type="text" maxlength="2" size="2" value="2" name="txtColumns" /></td>
+      <th><{t}>表格高度：<{/t}></th>
+      <td><input id="txtHeight" type="text" maxlength="4" size="3" name="txtHeight" /></td>
+    </tr>
+    <tr>
+      <th><{t}>边框粗细：<{/t}></th>
+      <td> <input id="txtBorder" type="text" maxlength="2" size="2" value="1" name="txtBorder" /></td>
+      <th><{t}>单元格边距：<{/t}></th>
+      <td><input id="txtCellSpacing" type="text" maxlength="2" size="2" value="1" name="txtCellSpacing" /></td>
+    </tr>
+    <tr>
+      <th><{t}>对齐标题：<{/t}></th>
+      <td><select id="selAlignment" name="selAlignment">
+              <option value="" selected="selected"><{t}>默认<{/t}></option>
+              <option value="left"><{t}>左边<{/t}></option>
+              <option value="center"><{t}>中间<{/t}></option>
+              <option value="right"><{t}>右边<{/t}></option>
+            </select></td>
+      <th><{t}>单元格间距：<{/t}></th>
+      <td> <input id="txtCellPadding" type="text" maxlength="2" size="2" value="1" name="txtCellPadding" /></td>
+    </tr>
+    <tr>
+      <th><{t}>像素：<{/t}></th>
+      <td> <select id="selWidthType" name="selWidthType">
+              <option value="px" selected="selected"><{t}>像素<{/t}></option>
+              <option value="%"><{t}>百分比<{/t}></option>
+            </select></td>
+      <th>&nbsp;</th>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+</div>
+
+
+
+<div class="mainFoot">
+     <table cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 0pt auto;" class="tableAction">
+      <tbody><tr>
+        <td>
+          <b class="submitBtn blue" id="mce_dlg_ok">
+            <button>
+            <span class=""><{t}>确定<{/t}></span>
+            </button>
+          </b>
+        </td>
+		
+        <td>
+          <b isCloseDialogBtn="true" class="submitBtn blue">
+            <button>
+            <span class=""><{t}>取消<{/t}></span>
+            </button>
+          </b>
+        </td>
+        </tr>
+        </tbody>
+      </table>
+</div>
+
+<script>
+$('mce_dlg_ok').addEvent('click',function(){
+  var ret = '<table '+($('selAlignment').value?('align="'+$('selAlignment').value+'" '):'')+'width="'+$('txtWidth').value+$('selWidthType').value+'" '+($('txtHeight').value?('height="'+$('txtHeight').value+'" '):'')+'border="'+$('txtBorder').value+'" cellspacing="'+$('txtCellSpacing').value+'" cellpadding="'+$('txtCellPadding').value+'">';
+    var row='';
+    for(var i=$('txtColumns').value.toInt();i>0;i--){
+      row+='<td>&nbsp;</td>';
+    }
+    for(var i=$('txtRows').value.toInt();i>0;i--){
+      ret+='<tr>'+row+'</tr>';
+    }
+    ret+='</table>';
+  window.curEditor.exec.bind(window.curEditor)('insertHTML',ret);
+});
+</script>

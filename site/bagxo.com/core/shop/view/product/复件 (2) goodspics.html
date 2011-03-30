@@ -1,0 +1,109 @@
+<div class="goods-detail-pic" style='<{if $env.small_pic_width !=0 && $env.small_pic_height !=0}> width:<{$env.small_pic_width}>px;height:<{$env.small_pic_height}>px;<{/if}>'>
+            <a href="<{link ctl=product act=viewpic arg0=$goods.goods_id arg0=$goods.goods_id arg1=def}>" target="_blank" style="visibility: visible; opacity: 1; margin-top: 8px;">
+                <img  src="<{$images.gimages[$goods.image_default].small|gimage:'small'}>"  alt="<{$goods.name}>"/></a>
+        </div>
+        <table class='picscroll'>
+            <tr>
+               <td width='5%' class='scrollarrow toleft' title='向左'>&nbsp;
+                  
+               </td>
+                <td width='90%'>
+                  <div class="goods-detail-pic-thumbnail pics">
+                <{if $images.gimages}>
+                <table>
+                   <tr>   
+                     <{if $imgtype != 'spec'}>
+                     <td> 
+                      <div class='uparrow'></div>
+                 <a href="<{link ctl=product act=viewpic arg0=$goods.goods_id arg0=$goods.goods_id arg1=$goods.image_default}>" target="_blank">
+                     <img b_src="<{$images.gimages[$goods.image_default].small|gimage:'small'}>" 
+					 c_src="<{$images.gimages[$goods.image_default].big|gimage:'big'}>"
+					 src="<{$images.gimages[$goods.image_default].thumbnail|storager}>" alt='<{$goods.name}>' width='45' height='45'/>
+                  </a>
+                    </td>
+                    <{/if}>
+                <{foreach from=$images.gimages item=thumb name=gimgs }>
+                <{if $thumb.gimage_id == $goods.image_default && $imgtype != 'spec'}>
+                    <{php}>continue;<{/php}>
+                <{/if}>
+                <td>
+                   <div class='uparrow'></div>
+                  <a href="<{link ctl=product act=viewpic arg0=$goods.goods_id arg0=$goods.goods_id arg1=$thumb.gimage_id}>" target="_blank">
+                     <img b_src="<{$thumb.small|gimage:'thumbnail'}>" 
+					 c_src="<{$thumb.big|gimage:'big'}>" 
+					 src="<{$thumb.thumbnail|storager}>" 
+					 alt='<{$goods.name}>' width='45' height='45'/>
+                  </a>
+                  </td>
+                <{/foreach}>
+                        </tr>
+                    </table>
+                <{/if}>
+                  </div>
+                </td>
+               <td width='5%' class='scrollarrow toright' title='向右'>&nbsp;
+               
+               </td>
+            </tr>
+        </table>
+        <div style="width:100%; text-align:center; padding-bottom:3px;"><a href="<{link ctl=product act=viewpic arg0=$goods.goods_id arg0=$goods.goods_id arg1=$goods.image_default}>" target="_blank"><{img src="statics/icons/btn_goods_gallery.gif" alt="查看商品相册"}></a></div>
+        
+        <script>
+        var readingGlassOptions=readingGlassOptions||{
+                 readingGlass:<{$readingGlass|default:0}>,
+                 readingGlassWidth:<{$readingGlassWidth|default:0}>,
+                 readingGlassHeight:<{$readingGlassHeight|default:0}>
+              };
+        window.addEvent('domready',function(){
+            try{
+              var goodsPic = new GoodsPic(<{$env.small_pic_width}>,<{$env.small_pic_height}>,readingGlassOptions);
+             }catch(e){}
+             
+           try{
+            var picscroll=$E('#goods-viewer .picscroll');
+            var scrollARROW=picscroll.getElements('.scrollarrow');
+            var picsContainer=$E('.pics',picscroll).scrollTo(0,0);
+            var offsetWidth=picsContainer.getElement('td').getSize().x;
+            if(window.ie){
+               offsetWidth+=picsContainer.getElement('td').getPadding().x
+            }
+            
+            var picArrowWalkto=function(where){
+                   var curon=$E('#goods-viewer .goods-detail-pic-thumbnail table').retrieve('tc');
+                   
+                   var newcur=false;
+                   try{
+                   newcur =curon['get'+where.capitalize()]('td').getElement('a');
+                   }catch(e){
+                      
+                   }       
+                  if(newcur)                   
+                  return newcur.fireEvent('click');
+                  return false;
+            };
+
+            if(picsContainer.getSize().x<picsContainer.getScrollSize().x){
+                    scrollARROW.setStyle('visibility','visible').addEvent('click',function(){
+               
+                     var scroll=picsContainer.getScroll();
+                     var scrollArrow=this;
+                     if(scrollArrow.hasClass('toleft')){
+                        picsContainer.scrollTo(scroll.x-offsetWidth);
+                        picArrowWalkto('previous');
+                     }else{
+                          picsContainer.scrollTo(scroll.x+offsetWidth);
+                          picArrowWalkto('next');
+                     }                     
+               
+               
+               });
+               
+             };
+             
+            }catch(e){
+              
+            }
+        });
+
+        
+        </script>

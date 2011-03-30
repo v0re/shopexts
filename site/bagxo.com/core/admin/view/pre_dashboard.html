@@ -1,0 +1,168 @@
+<div class="navBar mainHead"><{t}>欢迎登录ShopEx商店系统<{/t}><{if $logintime}><{t}>，您的上次登录时间为<{/t}><{$logintime|cdate:'SDATE_FTIME'}>。<{/if}></div>
+<div class="dashboard" id="dashboard_main">
+<div <{if $systeminfo.price || $systeminfo.pay || $systeminfo.sender || $systeminfo.area || $shopinfo.newversion}>class="notice"<{/if}>>
+    <ul>
+            <{if $systeminfo.price}>
+            <li onclick="W.page('index.php?ctl=system/cur&act=index','')"><b><{t}>系统提醒您：<{/t}></b><span><{t}>商店缺少默认货币，将会影响商店正常结算，请点此添加。<{/t}></span></li>
+            <{/if}>
+            
+            <{if $systeminfo.pay}>
+            <li  onclick="W.page('index.php?ctl=trading/payment&act=getPayList','')"><b><{t}>系统提醒您：<{/t}></b><span><{t}>商店缺少支付方式，顾客将无法下订单，请点此添加。<{/t}></span></li>
+            <{/if}>
+            
+            <{if $systeminfo.sender}>
+            <li onclick="W.page('index.php?ctl=trading/delivery&act=index','')"><b><{t}>系统提醒您：<{/t}></b><span><{t}>商店缺少配送方式，顾客将无法下订单，请点此添加。<{/t}></span></li>
+            <{/if}>
+            
+            <{if $systeminfo.area}>
+            <li onclick="W.page('index.php?ctl=trading/delivery&act=dlAreaList','')"><b><{t}>系统提醒您：<{/t}></b><span><{t}>商店缺少配送地区，顾客将无法下订单，请点此添加。<{/t}></span></li>
+            <{/if}>
+
+      <{if $systeminfo.cat}>
+            <li onclick="W.page('index.php?ctl=goods/category&act=addNew','')"><b><{t}>系统提醒您：<{/t}></b><span><{t}>商店缺少商品分类<{/t}></span></li>
+            <{/if}>
+
+      <{if $shopinfo.newversion}>
+      <li><b><{t}>可升级新版本：<{/t}></b><a href="<{$shopinfo.newversion}>" target="_blank">shopex 4.8</a></li>
+            <{/if}> 
+    
+    </ul>
+</div>
+<table border="0" cellspacing="0" cellpadding="0" class="frame">
+  <tr>
+    <td><div class="serviceitems" style="height:193px;">
+     <h3><{t}>待处理事务<{/t}></h3>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tbody>        
+          <tr>
+            <th><span onclick="W.page('index.php?ctl=order/order&act=index','')"><{t}>未处理订单<{/t}></span></th>
+            <td><span onclick="W.page('index.php?ctl=order/order&act=index','')" <{if $affairinfo.order==0}>class="dashboard_empty"<{else}>class="dashboard_number"<{/if}>><{$affairinfo.order}><{t}> 条<{/t}></span></td>
+          </tr>
+         
+          
+          <tr>
+            <th><span onclick="W.page('index.php?ctl=goods/gnotify&act=index','')"><{t}>未处理缺货登记<{/t}></span></th>
+            <td><span onclick="W.page('index.php?ctl=goods/gnotify&act=index','')" <{if $affairinfo.remember==0}>class="dashboard_empty"<{else}>class="dashboard_number"<{/if}>><{$affairinfo.remember}><{t}> 条<{/t}></span></td>
+          </tr>
+        
+    
+          <tr>
+            <th><span onclick="W.page('index.php?ctl=goods/product&act=index',{data:'goods_id=<{$affairinfo.strId}>'})"><{t}>商品库存报警<{/t}></span></th>
+            <td><span onclick="W.page('index.php?ctl=goods/product&act=index',{data:'goods_id=<{$affairinfo.strId}>'});" <{if $affairinfo.alert==0}>class="dashboard_empty"<{else}>class="dashboard_number"<{/if}>><{$affairinfo.alert}><{t}> 条<{/t}></span></td>
+          </tr>
+        
+   
+          <tr>
+            <th><span onclick="W.page('index.php?ctl=goods/discuss&act=index','')"><{t}>未处理商品评论<{/t}></span></th>
+            <td><span onclick="W.page('index.php?ctl=goods/discuss&act=index','')" <{if $affairinfo.remark==0}>class="dashboard_empty"<{else}>class="dashboard_number"<{/if}>><{$affairinfo.remark}><{t}> 条<{/t}></span></td>
+          </tr>
+       
+        
+   
+          <tr>
+            <th><span onclick="W.page('index.php?ctl=member/gask&act=index','');"><{t}>未处理购买咨询<{/t}></span></th>
+            <td><span onclick="W.page('index.php?ctl=member/gask&act=index','');" <{if $affairinfo.advisory==0}>class="dashboard_empty"<{else}>class="dashboard_number"<{/if}>><{$affairinfo.advisory}><{t}> 条<{/t}></span></td>
+          </tr>
+    
+                    
+  
+         <tr>
+            <th><span onclick="W.page('index.php?ctl=member/msgbox&act=index','');"><{t}>未处理商店留言<{/t}></span></th>
+      
+            <td><span onclick="W.page('index.php?ctl=member/msgbox&act=index','');" <{if $affairinfo.message==0}>class="dashboard_empty"<{else}>class="dashboard_number"<{/if}>><{$affairinfo.message}><{t}> 条<{/t}></span></td>
+          </tr>
+      
+        </tbody>            
+      </table>
+    </div></td>
+    <td><div class="serviceitems" style="height:193px;"> 
+       <h3><{t}>今日业务量<{/t}></h3>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tbody>
+        <tr> 
+            <th><{t}>今日订单数<{/t}></th>
+            <td><span <{if $businessinfo.todaysorder==0}>class="dashboard_empty"<{else}>class="dashboard_number" style="cursor:default;text-decoration:none;"<{/if}>><{$businessinfo.todaysorder}><{t}> 条<{/t}></span></td>
+      </tr>
+      <tr> 
+            <th><{t}>待付款订单<{/t}></th>
+            <td><span <{if $businessinfo.ordered==0}>class="dashboard_empty"<{else}>class="dashboard_number" style="cursor:default;text-decoration:none;" <{/if}>><{$businessinfo.ordered}><{t}> 条<{/t}></span></td>
+      </tr>
+      <tr> 
+            <th><{t}>已付款待发货订单<{/t}></th>
+            <td><span <{if $businessinfo.payed==0}>class="dashboard_empty"<{else}>class="dashboard_number" style="cursor:default;text-decoration:none;" <{/if}>><{$businessinfo.payed}><{t}> 条<{/t}></span></td>
+      </tr>
+      <tr> 
+            <th><{t}>今日新增会员<{/t}></th>
+            <td><span <{if $businessinfo.memberadd==0}>class="dashboard_empty"<{else}>class="dashboard_number" style="cursor:default;text-decoration:none;" <{/if}>><{$businessinfo.memberadd}><{t}> 位<{/t}></span></td>
+      </tr>
+      <tr> 
+            <th><{t}>今日过生日会员<{/t}></th>
+            <td><span <{if $businessinfo.birthday==0}>class="dashboard_empty"<{else}>class="dashboard_number" style="cursor:default;text-decoration:none;" <{/if}>><{$businessinfo.birthday}><{t}> 位<{/t}></span></td>
+      </tr>
+            </tbody>
+        </table>  
+        </div></td>
+    <td><div class="serviceitems" style=" width:590px;height:193px;">
+
+<div class="contentbg">
+    <iframe frameborder="0" src="<{$addurl}>" style="width:500px" ></iframe>
+    </div>
+    </div></td>
+  </tr>
+</table>
+
+<table border="0" cellspacing="0" cellpadding="0" class="frame">
+  <tr>
+    <td><div class="serviceitems"><h3><{t}>商店信息<{/t}></h3>
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tbody>
+      <tr> 
+            <th><{t}>上架商品<{/t}></th>
+            <td><span <{if $shopinfo.marketable==0}>class="dashboard_number_black"<{else}>class="dashboard_number_black"<{/if}>><{$shopinfo.marketable}><{t}> 件<{/t}></span></td>
+      </tr>
+      <tr> 
+            <th><{t}>已下架商品<{/t}></th>
+            <td><span <{if $shopinfo.marketdisable==0}>class="dashboard_number_black"<{else}>class="dashboard_number_black"<{/if}>><{$shopinfo.marketdisable}><{t}> 件<{/t}></span></td>
+      </tr>
+
+      <tr> 
+            <th><{t}>当前版本号<{/t}></th>
+            <td><span class="dashboard_number_black"><{$version}></span></td>
+      </tr>
+
+            <{if $shopinfo.newversion }>
+      <tr class="updatedVersion"> 
+            <th><{t}>发现新版本<{/t}></th>
+            <td><a href="<{$shopinfo.newversion}>" target="_blank">shopex 4.8</a></td>
+      </tr>
+            <{/if}>   
+</tbody>
+        </table>
+        </div></td>
+    <td><div class="serviceitems">
+<h3><{t}>新手帮助<{/t}></h3>
+<div class="contentbg" style="padding:3px 0; text-align:center">
+<a href="user_guide/step-1.html" target="_blank"><img src="user_guide/images/fastguide.gif"></a>
+
+    </div>
+    </div></td>
+    <td><div class="serviceitems" style=" width:590px;background:#E2E8EB; border:1px solid #ccc; overflow:hidden">
+ 
+<div class="contentbg" ></div>
+
+           
+                
+    </div></td>
+  </tr>
+</table>
+
+</div>
+<script>
+window.addEvent('domready', function(){
+  W.page('index.php?ctl=dashboard&act=getInfo',{method:'post',data:'dashboard',update:'dashboard_main'});
+});
+</script>

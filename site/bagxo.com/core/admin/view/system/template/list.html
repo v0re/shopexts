@@ -1,0 +1,154 @@
+<div style="text-align:right;padding-top:3px;padding-right:10px"><{help docid="77" type="link"}>点击查看帮助<{/help}></div>
+<div id="template" style="height:800px;">
+<div class="templatelist">
+<div class="clearfix">
+
+<{if $currentTheme.name}>
+<div class="tableform">
+<h4><{t}>正在使用的模板<{/t}></h4>
+<div style="margin:5px;">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top" style="padding:5px; vertical-align:top" width="160">
+  <img style="padding:3px;border-top: 2px solid #eee;border-left: 2px solid #eee;    border-right: 2px solid #bec6ce;border-bottom: 2px solid #bec6ce;" src="index.php?ctl=system/template&act=previewImg&p[0]=<{$currentTheme.theme}>" width="120" height="160"/>
+    </td>
+    <td width="200" valign="top" style="padding:5px; vertical-align:top"><h4><{$currentTheme.name}>(<{$currentTheme.version}>)</h4>
+      <ul class="info">
+        <li><{t}>作者<{/t}><a href="<{$currentTheme.site}>" target="_blank"><{$currentTheme.author}></a></li>
+    </ul>
+    <{$currentTheme.desc}>
+    <div class="optionsbar">
+      <a class="sysiconBtnNoIcon" href="index.php?ctl=system/template&act=edit&p[0]=<{$currentTheme.theme}>"><{t}>编辑模板<{/t}></a>
+      <a class="sysiconBtnNoIcon" href="index.php?ctl=system/tmpimage&act=index&p[0]=<{$currentTheme.theme}>"><{t}>图片管理<{/t}></a>
+          <a class="sysiconBtnNoIcon" href="index.php?ctl=system/tmpimage&act=index&p[0]=<{$currentTheme.theme}>&p[1]=css"><{t}>样式管理<{/t}></a>
+    </div>  
+    </td>
+     <td><a href="http://mb.shopex.cn/index.php" target="_blank"><img src="images/templates.jpg" alt="模板堂"/></a>
+  <!--   <div class="success">
+     <h5><{t}>模板使用说明：<{/t}></h5>
+     <ul style="padding-left:20px">
+         <li><{t}>一个网店，仅能同时使用一套模板；<{/t}></li>
+         <li><{t}>在页面下方有多个模板可供使用，鼠标移动到模板图片上方，即可看到关于此模板的说明和操作；<{/t}></li>
+         <li><{t}>点击“使用模板”按钮以后，点击页面上方的“浏览网站”按钮，即可看到此模板在前台的显示效果。<{/t}></li>
+     </ul>
+     </div>  --></td>
+  </tr>
+</table>
+</div>
+</div>
+
+<{else}>
+<div class="error" style="margin:10px;padding:20px;">
+当前应用的模板<{$currentTheme.theme}>不存在！请重新设置！
+</div>
+<{/if}>
+</div>
+
+
+<div class="tableform clearfix ">
+<table border="0" cellspacing="0" cellpadding="0" style="width:auto">
+  <tr>
+    <td><h4><{t}>其他可供使用的模板<{/t}></h4></td>
+    <td><{if $cantUploadMsg=='writeable'}>
+  因为模板目录无法写入，因此无法通过后台直接上传模板包。
+  <{else}>
+ <{uploader button_text="上传模板包"}>
+<script language="javascript">
+Uploader.init({
+      url:window.ie?'index.php?ctl=system/template&act=upload&sess_id='+sess_id:'../index.php?ctl=system/template&act=upload&sess_id='+sess_id,
+      fileDesc:'ShopEx48系列模板包',
+      fileExt:'*.tar.gz;*.tgz;*.theme',
+      MuliUpload:true,
+      handles:{
+          upload:function(e){
+             $(this.el).setHTML('<div class="progress-bar" style="width:100px"><i>&nbsp;</i></div><center>0%</center>');
+		  },
+          progress:function(e){
+               var pt=Number( e.bytesLoaded*100/e.bytesTotal).toFixed()+'%';
+                             $(this.el).getElement('i').setStyle('width',pt);
+                             $(this.el).getElement('center').set('text',pt);
+          },
+          complete:function(e){
+             $(this.el).getElement('center').set('text','生成中...');
+          },
+          uploadCompleteData:function(e){
+              $(this.el).setHTML(e.data);
+		      makeAjaksLink(this.el);
+          },
+          error:function(e){
+            MessageBox.error('上传失败!INFO:'+e);
+          },
+          select:function(e){
+             e.list.each(
+                function(f){
+                  new Element('div',{'class':'item',id:f.el}).inject($('all-themes'));
+                }
+              );
+          
+          }
+      
+      }
+});
+  </script>
+  <{/if}></td>
+  </tr>
+</table>
+
+
+
+<div id="all-themes">
+
+<{foreach from=$themes item=theme name=theme}>
+<{if $theme.name}>
+<div class="item">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="top">
+    
+    <div class="templateimg"><img src="index.php?ctl=system/template&act=previewImg&p[0]=<{$theme.theme}>" width="120" height="160" />
+   <div><a href="index.php?ctl=system/template&act=setDefault&p[0]=<{$theme.theme}>" class="sysiconBtnNoIcon"><{t}>使用模板<{/t}></a>
+   <{if $saas_mode != true}>
+   <a href="index.php?ctl=system/template&act=edit&p[0]=<{$theme.theme}>" class="sysiconBtnNoIcon"><{t}>编辑模板<{/t}></a>
+   <{else}>
+   <a target="download" href="index.php?ctl=system/template&act=dlpkg&p[0]=<{$theme.theme}>" class="sysiconBtnNoIcon"><{t}>下载模板<{/t}></a>
+   <{/if}><span class="sysiconBtnNoIcon" onClick="void function(themeitem){
+    if(window.confirm('确认删除么？')){
+      W.page('index.php?ctl=system/template&act=remove&p[0]=<{$theme.theme}>',{update:'messagebox',onComplete:function(){themeitem.remove()}});
+    }}($(this).getParent('.item'))"><{t}>删除模板<{/t}></span></div>
+<!--   <ul class="info widgets">
+            <li style="color:#666" ><{$theme.info}></li>
+      <li><{t}>占用空间：<{/t}><{$theme.size|size}></li> 
+            <li><{t}>使用到的版块：<{/t}></li>
+
+                            <{if count($theme.widgets)>0}>
+                                <{$theme.widget}>
+                                <{foreach from=$theme.widgets item=widget}>
+                                        <{if $widget.installed}>
+                                            <{$widget.name}> | <{else}><span style="color:red"><{t}>缺失:<{/t}><{$widget.name}></span> | 
+                                        <{/if}>
+                                <{/foreach}>
+                            <{/if}>
+             
+     </ul> -->
+        
+        
+        
+
+        
+        </div>
+    <h5 style="margin:0; height:20px; padding:0"><{$theme.name|cut:16}>(<{$theme.version|cut:20}>)</h5>
+    <span style="color:#999; font-size:11px; font-weight:normal;"><a href="<{$theme.site}>" target="_blank"><{$theme.author|cut:20}></a> | <{$theme.stime|cdate}></span>
+    
+      </td>
+  </tr>
+</table>
+    
+  </div>
+<{/if}>
+<{/foreach}>  
+  
+  
+  </div>
+</div>
+</div>
+</div>

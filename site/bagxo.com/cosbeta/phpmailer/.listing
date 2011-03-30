@@ -1,0 +1,5 @@
+drwxr-xr-x    2 bagxpcom bagxpcom     4096 Mar 28  2008 .
+drwxr-xr-x    4 bagxpcom bagxpcom     4096 Jun 13  2008 ..
+-rw-r--r--    1 bagxpcom bagxpcom    47901 Mar 28  2008 class.phpmailer.php
+-rw-r--r--    1 bagxpcom bagxpcom    36170 Mar 28  2008 class.smtp.php
+-rw-r--r--    1 bagxpcom bagxpcom    35333 Mar 28  2008 phpmailer_doc.html

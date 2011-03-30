@@ -1,0 +1,79 @@
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#edecea" >
+  <tr>
+    <td width="10"  ></td>
+    <td style="padding-top:5px;"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="cartliststyle" style="line-height:26px; ">
+<col class="span-6" />
+<col />
+<tbody>
+<tr>
+    <th><em style="color:red">*</em> <{t}>Name：<{/t}></th>
+    <td style="vertical-align:middle;"><{input class="inputstyle" name="delivery[ship_name]" id="name" style="width:180px" size="30" required="true" type="text" value=$trading.receiver.name}><span class="notice_inline"><{t}>Please type ture name! <{/t}></span></td>
+  </tr>
+  
+  <tr>
+    <th ><em style="color:red">*</em> <{t}>Address  1：<{/t}></th>
+    <td style="vertical-align:middle;" width="80%%"><{input class="inputstyle" name="delivery[ship_addr]" style="width:360px" size="30" id="addr" required="true" value=$trading.receiver.addr}></td>
+  </tr>
+ 
+  <tr>
+    <th ><em style="color:red; padding-left:8px;"></em> <{t}>Address 2：<{/t}></th>
+    <td style="vertical-align:middle;" width="80%%"><{input class="inputstyle" name="delivery[ship_addr1]" style="width:360px" size="30" id="addr1" required="false" value=$trading.receiver.addr1}></td>
+  </tr>
+
+ <tr>
+    <th><em style="color:red">*</em> <{t}>Shipping-area：<{/t}></th>
+    <td id="checkout-select-area"  style="vertical-align:middle;"><{input id="shipping-area" class="inputstyle" name="delivery[ship_area]" type="region" required="true" value=$trading.receiver.area}></td>
+  </tr>
+  
+  <tr>
+    <th><em style="color:red">*</em> <{t}>Post-code：<{/t}></th>
+    <td style="vertical-align:middle;"><{input class="inputstyle" name="delivery[ship_zip]" style="width:90px" size="30" id="zip" required="true" type="text" value=$trading.receiver.zip}></td>
+  </tr>
+
+  
+  <{if !$trading.member_id}>
+  <tr>
+    <th><em style="color:red">*</em> <{t}>E-mials：<{/t}></th>
+    <td style="vertical-align:middle;"><{input name="delivery[ship_email]" class="inputstyle" id="ship_email" style="width:180px" size="30" required="true" type="email" value=$trading.receiver.email}><span class="notice_inline"><{t}>Importan！All infotmation will send to this E-mial! <{/t}></span></td>
+  </tr>
+  <{/if}>
+  <tr>
+    <th style="padding-left:7px;"><{t}>Telephone：<{/t}></th>
+    <td style="vertical-align:middle;"><{input class="inputstyle" name="delivery[ship_tel]" size="30" style="width:180px" type="text" id="tel" value=$trading.receiver.tel}><span class="notice_inline"><{t}>Telephone or mobile must type one to contact!<{/t}></span></td>
+  </tr>
+  <tr>
+    <th style="padding-left:7px;"><{t}>Mobile：<{/t}></th>
+    <td style="vertical-align:middle;"><{input class="inputstyle" name="delivery[ship_mobile]" size="30" style="width:180px" type="text" id="mobile" value=$trading.receiver.mobile}></td>
+  </tr>
+  <tr class="recsave">
+    <th><em style="color:red">*</em> <{t}>Save?：<{/t}></th>
+    <td style="vertical-align:middle; padding-bottom:5px;"><label><input name="delivery[is_save]" type="checkbox" checked="checked" value=1>
+    <{t}>Save that address <{/t}></label></td>
+  </tr>
+  </tbody>
+</table></td>
+  </tr>
+</table>
+
+<{$selectArea}>
+<script>
+$E('#checkout-select-area input[name^=delivery[]').store('onselect',function(sel){
+if($E('option[has_c]',sel)){
+    $('shipping').set('html','<div class="notice">Please Select Shipping Area</div>');   
+}
+
+});
+$E('#checkout-select-area input[name^=delivery[]').store('lastsel',function(lastselect){
+    var areaSels=$ES("#checkout-select-area select");
+    var areaSelPrt=areaSels[0].getParent('*[package=mainland]');
+    var selected=[];
+    areaSels.each(function(s){
+       selected.push(s[s.selectedIndex].text);
+    });
+    if(!$('addr').value||$('addr').value==areaSelPrt.retrieve('selectedaddr'))
+    $('addr').value=selected.join('');
+    areaSelPrt.store('selectedaddr',selected.join(''));
+    Cart.checkout.shipping(lastselect);
+});
+</script>

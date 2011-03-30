@@ -1,0 +1,50 @@
+<div class="GoodsBrowsed" id="box_<{$widgets_id}>" >
+  
+</div>
+<script>
+window.withUStatus(function(uStatus){
+var box=$('box_<{$widgets_id}>');;
+uStatus.get('history',function(v){
+v=JSON.decode(v);
+if(!v||!v.length)return;
+      var html='';
+      var template = '<div class="hstdiv clearfix" style=" height:248px;">';
+          template+='<div class="hstbg goodpic" >';
+          template+= '<a href="<{link ctl='product' act='index' arg0='{goodsId}'}>" target="_blank" title="{goodsName}" inner_img="{goodsImg}">';
+          template+= '</a>';
+          template+= '</div><div class="hstfont goodsName">';
+          template+='<a href="<{link ctl='product' act='index' arg0='{goodsId}'}>" target="_blank" title="{goodsName}">{goodsName}</a></div></div>';
+      
+      var max=Math.min(v.length,<{$setting.max|default:3}>);
+      if(v.length>1)
+      v.reverse();
+      
+      v.each(function(goods,index){
+       if(index<max)
+       html += template.substitute(goods);
+      });
+      
+      $('box_<{$widgets_id}>').set('html',html);
+      
+    $ES('.goodpic',box).each(function(i){
+              var imga=$E('a',i).setText('loading...');
+          var imgsrc=imga.get('inner_img');
+                  new Asset.image(imgsrc,{onload:function(){
+          var img=$(this);
+          if(img.$e)return;
+            img.zoomImg(70,70);
+          img.inject(imga.empty());
+          img.$e=true;
+            },onerror:function(){imga.setText('NoPhoto');}
+        });          
+      });
+
+});
+
+
+});
+</script>
+<div style="clear:both;"></div>
+<div class="textright">
+  <a class="lnk clearAll" onclick="if(window.uStatus){window.uStatus.remove('history');$('box_<{$widgets_id}>').empty()}">Empty</a> | <a class="lnk viewAll" href="<{link ctl="tools" act="history"}>">View All</a><span>&nbsp;&nbsp;</span>
+</div>

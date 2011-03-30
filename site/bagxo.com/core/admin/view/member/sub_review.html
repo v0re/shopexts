@@ -1,0 +1,27 @@
+
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="finderInform">
+<colgroup class="Colsn"></colgroup>
+<colgroup class="Colname"></colgroup>
+<colgroup class="Coldetails"></colgroup>
+<colgroup class="Coldate"></colgroup>
+  <thead>
+    <tr>
+      <th><{t}>用户名<{/t}></th>
+      <th><{t}>标题<{/t}></th>
+      <th><{t}>内容<{/t}></th>
+      <th><{t}>发表时间<{/t}></th>
+    </tr>
+  </thead>
+  <tbody>
+  <{foreach from=$items item=aList}>
+  <tr>
+    <td><{$aList.author}></td>
+    <td><{$aList.title|escape:'html'}></td>
+    <td class="Coldetails"><{$aList.comment|escape:'html'}></td>
+    <td><{$aList.time|cdate:SDATE_STIME}></td>
+  </tr>
+  <{/foreach}>
+  </tbody>
+</table>
+</div>

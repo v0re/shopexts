@@ -1,0 +1,41 @@
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Sharing & Quires</span></div>
+<div class="Comments FormWrap" style=" width:750px; padding:10px; border:1px solid #D2D2D2;" id="shop-message">
+
+<{foreach from=$commentList item=items}>
+  <div class="division boxBrown" style=" margin-bottom:5px;">
+    <div style="background:#DDDDDD; padding-left:10px;"><strong><span class="author" style=" font-weight:bold; color:#9C9C9C;"><{t}>My<{/t}><{if $items.object_type == 'ask'}><{t}> quires: <{/t}><{else}><{t}> Sharing:    <{/t}><{/if}></span></strong><span class="timpstamp font10px fontcolorGray replies">(<{$items.time|cdate:FDATE_STIME}>)</span> <a href="<{link ctl=product act=index arg0=$items.goods_id}>" class="lnk prepend-1"><{t}>Product descriptiion<{/t}></a>
+      <!--<h4><{$comment.title|escape:'html'}></h4>-->
+      <div>
+        <{$comment.title}>
+        <div class="boxBlue" style="margin:0 0 5px 0;">
+        <{$items.comment}>
+        </div>
+        </div>
+    </div>
+    
+      <{if $items.items}>
+  
+  <div>
+<{foreach item=rep from=$items.items}>
+    <div style=" background:#F3F3F3; padding-left:10px;"><span style="color:#9C9C9C;" class="author"><{$rep.reply_name}></span><{t}> <span style="color:#9C9C9C;">Answer:</span><{/t}><span class="timpstamp font10px fontcolorGray replies prepend-1"><{$rep.time|cdate:'FDATE_FTIME'}></span>
+      <div style="padding-bottom:6px; padding-left:10px;"><{$rep.comment|escape:'html'}></div>
+    </div>
+    <{/foreach}>
+    </div>
+   <{/if}>
+    
+    
+  </div>
+  
+  
+  
+
+    
+    
+    
+    
+    
+   
+  <{/foreach}>
+  <{pager data=$pager}> </div>
+  

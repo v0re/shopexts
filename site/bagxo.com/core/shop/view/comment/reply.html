@@ -1,0 +1,37 @@
+
+<div class="Comments" id="goods-comment">
+  <div  style="background:#DDDDDD ; padding:10px; margin-bottom:7px;" >
+    <div ><span  style="font-weight:bold;"><{$comment.author}>说：</span><{t}><{/t}><span class="timpstamp font10px fontcolorGray"><{$comment.time|userdate}></span>
+      <!--<h4><{$comment.title|escape:'html'}></h4>-->
+      <div><{$comment.comment}></div>
+    </div>
+    </div>
+
+    <div > <{foreach from=$comment.reply item=items}>
+      <div class="replyitem "><span style="font-weight:bold;"><{$items.author}> Reply:
+        <!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}>-->
+         <{t}><{/t}></span><span class="timpstamp font10px fontcolorGray"><{$items.time|cdate:'SDATE_STIME'}></span>
+        <div style="color:#E86C6C;"><{$items.comment}></div>
+      </div>
+      <{/foreach}> </div>
+	<div style="padding:10px;"><a  onClick="javascript :history.back(-1);" style="text-decoration:underline; cursor:pointer;">Back</a></div>
+
+  <h3><{t}>Post a reply<{/t}></h3>
+  <form class=" division" method="post" action="<{link ctl="comment" act="toReply" arg0=$comment.comment_id}>
+    ">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform">
+      <tr>
+        <th><em>*</em><{t}>Your Contact：<{/t}></th>
+        <td><{input type="text" required="true" size=20 name="contact"}><span class="infotips"><{t}>(Your email address)<{/t}></span></td>
+      </tr>
+      <tr>
+        <th><em>*</em><{t}>Comments：<{/t}></th>
+        <td><{input type="textarea" required="true" rows="5" name="comment" style="width:80%" }></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td><input type="submit" class="buttonstyle" value="Submit"></td>
+      </tr>
+    </table>
+  </form>
+</div>

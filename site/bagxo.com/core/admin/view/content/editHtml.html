@@ -1,0 +1,35 @@
+<div id='content-html-edit'>
+<{input type="html" name="content-html-edit" value="$htmls"}>
+<div class="mainFoot">
+     <table cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 0pt auto;" class="tableAction">
+      <tbody><tr>
+        <td>
+          <b class="submitBtn blue">
+            <button>
+            <span class=""><{t}>确定编辑<{/t}></span>
+            </button>
+          </b>
+        </td>
+		
+        <td>
+          <b isCloseDialogBtn="true" class="submitBtn blue">
+            <button>
+            <span class=""><{t}>关闭<{/t}></span>
+            </button>
+          </b>
+        </td>
+        </tr>
+        </tbody>
+      </table>
+</div>
+</div>
+
+
+<script>
+  var sw=$('themeFrame').contentWindow.shopWidgets;
+  var btn=$E('#content-html-edit .mainFoot .submitBtn');
+  btn.addEvent('click',function(){
+       $E('.content-html',sw.curWidget).setHTML($E('textarea','content-html-edit').getValue());
+       sw.curdialog.close();
+  });
+</script>

@@ -1,0 +1,15 @@
+<span id="fix_fl10upload_panel"  style="float:left;padding:3px 4px 2px 20px;" <{if $mousemove}>$mousemove<{/if}>></span>
+<script>
+new Swiff('images/fcore_player10.swf'+'?'+$time(),{
+                          id:'fix_fl10upload',
+                          container:$('fix_fl10upload_panel'),
+                          width:108,
+                          height:24,
+						  vars:{
+							button_text:"<{$button_text|default:'上传图片'}>",
+							taskCallBack:'Uploader.taskCallBack'
+						  }
+                      });
+Xtip.attach($('fix_fl10upload_panel').store('tip:text','可以一次选择上传多个文件'));
+
+</script>

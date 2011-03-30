@@ -1,0 +1,53 @@
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Adress Book</span></div>
+<{if $is_allow}>
+<div style="margin:5px 0;">
+<table width="777" cellspacing="0" cellpadding="0" class="liststyle_option">
+    <colgroup class=" textright"></colgroup>
+		<tr>
+       <td><input  type="image" src="../../../../themes/zqzyb/images/member/addnewaddress.gif" onclick="location.href='<{link ctl="member" act="addReceiver"}>'" value="add" /></td>
+		</tr>
+		</table>
+		</div>
+<{/if}>
+<table width="100%" cellpadding="3" cellspacing="0" class="liststyle"  style="width:777px;">
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="textleft"></colgroup>
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="span-1"></colgroup>
+    <colgroup class="span-4"></colgroup>
+<thead>
+  <tr bgcolor="#EDECEA">
+    <th><{t}>receiver<{/t}></th> 
+    <th><{t}>adress<{/t}></th>
+    <th><{t}>phone<{/t}></th>
+    <th style=" display:none;"><{t}>mobile<{/t}></th>
+     <th><{t}>post core<{/t}></th>
+     <th><{t}>default<{/t}></th>
+     <th><{t}>operation<{/t}></th>
+    </tr>
+</thead>
+<tbody>
+<{foreach from=$receiver item=items key=key}>
+<tr><td colspan="7" height="5"></td></tr>
+<tr bgcolor="#EDECEA">
+  <td><a href="<{link ctl=member act=modifyReceiver arg0=$items.addr_id}>"><{$items.name|escape:'html'}></a></td>
+	<td class="textwrap" style="text-align:left;"><{$items.area|region}> <{$items.addr|escape:'html'}></td>
+  <td><{$items.tel|escape:'html'}></td>
+  <td style=" display:none;"><{$items.mobile|escape:'html'}></td>
+  <td><{$items.zip|escape:'html'}></td>
+  <td><{if $items.def_addr == 1}><{t}>yes<{/t}><{else}><{t}>no<{/t}><{/if}></td>
+  <td><a href="<{link ctl=member act=modifyReceiver arg0=$items.addr_id}>" ><{t}>change<{/t}></a><a href="<{link ctl=member act=delRec arg0=$items.addr_id}>" ><{t}>del<{/t}></a><a href="<{link ctl=member act=setDefault arg0=$items.addr_id}>" ><{if $items.def_addr == 1}><{t}>cancel default<{/t}><{else}><{t}>set default<{/t}><{/if}></a></td>
+</tr>
+<{/foreach}>
+</tbody>
+</table>
+<{if $is_allow}>
+<table width="100%" cellspacing="0" cellpadding="0" class="liststyle_option">
+  <colgroup class="textright"></colgroup>
+	<!--<tr>
+      <td><input  type="button" onclick="location.href='<{link ctl="member" act="addReceiver"}>'" value="add" /></td>
+	</tr>-->
+</table>
+<{/if}>

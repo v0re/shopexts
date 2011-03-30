@@ -1,0 +1,98 @@
+
+<div id="amountInfo">
+
+   
+    <table width="100%" cellpadding="0" cellspacing="0" class="liststyle data">
+            <col class="span-auto ColColorGray"></col>
+            <col class="span-4 ColColorOrange textright"></col>
+      <tr>
+        <th><{t}>商品总价格：<{/t}></th>
+        <td value="<{$trading.pmt_b.totalPrice}>" class="price"><{$trading.pmt_b.totalPrice|cur}></td>
+      </tr>
+      <{if $trading.shipping_id}>
+      <tr>
+        <th><{t}>配送费用：<{/t}></th>
+        <td><{$trading.cost_freight|cur}></td>
+      </tr>
+      <{/if}>
+      <{if $trading.is_protect}>
+      <tr>
+        <th><{t}>配送保价费：<{/t}></th>
+        <td><{$trading.cost_protect|cur}></td>
+      </tr>
+      <{/if}>
+      <{if $trading.cost_payment}>
+      <tr>
+        <th><{t}>支付费率：(客户承担支付手续费)<{/t}></th>
+        <td><{$trading.cost_payment|cur}></td>
+      </tr>
+      <{/if}>
+      <{if $trading.is_tax == '1'}>
+      <tr>
+        <th><{t}>税金<{/t}><span class="fontcolorOrange fontbold">(<{$trading.tax_rate*100}>%)</span>：</th>
+        <td><input type="checkbox" id="is_tax" name="payment[is_tax]" onclick="Cart.checkout.total()" <{if $trading.tax_checked}>checked=checked<{/if}> value="true">+<{$trading.cost_tax|cur}> 发票抬头：
+          <input type="text" name="payment[tax_company]" class="inputstyle" >
+          </span></td>
+      </tr>
+      <{/if}>
+      <{if $trading.pmt_amount}>
+      <tr>
+        <th><{t}>优惠金额：<{/t}></th>
+        <td style="color:#f00;">-<{$trading.pmt_amount|cur}></td>
+      </tr>
+      <{/if}>
+      <{if $trading.discount != 0}>
+      <tr>
+        <th><{t}>订单减免：<{/t}></th>
+        <td style="color:#f00;">-<{$trading.discount|cur}></td>
+      </tr>
+      <{/if}>
+      <{if $trading.totalConsumeScore}>
+      <tr>
+        <th><{t}>抵扣积分：<{/t}></th>
+        <td style="color:#f00;"><{$trading.totalConsumeScore}></td>
+      </tr>
+      <{/if}>
+    <{if $trading.cur_code != '' && $trading.cur_code != $trading.cur_display}>
+    <tr>
+    <th><{t}>货币汇率:<{/t}></th>
+    <td><{$trading.cur_rate}></td>
+    </tr>
+    <tr>
+    <th><{t}>货币结算金额:<{/t}></th>
+    <td><{$trading.cur_sign}> <{$trading.final_amount}></td>
+    </tr>
+    <{/if}>
+      <tr>
+        <th><{t}>订单总金额：<{/t}></th>
+        <td><span class="price1"><{$trading.total_amount|cur}></span></td>
+      </tr>
+     <{if ($trading.totalGainScore<>0) or ($trading.totalConsumeScore<>0)}> 
+     <{if $trading.totalConsumeScore}>
+      <tr>
+        <th><{t}>此订单的消费积分数：<{/t}></th>
+        <td style="color:#f00;"><{$trading.totalConsumeScore}></td>
+      </tr>
+      <{/if}>
+      <tr>
+        <th><{t}>此订单数获得积分：<{/t}></th>
+        <td><{$trading.totalGainScore}></td>
+      </tr>  
+      <tr>
+        <th><{t}>您的积分总计：<{/t}></th>
+        <td><{$trading.totalScore}></td>
+      </tr>            
+      <{/if}>
+   <{if count($trading.coupon_u)>0}>      
+      <tr>
+        <th><{t}>使用的优惠券：<{/t}></th>
+        <td><ol><{foreach from=$trading.coupon_u item="item" key="key"}><li><{$key}></li><{/foreach}></ol></td>
+      </tr>         
+   <{/if}>      
+    </table>
+
+
+    
+    
+    
+</div>

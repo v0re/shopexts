@@ -1,0 +1,35 @@
+
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">My Account</span></div>
+<div class="membertopb"><span style="margin-left:20px; font-size:16px; color:#CF5E64; line-height:40px; font-weight:bold;">Exchange coupons</span></div>
+<table width="100%" cellpadding="0" cellspacing="0" class="liststyleb">
+    <colgroup class=" textleft"></colgroup>
+    <colgroup class="span-2 "></colgroup>
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="span-2"></colgroup>
+    <colgroup class="span-3"></colgroup>
+<thead>
+  <tr>
+    <th><{t}>Campaign Event<{/t}></th>
+    <th><{t}>Poins<{/t}></th>
+    <th><{t}>Beginning time<{/t}></th>
+    <th><{t}>Finishing time<{/t}></th>
+    <th><{t}>operate<{/t}></th>
+  </tr>
+</thead>
+<tbody>
+  <{foreach from=$couponList item=item key=key}>
+    <tr style=" background:#EDECEA;">
+      <td><{$item.cpns_name}></td>
+      <td><{$item.cpns_point}></td>
+      <td><{$item.pmt_time_begin|cdate}></td>
+      <td><{$item.pmt_time_end|cdate}></td>
+      <td><{if $item.use_status}><a  style="color:#333333; text-decoration:underline;" href="<{link ctl=member act=exchange arg0=$item.cpns_id}>" ><{t}>Exchange<{/t}><{else}> 当前等级不能兑换<{/if}></a></td>
+    </tr>
+	<tr style=" height:5px; background:url(../../../../statics/Line.gif) repeat-x;">
+  <td ></td>
+</tr>
+  <{/foreach}>
+</tbody>
+</table>
+
+<{pager data=$pager}>

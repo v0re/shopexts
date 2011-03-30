@@ -1,0 +1,50 @@
+<table border="0" cellpadding="0" cellspacing="0" id="nospec_body">
+<tbody >
+  <{if $prototype.setting.data}>
+  <{foreach from=$prototype.setting.data item=item key=key}>
+  <tr class="idata">
+    <th><{$item.label}>
+      <input type="hidden" name="idataInfo[<{$key}>]" value="<{$item.label}>" ></th>
+      <td width="80"><{input name="idata[$key]" type=$item.type value=$goods.props.idata[$key] options=$item.options}></td>
+  </tr>
+  <{/foreach}>
+  <{/if}>
+  
+  <tr>
+    <th><{t}>销售价：<{/t}></th>
+    <td>
+    <{input type="unsigned" value=$goods.price name="goods[price]" style="width:60px" maxlength="25" }>
+	<span class="sysiconBtn edit" onclick="goodsEditor.mprice.bind(goodsEditor)(this)"><{t}>编辑会员价格<{/t}></span></div>
+    <{foreach from=$mLevels item=lv }>
+      <input type="hidden" name="goods[mprice][<{$lv.member_lv_id}>]" level="<{$lv.member_lv_id}>" value="<{$goods.mprice[$lv.member_lv_id]}>" type="money" vtype="mprice" />
+      <{/foreach}></td>
+  </tr>
+  <tr>
+    <th><{t}>成本价：<{/t}></th>
+    <td><{input type="unsigned" name="goods[cost]" maxlength="30" style="width:60px" value=$goods.cost }> <span class="notice_inline">前台不会显示，仅供后台使用。</span></td>
+  </tr>
+
+  <tr>
+    <th><{t}>货号：<{/t}></th>
+    <td><{input type="text" value=$goods.product_bn name="goods[product_bn]" maxlength="25" }></td>
+  </tr>
+  <tr>
+    <th><{t}>重量：<{/t}></th>
+    <td><{input type="unsigned" value=$goods.weight name="goods[weight]" style="width:60px" maxlength="25" }><{t}>克(g)<{/t}></td>
+  </tr>
+
+  <{if $prototype.is_physical}>
+  <tr>
+    <th><{t}>库存：<{/t}></th>
+    <td><{input type="unsigned" value=$goods.store name="goods[store]" style="width:60px" maxlength="25" }></td>
+  </tr>
+  <{/if}>  
+  <{if $prototype.setting.use_spec}>
+  <tr class="advui">
+    <th><{t}>规格：<{/t}></th>
+    <td style="padding:4px 0"><span class="lnk sysiconBtn addorder" onclick="goodsEditor.spec.addCol.bind(goodsEditor)(false,$('gEditor-GType-input').value)"><{t}>开启规格<{/t}></span> <{help docid="82" type="link-small"}>点击查看帮助<{/help}><span class="notice_inline"><{t}>开启规格前先填写以上价格等信息，可自动复制信息到货品<{/t}></span>
+    </td>
+  </tr>
+  <{/if}>
+</tbody>
+</table>

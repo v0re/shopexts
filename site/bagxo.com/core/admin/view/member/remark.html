@@ -1,0 +1,47 @@
+<!--<div id="Remark_<{$member_id}>" style="text-align:center">
+ <br/><br/>
+  <b class="submitBtn">
+  <input type="button" onclick="W.page('index.php?ctl=member/member&act=addRemark',{data:$('Remark_<{$member_id}>'),method:'post'})" value="保存" />
+  </b>
+</div> -->
+
+
+
+<div id="Remark_<{$member_id}>">
+ <div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+   <tr>
+   <th>标记：</th>
+   <td>
+       <label><input type='radio' name='remark_type' value='b1' id='b1'><img src='../statics/remark_icons/b1.gif' width='20' height='20'></label>
+	   <label><input type='radio' name='remark_type' value='b2' id='b2'><img src='../statics/remark_icons/b2.gif' width='20' height='20'></label>
+	  <label> <input type='radio' name='remark_type' value='b3' id='b3'><img src='../statics/remark_icons/b3.gif' width='20' height='20'></label>
+	  <label> <input type='radio' name='remark_type' value='b4' id='b4'><img src='../statics/remark_icons/b4.gif' width='20' height='20'></label>
+	  <label> <input type='radio' name='remark_type' value='b5' id='b5'><img src='../statics/remark_icons/b5.gif' width='20' height='20'></label>
+	  <label> <input type='radio' name='remark_type' value='b0' id='b0'><img src='../statics/remark_icons/b0.gif' width='20' height='20'></label>
+   </td>
+   </tr>
+   <tr>
+   <th>会员备注：</th>
+   <td><{input type="textarea" style="width:750px;height:200px" name="remark" value="$remark" }></td>
+   </tr>
+</table>
+ </div>
+ </div>
+ <table border="0" align="center" cellpadding="0" cellspacing="0" class="tableAction" >
+   <tbody><tr>
+    <td><b class="submitBtn"><input type="button" value="保存" onclick="W.page('index.php?ctl=member/member&act=addRemark&p[0]=<{$member_id}>',{data:$('Remark_<{$member_id}>'),method:'post'},$(this))"/></b></td>
+  </tr>
+</tbody></table>
+
+
+
+<script>
+	window.addEvent('domready',function(){
+		if('<{$remark_type}>'!=''){
+		    $('<{$remark_type}>').checked = true;
+		}else{
+		    $('b1').checked = true;
+		}
+	});
+</script>

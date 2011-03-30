@@ -1,0 +1,16 @@
+<form class="tableform" method="post" action="index.php?ctl=system/template&act=saveContent">
+<div class="division">
+<h4><{$theme}>/<{$file}></h4>
+</div>
+<div class="division">
+<input type="hidden" name="theme" value="<{$theme}>" />
+<input type="hidden" name="file" value="<{$file}>" />
+<{input type="textarea" rows="30" style="width:98%" value=$content name="content"}>
+</div>
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+      <tr>
+        <td><b class="submitBtn"><input type='submit' value='保存'></b></td>
+      </tr>
+    </table>
+
+</form>

@@ -1,0 +1,87 @@
+<script>
+if(!extra_validator['subPackage']){
+  extra_validator['subPackage'] ={
+    'checkForm':['',function(f,i){
+        var checkNum = 0;
+        $ES('input[type="hidden"]',"packageItem").each(function(item, index, itobj){
+          if(item.value > 0) checkNum++;
+        });
+        if(checkNum <= 1){
+          alert('捆绑商品必须为两件或两件以上！');
+          return false;
+        }else{
+          return true;
+        }
+      }]
+  };
+}
+</script>
+<form id='pkgForm'  method='post' action='index.php?ctl=goods/package&act=addPackage' extra="subPackage">
+<div style="display:none"><{input type="checkForm" }></div>
+<div class="tableform">
+<div class="division">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!--    <tr>
+      <th><{t}>捆绑商品编号：<{/t}></th>
+      <td><{input type='text' value=$package.bn name='bn'}></td>
+    </tr>-->
+    <tr>
+      <th><{t}>捆绑商品名称：<{/t}></th>
+      <td><{input type='text' value=$package.name name='name' required='true'}></td>
+    </tr>
+    </table>
+</div> 
+<div class="division">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th><{t}>是否上架销售：<{/t}></th>
+    <td><label><input type='radio' name='marketable' value='true' <{if $package.marketable == 'true'}>checked='checked'<{/if}> /><{t}>是<{/t}></label> &nbsp; &nbsp; 
+      <label><input type='radio' name='marketable' value='false' <{if $package.marketable == 'false'}>checked='checked'<{/if}> />否</label></td>
+    </tr>
+    <tr>
+      <th><{t}>库存：<{/t}></th>
+      <td><{input type='unsignedint' value=$package.store name='p_store' style="width:50px" required='true'}></td>
+    </tr>
+    <tr>
+      <th><{t}>重量：<{/t}></th>
+      <td><{input type='text' value=$package.weight style="width:50px" name='weight'}>克(g)</td>
+    </tr>
+    <tr>
+      <th><{t}>原价格：<{/t}></th>
+      <td><{$package.mktprice}><{input type='hidden' style="width:50px" value=$package.mktprice name='mktprice'}></td>
+    </tr>
+    <tr>
+      <th><{t}>捆绑销售价：<{/t}></th>
+      <td><{input type='money' value=$package.price name='price' style="width:80px" required='true'}></td>
+    </tr>
+    <{if $point_setting == 2}>
+    <tr>
+      <th><{t}>积分：<{/t}></th>
+      <td><{input type="unsignedint" name="score" style="width:50px" value=$package.score }></td>
+    </tr>
+    <{/if}>
+    <tr>
+      <th><{t}>排序顺序：<{/t}></th>
+      <td><{input type='unsignedint' value=$package.p_order style="width:50px" name='p_order'}></td>
+    </tr>
+  </table>
+  </div>
+<div class="division">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th><{t}>商品选择：<{/t}></th>
+      <td id='packageItem'>
+    
+        <{finder_result cols="goods,name,bn" value=$package.products moreinfo=$package.moreinfo  type="products" name="goods" view="product/package/pkg_items.html" select="checkbox"}></td>
+    </tr>
+    </table>
+</div>
+  <{if $package.goods_id}>
+  <input type='hidden' value='<{$package.goods_id}>' name='goods_id' />
+  <{/if}>
+  <table border="0" align="center" cellpadding="0" cellspacing="0" class="tableAction">
+    <tr>
+      <td><b class="submitBtn" ><input type='submit' value='完成'/></b></td>
+    </tr>
+  </table>
+</form>

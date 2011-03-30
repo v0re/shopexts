@@ -1,0 +1,84 @@
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Order Status & history</span></div>
+<h1 class="title" style="display:none;"><{t}>订单详情<{/t}></h1>
+  <div class="body" style="display:none;">
+    <ol>
+      <{foreach from=$orderlogs item=action name="orderlog"}>
+      <li><span class="date"><{$action.acttime|cdate:FDATE_STIME}></span>&nbsp;&nbsp;&nbsp;&nbsp;<{$action.log_text}></li>
+      <{/foreach}>
+    </ol>
+  </div>
+      <{if $order.status=='active' && ($order.pay_status == 0 || $order.pay_status == 3)}>
+        <div class="FormWrap" style="display:none;">
+
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+            <th><{t}>您尚未完成订单<{/t}></th>
+            <td style="padding:10px;"><a style="padding:4px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:12px;"" href="<{link ctl=member act=orderpay arg0=$order.order_id}>" ><{t}>按此为订单付款 &raquo;<{/t}></a></td>
+            </tr>
+        </table>
+
+        </div>
+    <{/if}>
+
+<div style="text-align:center;margin:5px; display:none;" >
+<a style="display:none;" style="padding:4px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:14px;"" href="<{link ctl=member act=addOrderMsg arg0=$order.order_id arg1=1}>" ><{t}>我已付款<{/t}></a>
+　　　　　
+<a  style="display:none;" style="padding:4px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:14px;"" href="<{link ctl=member act=addOrderMsg arg0=$order.order_id arg1=0}>" ><{t}>我有问题<{/t}></a>
+
+</div>
+
+    <{require file="common/orderinfo.html"}>
+    <{if $order.status=='active' && ($order.pay_status == 0 || $order.pay_status == 3)}>
+        <table border="0" cellspacing="0" cellpadding="0" class="liststyle data" width="100%">
+            <colgroup class="span-auto ColColorGray"></colgroup>
+            <colgroup class="span-4 ColColorOrange"></colgroup>
+            <tr>
+            <th><{t}>您尚未完成订单<{/t}></th>
+            <td><a style="padding:4px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:12px;"" href="<{link ctl=member act=orderpay arg0=$order.order_id}>" ><{t}>按此为订单付款 &raquo;<{/t}></a></td>
+            </tr>
+        </table>
+    <{/if}>
+
+
+<{if $ordermsg}>
+<div style="border: 1px solid rgb(229, 221, 199); background: rgb(245, 244, 236) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" class="FormWrap" style="display:none;">
+<h4>订单留言</h4>
+<div class="division">
+<table border="0" cellspacing="0" cellpadding="0" class="liststyle data" width="100%">
+<{foreach from=$ordermsg item=msgitem name="ordermsg"}>
+<tr>
+
+<td width="25%">
+<strong>时间：</strong><{$msgitem.date_line|usertime}>
+</td>
+
+<td width="45%">
+<strong>标题：</strong><{$msgitem.subject}>
+</td>
+
+<td>
+<strong>留言人：</strong><{$msgitem.msg_from}>
+</td>
+
+</tr>
+
+<tr>
+<td colspan=3>
+<{$msgitem.message|nl2br}>
+</td>
+
+</tr>
+<{/foreach}>
+
+</table>
+
+
+
+
+
+</div>
+</div>
+<{/if}>
+
+
+

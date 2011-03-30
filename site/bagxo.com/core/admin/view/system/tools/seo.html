@@ -1,0 +1,53 @@
+ <form action='index.php?ctl=sale/tools&act=seoedit' method='post' class="settingform" id="site_basic" enctype="multipart/form-data">
+<div class="tableform">
+    <h4><{t}>首页SEO设置<{/t}></h4>
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0"  class="shopping_setting">
+    <tr>
+	      <th>TITLE(首页标题)：</th>
+        <td><{setting key="system.index_title" namespace="setting" style="width:360px" display='false'}></td>
+	  </tr>
+<tr>
+<th>META_KEYWORDS<br />(关键词)：</th>
+<td><{setting key="site.meta_key_words" namespace="setting" style="width:360px" display='false'}></td>
+</tr>
+<tr>
+<th>META_DESCRIPTION<br />(页面描述)：</th>
+<td><{setting key="site.meta_desc" namespace="setting" style="width:360px" display='false'}></td>
+</tr>
+</table>
+ </div>
+<h4><{t}>其它页面SEO设置<{/t}></h4>
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0"  class="shopping_setting">
+      <tr>
+	      <th>商品列表页SEO设置</th>
+        <td>请到 商品 >> 商品分类 >> 商品分类编辑 中修改具体分类设置</td>
+	  </tr>
+      <tr>
+	      <th>商品详细页SEO设置</th>
+        <td>请到 商品 >> 商品列表 >> 商品编辑 中修改具体商品设置</td>
+	  </tr>
+</table>
+</div>
+    <h4><{t}>其他设置<{/t}></h4>
+
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0"  class="shopping_setting">
+<tr>
+<th>商店页面启用伪静态URL：</th>
+<td> <{setting key="system.seo.emuStatic" namespace="setting" display='false'}> &nbsp; &nbsp; <{help}>伪静态指的是动态网页通过重写URL的方法实现去掉动态网页的参数，但在实际的网页目录中并不存在重写网址的页面文件。<br /><br />伪静态主要目的是提高搜索引擎蜘蛛(Spider)对网站网页抓取的效果，达到搜索引擎优化的目的。<br /><br />注意：开启前请与主机提供商确认服务器是否支持网址重写(Rewrite)<{/help}></td>
+</tr>
+<tr>
+<th>通知搜索引擎不索引列表页：</th>
+<td><{setting key="system.seo.noindex_catalog" namespace="setting" display='false'}> &nbsp; &nbsp; <{help}>开启功能后，商店将禁止搜索引擎蜘蛛(Spider)对所有商品列表页进行抓取，以提高网站运行效率。<{/help}></td>
+</tr>
+</table>
+</div>
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+      <tr>
+    <td><b class="submitBtn"><input  type="submit" value="保存" id="on_submit"/></b></td>
+      </tr>
+    </table>
+  </div>
+ </form>

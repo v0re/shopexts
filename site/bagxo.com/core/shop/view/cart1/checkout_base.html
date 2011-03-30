@@ -1,0 +1,58 @@
+
+<{foreach from=$minfo item="product" key=product_id}>
+<h3><{t}>填写购买 <{/t}><{$product.name}><{if $product.nums>1}> x <{$product.nums}><{/if }><{t}> 时所需信息<{/t}></h3>
+<div class="field section">
+<div class="body"  id="misc" style="margin:0 0 0 110px;">
+  <{foreach key=key from=$product.minfo item="info"}>
+  <{assign var="infokey" value=$info.name}>
+  <div class="row">
+    <label for="misc_<{$key}>"><{$info.label}>：</label>
+    <input type="hidden" name="minfo[<{$product_id}>][<{$info.name}>][label]" value="<{$info.label}>">
+    <{if $info.type=='select'}>
+    <select class="inputstyle" name="minfo[<{$product_id}>][<{$info.name}>][value]">
+    <{foreach from=$info.options item=opt}>
+    <option value="<{$opt}>"><{$opt}></option>
+    <{/foreach}>
+    </select>
+    <{elseif $info.type=='text'}>
+    <{input class="inputstyle" type="textarea" rows="3" cols="40" id="misc_$key" name="minfo[$product_id][$infokey][value]"}>
+    <{else}>
+    <{input class="inputstyle" id="misc_$key" size="30" name="minfo[$product_id][$infokey][value]" }>
+    <{/if}>
+  </div>
+  <{/foreach}> </div>
+</div>
+<{/foreach}>
+
+<{if $has_physical || $trading.gift_e || $trading.package}>
+<div class="FormWrap" >
+<h3><{t}>Shipping address <{/t}></h3>
+<span id="receiver">
+<{include file="shop:common/receiver.html"}>  </span>
+<h3><{t}>Shipping mehtod<{/t}></h3>
+  <div class="division">
+  <div class="body" id="shipping">
+    <div class="notice"><{t}>请先选择配送地区<{/t}></div>
+  </div>
+  </div>
+<{else}>
+  <input type="hidden" name="no_physical" value="1" >
+<{/if}>
+<{if true}>
+<h3><{t}>选择支付方式--选择支付币别：<{/t}><{input type="select" id="payment-cur" style="visibility:hidden" onchange="Cart.checkout.setCurrency(this)" name="payment[currency]" rows=$currencys valueColumn="cur_code" labelColumn="cur_name" value=$currency}></h3>
+  <div class="division">
+  <div class="body" id="payment">
+  <{include file="shop:common/paymethod.html"}>
+  </div>
+  </div>
+  <script>
+      
+    window.addEvent('domready',function(){
+        $ES('input.x-payMethod','payment').each(function(pmt){
+           pmt.onclick=$empty;
+           pmt.addEvent('click',Cart.checkout.setPayment);
+        });
+    });
+  </script>
+</div>
+<{/if}>

@@ -1,0 +1,26 @@
+<div class="actionItems">
+  <table >
+    <tr>
+      <td class="functop"><h3><{t}>操作<{/t}></h3></td>
+    </tr>
+    <tr>
+      <td class="func"><span class="sysiconBtn addorder" submit="index.php?ctl=goods/comment&act=setIndexOrder" target="refresh"><{t}>置顶/解除置顶<{/t}></span></td>
+    </tr>
+  </table>
+</div>
+<{if count($orderby)>0}>
+<div class="actionItems">
+  <table >
+    <tr>
+      <td class="functop"><h3><{t}>操作<{/t}></h3></td>
+    </tr>
+    <tr>
+      <td class="func"><select class="finder-params" name="orderby">
+          <{foreach from=$orderby item=item}>
+          <option value="<{$item.sql}>"><{$item.label}></option>
+          <{/foreach}>
+        </select></td>
+    </tr>
+  </table>
+</div>
+<{/if}> 

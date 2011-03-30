@@ -1,0 +1,66 @@
+<div class="GoodsInfoWrap">
+  <div class="info">
+    <table width="100%">
+      <tr>
+        <td valign="top" align="center" class="goodspicbottom">
+         <table width="100%" >
+          <tr>
+              <td align="center" ><div  style="width:346px;height:415px; overflow:hidden;"><img src="<{$details.small_pic|gimage:'small'}>" alt="<{$details.name}>"/></div> </td>
+            </tr>
+        </table>
+    </td>
+        <td valign="top" style=" background-color:#EDECEA;">
+        <h1 class="goodsname"><{$details.name}></h1>
+        <{if $details.brief}>
+    <p class="brief"><{$details.intro}></p>
+     <{/if}>
+     
+        
+        <ul class="goodsprops clearfix">
+          <li><span><{t}>Gift Category：<{/t}></span><{$details.cat}></li>
+            
+            <li style="padding-top:20px;"><span><{t}>Beginning time：<{/t}></span><{$details.limit_start_time|userdate}></li>
+            <li><span><{t}>Finishing time：<{/t}></span><{$details.limit_end_time|userdate}></li>
+			<li><span><{t}>Stock：<{/t}></span><{$details.storage}></li>
+            <li><span><{t}>Quota：<{/t}></span><{if $details.limit_num==0}><{t}>无数量限制<{/t}><{else}><{$details.limit_num}><{/if}></li>
+            <li class="spec memberprice"><span><{t}>Sale Price：<{/t}></span><i style="text-decoration:line-through;"><{$details.price|cur}></i></li>
+			<li style="padding-top:20px;"><span><{t}>Standard Shipping Cost：<{/t}></span>$<{$details.weight}>.00 </li>
+            <li class="spec"><span><{t}>Points：<{/t}></span><span style="font-size:16px; color:#FF0000;"><{$details.point}></span></li>
+            <li class="spec" style="white-space:normal; display:none;"><span><{t}>兑换级别：<{/t}></span><{foreach from=$details.limit_level item=level}><{$level.name}> <{/foreach}></li>
+        </ul>
+        
+        <div style="padding-left:10px; padding-top:100px;">
+          <{if $details.sale_status == '1'}><a  href="<{link ctl="cart" act="addGiftToCart" arg0=$details.gift_id}>" target="_blank" ><img  src="../../../../statics/gift.gif"/></a><{else}>
+           <div ><img src="../../../../statics/nogift.gif"/></div>
+        <{/if}>
+        </div>
+    </td>
+      </tr>
+    </table>
+  </div>
+  
+
+  
+  <{if $details.gift_describe}>
+  <div class="goodspackagewrap clearfix">
+    <div class="active"><span><{t}>Description<{/t}></span></div>
+</div>
+<div  style="width:756px; border:1px solid #CCCCCC; height:auto; padding:10px; margin-top:5px; white-space:normal;">
+ 
+      <{$details.gift_describe}>
+
+</div>
+ 
+ <{/if}>
+</div>
+
+ <script>
+
+
+window.addEvent('load',function(){
+         var gift_details=$$('.gift_details div img');
+        try{
+         fixProductImageSize($$(gift_details),'div');
+         }catch(e){}
+    });
+</script>

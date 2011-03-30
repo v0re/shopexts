@@ -1,0 +1,35 @@
+<div class="actionItems">
+  <table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tbody>
+      <tr>
+        <td class="functop"><h3><{t}>搜索<{/t}></h3></td>
+      </tr>
+      <tr>
+        <td class="func"><table>
+  <tr>
+    <td valign="top"><label for="start_date"><{t}>起始日期<{/t}></label>
+      <{input type="date" name="start_date" id="start_date" class="cal _x_ipt" style="width:100px" value="$sfinddate"}> </td>
+    <td valign="top"><label for="end_date"><{t}>结束日期<{/t}></label>
+      <{input type="date" name="end_date" id="end_date" class="cal _x_ipt" style="width:100px" readonly=true value="$efinddate"}> </td>
+    <td><button style="font-size:12px; height:26px;padding:0 2px;marign:0" class="sysiconBtnNoIcon" onclick="$('finder-filterInput-<{$_finder._name}>').name='sdtime';$('finder-filterInput-<{$_finder._name}>').value=$('start_date').value+'/'+$('end_date').value;<{$_finder.var}>.refresh.call(<{$_finder.var}>);return false" ><{t}>搜索<{/t}></button></td>
+  </tr>
+</table></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+$('finder-filter-<{$_finder._name}>').style.display='none';
+$('finder-mode-<{$_finder._name}>').style.display='none';
+<{$_finder.var}>._initList = <{$_finder.var}>.initList;
+<{$_finder.var}>.initList = (function(){
+ this._initList();
+    $('finder-filter-<{$_finder._name}>').style.display='none';
+ $('finder-mode-<{$_finder._name}>').style.display='none'; 
+ this.selectMode.className='selectModeBar x-all';
+ $ES('strong',this.selectMode).setStyle('display','none');
+}).bind(<{$_finder.var}>);
+$ES('strong',<{$_finder.var}>.selectMode).setStyle('display','none');
+<{$_finder.var}>.selectAll();
+</script>

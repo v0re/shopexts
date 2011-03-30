@@ -1,0 +1,112 @@
+<div class="GoodsInfoWrap">
+  
+  
+  <table width="100%" cellspacing="0" cellpadding="0" style="border-bottom:5px solid #FFFFFF;">
+  <tr>
+    <td width="341"><div class="goodspic" style=" border-right:5px solid #FFFFFF;"><a href="#" target="_blank"><img src="<{$goods.small_pic|gimage:'small'}>" alt="<{$product.name}>"/></a></div></td>
+    <td valign="top" style="background:#EDECEA"><h1 class="goodsname"><a class="lnk"  href="<{link ctl=product act=index arg0=$goods.goods_id }>"><{$goods.name}></a></h1>
+    <ul class="goodsprops clearfix">
+    <{if $goods.bn}>
+    <li><span><{t}>Code No：<{/t}></span><{$goods.bn}></li>
+    <{/if}>
+    <{if $goods.brand_name}>
+    <li><span><{t}>商品品牌：<{/t}></span><{$goods.brand_name}></li>
+    <{/if}>
+    <{if $goods.weight}>
+    <li><span><{t}>Standard Shipping Cost：<{/t}></span>$<{$goods.weight}><{t}> <{/t}></li>
+    <{/if}>
+    <{if $goods.score}>
+    <li><span><{t}>所得积分：<{/t}></span><{$goods.score}></li>
+    <{/if}>
+    <{if $trading.score && $trading.score <> $goods.score}>
+    <li><span><{t}>特价积分：<{/t}></span><{$trading.score}></li>
+    <{/if}>
+    <{if $goods.mktprice && $goods.setting.mktprice}>
+    <li><span><{t}>General Price：<{/t}></span><{$goods.mktprice|cur}></li>
+    <{/if}>
+    <{if count($goods.products)<2}>
+    <li><span><{t}>VIP Price：<{/t}></span><{$goods.price|cur}></li>
+    <{if $goods.mktprice > $goods.price && $goods.setting.mktprice && $goods.setting.saveprice > 0}>
+    <li><span></span><{if $goods.setting.saveprice == 1}>节省：<{$goods.mktprice-$goods.price|cur}>
+          <{elseif $goods.setting.saveprice == 2}><{t}>优惠：<{/t}><{$goods.price/$goods.mktprice*100|number:'2'}>%
+          <{elseif $goods.setting.saveprice == 3}><{$goods.price/$goods.mktprice*10|number:'1'}>折<{/if}>		  </li>
+         <{/if}>
+    <{/if}>
+    </ul>
+	<br />
+    <a class="lnk"  href="<{link ctl=product act=index arg0=$goods.goods_id }>" style=" margin-left:10px; "><{t}>View Details<{/t}></a>  </td>
+  </tr>
+</table>
+
+  <div class="commentlistbody">
+ <h3 style="margin-top:10px;"><span><a class="lnk" href="<{link ctl=product act=index arg0=$goods.goods_id }>"><{$goods.name}></a><{t}><{/t}>Comments</span></h3> 
+
+
+
+
+
+
+<div class="body Comments section FormWrap pdtdetail" style="border:none" id="goods-comment">
+
+<{foreach from=$commentData item=comlist name=comments}>
+
+  <div class="pinglunmessageb" >
+    <div class=" floatLeft commentMain" style=" color:#9A9A9A;">
+    <span style="font-weight:bold;"><{$comlist.author}>说：<!--<{if $comlist.levelname!=""}> [<{$comlist.levelname}>]<{/if}> --></span> <{t}><{/t}>
+    <span class="timpstamp font10px fontcolorGray"><{$comlist.time|cdate:'SDATE_STIME'}></span>
+	<table width="738" border="0" cellspacing="0" cellpadding="0"  style="word-break:break-all; overflow:hidden; ">
+  <tr>
+    <td><div style="width:733px;"><{$comlist.comment|escape:'html'}><div></td>
+  </tr>
+</table>
+    </div><a class="floatRight lnk " href="<{link ctl="comment" act="reply" arg0=$comlist.comment_id}>" arg1="ask"><{t}>Reply to this comment<{/t}></a>
+    <div  style="clear:both;"></div></div>
+	
+    <div >
+    <{foreach from=$comlist.items item=items}>
+    <div class="replyitem " >
+    <span style="color:#9A9A9A;font-weight:bold;"><{$items.author}>回复：<!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}> --><{t}><{/t}></span>
+    <span class="timpstamp font10px fontcolorGray"><{$items.time|cdate:'SDATE_STIME'}></span>
+    <div style="color:#E86C6C; width:733px;word-break:break-all" ><{$items.comment}></div>
+    </div>
+ <{/foreach}> 
+ </div>    
+    
+    
+    
+
+<{/foreach}>
+<div style=" width:50px; float:left; color:#000000; text-decoration:underline;"> <a class="lnk"  href="<{link ctl=product act=index arg0=$goods.goods_id }>">Back</a></div>
+<div style="float:right; width:400px; "><{pager data=$pager}></div>
+<div style="clear:both;"></div>
+</div>
+<form  method="post" action="<{link ctl="comment" act="toComment" arg0=$goods.goods_id arg1=$comment.item}>">
+<h4><span>Your points and views（Current Comments<em><{$comment.total|default:'0'}></em>）</span></h4>
+<div class="division">
+      <table border="0" width="100%" cellpadding="0" cellspacing="0" class="forform">
+          <tr>
+            <th><em>*</em><{t}>Subject：<{/t}></th>
+                <td><{input class="inputstyle" type="text" required="true" size=40 name="title"}></td>
+          </tr>
+           <tr>
+           <th><em>*</em><{t}>Your Contact：<{/t}></th>
+                <td><{input class="inputstyle" type="text" required="true" size=20 name="contact"}><span class="infotips"><{t}>(Your email address)<{/t}></span></td>
+          </tr>
+            <tr>
+            <th><em>*</em><{t}>Comments：<{/t}></th>
+              <td><{input type="textarea" class="inputstyle" required="true" rows="5" name="comment" style="width:70%;"}></td>
+            </tr>
+            <tr>
+            <td></td>
+              <td><input style="padding:0; line-height:120%;" type="submit" value="Submit"></td>
+            </tr>
+        </table>
+  </div>
+
+
+  
+  
+</form>
+</div>
+</div>
+</div>

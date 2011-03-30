@@ -1,0 +1,114 @@
+
+<div id="amountInfo">
+
+   
+    <table width="100%" cellpadding="0" cellspacing="0" class="liststyled data">
+            <col class="span-auto ColColorGray"><col class="span-auto ColColorGray"><col class="span-4  textright"><tr>
+        <th rowspan="15" valign="top" style=" padding:0px;"><table width="80%" border="0" cellspacing="0" cellpadding="0">
+		 <{if $trading.totalConsumeScore}>
+      <tr>
+        <th><div align="right"><{t}>此订单的消费积分数：<{/t}></div></th>
+        <td ><div align="left"><{$trading.totalConsumeScore}></div></td>
+      </tr>
+      <{/if}>
+            <tr>
+              <td width="54%"><div align="right"><{t}>Points upon ordering：<{/t}></div></td>
+              <td><div align="left"><{$trading.totalGainScore}></div></td>
+            </tr>
+            <tr>
+              <td><div align="right"><{t}>This order cumulative points：<{/t}></div></td>
+              <td><div align="left"><{$trading.totalScore}></div></td>
+            </tr>
+			<{if $trading.coupon_u}>
+            <tr>
+              <td><div align="right"><{t}>Coupon used：<{/t}></div></td>
+              <td><div align="left">
+                <ol>
+                  <{foreach from=$trading.coupon_u item="item" key="key"}>
+                  <li><{$key}></li>
+                  <{/foreach}>
+                </ol>
+              </div></td>
+            </tr>
+			 <{/if}>
+          </table>        </th>
+        <th><{t}>Sum：<{/t}></th>
+        <td value="<{$trading.pmt_b.totalPrice}>" class="price"><div align="left"><{$trading.pmt_b.totalPrice|cur}></div></td>
+      </tr>
+      <{if $trading.shipping_id}>
+      <tr>
+        <th><{t}>Shipping Cost：<{/t}></th>
+        <td><div align="left"><{$trading.cost_freight|cur}></div></td>
+      </tr>
+      <{/if}>
+      <{if $trading.is_protect}>
+      <tr>
+        <th><{t}>配送保价费：<{/t}></th>
+        <td><div align="left"><{$trading.cost_protect|cur}></div></td>
+      </tr>
+      <{/if}>
+      <{if $trading.cost_payment}>
+      <tr>
+        <th><{t}>支付费率：(客户承担支付手续费)<{/t}></th>
+        <td><div align="left"><{$trading.cost_payment|cur}></div></td>
+      </tr>
+      <{/if}>
+      <{if $trading.is_tax == '1'}>
+      <tr style="display:none;">
+        <th><{t}>税金<{/t}><span class="fontcolorOrange fontbold">(<{$trading.tax_rate*100}>%)</span>：</th>
+        <td><input type="checkbox" id="is_tax" name="payment[is_tax]" onclick="Cart.checkout.total()" 
+          <div align="left"><{if $trading.tax_checked}>checked=checked<{/if}> value="true">+<{$trading.cost_tax|cur}> 发票抬头：
+            <input type="text" name="payment[tax_company]" class="inputstyle" >
+            </span></div></td>
+      </tr>
+      <{/if}>
+      <{if $trading.pmt_amount}>
+      <tr>
+        <th><{t}>Offer Amount：<{/t}></th>
+        <td ><div align="left"><{$trading.pmt_amount|cur}></div></td>
+      </tr>
+      <{/if}>
+      <{if $trading.discount != 0}>
+      <tr style="display:none;">
+        <th><{t}>订单减免：<{/t}></th>
+        <td style="color:#f00;"><div align="left">-<{$trading.discount|cur}></div></td>
+      </tr>
+      <{/if}>
+      <{if $trading.totalConsumeScore}>
+      <tr style="display:none;">
+        <th><{t}>抵扣积分：<{/t}></th>
+        <td style="color:#f00;"><div align="left"><{$trading.totalConsumeScore}></div></td>
+      </tr>
+      <{/if}>
+    <{if $trading.cur_code != '' && $trading.cur_code != $trading.cur_display}>
+    <tr>
+    <th><{t}>货币汇率:<{/t}></th>
+    <td><div align="left"><{$trading.cur_rate}></div></td>
+    </tr>
+    <tr>
+    <th><{t}>货币结算金额:<{/t}></th>
+    <td><div align="left"><{$trading.cur_sign}> <{$trading.final_amount}></div></td>
+    </tr>
+    <{/if}>
+      <tr>
+        <th><{t}>Payment：<{/t}></th>
+        <td><div align="left"><span class="price1"><{$trading.total_amount|cur}></span></div></td>
+      </tr>
+     <{if ($trading.totalGainScore<>0) or ($trading.totalConsumeScore<>0)}> 
+    
+     
+            
+      <{/if}>
+   <{if count($trading.coupon_u)>0}>      
+      <tr>
+        <th></th>
+        <td></td>
+      </tr>         
+   <{/if}>      
+    </table>
+
+
+    
+    
+    
+</div>

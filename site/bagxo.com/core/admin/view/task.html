@@ -1,0 +1,53 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<{strip}><html>
+<head>
+<{if $task.total > $smarty.get._s}>
+<meta http-equiv="refresh" content="0; url=index.php?ctl=default&act=task&_s=<{$smarty.get._s+1}>&_i=<{$smarty.get._i}>&_t=<{$smarty.get._t}>"></head>
+<body style="background:#fff">
+<h4 style="padding:0;margin:0"><{$task.title}></h4>
+<table>
+<tr>
+  <td>
+  <div style="border:1px solid #ccc;overflow:hidden;height:10px;width:150px;background:#fff">
+  <div style="overflow:hidden;height:10px;width:<{math equation="(x)*150/y" format="%d" x=$smarty.get._s y=$task.total}>px;background:#090"></div>
+</div>
+</td>
+  <td><{$smarty.get._s+1}>/<{$task.total}></td>
+</tr>
+</table>
+<{elseif $task.total > $smarty.get._s-1}>
+<{if !$task.succ}>
+<script language="javascript">
+window.parent.W.task.finish(<{$smarty.get._i}>);
+</script>
+<{else}>
+<meta http-equiv="refresh" content="0; url=index.php?ctl=default&act=task&_s=<{$smarty.get._s+1}>&_i=<{$smarty.get._i}>&_t=<{$smarty.get._t}>"></head>
+<body style="background:#fff">
+<h4 style="padding:0;margin:0"><{$task.title}></h4>
+<table>
+<tr>
+  <td>
+  <div style="border:1px solid #ccc;overflow:hidden;height:10px;width:150px;background:#fff">
+  <div style="overflow:hidden;height:10px;width:<{math equation="(x)*150/y" format="%d" x=$smarty.get._s y=$task.total}>px;background:#090"></div>
+</div>
+</td>
+  <td><{$task.total}>/<{$task.total}></td>
+</tr>
+后期处理...
+</table>
+<{/if}>
+<{else}>
+<{if !$task.message}>
+<script language="javascript">
+window.parent.W.task.finish(<{$smarty.get._i}>);
+</script>
+<{/if}>
+</head>
+<body style="background:#fff">
+<h4 style="padding:0;margin:0"><{$task.title}><{t}> 完成<{/t}></h4>
+<{$task.message}>
+<div style="text-align:center"><input type="button" onclick="window.parent.W.task.finish(<{$smarty.get._i}>)" value="确定" /></div>
+<{/if}>
+</body>
+</html>
+<{/strip}>

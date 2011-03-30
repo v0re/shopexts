@@ -1,0 +1,64 @@
+<div style="background:url(../../../../statics/cartt.jpg) no-repeat; width:300px; height:28px; overflow:hidden; line-height:20px;">
+<h3 style="padding-left:15px; color:#FFFFFF;"><{t}>Your products : <{/t}><span class="cartCount" style="color:#FF0000; padding-right:5px;"><{$cartCount}></span><{t}>piece<{/t}></h3></div>
+<div class="boxGray CartInfoItems" >
+
+
+   <{if count($trading.products) > 0}>
+  <table width='260px'>
+  <col></col>
+  <col></col>
+  <tbody>
+    <{foreach from=$trading.products item="item" key="key"}>
+        <tr >
+         <td width='45px;' valign='middle' align='center'>
+                <a href="<{link ctl=product act=index arg0=$item.goods_id}>" class='goods-pic' style='dispaly:block;width:40px;height:40px;overflow:hidden;border:none;color:#fff;font-size:1px;'>
+                  <img style="width:45px; height:55px; border:1px solid #CCCCCC;" src="<{$item.thumbnail_pic|gimage:'thumbnail'}>" onload="$(this).zoomImg(40,40);"/>
+                </a>
+          </td>
+          <td style="vertical-align:middle;">
+              <a href="<{link ctl=product act=index arg0=$item.goods_id}>">
+                  <{$item.name}>
+                  <{$item.addon.adjname}>
+                  <{if $item._pmt.describe}>
+                     <div class="ht1"><{$item._pmt.describe}></div>
+                  <{/if}>
+              </a>
+               <span class=" num"  style="color:FF6666;">x<{$item.nums}></span>
+           </td>
+          </tr>
+		  <tr height="7"><td></td><td></td></tr>
+    <{/foreach}>
+    </tbody>
+  </table>
+  <{/if}>
+  
+  
+  <{if count($trading.gift_e) > 0}>
+  <h3><{t}>Gifs：<{/t}></h3>
+  <ol >
+    <{foreach from=$trading.gift_e item="item" key="key"}>
+      <li><a href="<{link ctl=gift act=index arg0=$item.gift_id}>"><{$item.name}><span class=" num" style="color:FF6666;">x<{$item.nums}></span></a></li>
+    <{/foreach}>
+  </ol>
+  <{/if}>
+ 
+  <{if count($trading.package) > 0}>
+   <h3><{t}>Package：<{/t}></h3>
+   <ol >
+    <{foreach from=$trading.package item="item" key="key"}>
+     <li><{$item.name}><span class="num" style="color:FF6666;">x<{$item.nums}></span></li>
+    <{/foreach}>
+  </ol>
+  <{/if}>
+  
+</div>
+<div style="background:url(../../../../statics/carttb.jpg) no-repeat; width:300px; height:28px;"><div style="padding-left:15px; padding-top:5px; color:#FFFFFF;">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><{t}>Total:<{/t}><span class="textright price1 total" style="padding-left:5px;"><{$trading.totalPrice|cur}><{t}>元<{/t}></span></td>
+    <td align="right" style="padding-right:10px;"><a class="lnk gocart" href="<{link ctl=cart act=index}>" target="_blank"><{t}><img  style="padding-top:1px;" src="../../../../statics/Checkout2.gif"/> <{/t}></a></td>
+  </tr>
+</table>
+</div>  </div>
+

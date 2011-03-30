@@ -1,0 +1,79 @@
+<form method="post" action="<{link ctl="passport" act="create"}>" class='signform'>
+<div class="RegisterWrap">
+
+      <h4><{t}>Register<{/t}></h4>
+      <div class="intro"><{t}>Wellcom，please fill out the form below to register<{/t}></div>
+      <div class="form">
+        <input name="forward" type="hidden" value="<{$options.url}>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th><div align="right"><i>*</i><{t}>username：<{/t}></div></th>
+            <td><{input class="inputstyle" name="uname" required="true" id="reg_user" maxlength="50" onchange="nameCheck(this.value)"}><span id="reg_user_info"></span></td>
+          </tr>
+          <tr>
+            <th><div align="right"><i>*</i><{t}>e-mail：<{/t}></div></th>
+            <td><{input class="inputstyle" name="email" type="email" required="true" id="reg_email" maxlength="200"}></td>
+          </tr>
+
+          <tr>
+            <th><div align="right"><i>*</i><{t}>code：<{/t}></div></th>
+            <td><{input class="inputstyle" name="passwd" type="password" required="true" id="reg_passwd"}></td>
+          </tr>
+          <tr>
+            <th><div align="right"><i>*</i><{t}>confirm password：<{/t}></div></th>
+            <td><{input class="inputstyle" name="passwd_r" type="password" required="true" id="reg_passwd_r"}></td>
+          </tr>
+          <{if $valideCode}>
+          <tr>
+            <th><div align="right"><i>*</i><{t}>verifycode：<{/t}></div></th>
+            <td id='verifyCodebox'><{input size="8" class="inputstyle"  type="digits" required="true" name="signupverifycode" id="iptsingup"}>
+                <span class='verifyCode' style='display:none;'><img src="#" border="1" id="SingupimgVerifyCode"/><a href="javascript:changeimg()">&nbsp;change the image of code!</a>
+               </span>
+            </td>
+          </tr>
+          <{/if}>
+          <tr>
+            <th></th>
+            <td><label for="license" class="nof" style="width:auto; text-align:left; font-weight:normal;">
+          <input type="checkbox" id="license" name="license" value="agree" checked="checked"/>
+          I have read and agree to<a href="<{link ctl=page act=license}>" id="terms_error" class="lnk" target='_blank'><span class="FormText" id="terms_error_sym"><{t}>Member Registration Agreement<{/t}></span></a> <{t}>and<{/t}> <a href="<{link ctl=page act=privacy}>" id="privacy_error" class="lnk" target='_blank'><span class="FormText" id="privacy_error_sym"><{t}>Privacy policy<{/t}></span></a>。
+          </label></td>
+          </tr>          
+          <tr>
+            <th></th>
+            <td>
+        <input class="actbtn btn-register" type="image" value="" src="../../../../../statics/btn-register.gif"/>
+        <input type="hidden" name="forward" value="<{$forward}>">
+            </td>
+          </tr>
+        </table>
+        <{$redirectInfo}> </div>
+
+<!--    <div class="righttop" style=" margin-top:20px;"><h4><{t}>Login<{/t}></h4>
+      <div class="intro"><{t}>If you are our member，please login!<{/t}></div>
+      <a style="margin-top:9px;" class="actbtn btn-login" href="<{link ctl='passport' act='login'}>"><{t}>Register<{/t}></a>
+      
+      </div>
+    <div class="rightbottom"><h4><{t}>Forgot the code？<{/t}></h4>
+      <div class="intro"><{t}>If you forgot the code，please lick here to get the code again!<{/t}></div>
+      <a style="margin-top:9px;"  class="actbtn btn-forgetpass" href="<{link ctl='passport' act='lost'}>"><{t}>Get code<{/t}></a>
+      </div>-->
+  </div>
+
+</form>
+<script> 
+$$('.signform input').addEvent('focus',function(){
+    if(this.form.retrieve('showvcode',false))return;
+    $('verifyCodebox').getElements('span').show();
+    changeimg();
+    this.form.store('showvcode',true);
+});
+function nameCheck(name){
+      
+  new Ajax('<{link ctl=passport act=namecheck}>',{method:'post',update:'reg_user_info',data:'name='+encodeURIComponent(name)}).request();
+}
+
+function changeimg(){
+    $('SingupimgVerifyCode').set('src','<{link ctl="passport" act="verifyCode" arg0="s"}>?'+$time());
+}
+</script>

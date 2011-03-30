@@ -1,0 +1,161 @@
+<form action="index.php?ctl=order/order&act=docreate" method="post" id="order-create" extra="subOrder">
+<script type="text/javascript">
+var  Shop={
+  url:{
+    shipping:'index.php?ctl=order/order&act=shipping',
+    payment:'index.php?ctl=order/order&act=payment',
+    total:'index.php?ctl=order/order&act=total'
+  }
+}
+var Cart={
+  shipping_id:0,
+  d_pay:0,
+  is_protect:'false',
+  payment:0,
+  checkout:{
+    shipping:function(o){
+      if(o.value){
+        new Ajax(Shop.url.shipping,{method:'post',update:'shipping',data:'area='+o.value}).request();
+      }
+    },
+    setShipping:function(o,t){
+      if(o.id){
+        var strid = o.id, ss;
+        ss = strid.split('_');
+        var oInput = $('shipping').getElementsByTagName('INPUT');
+        for(var i=0; i<oInput.length; i++){
+          if(ss[0] == 'shipping'){
+            if(oInput[i].id != 'protect_'+ss[1] && oInput[i].id != strid){
+              oInput[i].checked = false;
+            }
+          }else{
+            if(o.checked){
+              if(oInput[i].id !=
+               'protect_'+ss[1]){
+                oInput[i].checked = false;
+              }
+              if(oInput[i].id == 'shipping_'+ss[1]){
+                oInput[i].checked = true;
+                Cart.shipping_id = oInput[i].value;
+              }
+            }
+          }
+        }
+      }
+      if(t == 1){
+        if(o.checked == true)
+          Cart.is_protect = 'true';
+        else
+          Cart.is_protect = 'false';
+      }else{
+        Cart.shipping_id = o.value;
+      }
+
+      if($('shipping_'+Cart.shipping_id).getAttribute('has_cod') == 1){
+        $('_pay_cod').style.display = '';
+        Cart.d_pay = 1;
+      }else{
+        $('_pay_cod').style.display = 'none';
+        Cart.d_pay = 0;
+      }
+
+      Cart.checkout.total();
+      return;
+    },
+    setCurrency:function(o){
+      if(o.value){
+        new Ajax(Shop.url.payment,{method:'post',update:'payment',data:'cur='+o.options[o.selectedIndex].value+'&d_pay='+Cart.d_pay+'&payment='+Cart.payment}).request();
+      }
+      Cart.payment = 0;
+      return;
+    },
+    setPayment:function(o){
+      Cart.payment = new Event(o).target.value;
+      Cart.checkout.total();
+    },
+    total:function(){
+      if($('is_tax') && $('is_tax').checked == true){
+        var is_tax = 'true';
+      }else{
+        var is_tax = 'false';
+      }
+      var strData = '';
+	  $('hiddenData').getElements('input').each(function(e){
+		strData += '&'+e.get('name')+'='+e.get('value');
+	  });
+      new Ajax(Shop.url.total+strData,{method:'post',
+                               update:'amountInfo',
+                               data:{
+                                 'shipping_id':Cart.shipping_id,
+                                 'is_protect':Cart.is_protect,
+                                 'payment':Cart.payment,
+                                 'cur':$('payment-cur').getValue(),
+                                 'is_tax':is_tax,
+                                 'area':$E('input[name^=delivery[ship_area]')?$E('input[name^=delivery[ship_area]').getValue():''
+                               }}).request();
+    }
+  }
+}
+
+if(!extra_validator['subOrder']){
+  extra_validator['subOrder'] ={
+    'checkForm':['',function(f,i){
+        if($('shipping-area')&&$('shipping-area').value == ''){
+          alert('您未选择配送地区！');
+          return false;
+        }
+        
+        var addr_num = 0;
+        var checkTag = false;
+        $$('input[name^=delivery[addr_id]','receiver').each(function(item){
+            addr_num++;
+            if(item.checked){
+                checkTag = true;
+            }
+        });
+        if(checkTag==false && addr_num>0){
+            alert('请选择收货地址！');
+            return false;
+        }
+        
+        if($('checkout-recaddr').getElement('input[name^=delivery[ship_tel]').getProperty('value').trim() == '' && $('checkout-recaddr').getElement('input[name^=delivery[ship_mobile]').getProperty('value').trim() == ''){
+          alert('请至少输入联系电话和联系手机中的一项！');
+          return false;
+        }
+        
+        var checkNum = 0;
+        $ES('input[name^=delivery[shipping_id]',"shipping").each(function(item){
+          if(item.checked == true) checkNum++;
+        });
+        if(checkNum == 0){
+          alert('您未选择配送方式！');
+          return false;
+        }
+        
+        checkNum = 0;
+        $ES('input[name^=payment[payment]',"payment").each(function(item){
+          if(item.checked == true) checkNum++;
+        });
+        if(checkNum == 0){
+          alert('您未选择支付方式！');
+          return false;
+        }else{
+          return true;
+        }
+      }]
+  };
+}
+</script> 
+<{include file="shop:cart/checkout_base.html"}>
+<{include file="admin:order/order_prom.html"}>
+<{include file="shop:cart/checkout_total.html"}>
+<div id="hiddenData"><{foreach from=$hiddenInput key=key item=item}><input type="hidden" name="<{$key}>" value="<{$item}>"><{/foreach}><div>
+<div style="display:none"><{input type="checkForm" }></div>
+
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+      <tr>
+        <td><b class="submitBtn"><input type="submit" value="创建订单"></b></td>
+      </tr>
+    </table>
+</div>
+</form>

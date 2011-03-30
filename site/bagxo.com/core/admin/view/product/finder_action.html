@@ -1,0 +1,54 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><div class="actionItems">
+<table >
+  <tr>
+    <td class="functop"><a class="sysiconBtn addorder" href="index.php?ctl=goods/product&act=addNew&p[0]=<{$cat_id}>"><{t}>添加商品<{/t}></a></td>
+  </tr>
+  <tr>
+    <td><select id="batchEdit" class='sel-finder-list-opt'>
+      <option label="批量操作..."><{t}>批量操作...<{/t}></option>
+    <optgroup label="商品上下架">
+      <option submit="index.php?ctl=goods/product&act=enable" target="refresh"><{t}>将商品上架<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=disable" target="refresh"><{t}>将商品下架<{/t}></option>
+    </optgroup>
+    <optgroup label="商品信息调整">
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=uniformPrice" target="dialog" dialogtitle="统一调价"><{t}>统一调价<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=differencePrice" target="dialog" dialogtitle="分别调价"><{t}>分别调价<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=uniformStore" target="dialog" dialogtitle="统一调库存"><{t}>统一调库存<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=differenceStore" target="dialog" dialogtitle="分别调库存"><{t}>分别调库存<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=name" target="dialog" dialogtitle="批量修改商品名称"><{t}>商品名称<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=cat" target="dialog" dialogtitle="批量修改商品分类"><{t}>商品分类<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=brief" target="dialog" dialogtitle="批量修改商品简介"><{t}>商品简介<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=brand" target="dialog" dialogtitle="批量修改商品品牌"><{t}>商品品牌<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=dorder" target="dialog" dialogtitle="批量修改商品排序"><{t}>商品排序<{/t}></option>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=weight" target="dialog" dialogtitle="批量修改商品重量"><{t}>商品重量<{/t}></option>
+
+    <{if $get_policy == 2}>
+      <option submit="index.php?ctl=goods/product&act=singleBatchEdit&cat_id=<{$cat_id}>&finder=<{$_finder.var}>&p[0]=score" target="dialog" dialogtitle="批量修改商品积分"><{t}>商品积分<{/t}></option>
+    <{/if}>
+    </optgroup>
+    <optgroup label="图片维护">
+      <option submit="index.php?ctl=goods/product&act=batchImage" target="dialog" dialogtitle="重新生成图片"><{t}>重新生成图片...<{/t}></option>    
+    </optgroup>      
+     </select></td>
+  </tr>
+  
+</table>
+</div></td>
+    <td>
+</td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+

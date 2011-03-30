@@ -1,0 +1,39 @@
+<form method="post" action="<{link ctl="passport" act="verify"}>" class="loginform">
+        <input name="forward" type="hidden" value="<{$options.url}>">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="line-height:15px;">
+          <tr>
+            <th><div align="left"><i>*</i><{t}>User name：<{/t}></div></th>
+            <td><{input name="login" class="inputstyle" required="true" id="in_login"}></td>
+          </tr>
+          <tr>
+            <th><div align="left"><i>*</i><{t}>Password：<{/t}></div></th>
+            <td><{input name="passwd" class="inputstyle" type="password" required="true" id="in_passwd"}></td>
+          </tr>
+           <{if $LogInvalideCode}>
+		   <tr>
+            <th><div align="right"><i>*</i><{t}>Verifycode：<{/t}></div></th>
+            <td id='LoginverifyCodebox'><{input size="8" class="inputstyle"  type="digits" required="true" name="loginverifycode" id="iptlogin" }>
+                <span class='verifyCode' style='display:none;'><img src="#" border="1" id="LogInImgverifycode"/><a href="javascript:changeimg('login')">&nbsp;&nbsp;Change</a>               </span>            </td>
+          </tr>
+		     <{/if}>
+           <tr>
+             <th>&nbsp;</th>
+             <td id='LoginverifyCodebox'><input name="submit" type="submit" class="actbtn " 
+
+style="background:url(../../../../../statics/signin.jpg) no-repeat" 
+
+value="登录" /></td>
+           </tr>
+           <tr>
+             <th>&nbsp;</th>
+             <td id='LoginverifyCodebox'><p style="font-size:12px; padding-left:5px; ">Forgot your password ？<br />
+              <a style="margin-left:6px;  text-
+
+decoration:underline; color:#666666;" href="<{link ctl='passport' act='lost'}>">
+<{t}>Check here<{/t}></a>
+            </p>  </td>
+           </tr>
+ 
+        </table>
+        <{$redirectInfo}>
+</form>

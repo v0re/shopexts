@@ -1,0 +1,109 @@
+<{if !$_finder.listOnly}>
+<div class="mainHead headBox" id="finder-head-<{$_finder._name}>">
+<{/if}>
+  <div class="headContent">
+    <div class="finder-head">
+      <{if !$_finder.compact}>
+      <div class=" sysiconBtnNoIcon mycolumn" id="finder-colBtn-<{$_finder._name}>"><span style="font-size:12px"><{t}>列表项<{/t}></span>&raquo;</div>
+      <{/if}>
+      <{if $_finder.select}>
+      <div class="span-1"><input type="checkbox" id="finder-selAll-<{$_finder._name}>" onclick="<{$_finder.var}>.selection.all.call(<{$_finder.var}>,this.checked)"></div>
+      <{/if}>
+      <{if $_finder.tools}>
+      <div class="<{$_finder.tools.class}>"><{t}>操作<{/t}></div>
+      <{/if}>
+      <{foreach from=$items.cols item=col key=key}>
+      <{if $_finder.order[0]==$key}>
+        <div title="<{$col.title|default:$col.label}>" onclick="<{$_finder.var}>.orderby.apply(<{$_finder.var}>,['<{$key}>','<{if $_finder.order[1]=='desc'}>asc<{else}>desc<{/if}>'])" class="<{$col.class}> highlight-<{if $_finder.order[1]=='desc'}>down<{else}>up<{/if}> borderdown">
+      <{elseif $col.noOrder}>
+        <div title="<{$col.title|default:$col.label}>" class="<{$col.class}>">
+      <{else}>
+        <div title="<{$col.title|default:$col.label}>" onclick="<{$_finder.var}>.orderby.apply(<{$_finder.var}>,['<{$key}>','desc'])" class="<{$col.class}> pointer">
+      <{/if}>
+      <{$col.label}></div>
+      <{/foreach}>
+    </div>
+    <{if $_finder.pager.total>1 || !$_finder.select}>
+    <div class="selectModeBar" id="finder-mode-<{$_finder._name}>">
+        <div class="mode selectAll">
+        此页中的所有 <strong>20</strong><{t}>条记录都已选中。<{/t}><span class="lnk" onclick="<{$_finder.var}>.selectAll.call(<{$_finder.var}>)"><{t}>点此选中当前列表中的所有<{/t}><strong><{$_finder.count}></strong><{t}>条记录。<{/t}></span></div>
+        <div class="mode deSelectAll"><{t}>已选中当前列表所有<{/t}><{$_finder.count}><{t}>条记录。<{/t}><strong><span class="lnk" onclick="<{$_finder.var}>.selection.all.call(<{$_finder.var}>,false)"><{t}>取消选中<{/t}></span></strong></div>
+    </div>
+    <{/if}>
+
+  <div id="finder-colChanger-<{$_finder._name}>" class="finder-colChanger" style="position: absolute;z-index:65535;right:0;padding:5px;display:none; border:1px solid #ccc;">
+    <div>
+      <span><{t}>请打勾选择需要显示在列表上的项<{/t}></span>
+    </div>
+    <div class="x-colbody" style="overflow-y:auto;">
+    <{foreach from=$items.allCols item=col key=key}>
+    <{if $col.colsGridShow}>
+    <div<{if $col.used}> checked="checked"<{/if}>><input type="checkbox" name="cols[]" value="<{$key}>" <{if  $col.primary}>disabled='true' checked="checked"<{else}><{if $col.used}> checked="checked"<{/if}><{/if}> />
+	<{if  $col.primary}><input type="hidden" name="cols[]" value="<{$key}>"/><{/if}>
+	<label><{$col.label}></label>
+    <input type="hidden" name="orders[]" value="<{$key}>" />
+    </div>
+    <{/if}>
+    <{/foreach}>
+    </div>
+    <div class="textcenter">
+      <span class="sysiconBtn buttonsave" onclick="<{$_finder.var}>.saveCols.call(<{$_finder.var}>)"><{t}>保存结果<{/t}></span>
+    </div>
+  </div>
+
+  </div>
+<{if !$_finder.listOnly}>
+</div>
+<{/if}>
+<{capture name="rightPadding"}>
+<!--<{if !$_finder.compact}>
+<div style="width:20px;float:right" ></div>
+<{/if}>-->
+<{/capture}>
+<{assign var="finderId" value=$_finder.var}>
+<div class="finder-list" id="finder-list-<{$_finder._name}>">
+  <{foreach from=$items.list item=item name="_finder"}>
+  <div class="<{if $item.highlight}>highlight-row <{/if}>row" item-id="<{$item[$_finder.id]}>">
+    <div class="row-line"<{if $_finder.rowselect}> style="cursor: pointer;"<{/if}>>
+    <{$smarty.capture.rightPadding}>
+    <{if $_finder.select}>
+    <div class="span-1 span-select"><input type="checkbox" tags="<{$item._tags|escape:"html"}>" class="sel" name="<{$_finder.id}>[]" value="<{$item[$_finder.id]}>"></div>
+    <{/if}>
+    <{if $_finder.tools}>
+    <div class="<{$_finder.tools.class}>"><{toolset item=$item}></div>
+    <{/if}>
+    <{foreach from=$items.cols item=colItem key=col}>
+    <div key="<{$col}>" class="cell <{$colItem.class}><{if $_finder.order[0]==$col}> orderCell<{/if}>">
+      <{if $_finder.editMode && $colItem.colsGridEdit}>
+      <{input required=$colItem.required type=$colItem.type oldvalue=$item[$col]|safehtml value=$item[$col]|safehtml inputType=$colItem.inputType options=$colItem.options style="width:90%;" onchange="$finderId.modify.call($finderId,this)"}>
+      <{else}><{$item[$col]|default:'-'|safehtml}>
+      <{/if}>
+    </div>
+    <{/foreach}>
+    </div>
+  </div>
+  <{/foreach}>
+  <!-- <div id="finder-edMask-<{$_finder._name}>" style="border:2px solid #009;position: absolute;z-index:9999"></div> -->
+</div>
+
+<{if !$_finder.listOnly}>
+<div class="mainFoot" id="finder-foot-<{$_finder._name}>">
+<{/if}>
+<table class="footer" style="clear:both" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td width="5%" style="white-space:nowrap;">
+    <{if $_finder.rowselect}><div class="sysiconBtnNoIcon" onclick="<{$_finder.var}>.movePrev()"><{t}>上一条<{/t}></div>
+    <div class="sysiconBtnNoIcon" onclick="<{$_finder.var}>.moveNext()"><{t}>下一条<{/t}></div><{/if}>
+    <div class="sysiconBtnNoIcon" onclick="<{$_finder.var}>.refresh()"><{t}>刷新<{/t}></div></div>
+  </td>
+  <td align="center"><{pager data=$_finder.pager}></td>
+  <{if $_finder.statusStr}><td width="45%"><{$_finder.statusStr}></td><{/if}>
+  <td width="5%" style="white-space:nowrap;text-align:right"><{t}>共<{/t}><{$_finder.count}><{t}>条<{/t}></td>
+  </tr>
+</table>
+<script>
+<{$_finder.var}>.setTaglib.bind(<{$_finder.var}>)(<{json from=$_finder.tagList}>);
+</script>
+<{if !$_finder.listOnly}>
+</div>
+<{/if}>

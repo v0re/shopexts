@@ -1,0 +1,99 @@
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Order status & History</span></div>
+<div style="width:770px; margin-top:5px;">
+<table width="100%" cellpadding="3" cellspacing="0" class="liststylec">
+<colgroup class="span-2 ColColorGray"></colgroup>
+<!--<colgroup></colgroup>-->
+<colgroup class="span-3"></colgroup>
+<colgroup class="span-2 ColColorOrange"></colgroup>
+<colgroup class="span-3"></colgroup>
+<thead>
+  <tr bgcolor="#FFF0FB">
+    <th  style="color:#D78299"><{t}>Order No.<{/t}></th>
+    <!--<th><{t}>商品<{/t}></th>--> 
+    <th style="color:#D78299"><{t}>Date<{/t}></th> 
+    <th style="color:#D78299"><{t}>Total<{/t}></th>
+     <th style="color:#D78299"><{t}>Status<{/t}></th>
+  </tr>
+</thead>
+<tbody>
+<{foreach from=$orders item="order" name=orders}>
+<tr height="5"></tr>
+<tr bgcolor="#EDECEA">
+  <td ><a href="<{link ctl=member act=orderdetail arg0=$order.order_id}>"><{$order.order_id}></a></td>
+  <!--<td  class="textwrap"><{$order.tostr}></td> -->
+  <td><{$order.createtime|cdate:FDATE_STIME}></td>
+  <td class="textright"><{$order.final_amount|cur:$order.currency:false:false}></td>
+  <td>
+  <{if $order.status == 'finish'}>Completed
+  <{elseif $order.status == 'dead'}>已作废
+  <{else}>
+  <{if $order.pay_status==1}>paid
+  <div style="display:none;">
+    [<{if $order.ship_status==1}>
+    Shipped
+    <{elseif $order.ship_status==2}>
+    部分发货
+    <{elseif $order.ship_status==3}>
+    部分退货
+    <{elseif $order.ship_status==4}>
+    已退货
+    <{else}>
+    正在备货...
+    <{/if}>]
+	</div>
+  <{elseif $order.pay_status==2}>
+    已付款至担保方
+  <{elseif $order.pay_status==3}>
+    <a href="<{link ctl=member act=orderpay arg0=$order.order_id}>" ><{t}>等待补款<{/t}></a>
+    <{if $order.ship_status==1}>
+    [已发货]
+    <{elseif $order.ship_status==2}>
+    [部分发货]
+    <{elseif $order.ship_status==3}>
+    [部分退货]
+    <{elseif $order.ship_status==4}>
+    [已退货]
+    <{/if}>
+  <{elseif $order.pay_status==4}>
+    部分退款
+    [<{if $order.ship_status==1}>
+    已发货
+    <{elseif $order.ship_status==2}>
+    部分发货
+    <{elseif $order.ship_status==4}>
+    已退货
+    <{elseif $order.ship_status==0}>
+    未发货
+    <{/if}>]
+  <{elseif $order.pay_status==5}>
+    已退款
+    [<{if $order.ship_status==1}>
+    已发货
+    <{elseif $order.ship_status==2}>
+    部分发货
+    <{elseif $order.ship_status==4}>
+    已退货
+    <{elseif $order.ship_status==0}>
+    未发货
+    <{/if}>]
+  <{else}>
+    <a href="<{link ctl=member act=orderpay arg0=$order.order_id}>" ><{t}>non-payment<{/t}></a>
+    <{if $order.ship_status==1}>
+    [已发货]
+    <{elseif $order.ship_status==2}>
+    [部分发货]
+    <{elseif $order.ship_status==3}>
+    [部分退货]
+    <{elseif $order.ship_status==4}>
+    [已退货]
+    <{/if}>
+  <{/if}>
+  <{/if}>
+  </td>
+</tr>
+<tr height="5"></tr>
+<{/foreach}>
+</tbody>
+</table>
+</div>
+<{pager data=$pager}>

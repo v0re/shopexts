@@ -1,0 +1,61 @@
+<style type="text/css">
+<!--
+.STYLE1 {font-size: 12px}
+-->
+</style>
+<div class="RegisterWrap clearfix">
+       
+    <div class="form" style=" padding-left:125px;">
+
+       <form name="FORM_TPL_FORGETQUESTION" method="post" action=<{link ctl="passport" act="sendPSW"}>>
+     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="line-height:30px;" >
+	 <tr><td colspan="2"><span style="font-weight:bold;">Answer the question, then click continue, we'll email you a new password.</span></td></tr>
+          <tr>
+            <td align="right" ><div align="left" class="STYLE1">
+              <div align="right"><{t}>User Name：<{/t}></div>
+            </div></td>
+            <td width="90%"><{$data.uname}><input type=hidden name=uname value="<{$data.uname}>" /></td>
+          </tr>
+          <{if $data.pw_question}>
+          <tr>
+            <td><div align="left" class="STYLE1">
+              <div align="right"><{t}>Question： <{/t}></div>
+            </div></td>
+            <td><{$data.pw_question}></td>
+          </tr>
+          <tr>
+            <td><div align="left" class="STYLE1">
+              <div align="right"><{t}>Answer：<{/t}></div>
+            </div></td>
+            <td><{input name=pw_answer class="inputstyle" }></td>
+          </tr>          
+          <{/if}>
+          <tr>
+            <td><div align="left" class="STYLE1">
+              <div align="right"><{t}>Your E-mail：<{/t}></div>
+            </div></td>
+            <td> <{input name=email class="inputstyle" }></td>
+          </tr>   
+          <tr>
+            <td>&nbsp;</td>
+            <td height="30"><input  type="image" class="memlogin_btn" value="" src="../../../../../statics/btn-getpassword.gif"/></td>
+          </tr>                      
+</table>
+   
+    </div>
+    
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

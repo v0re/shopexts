@@ -1,0 +1,16 @@
+<div class="BrandDetailWrap">
+
+  <{$data.brand_desc}>
+
+
+</div>
+<div class="GoodsSearchWrap">
+  <{require file=brand/grid.html}>
+</div>
+
+<center>
+<{if $count>20}>
+<a href="<{$link}>" title="All <{$data.brand_name}> Product"><{t}>More <{/t}><{$data.brand_name}><{t}> Product, Total  <{/t}><{$count}><{t}>  Items...<{/t}></a>
+<{else}>
+已显示所有<{$count}>件 <{$data.brand_name}> 商品</>
+<{/if}></center>

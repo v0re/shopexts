@@ -1,0 +1,48 @@
+<div class="RegisterWrap clearfix">
+      <h4><{t}>The second step ：answer the question <{/t}></h4>
+      <div class="intro"> <{t}>When you choose to submit, the password will be aent to your e-mail, please check e-mail in time to get a password!/t}></div>
+    <div class="form">
+
+       <form name="FORM_TPL_FORGETQUESTION" method="post" action=<{link ctl="passport" act="sendPSW"}>>
+     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+          <tr>
+            <th><{t}>username：<{/t}></th>
+            <td><{$data.uname}><input type=hidden name=uname value="<{$data.uname}>" /></td>
+          </tr>
+          <{if $data.pw_question}>
+          <tr>
+            <th><{t}>question for get password：<{/t}></th>
+            <td><{$data.pw_question}></td>
+          </tr>
+          <tr>
+            <th><{t}>answer for get passord ：<{/t}></th>
+            <td><{input name=pw_answer class="inputstyle" }></td>
+          </tr>          
+          <{/if}>
+          <tr>
+            <th style="width:200px;"><{t}>Please enter the current account-mail<{/t}></th>
+            <td> <{input name=email class="inputstyle" }></td>
+          </tr>   
+          <tr>
+            <th>&nbsp;</th>
+            <td><input  type="image" class="memlogin_btn" value="" src="../../../../statics/btn-OK.gif"/></td>
+          </tr>                      
+</table>
+   
+    </div>
+    
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

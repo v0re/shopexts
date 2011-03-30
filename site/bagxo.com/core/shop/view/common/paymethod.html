@@ -1,0 +1,19 @@
+
+<table width="100%" cellpadding="0" cellspacing="0" class="liststyleg data" style="padding:5px 0;">
+            <colgroup class="span-6 ColColorGray"></colgroup>
+            <colgroup class="span-auto"></colgroup>
+  <tr id="_pay_cod" style="display:<{if $delivery.has_cod == 1}>block<{else}>none<{/if}>">
+    <th style="text-align:left;"><input type="radio" name="payment[payment]" value="-1" id="payment_bank" class="x-payMethod"<{if $order.payment==-1}> checked="checked"<{/if}> /><{t}><strong>货到付款</strong><{/t}></th>
+    <td><{t}>由我们的快递人员在将货物送到时收取货款。<{/t}></td>
+  </tr>
+
+  <{foreach from=$payments item="payment" key="key"}>
+  <tr>
+    <th style="text-align:left;padding-top:7px;" >
+    <label><input class="x-payMethod" type="radio" name="payment[payment]" value="<{$payment.id}>"<{if $order.payment==$payment.id}> checked="checked"<{/if}> moneyamount="<{$payment.money}>" formatmoney ="<{$payment.money|cur:$order.currency}>" onclick="changePrice($(this).get('moneyamount'),$(this).get('formatmoney'));"/></label>
+
+</td><td width="95%"  style="text-align:left;"><{$payment.custom_name}><{if $payment.fee>0}><{t}> (支付费率: +<{/t}><{$payment.fee*100}>%)<{/if}><br /><{$payment.des|default:'&nbsp;'}></th>
+  </tr>
+  <{/foreach}>
+
+</table>

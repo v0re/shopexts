@@ -1,0 +1,263 @@
+@import "../ext/resources/css/ext-all.css";
+@import "../ext/resources/css/xtheme-aero.css";
+html{
+	background:url(bg.gif) repeat-x;
+}
+body{
+	font-family:verdana,tahoma,helvetica;
+	font-size:13px;
+}
+h1 {
+	font-size:large; 
+	margin-bottom:20px;
+}
+form{
+	margin:0;
+	padding:0;
+}
+#page{
+	padding:10px 0;
+	margin:0 auto;
+	width:90%;
+	min-width:770px;
+}
+
+
+#top{
+	text-align:right;
+}
+#titleBar{
+	float:left;
+}
+.lnk{
+	cursor: pointer;
+	text-decoration: underline;
+	color:#009;
+}
+
+
+#mainBar{
+	clear:both;
+	background:url(bar_2.gif);
+	height:45px;
+	position:relative;
+}
+#mainBar .lft{
+	background:url(bar_1.gif) no-repeat;
+	width:30px;
+	float:left;
+	height:45px;
+}
+#mainBar .rht{
+	background:url(bar_4.gif) no-repeat;
+	width:12px;
+	float:right;
+	height:45px;
+}
+#mainBar .wg-btn{
+	cursor: pointer;
+	padding:0 10px;
+	height:45px;
+	line-height:45px;
+	text-align:center;
+	font-weight:bold;
+	display:block;
+	float:left;
+	color:#403927;
+	background:url(bar_3.gif) no-repeat 100%;
+}
+#mainBar .current{
+	cursor: default;
+	color:#fff;
+	background:url(bar_5.gif);
+}
+#search{
+	position:absolute;
+	right:20px;
+	top:10px;
+}
+
+
+
+.example-info{
+	width:150px;
+	border:1px solid #c3daf9;
+	border-top:1px solid #DCEAFB;
+	border-left:1px solid #DCEAFB;
+	background:#ecf5fe url(info-bg.gif) repeat-x;
+	font-size:10px;
+	padding:8px;
+}
+pre.code{
+	background: #F8F8F8;
+	border: 1px solid #e8e8e8;
+	padding:10px;
+	margin:10px;
+	margin-left:0px;
+	border-left:5px solid #e8e8e8;
+	font-size: 12px !important;
+	line-height:14px !important;
+}
+.msg .x-box-mc {
+    font-size:14px;
+}
+#msg-div {
+    position:absolute;
+    left:35%;
+    top:10px;
+    width:250px;
+    z-index:20000;
+}
+.x-grid3-row-body p {
+    margin:5px 5px 10px 5px !important;
+}
+#footer{
+	text-align:center;
+	padding:10px;
+}
+
+
+
+
+
+#workground{
+	position:relative;
+	min-height:600px;
+}
+.sider{
+	padding-left:5px;
+	position:absolute;
+	display:block;
+	width:150px;
+	left:0;
+}
+.sider-items{
+	padding:10px 0;
+}
+.sider-items li{
+	text-align:center;
+	line-height:30px;
+	height:30px;
+	display:block;
+	cursor: pointer;
+	text-decoration: underline;
+	color:#009;
+}
+.sider-items li.current{
+	background:url(sider-cur-item.gif);
+	cursor: default;
+	text-decoration: none;
+	color:#000;
+}
+
+.opbar{
+	position:relative;
+	margin:3px 0 -3px 0;
+	height:26px;
+}
+.tabs{
+	position:absolute;
+	bottom:0;
+	width:500px;
+	left:50px;
+}
+.tabs li{
+	float:left;
+	background:url(tabs_bg.gif) no-repeat;
+	width:98px;
+	text-align:center;
+	display:block;
+	cursor: pointer;
+	color:#6c7684;
+	height:23px;
+	line-height:27px;
+}
+.tabs li.current{
+	background:url(tabs_bg_active.gif) no-repeat;
+	width:97px;
+	cursor: default;
+	text-decoration: none;
+	font-weight:bold;
+	color:#8a2713;
+}
+#main{
+	margin-left:145px;
+}
+.cbox{
+	margin:0;width:13px;height:13px;overflow:hidden;
+}
+
+/*add new product */
+#pdt-opts .x-tabs-wrap{background:none;border:none;border-bottom:1px solid #ccc}
+#pdt-opts .x-tabs-strip-wrap{background:none;border:none}
+#pdt-opts .x-tabs-body{border:none}
+#pdt-opts .x-tabs-item-body {display:none;padding:10px;min-height:100px}
+#view{
+}
+#view .sec{
+	width:50px;height:50px;border:1px solid #ccc;float:left;margin:2px
+}
+#view .prg{
+	margin-top:10px;
+	overflow:hidden;
+	height:5px;
+	background:#eee;
+	width:50px;
+	text-align:left;
+}
+#view .cur{
+	height:5px;
+	background:#090;
+}
+#view h2{
+	margin:0;padding:0;font-size:14px;height:30px;line-height:30px
+}
+
+/* 列表页详细内容面板 */
+.list{
+}
+.detail{
+	height:300px;
+}
+.detail .tab-content{
+	height:268px;
+}
+.detail x-tabs-body{
+	border:none;
+	background:#ccc;
+}
+.filter{
+	background:#CEDFF5;
+	border-bottom:1px solid #8DB2E3;
+}
+.x-tree-node{
+	font-size:14px;
+	line-height:20px;
+}
+.cat_table{
+	width:100%;
+}
+.cat_table .cat_title{
+	width:50%;
+}
+
+.cat_table .cat_pub{
+	width:30px;
+	background:url(../ext/resources/images/aero/menu/unchecked.gif) no-repeat 50% 50%;
+	cursor: pointer;
+}
+.cat_table .publish{
+	background-image:url(../ext/resources/images/aero/menu/checked.gif);
+}
+.cat_table .cat_info{
+	width:80px;
+}
+.x-form-tags li{
+	color:#3A5774;
+	padding:1px 4px;
+	margin:2px 4px 2px 0;
+}
+.x-form-tags li.selected{
+	background:#36c;
+	color:#fff;
+}

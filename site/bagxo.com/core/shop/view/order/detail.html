@@ -1,0 +1,55 @@
+<form action="<{link ctl="paycenter" act="order"}>" method="post">
+  <{require file="common/orderinfo.html"}>
+  <input type="hidden" name="order_id" value="<{$order.order_id}>" />
+  <input type="hidden" name="money" value="<{$order.amount.total-$order.amount.payed}>" />
+  <input type="hidden" name="currency" value="<{$order.currency}>" />
+  <input type="hidden" name="cur_money" value="<{$order.cur_money }>" />
+  <input type="hidden" name="cur_rate" value="<{$order.cur_rate }>" />
+  <input type="hidden" name="cur_def" value="<{$order.cur_def }>" />
+<{if $order.selecttype}>
+  <div class="division">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="liststyle data">
+      <tr>
+        <td valign="top">
+          <{require file="common/paymethod.html"}>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="division textcenter" style="margin:10px;">
+    <input type="submit" style=" padding:4px 20px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:16px;" value="Pay now" />
+  </div>
+<{else}>
+  <input type="hidden" name="payment[payment]" value="<{$order.payment}>" />
+  <div style="float:right; padding-right:100px;"><a style="text-decoration:underline;" href="?member.html">My Account</a></div>
+  <div class="FormWrap " style="display:none;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="liststyle data">
+      <colgroup class="span-6 ColColorBlue"></colgroup>
+      <colgroup class="span-5 ColColorGray textcenter"></colgroup>
+      <colgroup class="span-auto ColColorGray textcenter"></colgroup>
+      <tr>
+        <td style="padding:6px;"><div style="padding:3px 6px ;"><{t}>Total<{/t}></div>
+          <h1 style="font-size:30px; margin:0 0 15px 0"><span class="hueorange"><{$order.amount.total-$order.amount.payed|cur:$order.currency}></span></h1></td>
+        <td>
+          <{if $order.amount.total > $order.amount.payed}>
+            <{if $order.paytype=="OFFLINE"}>
+              <strong><{t}>choose1。<{/t}></strong>
+            <{elseif $order.payment==-1 || $order.paytype=="PAYAFT"}>
+              <strong><{t}>choose2<{/t}></strong>
+            <{else}>
+              <{if $order.paytype=="DEPOSIT"}>
+                <strong><{t}>choose3<{/t}></strong>
+              <{/if}>          </td>
+          <td>
+            <input type="submit" style=" width:80%; padding:14px 20px;border-left:2px solid #FFCC00; border-top:2px solid #FFCC00; border-bottom:2px solid #9F4E2B;border-right:2px solid #9F4E2B; background:#FF9900; color:#FFFFFF; font-weight:bold; font-size:16px;" value="Pay now" /> 
+            <br />
+            <a class="lnk" href="<{link ctl=order act=index arg0=$order.order_id arg1=true}>"><{t}>choose the other Way to pay &raquo;<{/t}></a>
+      </div> 
+            <{/if}>
+          <{else}>Orders do not need to pay, please wait for us to deal with<{/if}>
+        </td>
+      </tr>
+    </table>
+  </div>
+<{/if}>
+</form>

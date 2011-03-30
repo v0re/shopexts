@@ -1,0 +1,44 @@
+<form action='index.php?ctl=system/debug&act=updateSql' method='POST' class="tableform">
+<div class="division">
+<table class="finderInform" width="100%" cellspacing="0" cellpadding="0" border="0">
+<thead>
+<tr>
+<th><{t}>状态<{/t}></th>
+<th><{t}>表名称<{/t}></th>
+<th><{t}>SQL<{/t}></th>
+</tr>
+</thead>
+  <{if $lack}>
+
+<tbody>
+  <{foreach from=$lack key=key item=item}>
+  <tr>
+    <td><{$item.status}></td>
+    <td><{$item.table}></td>
+    <td><textarea name='sql[<{$item.table}>]' style="width:500px"><{$item.sql}></textarea></td>
+  </tr>
+  <{/foreach}>
+  <{else}>
+  <tr>
+  <td colspan="3">
+  <div align="center">您的数据库完整无缺</div>
+  </td>
+  <{/if}>
+    </tbody>
+</table>
+  
+
+</div>
+<table class="tableAction" cellspacing="0" cellpadding="0" border="0" align="center">
+	<tbody>
+	<tr>
+		<td id="backupbtn">
+			<b class="submitBtn">
+				<input type="submit" value="修复数据库" <{if !$lack}>disabled<{/if}>/>
+			</b>
+		</td>
+	</tr>
+	</tbody>
+</table>
+
+</form>

@@ -1,0 +1,12 @@
+<div class="SiteMaps">
+<div class="clearfix">
+      <{foreach from=$items item=item}>
+        <div class="span-4 colborder"><h3><a href="<{$item.link}>"><{$item.title}></a></h3></div>
+      <{/foreach}>
+ </div>  
+<div class="clearfix">          
+    <{foreach from=$items item=item}>
+      <div class="span-4 colborder"><{$item.html}></div>
+    <{/foreach}>
+</div>  
+</div>

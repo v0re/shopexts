@@ -1,0 +1,34 @@
+<div class="boxGray CartInfoItems">
+<h3><{t}>选购商品共<{/t}><span class="cartCount"><{$cartCount}></span><{t}>件<{/t}></h3>
+
+  <{if count($trading.products) > 0}>
+  <ol class="division CartInfoContent">
+    <{foreach from=$trading.products item="item" key="key"}>
+      <li><a href="<{link ctl=product act=index arg0=$item.goods_id}>"><{$item.name}><span class="fontcolorOrange num">x<{$item.nums}></span></a></li>
+    <{/foreach}>
+  </ol>
+  <{/if}>
+  
+  
+  <{if count($trading.gift_e) > 0}>
+  <h3><{t}>赠品：<{/t}></h3>
+  <ol class="division CartInfoContent">
+    <{foreach from=$trading.gift_e item="item" key="key"}>
+      <li><a href="<{link ctl=gift act=index arg0=$item.gift_id}>"><{$item.name}><span class="fontcolorOrange num">x<{$item.nums}></span></a></li>
+    <{/foreach}>
+  </ol>
+  <{/if}>
+ 
+  <{if count($trading.package) > 0}>
+   <h3><{t}>捆绑促销商品：<{/t}></h3>
+  <ol class="division CartInfoContent">
+    <{foreach from=$trading.package item="item" key="key"}>
+     <li><{$item.name}><span class="fontcolorOrange num">x<{$item.nums}></span></li>
+    <{/foreach}>
+  </ol>
+  <{/if}>
+  <div><{t}>总计:<{/t}><br />
+<span class="textright price1 total"><{$trading.totalPrice|cur}><{t}>元<{/t}></span>&nbsp;&nbsp;&nbsp;&nbsp;<a class="lnk gocart" href="<{link ctl=cart act=index}>" target="_blank"><{t}>进入购物车<{/t}></a></div>  
+</div>
+
+

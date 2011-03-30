@@ -1,0 +1,9 @@
+<{capture name="listHeader"}>
+  <div class="span-5"><{t}>捆绑物品数量<{/t}></div>
+<{/capture}>
+<{capture name="listBody"}>
+  <div class="span-5">
+    <{if $moreinfo.num<1}><{assign var=itemnum value=$moreinfo.num}><{else}><{assign var=itemnum value=$moreinfo.num}><{/if}>
+    <{input name=pkgnum[$id] type="positive" style="width:50px;text-align:right" required="true" value=$itemnum }>
+  </div>
+<{/capture}>

@@ -1,0 +1,33 @@
+<form id="gedit-grp-detail">
+<div class="division">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><{t}>配件组名称：<{/t}></th>
+    <td><input type="text" name="name" value="配件" /></td>
+  </tr>
+  </table>
+</div>
+<div class="division">  
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><{t}>选择配件：<{/t}></th>
+    <td><{html_radios name="type" options=$aOptions checked='goods' separator=" "}></td>
+  </tr>
+</table>
+</div>
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+  <tr>
+  <td><b class="submitBtn">
+  <input type="button" value="下一步" onclick="addAdjunctRow()" >
+  </b></td>
+  </tr>
+</table>
+</form>
+
+<script>
+function addAdjunctRow(){
+  var el=new Element('div').inject('goods-adj');
+  W.page('index.php?ctl=goods/adjunct&act=doAddGrp',{update:el,method:'post',data:$('gedit-grp-detail')});
+  goodsEditor.dialog.close();
+}
+</script>

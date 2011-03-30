@@ -1,0 +1,22 @@
+<div class="tableform">
+<p class="notice"><{t}>在本处可备份所有的数据库数据与结构,备份完成后可通过数据库恢复功能进行恢复。<{/t}><br />
+<span class="loud"><{t}>分卷备份大小：1024 K<{/t}></span><br><span class="loud"><{t}>备份过程中请勿进行其他页面操作。<{/t}></span></p>
+<BR>
+<div id="BackupProgess" align='center'></div>
+
+<table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+      <tr>
+        <td id="backupbtn"><b class="submitBtn"><input type='button' value='开始备份' onclick='runbackup("")'></b></td>
+      </tr>
+    </table>
+</div>
+<script>
+function runbackup(url){
+  if(!url) {
+    $('BackupProgess').innerHTML = '正在备份第1卷，请勿进行其他页面操作。';
+    $('backupbtn').innerHTML = '';
+  }
+  if(!url) url = 'index.php?ctl=system/backup&act=backup&sizelimit=1024&fileid=0&tableid=0&startid=-1';
+  new Ajax(url,{update:'BackupProgess',data:'a=a',evalScripts:true}).request();
+}
+</script>

@@ -1,0 +1,39 @@
+<form action="index.php?ctl=content/sitemaps&act=save&p[0]=<{$node.node_id}>" method="post" class="tableform">
+
+  <div class="division">
+  <table>
+  <tr>
+    <th><{t}>路径<{/t}></th>
+    <td>
+      <select style="width:250px" name="p_node_id">
+        <option value="0"><{t}>根目录<{/t}></option>
+      <{foreach from=$list item=item}>
+        <option <{if $item.node_id eq $node.p_node_id}>selected="selected"<{/if}> value="<{$item.node_id}>" ><{$item.title|paddingleft:$item.depth*4+4:'&nbsp;'}></option>
+      <{/foreach}>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th><{t}>名称<{/t}></th>
+    <td><{input type="text" value=$node.title name="title"}></td>
+  </tr>
+  <tr>
+    <th><{t}>显示在菜单上<{/t}></th>
+    <td><input type="checkbox" name="display" value="1" <{if $node.hidden neq "true"}>checked="checked"<{/if}>></td>
+  </tr>
+  </TABLE>
+  </div>
+
+  <table cellspacing="0" cellpadding="0" border="0" align="center" class="tableAction">
+    <tbody>
+      <tr>
+        <td>
+          <b class="submitBtn">
+            <input type="submit" value="保存栏目信息" id="newNodeBtn"/>
+          </b>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</form>

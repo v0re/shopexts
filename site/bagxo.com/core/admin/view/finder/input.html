@@ -1,0 +1,48 @@
+<{if $_finder.view}><{include file=$_finder.view}><{/if}>
+<{capture name="list"}>
+    <{foreach from=$items.list item=item name="_finder"}>
+    <div class="row"  item-id="<{$item[$_finder.id]}>">
+      <div class="row-line">
+      <input type="hidden" name="<{$_finder.name}>[]" value="<{$item[$_finder.id]}>" >
+      <{assign var="domid" value=$_finder.domid}>
+      <div class="span-2" style="text-align:center;padding-top:3px;cursor: pointer;"><{img class="closeBtn" src="images/bundle/closeBtn.gif" onclick="window.selector.$domid.remove.call(window.selector.$domid,this)" }></div>
+      <{foreach from=$items.cols item=colItem key=col moreinfo=$_finder.moreinfo}>
+        <div class="<{$colItem.class}>"><{$item[$col]|default:'-'}></div>
+      <{/foreach}>
+      <{assign var="id" value=$item[$_finder.id] }>
+      <{if $_finder.view}><{include file=$_finder.view moreinfo=$_finder.moreinfo[$id]}><{/if}>
+      <{$smarty.capture.listBody}>
+      </div>
+    </div>
+    <{/foreach}>
+<{/capture}>
+<{if $_finder.listOnly}>
+  <{$smarty.capture.list}>
+<{else}>
+  <!--<div style="width:<{$_finder.width|default:500}>px;padding:0" id="<{$_finder.domid}>" class="division">-->
+      <div  id="<{$_finder.domid}>" class="division">
+    <div class="headContent">
+      <div class="finder-head">
+        <div class="span-2 last">
+           <span class='sysiconBtn addorder' style=" padding-left:25px"  onclick="window.selector.<{$_finder.domid}>.open.call(window.selector.<{$_finder.domid}>)"><{t}>添加<{/t}></span>
+        </div>
+        <{foreach from=$items.cols item=col key=key}>
+        <div title="<{$col.label}>" class="<{$col.class}>" ><{$col.label}></div>
+        <{/foreach}>
+        <{$smarty.capture.listHeader}>
+                <div class="span-1 sysiconBtn delete" style="float:right; padding:1px 2px 2px 20px" onclick="window.selector.<{$_finder.domid}>.clear.call(window.selector.<{$_finder.domid}>)"><{t}>清空<{/t}></div>
+      </div>
+    </div>
+    <div class="finder-list" id="finder-list-<{$_finder._name}>">
+      <{if count($items.list)>0}>
+        <{$smarty.capture.list}>
+      <{/if}>
+      <p class="notice" style="margin:20px<{if count($items.list)>0}>;display:none<{/if}>">
+        您还没有添加任何<{$items.custom_name}>，请<span class="lnk" onclick="window.selector.<{$_finder.domid}>.open.call(window.selector.<{$_finder.domid}>)"><{t}>点此添加<{/t}></span>。
+      </p>
+    </div>
+  </div>
+  <script>
+  window.selector.<{$_finder.domid}> = new Selector('<{$_finder.domid}>',<{json from=$_finder}>);
+  </script>
+<{/if}>

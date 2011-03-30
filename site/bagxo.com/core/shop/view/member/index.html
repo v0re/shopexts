@@ -1,0 +1,36 @@
+<div class="membertop"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">My Account</span></div>
+<div class="membertopb"><span style="margin-left:20px; font-size:16px; color:#CF5E64; line-height:40px; font-weight:bold;">User name information</span></div>
+
+
+
+<{if $wel.oNum!=0 || $wel.mNum!=0}>
+
+<div class="note clearfix" id="infotip">
+
+  <div class="span-10" style="color:#666666;">
+   
+    <{if $wel.oNum!=0}>
+    You have<strong style="color:#FF3333; padding:0 5px;"><{$wel.oNum}></strong><{t}>orders need to pay，do you going to<{/t}>&nbsp; <a style="color:#0000FF; text-decoration:underline;" href="<{link ctl=member act=orders}>"><{t}>check<{/t}></a>&nbsp; now?
+  <{/if}>
+  
+</div>
+
+</div>
+<{/if}>
+
+<div class="memberconb" style="color:#666666;"><{t}>Your points now：<{/t}><strong class="font16px "  style="color:#FF3333"><{$wel.pNum}></strong><{t}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<{/t}></div>
+
+<div class="membertopb" style="margin-top:16px;"><span style="margin-left:20px; font-size:16px; color:#CF5E64; line-height:40px; font-weight:bold;">On-going Campaign</span></div>
+  <div  style=" background:#EDECEA;color:#CE5F68; width:757px; overflow:hidden; padding-left:13px;">    
+ 
+	<ol class="list">
+      <{foreach from=$wel.pa item=key}>
+      <li style="color:#666666;"><{$key.pmta_name}>--<{$key.pmta_describe}></li>
+      <{/foreach}>
+    </ol>
+  </div>
+  <div  style="clear:both;"></div>
+
+
+
+

@@ -1,0 +1,64 @@
+
+<div class="Comments" style="border:none; width:770px;" id="shop-message">
+<div style=" background:#FBA4D9; height:40px; margin-bottom:6px; width:770px; overflow:hidden;"><span style="margin-left:20px; font-size:16px; color:#FFFFFF; line-height:40px; font-weight:bold;">Guestbook</span></div>
+ <{foreach from=$msg item=msglist}>
+  <div >
+   <div class="mainReply"><strong> <span class="author"><{$msglist.msg_from}>:</span>&nbsp;&nbsp;<{$msglist.subject}> <{t}>&nbsp;&nbsp;<{/t}></strong> <span class="timpstamp font10px fontcolorGray replies prepend-1">(<{$msglist.date_line|cdate:'SDATE_STIME'}>)</span>
+      <!--<h4> <{$comment.title|escape:'html'}></h4>-->
+      <div class="boxBlue" style="margin:0;">
+      
+        
+        <{$msglist.message}></div>
+    </div>
+    
+      <div> <{foreach from=$msglist.reply item=items}>
+    <div style="  background:#F3F3F3; margin:5px 0 13px 0; padding-left:20px;"> <span  class="author "><{$items.msg_from}> </span><{t}>&nbsp;&nbsp;Aswer：<{/t}><span class="timpstamp font10px fontcolorGray replies prepend-1">(<{$items.date_line|cdate:'SDATE_STIME'}>)</span>
+      <div style="padding:0 10px 0 10px; color:#FF6666;"><{$items.message}></div>
+    </div>
+    <{/foreach}> </div>
+    
+  </div>
+
+  <{/foreach}>
+  
+  
+  
+  <{pager data=$pager}>
+  <form class="addcomment division" method="post" action="<{link ctl="message" act="sendMsgToOpt"}>
+    ">
+    <h4><{t}>Sign Gestbook<{/t}></h4>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="forform">
+      <tr>
+        <th><em>*</em><{t}>Subject：<{/t}></th>
+        <td><{input type="text" required="true" size=50 name="subject"}></td>
+      </tr>
+
+      <{if $nomember eq 'on'}>
+
+      <tr>
+        <th><em>*</em><{t}>Your Contact：<{/t}></th>
+        <td><{input type="text" required="true" size=30 name="email" maxlength=255}>(Your email address)</td>
+      </tr>
+      <{/if}>
+      <tr>
+        <th><em>*</em><{t}>Content：<{/t}></th>
+        <td><{input type="textarea" required="true" rows="5" name="message" style="width:70%"}></td>
+      </tr>
+      <{if $msgshow == "on" }>
+      <tr>
+        <th><em>*</em><{t}>验证码：<{/t}></th>
+        <td><{input type="text" required="true" size="4" maxlength="4" name="verifyCode"}>&nbsp;<img src="<{link ctl="passport" act="verifyCode"}>" border="1" id="imgVerifyCode"/><a href="javascript:changeimg()">&nbsp;看不清楚?换个图片</a></td>
+      </tr>
+      <{/if}>
+      <tr>
+        <th></th>
+        <td><input type="submit"  value="Submit"></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<script>
+function changeimg(){
+    $('imgVerifyCode').set('src','<{link ctl="passport" act="verifyCode"}>#'+$time());
+}
+</script>

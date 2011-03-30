@@ -1,0 +1,17 @@
+<script>
+top.Splash.go("<{$jumpto}>",<{$wait}>*1000,{method:'post',data:'a=b'});
+</script>
+<div style="width:400px;padding:20px;margin:0 auto;position:relative" class="success" id='noticeSplash'>
+  <h4><{$msg}></h4>
+  <div style="clear:both;margin-top:30px">    
+    <{assign var="id" value=$smarty.now}>
+    <p><a id="splash-<{$id}>" href="<{$jumpto}>" target="{method:'post',data:'a=b'}"><{if $wait>1}><{$wait}><{t}>秒后系统会自动跳转，也可点击本处<{/t}><{else}><{t}>正在跳转...<{/t}><{/if}></a></p>
+    <{if count($errinfo)>0}>
+    <ul>
+    <{foreach from=$errinfo item=item}>
+      <li><{$item.codeinfo}><em><{$item.file}>:<{$item.line}></em>-<strong><{$item.string}></strong></li>
+    <{/foreach}>
+    </ul>
+    <{/if}>
+  </div>
+</div>
