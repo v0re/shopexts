@@ -113,7 +113,7 @@ class ctl_gallery extends shopPage{
                 }
                 foreach($p['data'] as $i){
                     $title[] = $brand[$i];
-                    $tip = "品牌";
+                    $tip = "Brand";
                 }
                 unset($brand);
             }elseif(substr($p['type'],0,2)=='s_'){
@@ -226,7 +226,7 @@ class ctl_gallery extends shopPage{
         if (is_array($cat['brand'])){
             foreach($cat['brand'] as $bk => $bv){
                 $bCount=0;
-                $brand = array('name'=>'品牌','value'=>array_flip($filter['brand_id']));
+                $brand = array('name'=>'Brand','value'=>array_flip($filter['brand_id']));
                 foreach($goods_relate as $gk => $gv){
                     if ($gv['brand_id']){
                         if ($gv['brand_id']==$bv['brand_id']){
