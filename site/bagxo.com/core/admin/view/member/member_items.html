@@ -22,8 +22,8 @@
             <label><{t}>邮编：<{/t}></label>
             <{$mem.zip|escape:'html'}></div>
           <div class="span-7">
-            <label><{t}>性别：<{/t}></label>
-            <{if $mem.sex == 1}>男<{else}>女<{/if}></div>
+            <label><{t}>gender：<{/t}></label>
+            <{if $mem.sex == 1}>Male<{else}><{/if}></div>
           <div class="span-7">
             <label><{t}>出生日期：<{/t}></label>
             <{$mem.b_year}>-<{$mem.b_month}>-<{$mem.b_day}></div>

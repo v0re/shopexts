@@ -5,7 +5,7 @@
       <{if $setting.picaddress}> <img src="<{$setting.picaddress}>" /> <{/if}>
       <{else}>
       <{img src=$setting.smallPic path="icons"}>
-      <{/if}> 感谢<span class="OrderListName"><{$data.$key.ship_name}><{if $data.$key.sex==='0'}>女士<{/if}><{if $data.$key.sex==1}>先生<{/if}></span> 于<span class="OrderListDate"><{$data.$key.date}></span>完成交易额为<span class="OrderListPrice"><{$data.$key.total_amount|cur}></span>的订单<!--<span class="OrderListId"><{$data.$key.order_id}></span>-->  </li>
+      <{/if}> 感谢<span class="OrderListName"><{$data.$key.ship_name}><{if $data.$key.sex==='0'}>士<{/if}><{if $data.$key.sex==1}>先生<{/if}></span> 于<span class="OrderListDate"><{$data.$key.date}></span>完成交易额为<span class="OrderListPrice"><{$data.$key.total_amount|cur}></span>的订单<!--<span class="OrderListId"><{$data.$key.order_id}></span>-->  </li>
     <{/foreach}>
   </ul>
 </div>
