@@ -8,5 +8,6 @@ if(file_exists('config/config.php')){
     ob_end_clean();
     require(CORE_DIR.'/include/shopCore.php');
     new shopCore();
+    require('auth.php');
 }else header('Location: install/');
 ?>
