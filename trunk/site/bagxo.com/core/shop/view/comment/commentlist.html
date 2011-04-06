@@ -52,7 +52,7 @@
 
   <div class="pinglunmessageb" >
     <div class=" floatLeft commentMain" style=" color:#9A9A9A;">
-    <span style="font-weight:bold;"><{$comlist.author}>说：<!--<{if $comlist.levelname!=""}> [<{$comlist.levelname}>]<{/if}> --></span> <{t}><{/t}>
+    <span style="font-weight:bold;"><{$comlist.author}>：<!--<{if $comlist.levelname!=""}> [<{$comlist.levelname}>]<{/if}> --></span> <{t}><{/t}>
     <span class="timpstamp font10px fontcolorGray"><{$comlist.time|cdate:'SDATE_STIME'}></span>
 	<table width="738" border="0" cellspacing="0" cellpadding="0"  style="word-break:break-all; overflow:hidden; ">
   <tr>
@@ -65,7 +65,7 @@
     <div >
     <{foreach from=$comlist.items item=items}>
     <div class="replyitem " >
-    <span style="color:#9A9A9A;font-weight:bold;"><{$items.author}>回复：<!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}> --><{t}><{/t}></span>
+    <span style="color:#9A9A9A;font-weight:bold;"><{$items.author}>：<!--<{if $items.levelname!=""}> [<{$items.levelname}>]<{/if}> --><{t}><{/t}></span>
     <span class="timpstamp font10px fontcolorGray"><{$items.time|cdate:'SDATE_STIME'}></span>
     <div style="color:#E86C6C; width:733px;word-break:break-all" ><{$items.comment}></div>
     </div>

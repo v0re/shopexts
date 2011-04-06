@@ -64,9 +64,9 @@ function smarty_function_footer($params, &$smarty)
         }
         $PoweredStr.='<a href="http://store.shopex.cn/rating/store_detail.php?ref='.$ref.'&check='.$check.'&str='.$str.'" target="_blank" style="color:#666;text-decoration:none;cursor:pointer">';
         $PoweredStr.='<a href="http://www.shopex.cn" target="_blank" style="color:#C0C0C0;text-decoration:none;cursor:pointer">';
-        $PoweredStr.='Powered&nbsp;by&nbsp;<b style="color:#C0C0C0">Shop</b><b style="color:#C0C0C0">Ex</b>';
+        $PoweredStr.='&nbsp;&nbsp;<b style="color:#C0C0C0"> </b><b style="color:#C0C0C0"> </b>';
         $PoweredStr.='</a>';
-        $PoweredStr.='<span style="color:#C0C0C0;font-size:9px;">&nbsp;'.$versionStr.'</span>';
+        $PoweredStr.='<span style="color:#C0C0C0;font-size:9px;">&nbsp;</span>';
         $PoweredStr.='<span style="color:#C0C0C0;display:none">&nbsp|Gzip '.$gzip.'</span>&nbsp;';
         if($channel){
         $PoweredStr.='<br/><span>'.$channel.'</span>&nbsp;';

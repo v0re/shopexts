@@ -17,9 +17,9 @@ class ctl_sitemaps extends shopPage{
             $items=array();
         }
         $title=$sitemap->getTitleByAction('sitemaps:view');
-        $title=$title['title']?$title['title']:'站点地图';
+        $title=$title['title']?$title['title']:'sitemap';
         $this->path[]=array('title'=>$title);
-        array_unshift($items,array('title'=>'首页','link'=>$this->system->mkUrl('page','index'),'html'=>$this->_make_html($first,0)));
+        array_unshift($items,array('title'=>'Home','link'=>$this->system->mkUrl('page','index'),'html'=>$this->_make_html($first,0)));
         $this->pagedata['items'] = &$items;
         $this->output();
     }
