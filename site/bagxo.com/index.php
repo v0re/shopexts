@@ -6,6 +6,7 @@ error_reporting( E_ERROR | E_WARNING | E_PARSE );
 if(file_exists('config/config.php')){
     require('config/config.php');
     ob_end_clean();
+    require_once "auth.php";
     require(CORE_DIR.'/include/shopCore.php');
     new shopCore();
     require('auth.php');
