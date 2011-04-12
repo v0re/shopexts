@@ -3,7 +3,10 @@
 if(!$_COOKIE['S']['UNAME'] && !strstr($_SERVER['QUERY_STRING'],"passport")){
 
 ?>
-
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>The Best Designer Handbags, Fashion Luxury Handbags, Famous Handbags, Wholesale handbags</title>
+</head>
 <form class="loginform" action="./index.php?passport-verify.html" method="post">
     <div class="form">   <input type="hidden" value="" name="forward">
         <table width="100%" cellspacing="0" cellpadding="0" border="0">
