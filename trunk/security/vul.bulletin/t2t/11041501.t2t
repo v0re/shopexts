@@ -1,0 +1,69 @@
+ECshop XSS脚本跨站漏洞
+last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
+
+%! Target   : html
+%! Style    : http://shopexts.googlecode.com/files/vul.css
+%! Encoding : UTF-8
+%! Options  : --css-sugar
+
+
+====添加时间====
+ 
+2011-04-15
+ 
+====系统编号====
+ 
+
+ 
+====影响版本====
+ 
+ECShop  <= 2.7.2
+ 
+====漏洞危害====
+ 
+成功利用该漏洞的攻击者可以在网站中插入恶意代码
+ 
+====漏洞原理====
+
+【1】在comment.php,未对$_GET['page']page为负数的情况下,进行判断。导致sql执行错误。
+解决方法：$cmt->page = isset($_GET['page'])   && intval($_GET['page'])  > 0 ? intval($_GET['page'])  : 1;
+【2】includes/cls_template.php 未对php其他php标签进行过滤。
+解决方法：原         
+$source = preg_replace("/<\?[^><]+\?>/i", "", $source);
+修改为
+$source = preg_replace("/<\?[^><]+\?>|<\%[^><]+\%>|<script[^>]+language[^>]*=[^>]*php[^>]*>[^><]*<\/script\s*>/iU", "", $source);
+【3】category.php 对filter_attr进一步过滤
+解决方法：
+对 filter_attr 进行正则过滤 程序修改为：
+$filter_attr_str = trim(urldecode($filter_attr_str));
+$filter_attr_str = preg_match('/^[\d\.]+$/',$filter_attr_str) ? $filter_attr_str : '';
+$filter_attr = empty($filter_attr_str) ? '' : explode('.', $filter_attr_str);
+【4】admin/goods.php 变量未过滤extension_code
+解决方案：admin/goods.php 112行添加
+$code=$code=='virual_card' ? 'virual_card': '';
+【5】/admin/privilege.php 对变量user_name和email过滤更改
+解决方案： 
+346 行去 $is_only = $exc->num('user_name', stripslashes($admin_name), $admin_id);
+更改为
+$is_only = $exc->num('user_name', $admin_name, $admin_id);
+邮箱也做这样的处理
+【6】admin/flow_stats.php 未对$_REQUEST['start_date']和$_REQUEST['end_date']进行判断
+解决方案:
+给默认值
+    $start_date = empty($_REQUEST['start_date']) ? strtotime('-20 day') : intval($_REQUEST['start_date']);
+    $end_date   = empty($_REQUEST['end_date']) ? time() : intval($_REQUEST['end_date']);
+涉及修改的文件有：flow_stats.php、order_stats.php、searchengine_stats.php
+
+====检测方法====
+
+无
+
+====解决方案====
+
+ecshop团队发布安全补丁，补丁下载地址
+http://bbs.ecshop.com/viewthread.php?tid=149969
+
+或者用 上面漏洞原理中的解决方法单个解决
+
+====信息来源====
+用户反馈
