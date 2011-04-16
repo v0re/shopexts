@@ -359,7 +359,7 @@ class ctl_passport extends shopPage{
                 $this->checkusername($_POST['login'],$_POST['passwd'],$_POST['forward'],$uinfo[0],$uinfo[3]);
             }
             else{
-                $this->nowredirect('failed',base64_encode(str_replace(array('+','/','='),array('_',',','~'),$_POST['ref_url'])),'The username or password is invalid/ please modify');
+                $this->nowredirect('failed',base64_encode(str_replace(array('+','/','='),array('_',',','~'),$_POST['ref_url'])),'The username or password is invalid/ please modify.Need more help? Contact vipBagXO@gmail.com');
             }
         }
         $this->title = '';
@@ -411,7 +411,7 @@ class ctl_passport extends shopPage{
                 }
                 else{
                     if ($_POST['forward']){
-                        $url='';
+                        $url=$_POST['forward'];
                     }
                     $loginfo = $oPassport->login($info['member_id'],$url);
                     $this->header.=$loginfo;                    
@@ -422,7 +422,7 @@ class ctl_passport extends shopPage{
                 $this->nowredirect('success',$url,'');
             }
         }else{            
-            $this->nowredirect('failed',base64_encode(str_replace(array('+','/','='),array('_',',','~'),$_POST['ref_url'])),'The username or password is invalid, please modify');
+            $this->nowredirect('failed',base64_encode(str_replace(array('+','/','='),array('_',',','~'),$_POST['ref_url'])),'The username or password is invalid, please modify.Need more help? Contact vipBagXO@gmail.com');
         }
     }
 
