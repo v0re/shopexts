@@ -14,7 +14,9 @@
 	         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="entry-content">
           <tr>
             <td colspan="2">
-			<{if ($product.pdt_desc.price|@count) > 1}><div style="text-align:center;"><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name}>" class="entry-title" target="_blank"><img src="/statics/More Color.gif"/></a></div><{/if}>
+			<{if ($product.pdt_desc.price|@count) > 1}>
+			<div style="text-align:center;"><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name}>" class="entry-title" target="_blank"><img src="/statics/more_color.gif"/></a></div>
+			<{/if}>
 			<div style="text-align:left; line-height:15px;"><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name}>" class="entry-title" target="_blank"><{$product.name|escape:"html"}></a>
 			</div></td>
           </tr>
