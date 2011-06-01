@@ -1,0 +1,74 @@
+INSERT INTO `bagxocom`.`sdb_members` (`member_lv_id`,`uname`,`name`,`lastname`,`firstname`,`password`,`area`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`ctiy`,`order_num`,`b_year`,`b_month`,`b_day`,`sex`,`advance`,`point_freeze`,`point_history`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,) SELECT  `level`,`user`,`name`,NULL,NULL,`password`,NULL,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,NULL,NULL,NULL,NULL,`sex`,`advance`,NULL,NULL,`piont`,`ip`,`regtime`,`pw_answer`,`pw_question`, FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`) SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question` FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`sex`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday` 
+            FROM `do4bagnet`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `do4bagnet`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `do4bagnet`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `my7martcom`.`sdb_mall_member`
+INSERT INTO `bagxocom`.`sdb_members` 
+            (`member_lv_id`,`uname`,`name`,`password`,`mobile`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`reg_ip`,`regtime`,`pw_answer`,`pw_question`,`remark`,`fav_tags`) 
+            SELECT  `level`,`user`,`name`,`password`,`mov`,`tel`,`email`,`zip`,`addr`,`province`,`city`,`advance`,`point`,`ip`,`regtime`,`pw_answer`,`pw_question`,`birthday`,`sex` 
+            FROM `do4bagnet`.`sdb_mall_member`

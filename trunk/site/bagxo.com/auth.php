@@ -15,7 +15,7 @@ function is_page_allow(){
     return false;
 }
 
-if( strstr($_SERVER['HTTP_REFERER'],"bagxo")){
+if( strstr($_SERVER['HTTP_REFERER'],"vipbagxo")){
     $sw_forward = $_SERVER['HTTP_REFERER'];
 }else{
     $sw_forward = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
