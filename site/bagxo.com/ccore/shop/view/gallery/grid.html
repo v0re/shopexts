@@ -1,0 +1,53 @@
+<table width="760" border="0" cellpadding="0" cellspacing="0" style="margin-left:10px;  overflow:hidden;">
+  <{if count($products) > 0}>
+  <tr valign="top"> <{foreach from=$products item=product name=goods}>
+    <td  width="184" id="pdt-<{$product.goods_id}>" product="<{$product.goods_id}>" >
+   
+   <div class="items-gallery<{$mask_webslice}>">
+    <div class="goodpic" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:178px; overflow:hidden;height:215px;<{/if}>
+     text-align:left;margin:0; padding:0;'>
+    <a target="_blank" href="<{link ctl="product" act="index" arg0=$product.goods_id}>" style=" margin:0 ;overflow:hidden;<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:176px; height:213px;<{/if}>" style='<{if $env.thumbnail_pic_width !=0 && $env.thumbnail_pic_height !=0}> width:<{$env.thumbnail_pic_width}>px;height:<{$env.thumbnail_pic_height}>px;<{/if}>
+     overflow:hidden;text-align:center;vertical-align: middle;margin:0; line-height:<{$env.thumbnail_pic_height}>px;'>
+    <img src="<{$product.thumbnail_pic|gimage:'thumbnail'}>" alt="<{$product.name}>" />
+    </a></div>
+      <div class="goodinfo" style="margin-top:5px;">
+	         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="entry-content">
+          <tr>
+            <td colspan="2">
+			<{if ($product.pdt_desc.price|@count) > 1}>
+<<<<<<< .mine
+			<div style="text-align:center;"><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name}>" class="entry-title" target="_blank">MORE COLOR AVAILABLE</a></div>
+=======
+			<div><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name}>"  target="_blank"><img src="http://www.vipbagxo.com/statics/more_color.gif"/></a></div>
+>>>>>>> .r977
+			<{/if}>
+			<div style="text-align:left; line-height:15px;"><a href="<{link ctl="product" act="index" arg0=$product.goods_id}>" title="<{$product.name}>" class="entry-title" target="_blank"><{$product.name|escape:"html"}></a>
+			</div></td>
+          </tr>
+          <tr >
+            <td colspan="2" style="text-align:left; "><ul style="line-height:15px;" >
+                
+				<li>General Price:<span  style="text-decoration:line-through;"><{$product.mktprice|cur}></span></li>
+				<li>VIP Price:<span  style="color:#FF0000;"><{$product.price|cur}></span></li>
+              </ul></td>
+          </tr>
+                  </table>
+      </div>
+    </div>  
+      
+      </td>
+    <{if !($smarty.foreach.goods.iteration%4)}> </tr>
+  <{if !$smarty.foreach.goods.last}>
+  <tr valign="top"> <{/if}>
+    
+    <{elseif $smarty.foreach.goods.last}>
+    <td colspan="<{math equation='4 - y' y=$smarty.foreach.goods.iteration%4}>">&nbsp;</td>
+  </tr>
+  <{/if}>
+  <{/foreach}>
+  
+  
+  
+  
+  <{/if}>
+</table>
