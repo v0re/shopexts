@@ -31,7 +31,7 @@ class svhost_server_nginx{
             array($ip,$domain,$htdocs),
             $conf_template
         );
-        $save_file = "$conf_dir/site/$conf_name";
+        $save_file = "$conf_dir/vhosts/$conf_name";
         $bash->fwrite($save_file,$conf);
         
         return true;
@@ -40,7 +40,7 @@ class svhost_server_nginx{
     function bash_delete(&$bash,$domain){
         $conf_dir = dirname($this->config['conf']);
         $conf_name = $domain.".conf";
-        $save_file = "$conf_dir/site/$conf_name";
+        $save_file = "$conf_dir/vhosts/$conf_name";
         $bash->del($save_file);
         
         return true;
