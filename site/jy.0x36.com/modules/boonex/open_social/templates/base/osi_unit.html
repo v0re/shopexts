@@ -1,0 +1,18 @@
+<tr>
+	<td colspan="2">
+		<div id="selectable_el" class="blogBlockX" style="border-bottom:1px solid #DBDBDB;padding:5px 10px;">
+			__application_url__
+			<p class="small"><bx_text:_Description />: __application_description__</p>
+			<p class="small" id="appl___application_status__" style="border-bottom:0px solid red;"><bx_text:_Status />: __application_status__</p>
+			<div id="selectable_el_div">
+				<!-- <a id="selectable_el_pic" href="javascript:void(0);" onclick="if( name = prompt('__enter_new_url__', '__application_url_js__') ) { getHtmlData('custom_appl_lists_div', '__php_self__?ID=__owner_id__&action=ren_rss&application_id=__application_id__&rss_url='+ encodeURIComponent(name) +'&mode=ajax', '', 'post'); } return false;" title="<bx_text:_Edit />">
+					<img alt="<bx_text:_Edit />" src="<bx_icon_url:description_edit.png />" />
+				</a> -->
+				<a id="selectable_el_pic" href="__php_self__?ID=__owner_id__&action=del_application&application_id=__application_id__" onclick="getHtmlData('custom_appl_lists_div', '__php_self__?ID=__owner_id__&action=del_application&application_id=__application_id__&mode=ajax', '', 'post'); return false;" title="<bx_text:_Delete />">
+					<img alt="<bx_text:_Delete />" src="<bx_icon_url:action_block.png />" />
+				</a>
+			</div>
+			<div class="clear_both"></div>
+		</div>
+	</td>
+</tr>

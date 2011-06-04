@@ -1,0 +1,61 @@
+/*--- Uploader styles ---*/
+div.modules-results {
+    margin: 5px 10px;
+}
+div.modules-uploader {
+    margin: 10px;
+}
+
+/*--- Installed/Not-Installed Modules, Available Updates styles ---*/
+div.modules-items {
+    margin: 10px;
+}
+div.modules-item {
+    padding: 2px 0px;
+    color: #333333;
+}
+div.modules-item span.modules-item-title {
+    font-weight: bold;
+}
+
+/*--- Plank styles ---*/
+div.modules-plank {
+    margin: 5px  0px;
+	padding: 5px;
+	
+	position: relative;
+	
+	border: 1px solid #cccccc;
+	background-color: #eeeeee;	
+}
+span.modules-plank-title {}
+div.modules-plank-switch {    
+	top: 5px;
+	right: 6px;
+	width: 13px;
+	height: 13px;
+
+	position: absolute;
+
+	background-image:url(../images/modules_toggle.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+
+	font-size: 11px;
+	font-weight: bold;
+	cursor: pointer;
+}
+div.modules-plank-switch-opened {
+    background-position: 0px -13px;
+}
+div.modules-plank-content {
+	display: none;
+}
+span.modules-plank-success {
+    font-weight: bold;
+    color: green;
+}
+span.modules-plank-failed {
+    font-weight: bold;
+    color: red;
+}

@@ -1,0 +1,21 @@
+
+<div class="bx_sys_files_wrapper">
+    <bx_repeat:files>
+        <div class="bx_sys_files_line">
+            <div class="sys_icon"><img alt="__title__" title="__title__" src="__icon__" /></div>
+            <p>__title__</p>
+            <u>__date__</u>
+            <i>__for_group__</i>
+            <b>__price__</b>            
+            <div class="bx_sys_files_btns">                
+                <bx_if:purchase>
+                    __btn_purchase__
+                </bx_if:purchase>                
+                <bx_if:download>
+                    __btn_download__
+                </bx_if:download>
+                <div class="clear_both"></div>
+            </div>            
+        </div>
+    </bx_repeat:files>    
+</div>        

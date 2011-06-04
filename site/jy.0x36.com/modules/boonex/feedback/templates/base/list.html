@@ -1,0 +1,31 @@
+<div id="feedback-content-__sample__" class="feedback-content">
+    <div class="feedback-entries">
+        <bx_repeat:entries>
+            <div id="__id__" class="feedback-entry">
+                __voting__
+                <bx_if:checkbox>
+                    <div class="feedback-checkbox">
+                        <input type="checkbox" name="feedback-ids[]" value="__id__" />
+                    </div>
+                </bx_if:checkbox>
+                __author_icon__
+                <div class="feedback-info">
+                    <div class="feedback-caption">
+                        <a class="feedback-caption" href="__link__">__caption__</a>
+                        <bx_if:status>
+                            <span class="feedback-status">__status__</span>
+                        </bx_if:status>
+                        <bx_if:edit_link>
+                            <a href="__edit_link_url__">__edit_link_caption__</a>
+                        </bx_if:edit_link>
+                    </div>
+                    <div class="feedback-date">__date__</div>
+                    <div class="feedback-text__class__">__content__</div>
+                </div>
+                <div class="feedback-cb">&nbsp;</div>
+            </div>
+        </bx_repeat:entries>
+    </div>
+    __paginate__
+    __loading__
+</div>

@@ -1,0 +1,98 @@
+/* main settings  */
+
+.bx_videos_search_unit {
+
+}
+
+.bx_videos_file_search_pic {
+
+}
+
+.bx_videos_file_search_pic img{
+
+}
+
+.sys_album_unit {
+    
+}
+
+.sys_album_unit .bx_sys_unit_checkbox {
+   	top: 7px;
+   	left: 7px;
+}
+
+.sys_album_cover {
+    height: 140px;
+}
+
+.mainInfo {
+
+}
+
+.addInfo {
+    
+}
+
+.addInfoDate {
+    text-transform: lowercase;
+    color: #888888;
+}
+
+.addInfoFrom {
+    margin-left: 5px;
+}
+
+.latestFile {
+	margin: 10px auto;
+}
+
+/* redeckaration  settings from another files*/
+.boxContent .votes_small {
+	float: none;
+	position:relative;
+	width: auto;
+}
+
+div.viewFile {
+	margin: 10px auto;
+	padding: 1px;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+	width: 602px;
+}
+
+div.fileInfo {
+    margin: 10px auto;
+}
+
+div.fileTitle {
+    margin: 0px auto 5px auto;
+    font-size: 16px;
+}
+
+.fileWhen, .fileFrom {
+    margin-bottom: 5px;
+    float: left;
+    position: relative;
+}
+
+.fileWhen {
+    text-transform: lowercase;
+    color: #888888;
+}
+
+.fileFrom {
+    margin-left: 5px;
+}
+
+.searchContentBlock {
+    margin: 5px auto;
+}
+
+#searchArea {
+    margin: 10px auto;
+}
+
+.picSwitcher .paginate {
+    margin-top: 10px;
+}

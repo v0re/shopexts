@@ -1,0 +1,364 @@
+div.adm-design-box {
+    width:560px;
+}
+
+.manage_el {
+    float:left;
+    background-color:#FFCCCC;
+    margin-right:5px;
+}
+
+div.block_cont 
+{
+    width:805px;
+}
+
+div.admin_poll_block
+{
+    float:left;
+    margin-right:5px;
+    margin-top:5px;
+    border: solid 1px #cccccc;
+}
+
+div.input_wrapper{
+    margin-bottom:5px;
+}
+
+div.admin_actions_panel div.input_wrapper{
+    float:right;
+    padding-right:5px;
+    padding-top:7px;
+}
+
+div.admin_poll_block div.link_section
+{
+    text-align:left;
+    padding:5px;
+}
+
+div.admin_poll_block div.admin_poll_section
+{
+    position:relative; 
+    padding-top:25px;
+    height:160px;
+}
+
+div.admin_poll_block div.admin_poll_section div.admin_action
+{
+    position:absolute; 
+    top:4px; 
+    left:4px;
+}
+
+div.admin_poll_approved
+{
+   background-color:green;
+}
+
+div.admin_poll_not_approved
+{
+   background-color:#FFCCCC;
+}
+
+form.poll_form
+ {
+   margin:10px;
+}
+
+table.poll_table
+{
+   width:100%;
+}
+
+table.poll_table th 
+{
+    text-align:left;
+}
+
+table.poll_table th img
+{
+    vertical-align:middle;    
+}
+
+table.poll_table th.header
+    {
+    text-align:left;
+    padding:12px;    
+}
+
+table.poll_table td.form_label
+{
+    padding:12px;   
+    width:150px;
+}
+
+table.poll_table div.answer_block
+{
+    padding-top:2px;    
+    padding-bottom:2px;    
+}
+
+table.poll_table div.answer_block input
+{
+   width:225px;
+}
+
+table.poll_table .question_bar
+{
+    width:225px;    
+}
+
+div.pollResultRow 
+{
+    background-image:url('../images/poll_res_fill.png');
+    margin-bottom:10px;
+    margin-left:5px;
+    
+    color:#FFFFFF;
+    font-weight:bold;
+    font-family:Verdana;
+    padding:1px;
+}
+
+div.pollThumb 
+ {
+    float:left;
+    height:47px;
+    position:relative;
+    width:47px;
+}
+
+div.pollBlock 
+{
+    float:none;
+}
+
+div.poll_block 
+{
+    float: left; 
+    position: relative;
+    padding:10px;
+    width:250px;
+}
+
+div.poll_block_view{
+    float:none;
+    width:96%;
+}
+
+div.poll_block div.poll_section
+ {
+    float:left;
+    position:relative;
+    width:80%;
+}
+
+div.poll_block div.poll_section_view {
+    float:none;
+    width:100%;
+}
+
+/*fix for ie 7*/
+*div.poll_block div.poll_section_view {
+    width:90%;
+}
+
+div.poll_block div.poll_section div.poll_result
+{
+    float:right;
+    position:relative;
+}
+
+div.poll_block div.poll_section div.pollBlock 
+{
+    border:0 solid #96B2C9;
+    margin-bottom:10px;
+    position:relative;
+    text-align:left;
+    width:100%;
+}
+
+div.poll_block div.poll_section div.pollCaption 
+ {
+    line-height:15px;
+    margin:2px 0 8px;
+    position:relative;
+    font-family:Verdana;
+    size:12px;
+    color: #3333CC;
+    font-weight:bold;
+    overflow:hidden;
+}
+
+div.poll_block div.poll_section div.pollCaption :first-letter 
+{
+   text-transform:capitalize;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlock 
+{
+    height:85px;
+    /*position:relative;*/
+    text-align:left;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlockView
+{
+    height:auto;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlock  div.pollSlBG 
+ {
+    height:100%;
+    position:absolute;
+    top:0;
+    width:17px;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.corner 
+{
+    width:5px;
+    height:5px;
+} 
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.spacer 
+{
+    height:5px;
+    width:100%;
+} 
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.poll 
+{
+    background-color:#EDEDED;
+    padding:5px;
+} 
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.poll div.poll_wrapper
+{
+    position:relative;
+    overflow:hidden;
+    height:67px;
+    width:187px;
+} 
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.poll div.poll_wrapper_private
+{
+    background-repeat:no-repeat;
+    background-position:center center;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.poll div.poll_wrapper div.pollUp 
+{
+    left:0;
+    position:absolute;
+    top:0;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.poll div.poll_wrapper div.pollDown 
+ {
+    bottom:0;
+    left:0;
+    position:absolute;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.poll div.poll_wrapper div.pollQuestionBlock 
+{
+    border:0 solid green;
+    margin-left:17px;
+    overflow:hidden;
+    position:absolute;
+    width:90%;
+}
+
+div.poll_block div.poll_section div.pollAnswerBlock table td.poll div.poll_wrapper div.pollQuestionBlock
+span.votes_number
+{
+    color:#ADADAD;
+    font-size:9px;
+}
+
+div.poll_info
+{
+    position:relative;
+    width:100%;
+}
+
+div.poll_info div.owner_info
+{
+	color:#999999;
+	float:left;
+	font-family:Verdana;
+	font-size:9px;
+	height:15px;
+	overflow:hidden;
+	padding-top:3px;
+	width:75%;
+	white-space:nowrap;
+}
+
+div.poll_info div.owner_info span.date_add
+{
+   color:#ADADAD;
+}
+
+div.poll_info div.owner_info  a:link,
+div.poll_info div.owner_info  a:visited,
+div.poll_info div.owner_info  a:hover,
+div.poll_info div.owner_info  a:active
+{
+    font-family:Verdana;
+    font-size:9px;
+    color:#6666CC;
+}
+
+div.poll_info div.result_section
+{
+	color:#999999;
+	float:right;
+	font-family:Verdana;
+	font-size:9px;
+	height:20px;
+	overflow:hidden;
+	padding-top:3px;
+	width:20%;
+}
+
+div.poll_info div.actions
+{
+    margin-top:5px;
+    font-size:9px;
+}
+
+div.poll_info div.back_poll_section
+{
+    display:none;
+    font-family:Verdana;
+    font-size:9px;
+    color:#999999;
+    float:right;
+}
+
+div.poll_owner_block{
+    margin:10px;
+}
+
+div.poll_owner_block div.info{
+    float:left;
+    position:relative;
+    margin-left:10px;
+    text-align:left;
+}
+
+div.poll_owner_block div.info div{
+    margin-bottom:5px;
+}
+
+div.poll_owner_block div.info img{
+    vertical-align:middle;
+}
+
+div.pollQuestionBlockView{
+    position:relative;
+    width:100%;
+}

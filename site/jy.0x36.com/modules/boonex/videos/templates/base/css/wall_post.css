@@ -1,0 +1,49 @@
+div.sh-video-wall-event {
+    margin-left: 25px;
+    
+    position: relative;    
+}
+div.sh-video-wall-caption {
+    height: 30px;
+    padding-left: 20px;
+    
+    position: relative;
+    
+    background-repeat: no-repeat;
+    background-position: 0px center;
+    
+    line-height: 30px; 
+}
+span.sh-video-wall-caption-owner {
+    font-weight: bold;
+}
+a.sh-video-wall-caption-link,
+a.sh-video-wall-caption-link:link {
+    text-decoration: none;
+}
+a.sh-video-wall-caption-link:hover,
+a.sh-video-wall-caption-link:active {
+    text-decoration: underline;
+}
+div.sh-video-wall-content {
+    position: relative;
+}
+div.sh-video-wall-comments {
+    padding-left: 0px;
+    
+    position: relative;
+    
+    font-size: 10px;
+}
+
+/*--- Overwrite default Comment styles ---*/
+div.sh-video-wall-comments div.cmts {
+    padding: 0px;
+}
+div.sh-video-wall-comments div.cmt-reply {
+    padding: 0px;
+}
+div.sh-video-wall-comments div.thumbnail_block {
+    left: -38px;
+    top: 1px;
+}

@@ -1,0 +1,21 @@
+<div class="adm-dashboard">
+    <bx_repeat:columns>
+        <div class="adm-dashboard-column">
+            <bx_repeat:boards>
+                <div class="adm-dashboard-item">
+                    <img class="adm-di-icon" src="<bx_image_url:spacer.gif />" style="background-image:url(__icon__);" />
+                    <div class="adm-di-title">
+                        <bx_if:link>
+                            <a href="__link__">__title__</a>
+                        </bx_if:link>
+                        <bx_if:text>
+                            __title__
+                        </bx_if:text>
+                    </div>
+                    <div class="adm-di-content">__content__</div>
+                </div>
+            </bx_repeat:boards>
+        </div>
+    </bx_repeat:columns>
+    <div class="clear_both">&nbsp;</div>
+</div>

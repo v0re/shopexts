@@ -1,0 +1,32 @@
+<div class="admin_login_wrapper">
+	<img class="admin_login_icon" src="<bx_image_url:admin_login_icon.png />" />
+	<div class="admin_login_form_wrapper">
+    	<form class="admin_login_form" action="__action_url__" method="post" onsubmit="javascript: validateLoginForm(this); return false;">
+        	<input type="hidden" name="relocate" value="__relocate_url__" />
+            <table cellspacing="20" cellpadding="0" class="admin_login_table">
+                <tr>
+                    <td class="value"><bx_text:_adm_txt_login_username />:</td>
+                    <td><input type="text" name="ID" id="admin_username" /></td>
+                </tr>
+                <tr>
+                    <td class="value"><bx_text:_adm_txt_login_password />:</td>
+                    <td><input type="password" name="Password" id="admin_password" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;
+                    </td>
+                    <td><input type="submit" id="admin_login_form_submit" value="<bx_text:_adm_btn_login_login />"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div class="admin_login_footers">
+	<div class="left_banner">
+    	<img src="<bx_image_url:admin_login_admin_logo.png />" alt="Dolphin 7 Admin" />
+    </div>
+    <div class="right_banner">
+    	<img src="../media/images/small_logo.png" alt="BoonEx - Community Software Experts" />
+    </div>
+</div>

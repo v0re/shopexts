@@ -1,0 +1,15 @@
+<div class="sys_album_unit">
+    <bx_if:editMode>
+      <div class="bx_sys_unit_checkbox">
+          <input type="checkbox" name="entry[]" value="{id}" {checked}/>
+      </div>
+	</bx_if:editMode>
+    <div class="sys_album" onclick="window.location = '{albumUrl}';">
+          <img class="sys_album_cover" src="{spacer}" style="background-image: url('{pic}');"/>
+    </div>
+    <div class="sys_file_search_title"><a href="{titleLink}" title="{title}">{title}</a></div>
+    <div class="sys_file_search_bottom">
+        <div class="sys_file_search_from"><bx_text:_From /> <a href="{fromLink}">{from}</a></div>
+    </div>
+    <div class="sys_file_search_when">{when}, {view}</div>
+</div>

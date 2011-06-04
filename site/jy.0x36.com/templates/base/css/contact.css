@@ -1,0 +1,34 @@
+table.messageBlock
+{
+	width:400px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+table.messageBlock td
+{
+	padding:5px;
+}
+
+table.messageBlock td.contact_label
+{
+	text-align:right;
+	vertical-align:top;
+	padding-top:6px;
+}
+
+.inputText,
+.inputTextarea
+{
+	width:250px;
+}
+
+.inputTextarea
+{
+	height:100px;
+}
+
+td.contact_submit
+{
+	text-align:center;
+}

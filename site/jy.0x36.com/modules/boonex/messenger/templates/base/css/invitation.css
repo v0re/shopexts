@@ -1,0 +1,200 @@
+.msg_ajax {
+	width:323px;
+	height:268px;
+	position:absolute;
+	z-index:1000;
+	display:block;
+	left:25px;
+}
+.msg_left_side {
+	margin-left:10px;
+	position:relative;
+	float:left;
+}
+.msg_right_side {
+	margin-left:4px;
+	position:relative;
+	float:left;
+}
+.msg_right_side .msg_sender {
+	margin-left:6px;
+	margin-bottom:10px;
+	overflow:hidden;
+	width:180px;
+	height:25px;
+	font-size:11px;
+	font-family:Verdana;
+}
+.msg_right_side .msg_sender a{
+	font-size:11px;
+	font-family:Verdana;
+	font-weight:bold;
+	color:#3333cc;
+}
+.msg_buttons {
+	left:-3px;
+	position:relative;
+	padding:0px 0px 0px 0px;
+	margin-top:4px;
+	margin-bottom:10px;
+}
+
+.msg_window {
+	border-collapse:collapse;
+	margin:0px;
+	padding:0px;
+	width:100%;
+}
+.msg_window td {
+	padding:0px;
+	margin:0px;
+}
+.msg_window td.corner {
+	width:16px;
+	height:16px;
+	font-size:1px;
+}
+.msg_window td.side {
+	width:16px;
+}
+.msg_window td.side_ver {
+	height:16px;
+}
+.msg_window td.side_ver, .msg_window td.side {
+	background-image:url(../images/sp_op_gr.png);
+	font-size:1px;
+}
+.msg_window td.container {
+	background-color:white;
+	width:100%;
+}
+
+.msg-post-body {
+	height:100px;
+	width:164px;
+	overflow:hidden;
+	font-size:12px;
+	font-family:Verdana;
+	font-weight:bold;
+}
+table.msg-balloon {
+	width: 187px;
+	padding: 0px;
+	margin: 0px;
+	position: relative;
+	border: 0px;
+	border-collapse: collapse;
+	font-size: 11px;
+}
+table.msg-balloon tr,
+table.msg-balloon td {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+tr.msg-head {
+    height: 22px;        
+    position: relative;
+    line-height: 20px;
+}
+tr.msg-head a {
+    text-decoration: none;
+}
+tr.msg-head a:hover,
+tr.msg-head a:active {
+    text-decoration: underline;
+}
+td.msg-head-l,
+td.msg-head-m,
+td.msg-head-r {        
+    position: relative;
+}
+td.msg-head-l {
+    width: 14px;        
+
+    background-image: url(../images/icons/bln-tl.png);
+    background-repeat: no-repeat;
+    
+    font-size: 0px;
+}
+td.msg-head-m {    
+    background-image: url(../images/icons/bln-tm.png);
+    background-repeat: repeat-x;
+}
+td.msg-head-r {
+    width: 9px;        
+
+    background-image: url(../images/icons/bln-tr.png);
+    background-repeat: no-repeat;
+    
+    font-size: 0px;
+}
+td.msg-cont {    	
+    position: relative;      
+}
+td.msg-cont-l,
+td.msg-cont-m,
+td.msg-cont-r {
+    position: relative;
+}
+td.msg-cont-l {
+    width: 14px;
+    background-image: url(../images/icons/bln-ml.png);
+    background-repeat: repeat-y;
+    font-size: 0px;
+}
+td.msg-cont-m {
+    background-color: #e9ecff;
+}
+td.msg-cont-r {
+    width: 9px;
+	background-image: url(../images/icons/bln-mr.png);
+    background-repeat: repeat-y;
+    font-size: 0px;
+}
+tr.msg-foot {
+    height: 8px;
+    position: relative;
+    font-size: 0px;
+}
+td.msg-foot-l,
+td.msg-foot-m,
+td.msg-foot-r {        
+    position: relative;      
+}
+td.msg-foot-l {
+    width: 14px;
+    background-image: url(../images/icons/bln-bl.png);
+    background-repeat: no-repeat;
+    font-size: 0px;
+}
+td.msg-foot-m {
+    background-image: url(../images/icons/bln-bm.png);
+    background-repeat: repeat-x;
+}
+td.msg-foot-r {
+    width: 9px;       
+    background-image: url(../images/icons/bln-br.png);
+    background-repeat: no-repeat;
+    font-size: 0px;
+}
+
+.invitation_form_wrapper table.form_advanced_table {
+	border: none;
+	width: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.invitation_form_wrapper table.form_advanced_table td {
+	border-bottom: none;
+	background-color: transparent;
+}
+
+.invitation_form_wrapper table.form_advanced_table .form_input_button {
+	width: 60px;
+}
+
+.invitation_form_wrapper table.form_advanced_table .button_wrapper {
+	margin-left: 3px;
+}

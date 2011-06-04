@@ -1,0 +1,55 @@
+    <div class="communicator_container">
+        <table cellspacing="1" cellpadding="0" border="0">
+            <thead>
+                <tr>
+                    <th class="action_section inputs_section">
+                        <input type="checkbox" onclick="javascript: if ( typeof oCommunicatorPage != 'undefined' ) (this.checked) ? oCommunicatorPage.selectCheckBoxes(true, 'communicator_container') : oCommunicatorPage.selectCheckBoxes(false, 'communicator_container')"/>
+                    </th>
+                    <th title="__click_sort__" class="action_section author_section __author_sort_toggle_ellement__" onclick="javascript: if ( typeof oCommunicatorPage != 'undefined' ) oCommunicatorPage.getSortedPage('__page_sort_url__', '__sort_author__')">
+                        __author__
+                    </th>
+                    <th class="type_section">
+                        __type__
+                    </th>
+                    <th title="__click_sort__" class="action_section date_section __date_sort_toggle_ellement__" onclick="javascript: if ( typeof oCommunicatorPage != 'undefined' ) oCommunicatorPage.getSortedPage('__page_sort_url__', '__sort_date__')">
+                        __date__
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            <bx_repeat:rows>
+                <tr class="__filled_class__">
+                    <td class="input_el_section">
+                        <input type="checkbox" name="rows[]" value="__row_value__" />
+                    </td>
+                    <td class="member_section">
+                        <div class="member_info">
+                            __member_icon__
+                        </div>
+                        <div class="info">
+                            <div class="member_link">
+                                __member_location__
+                            </div>
+                            <div>
+                               __member_sex_img__ <span>__member_age__</span> __member_flag__ <span>__member_country__</span>
+                            </div>
+                        </div>
+                        <div class="clear_both"></div>
+                    </td>
+                    <td class="type_section">
+                        __type__
+                    </td>
+                    <td class="date_section">
+                       __message_date__
+                    </td>
+                </tr>
+            </bx_repeat:rows> 
+                <tr>
+                    <td class="bottom_actions" valign="middle" colspan="4">
+                        __actions_list__
+                    </td>
+                </tr>    
+            </tbody>
+        </table>
+    </div>
+    __page_pagination__

@@ -1,0 +1,15 @@
+
+div.sys_fan_unit {
+    position:relative;
+    padding:0;
+}
+
+.sys_unit_admin {
+
+    height:16px;
+    width:16px;
+    right:-5px;
+    top:57px;    
+    position:absolute;    
+    z-index:1;
+}

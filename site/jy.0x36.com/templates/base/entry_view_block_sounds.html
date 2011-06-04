@@ -1,0 +1,32 @@
+<div>
+
+    <div id="__prefix__sounds_title_curr" class="bx_sys_block_sounds_title_curr">
+        __title__
+    </div>
+
+    <div id="__prefix__sounds_curr" class="bx_sys_block_sounds_curr">
+        <bx_repeat:sounds>
+            <div class="bx_sys_sounds_curr__id__" style="__style__">__sound__</div>
+        </bx_repeat:sounds>                
+    </div>
+
+    <div id="__prefix__sounds_icons" class="bx_sys_block_sounds_icons">
+        <bx_repeat:icons>
+            <div class="sys_icon"><img alt="__id__" title="__title__" src="__icon_url__" /></div>
+        </bx_repeat:icons>
+        <div class="clear_both"></div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+                bx_center_content ('#__prefix__sounds_icons', '.sys_icon');
+                $('#__prefix__sounds_icons .sys_icon img').bind('click', function () {
+                    var e = $(this);
+                    $('#__prefix__sounds_title_curr').html(e.attr('title'));
+                    $('#__prefix__sounds_curr > div:visible').fadeOut(1000);
+                    $('#__prefix__sounds_curr > .bx_sys_sounds_curr' + e.attr('alt')).fadeIn(1000);
+                });
+        });
+    </script>
+
+</div>

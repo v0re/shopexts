@@ -1,0 +1,34 @@
+.links_cont
+{
+	margin-bottom:15px;
+}
+
+.no_links
+{
+	text-align:center;font-weight:bold;
+}
+
+.links_header,
+.links_snippet
+{
+	margin-left:12px;
+	margin-right:12px;
+	margin-bottom:5px;
+}
+
+.links_snippet
+{
+	text-align:justify;
+	font-size:13px;
+}
+
+.links_header
+{
+	font-size:16px;
+	font-weight:bold;
+	padding-left:30px;
+	padding-bottom:3px;
+	background-repeat:no-repeat;
+	background-position:left top;
+	background-image:url(../images/icons/links.gif);
+}

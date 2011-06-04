@@ -1,0 +1,483 @@
+.form_advanced_table,
+.form_advanced_table tr,
+.form_advanced_table td{
+    border:none;
+}
+
+#compose_message_block div.input_wrapper,
+div.message_actions div.input_wrapper,
+td.bottom_actions div.input_wrapper {
+    float:right;
+    margin-left:5px;
+    position:relative;
+}
+
+#compose_message_block .replay_wrapper {
+    background-color:#F5F7FA;
+    padding:10px;
+}
+
+#compose_message_block .replay_wrapper .replay_thumb{
+    float:left;
+    position:relative;
+    margin-right:10px;
+}
+
+#compose_message_block .replay_wrapper .owner_info{
+    float:left;
+    position:relative;
+}
+
+div.input_select_wrapper {
+    float:right;
+    margin-left:5px;
+    padding-top:5px;
+    position:relative;
+}
+
+div.dbContent 
+{
+	margin:0px;
+}
+div.dbBottomMenu 
+{
+ margin:0px;
+}
+
+div.information_block
+{
+	font-weight:bold;
+	margin-left:10px;
+	margin-top:5px;
+    position:relative;
+}
+
+div.view_message_container
+{
+	margin:10px;
+	border:1px solid #DCDCDC;
+}
+
+div.view_message_container table#owner_information
+{
+	background-color:#DCDCDC;
+	width:100%;
+	border-bottom:1px solid #DCDCDC;
+}
+
+div.view_message_container table#owner_information td.message_section
+{
+	background-color:#FFFFFF;
+	padding:5px;
+}
+
+div.view_message_container table#owner_information td.message_section table#owner_information
+{
+	background-color:#F5F7FA;
+}
+
+div.view_message_container table#owner_information td
+{
+	background-color:#F5F7FA;
+}
+
+div.view_message_container table#owner_information td.thumb_section
+{
+	padding:10px;
+    width:80px;
+}
+
+
+div.view_message_container table#owner_information  td.member_info,
+div.view_message_container div.member_info
+{
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:10px;
+	font-size:11px;
+	color:#333333;
+}
+
+div.view_message_container table#owner_information  td.member_info img,
+div.view_message_container div.member_info img
+{
+	vertical-align:text-bottom;
+}
+
+div.view_message_container table#owner_information td.member_info div,
+div.view_message_container div.member_info div
+{
+	padding-bottom:5px;
+}
+
+div.view_message_container table#owner_information td.member_info div a:link,
+div.view_message_container table#owner_information td.member_info div a:visited,
+div.view_message_container table#owner_information td.member_info div a:hover,
+div.view_message_container table#owner_information td.member_info div a:active,
+div.view_message_container div.member_info a:link,
+div.view_message_container div.member_info a:visited,
+div.view_message_container div.member_info a:hover,
+div.view_message_container div.member_info a:active
+{
+	font-size:12px;
+	font-weight:bold;
+}
+
+div.view_message_container table#owner_information td.member_info div.subject
+{
+	font-weight:bold;
+	font-size:12px;
+}
+
+div.view_message_container table#owner_information td.member_info div.subject input,
+div.view_message_container #compose_subject
+{
+	font-weight:bold;
+	width:370px;
+}
+
+div.view_message_container table#owner_information td div.actionItem a:link,
+div.view_message_container table#owner_information td div.actionItem a:visited,
+div.view_message_container table#owner_information td div.actionItem a:hover,
+div.view_message_container table#owner_information td div.actionItem a:active
+{
+	font-size:10px;
+}
+
+div.view_message_container table#owner_information td.action_list table#owner_information
+{
+	background-color:#F5F7FA;
+}
+
+div.view_message_container div.message_container
+{
+	padding:10px;
+    position:relative;
+}
+
+div.view_message_container div.message_container textarea
+{
+	width:100%;
+	height:300px;
+}
+
+*div.view_message_container div.message_container textarea
+{
+    width:99%;
+}
+
+div.view_message_container div.message_actions
+{
+	background-color:#F5F7FA;
+	border-top:1px solid #DBDBDB;
+	padding:10px;
+	font-size:11px;
+    position:relative;
+}
+
+.message_actions_wrapper {
+    float:right;
+    position:relative;
+}
+
+.message_actions_wrapper .input_wrapper {
+    float: left;
+}
+
+div.view_message_container div.message_actions div.messages_options
+{
+	text-align:left;
+    position:relative;
+}
+
+*div.button_wrapper {
+    margin-right:4px;
+}
+
+div.view_message_container div.reply_window
+{
+	display:none;
+	border-top:1px solid #DBDBDB;
+    position:relative;
+}
+
+div.contacts_container
+{
+	margin:10px;
+}
+
+div.contacts_container table
+{
+	background-color:#DCDCDC;
+	width:100%;
+}
+
+div.contacts_container table tr
+{
+	background-color:#FFFFFF;
+}
+
+div.contacts_container table a:link,
+div.contacts_container table a:visited,
+div.contacts_container table a:hover,
+div.contacts_container table a:active
+{
+	font-weight:bold;
+}
+
+div.contacts_container div.checkboxes_block
+{
+	float:left;
+	padding-top:5px;
+	padding-left:5px;
+}
+
+div.contacts_container div.images_block
+{
+	float:right;
+	padding-top:24px;
+	padding-right:10px;
+}
+
+div.contacts_container div.thumbnail_block
+{
+	margin:5px;
+}	
+
+div.contacts_container div.information_block
+{
+	float:left;
+	font-size:11px;
+}
+
+div.contacts_container div.information_block div.member_link
+{
+	padding-bottom:5px;
+	font-size:11px;
+}
+
+div.contacts_container div.information_block img
+{
+	vertical-align:text-top;
+}
+
+div.contacts_container div.compose_block
+{
+	float:right;
+	padding:5px;
+	font-size:11px;
+	color:#666666;
+	text-align:right;
+}
+
+div.contacts_container div.compose_block div.compose_img
+{
+	padding-bottom:5px;
+}
+
+
+div.messages_container
+{
+	padding:10px;
+}
+
+div.top_settings_block div.left_section
+{
+	float:left;
+	color:#666666;
+	font-size:11px;
+	padding-top:5px;
+	padding-left:5px;
+}
+
+div.top_settings_block div.left_section img
+{
+	vertical-align:text-top;
+}
+
+div.top_settings_block div.right_section
+{
+	float:right;
+	color:#666666;
+	font-size:11px;
+	padding-top:5px;
+	padding-right:5px;
+}
+
+table.mailbox
+{
+	background-color:#DCDCDC;
+	width:100%;
+}
+
+table.mailbox tr.filled
+{
+	background-color:#EDF1FB;
+}
+
+table.mailbox tr.not_filled
+{
+	background-color:#FFFFFF;
+}
+
+table.mailbox tr.mailbox_row td
+{
+	height:49px;
+	padding:5px;
+	overflow:hidden;
+}
+
+table.mailbox th.action_section
+{
+	background-color:#F5F7FA;
+	height:30px;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+table.mailbox th.toggle_up
+{
+	background-image: url(../images/icons/toggle_up.png);
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+
+table.mailbox th.toggle_down
+{
+	background-image: url(../images/icons/toggle_down.png);
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+
+table.mailbox th.m_inputs_section
+{
+	width:20px;
+}
+
+table.mailbox th.m_author_section
+{
+	width:26%;
+}
+
+table.mailbox th.m_subject_section
+{
+	width:306px;
+}
+
+table.mailbox th.m_date_section
+{
+	width:71px;
+}
+
+table.mailbox td.member_section
+{
+	color:#333333;
+	font-size:11px;
+	vertical-align:middle;
+	width:200px;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+table.mailbox td.member_section a:link,
+table.mailbox td.member_section a:visited,
+table.mailbox td.member_section a:hover,
+table.mailbox td.member_section a:active
+{
+	font-weight:bold;
+}
+
+table.mailbox td.member_section div.member_info
+{
+}
+
+table.mailbox td.member_section div.member_info img
+{
+	vertical-align:text-top;
+}
+
+table.mailbox td.member_section div.member_info span
+{
+	padding:2px;
+}
+
+table.mailbox td.member_section div.member_info div.info
+{
+	margin-left:45px;
+	float:none;
+}
+
+table.mailbox td.member_section div.member_info div.info div.member_link
+{
+	padding-bottom:5px;
+}
+
+table.mailbox td.type_section
+{
+	width:95px;
+	font-size:11px;
+	color:#666666;
+}
+
+table.mailbox td.type_section img
+{
+	vertical-align:middle;
+}
+
+table.mailbox td.subject_section
+{
+	font-color:#666666;
+	font-size:11px;
+}
+
+table.mailbox td.subject_section div
+{
+	padding:2px;
+}
+
+table.mailbox td.subject_section div.subject_text
+{
+	float:left;
+}
+
+table.mailbox td.subject_section div.subject_img
+{
+	float:right;
+}
+
+table.mailbox td.subject_section a:link,
+table.mailbox td.subject_section a:visited,
+table.mailbox td.subject_section a:hover,
+table.mailbox td.subject_section a:active
+{
+	font-size:12px;
+	font-weight:bold;
+}
+	
+table.mailbox td.date_section
+{
+	font-color:#666666;
+	font-size:11px;
+}
+
+table.mailbox td.bottom_actions
+{
+	height:26px;
+	background-color:#F5F7FA;
+	color:#707070;
+	font-size:11px;
+}
+
+table.mailbox td.bottom_actions div.left_section
+{
+	float:left;
+	padding-top:13px;
+	padding-left:10px;
+    position:relative;
+}
+
+table.mailbox td.bottom_actions div.right_section
+{
+	float:right;
+    position:relative;
+}

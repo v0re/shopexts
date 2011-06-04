@@ -1,0 +1,145 @@
+iframe#adm-mp-members-iframe {
+	width: 0px;
+	height: 0px;
+	margin: 0px;
+	padding: 0px;
+
+	border: 0px;
+}
+form#adm-mp-members-form {
+    position: relative;
+}
+
+/*--- Tags Styles ---*/
+div.tags_wrapper {
+	text-align: center;	
+}
+span.one_tag{
+    padding: 0px 4px;
+	line-height: 30px;
+}
+
+/*--- Member Controls Styles ---*/
+div.adm-mp-qlinks-item {
+    width: 210px;
+    height: 30px;
+    
+    position: relative;
+    float: left;
+    
+    background-image: url(../images/icons/pm_qlinks_item.png);
+    background-position: 0px 7px;
+    background-repeat: no-repeat;
+    
+    line-height: 30px;
+    text-indent: 20px;
+    overflow: hidden;
+}
+
+/*--- Members view controls Styles ---*/
+div.adm-mp-order-item {
+    padding: 0px 0px 0px 10px;
+
+    position: relative;
+    float: left;
+    
+    line-height: 30px;
+}
+div.adm-mp-order-item-right {
+    padding: 0px 10px 0px 0px;
+    
+    float: right;
+}
+
+/*--- GEEKY Members list Styles ---*/
+div.adm-mp-members-geeky {
+    width: 630px;
+    margin: 10px;
+}
+table.adm-mp-members-geeky td {
+    padding: 2px 0px;
+}
+table.adm-mp-members-geeky th {
+    text-align: left;
+}
+a.adm-mp-active {}
+a.adm-mp-inactive {
+    color: #999999;
+}
+a.adm-mp-banned {
+    color: red;
+}
+
+/*--- SIMPLE Members list Styles ---*/
+div.adm-mp-members-simple {
+    width: 640px;
+    margin: 5px;
+}
+div.adm-mp-member-simple {
+    padding: 5px;
+
+    position: relative;
+    float: left;
+}
+div.adm-mp-ms-check,
+div.adm-mp-me-check {
+    top: 6px;
+    left: 6px;
+
+    position: absolute;
+    z-index: 2;
+    
+    background-color: #ffcccc;
+}
+div.adm-mp-ms-check input.form_input_checkbox {
+    margin: 3px;
+    padding: 0px;
+}
+*+html div.adm-mp-ms-check input.form_input_checkbox {
+    margin: 0px;  
+}
+div.adm-mp-ms-username {
+    text-align: center;
+    overflow: hidden;
+}
+
+/*--- EXTENDED Members list Styles ---*/
+*+html form#adm-mp-members-form {
+    width: 650px;
+}
+div.adm-mp-members-extended {
+    width: 640px;
+    margin: 5px;
+}
+div.adm-mp-member-extended {
+    padding: 5px;
+
+    position: relative;    
+}
+div.adm-mp-ms-thumbnail {
+    top: 5px;
+    left: 5px;
+
+    position: absolute;
+    z-index: 1;
+}
+div.adm-mp-ms-info {
+    min-height: 70px;
+    padding-left: 80px;
+}
+div.adm-mp-ms-nick {
+    font-weight: bold;
+    line-geight: 17px;
+}
+div.adm-mp-ms-age {
+    padding-top: 3px;
+
+    line-geight: 17px;
+    color: #333333;
+}
+div.adm-mp-ms-desc {
+    padding-top: 3px;
+
+    color: #666666;
+    overflow: hidden;
+}

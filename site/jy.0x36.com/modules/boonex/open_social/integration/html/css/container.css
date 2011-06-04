@@ -1,0 +1,91 @@
+/* Only necessary */
+
+#profileContent,#profileContentWide {
+	padding-left: 12px;
+	margin-top: 11px;
+	/*width: 502px;*/
+	float: left;
+	width: 100%;
+}
+#profileContentWide {
+	margin-top: 0px;
+}
+
+.gadgets-gadget-chrome {
+	margin-bottom: 12px;
+	width: 488px;
+}
+
+.gadgets-gadget {
+	border: none;
+}
+
+.gadgets-gadget-title-bar {
+	margin-bottom: 6px;
+	padding: 2px 4px;
+	height: 16px;
+	line-height:16px;
+	border: 1px solid #E5ECF9; background: #E5ECF9 url(../images/ui-bg_highlight-soft_75_E5ECF9_1x100.png) 50% 50% repeat-x;
+	color: #3366CC;
+	font-weight: bold;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.gadgets-gadget-title {
+	font-weight: bold;
+	color: #3366cc;
+}
+
+.gadgets-gadget-content {
+	padding: 4px;
+}
+
+#profileContentWide input, #profileContentWide select {
+	border:1px solid #BDC7D8;
+	font-size:11px;
+	padding:3px;
+}
+
+#profileContentWide .submit, #profileContentWide .button {
+	text-align: center;
+	border: 1px solid #E5ECF9;
+	background: #E5ECF9 url(../images/ui-bg_glass_75_E5ECF9_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #3366CC;
+	outline: none;
+	cursor: pointer;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+#profileContentWide .submit {
+	background-color: #E5ECF9;
+}
+
+#manage_applications_block .app {
+	background-color: #e5ecf9;
+	padding: 8px;
+	height: 84px;
+	margin-bottom: 12px;
+	overflow: hidden;
+	border: 1px solid #E5ECF9; background: #E5ECF9 url(../images/ui-bg_highlight-soft_75_E5ECF9_1x100.png) 50% 50% repeat-x;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+#manage_applications_block .app .app_thumbnail {
+	overflow: hidden;
+	float: left;
+	width: 120px;
+	height: 60px;
+	margin-right: 6px;
+}
+
+#manage_applications_block .app .options {
+	float: right;
+	padding: 6px;
+	width: 100px;
+	height: 60px;
+	text-align: right;
+}

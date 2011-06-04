@@ -1,0 +1,10 @@
+.action_result {
+    margin: 10px auto 5px auto;
+    width: 400px;
+    text-align: center;
+}
+
+#forgot_form .form_advanced_wrapper {
+    width: 400px;
+    margin: 10px auto;
+}

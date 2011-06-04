@@ -1,0 +1,45 @@
+/* * * * Friend list * * * */
+.friends_thumb_1
+{
+	/*position:relativ_e;*/
+	float:left;
+	margin: 0px 7px 7px 0px;	
+}
+
+.friends_thumb_2
+{
+	/*position:relativ_e;*/
+	float:left;
+	margin: 0px 0px 7px;
+}
+
+.browse_nick
+{
+	/*position:relativ_e;*/
+	text-align:center;
+}
+
+.browse_nick a
+{
+	font-weight:bold;
+}
+
+/* * * *  * * * */
+
+.rss_item_header
+{
+	padding-bottom:5px;
+}
+
+.rss_item_info span
+{
+	margin-right:5px;
+	line-height:18px;
+}
+
+.rss_item_info span img
+{
+	vertical-align:middle;
+	margin-right:3px;
+}
+

@@ -1,0 +1,39 @@
+.form_advanced_table th, .form_advanced_table td td {
+	border-bottom-width:0px;
+}
+
+#custom_rss_lists #crss_active {
+	color:green;
+}
+
+#custom_rss_lists #crss_passive {
+	color:red;
+}
+
+#selectable_el {
+	position:relative;
+}
+#selectable_el_div {
+	display:none;
+	position:absolute;
+	right:10px;
+	top:37px;
+}
+#selectable_el:hover #selectable_el_div {
+	display:block;
+}
+
+
+#adding_custom_rss_form .form_advanced_table {
+	border-left-width:0px;
+	border-right-width:0px;
+	border-top-width:0px;
+}
+
+#adding_custom_rss_form .form_advanced_table th, #adding_custom_rss_form .form_advanced_table td {
+	padding:5px 10px;
+}
+
+#member_rss_list_loaded .rss_feed_wrapper {
+    padding: 9px;
+}

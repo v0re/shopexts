@@ -1,0 +1,259 @@
+
+IMPORTANT: For the latest and extended version of this manual go to http://www.boonex.com/trac/dolphin/wiki/DolAdmin
+
+Dolphin 7 Beta Administration Manual
+
+This is the default “tree” structure of the Administration panel. Following by this document you will get brief overview of all parts of the Panel. This document is not final and is updated often.
+
+1.	Members
+
+2.	Extensions
+
+	Flash Apps
+
+3.	Tools
+
+	Mass Mailer
+	Manage Subscribers
+	Links
+	Banners
+	Modules
+	IP Blacklist
+	Database Backup
+	Host Tools
+
+4.	Builders
+
+	Navigation Menu
+	Member Menu
+	Profile Fields
+	Pages Blocks
+
+5.	Settings
+
+	Admin Password
+	Basic Settings
+	Advanced Settings
+	Languages Settings
+	Membership Levels
+	Email Templates
+	CSS Styles
+	Blogs Settings
+	Tags Settings
+	Database Pruning
+	Meta Tags
+	Moderation settings
+	Privacy Settings
+	Permalinks
+	Predefined Values
+
+
+
+
+
+
+
+Members
+
+This is where you can manage all your members’ profiles. You see “Controls” block is loaded in “Quick Links” mode giving you option to see the brief stats of kinds of members you site has with appropriated links. Check out “Tags” and “Search” modes as well for more options.
+The block “Members” shows you the full list of you members with brief information in “Geeky” mode by default. Check out “Extended” and “Simple” modes as well to choose the most convenient way of browsing your members.
+You can sort the list by the number of the members per page or sort them by username, activity, etc. in all modes. Actions buttons (Activate, Ban, etc) are available too in all modes. 
+By default Dolphin is set in “Post-Moderation” mode. It means the visitor joins your site without Email confirmation and gets “Active” status at a time. 
+This mode is controlled by Administration Panel -> Settings -> Moderation Settings section. You may want to manipulate “Moderation Settings” according to the needs and terms of your site. If so, you should learn what statuses members have and how they operate.
+Generally, profiles have different statuses:
+•	Unconfirmed;
+•	Approval;
+•	Active;
+•	Rejected;
+•	Suspended.
+
+Unconfirmed
+A profile has this status while a newly registered member did not confirm his e-mail address. In a standard way, confirmation is performed through sending a message to the member’s address specified in the profile. The message contains a link that a member should click on to complete the registration process. After this happens the profile’s status shifts to Approval.
+Besides, a registered member’s profile will also become unconfirmed after he/she changes the e-mail address. The new address will need the same confirmation procedure as described above.
+NB: Normally, you as the site’s administrator should not care about the profiles of the Unconfirmed status. They become subject of your attention as soon as they get into the Approval category.
+Approval
+Profiles of this status are those that already have e-mail addresses confirmed by the members but not checked by the Administrator. In the process of profiles approving you check whether uploaded photos and text entered in text fields meet the requirements of your site policies. In case the content of a profile does not violate your site’s rules you will change the status to Active. The member will then receive a message notifying him/her about becoming a member and possibility to enjoy the full scope of services. Otherwise, you will make it Rejected. In this case the member will receive a notification message listing possible reasons for rejection. Both messages can be modified in the Email Templates settings.
+NB: Reason for rejection could be very different. Some examples: insufficient or irrelevant information in the “Description” field, lack of correct date of birth, profile filled in a non-target language or contains derogatory, offensive or explicit expressions, etc.
+NB: If a profile contains “prohibited” photos (for example, with pornographic content which is not allowed by your policies, or with contact information on them, etc.) or there is contact information in the text fields, you still may switch this profile to Active category after manually deleting “prohibited” photos or, if this is the case, blocks of text containing contact information or inappropriate language.
+Active
+Active members can search through the site and buy contact information other members. But the main feature of active members is that they can get into search results conducted by other members and non-member visitors. You can make an active member featured by checking the “Mark as Featured” check-box above the photo section.
+Rejected
+Profiles resting in this category are waiting for being changed by the members. After a member changes content of his/her profile (edited text fields or uploaded new photos), the status of the profile will be changed to Approval and it will again be subject to administrator’s attention.
+Suspended
+This category is created for those members who want to be temporarily “invisible” to other members. The shift from Active to Suspended and back should made by the member himself. 
+NB: If an active or suspended member makes changes in the profile his/her profile will also get into Approval category.
+
+
+
+
+
+Extensions
+
+
+These are Dolphin modules which you may want to install. You can go through the simple installation process at Administration Panel -> Tools -> Modules of each module that you want to be presented on your site.
+
+Dolphin provides powerful flexibility by using modules. You can easy add or remove modules on your site. There is one system module which needs to be installed first. This module is Avatar.
+
+You see Flash Apps are already placed there by default for further administration purposes. So firstly, you will need to go and install desired apps from the Administration Panel -> Tools -> Modules.
+
+Once the module is installed from the Administration Panel -> Tools -> Modules the link to this module will appear under Extensions section. Now you have ability to administer installed module, also tweak its options and settings.
+
+You need to take into your consideration that some of the modules during  installation may add their own additional options/settings to Dolphin general Tools, Settings and Builders. 
+
+Here is an example for you to learn more about this. 
+E.g.: You have installed module “Photos”. So, now you see it is listed under Extensions list. By clicking the link you will see modules’ own options and settings. You are setting your desired options in it. But you will also have to look at the Administration Panel -> Settings -> Membership Levels to activate “Photos” modules’ actions and appropriate it with desired membership. 
+Also this module adds own Email Templates to Administration Panel -> Settings -> Email Templates. 
+Navigation Menu and Member Menu at Administration Panel -> Builders are affected appropriately too. 
+
+Some of the modules have dependencies. It means that some of them won’t get installed if the other is not installed before. You will be promptly informed about these dependencies during installation of such kind of modules.
+
+When module gets installed on your site it adds own language keys to the Language file.
+So, if your site is going to be multilingual we’d advise you to install all desired modules first and only then manage the Language file (through Administration Panel -> Settings -> Language Settings) to make the translation. 
+
+
+
+
+
+
+
+
+
+
+Tools
+
+
+Mass Mailer
+
+This page is used for creating and sending notification letters to the members in your database. 
+You compose your message using TinyMCE editor which makes the process clear and simple. The format that the message is sent in is HTML.
+Administrator can select groups of users, whom mass mailer will send the letter. I.e. he can choose age range of recipients, their gender, country or membership level.
+The number of messages that will be sent at a time is set on the Administration Panel -> Settings -> Email Templates -> Settings form.
+
+Manage Subscribers
+
+Subscriber - a visitor who is not a member of your database who can subscribe on the index page of your site to receive newsletters or other deliveries from your site.
+This page lists the subscribers of your site. You can browse them and may want to delete the ones you may consider to be invalid or inappropriate, which is totally up to your discretion. 
+
+
+Links
+
+This page lets you add, remove or change links to other sites that you find relevant to your business venture. You may add one listing at a time. Here you may also remove and edit links and descriptions.
+
+
+Banners
+
+A new banner can be added by using a form at the bottom of the “Manage banners” page.
+
+Please note that the field "Text" should contain only the path to the image source located on your server or just plain text (if you want to have a plain text banner). The actual link should be specified in the field "URL".
+
+You can set a banner to be active by checking the option "Active". Active banners are highlighted in the list with a grey line. Please note that banners that will be displayed on your site are randomly chosen only from active banners.
+
+If you check the option "Insert as new", then after submission of the form, a new banner will be added and the existing banner will stay unmodified.
+
+The banner system allows you to point the banner to a specific place on the pages.  There is a set of check boxes: Top, Right, Left, Bottom.
+ 
+There are ‘SHIFTS’ which will help you to fit the banner the better position on the pages.
+
+Also now you can easily add the Google adds via our banners system.
+
+On the top of the Manage Banners Panel there is a list of your banners. Each banner in the list has the following control buttons: Preview, Edit, and Delete.
+
+Preview - this option lets you see the banner as it will look on your site.
+Edit - via this option you can change the banner settings. They appear in the form below.
+Delete - deletes a banner.
+
+Besides, every line holds statistics such as number of impressions (views) and number of clicks.
+
+
+Modules
+
+You should have read about modules in the Extension section where you manage them separately when modules are installed, while Modules section is all about the upload of the new modules and install/uninstall or upgrade the existing ones.
+
+At the stage of the Beta version you will face with installs and uninstalls of the modules only.
+
+We’d advise you not to install all modules at once but go with step by step installation process of 2-3 at once. This is because some modules will require additional adjustments of permissions of the files or folders during installation. You will be promptly advised what to do via “Operation Results” box at the top of the page when installing particular module.
+
+How to install modules? You see the list of modules under the “Not Installed Modules” form. All you have to do is check the box near the module which you may want to install and press the button “Install”. “Operation Results” will advise you whether installation is completed or not, or some additional adjustments of permissions are required, or other particular module is required to be installed before this one. If the installation is successful the “Operation Results” will inform about that and the module will appear in the “Installed Modules”.
+
+
+IP Blacklist 
+
+It can happen sometimes that you may want to restrict or allow access to your website for certain individuals, local groups or even for particular countries by IP range.
+IP Blacklist will help you to do that easily. The form is presented by the following fields: 
+
+“From” and “To” - define the IP range list
+“IP Role” – defined with the “allow” or “deny” options for the list
+“Date of Finish” – the due date of the action
+“Description” – your notes about this action 
+
+There are global settings for this tool in Administration Panel -> Settings –> Advanced Settings -> Other
+
+IP Blacklist System Mode with values
+
+1 – total block. If it is set, the IP range will be totally blocked from the site.
+2 – login block. If it is set, the IP range will be blocked from login and will allow only surfing on your site as guest.
+The setting begins to work when the below option is enabled.
+
+IP List Type with values
+
+0 – disabled. Globally disables this feature.
+1 – all allowed except listed. Will allow to visit your site for all except those IP ranges that you have listed in Administration Panel -> Tools -> IP Blacklist under the “deny” role.
+2 – all blocked except listed. Will restrict access to your site for all visitors except those IP ranges that you have listed in Administration Panel -> Tools -> IP Blacklist under the “allow” role. 
+
+
+Database Backup
+
+This tool allows you to do database backup intuitively easy. 
+
+Tables Backup Tools
+
+The list of all DB tables for you to choose and save particular one with or without content to your PC or server (to the “backup” folder of Dolphin), or show as simple text to save it as a document. 
+
+Database Backup Tools
+
+Save the whole database at once with or without content to your PC, server or show as simple text. This tool also creates DB dump when you save the DB onto your server for further DB restore actions. 
+
+Database Restore
+
+Restore your DB from the dump file from your server or upload the one from your PC. 
+
+
+
+
+
+
+
+
+Host Tools
+
+This tool is created for your quick, simple and convenient overview of your Host Tools to make sure that everything is set correctly on your server to run Dolphin properly.
+
+Permissions
+
+See the list of the permissions on Dolphin files and folders. The form will highlight incorrect ones if there are any of them. So, in this case you will have to go and set appropriate permissions.
+
+Host Params
+
+The list of the host parameters which you also have to check. They show current values of the host parameters of your server and the recommended one. Please make sure that your current parameters are equal to the recommended ones.
+
+You should note that some of the parameters are critical in terms of security, site operation, usage, etc. For example, “register_globals” must always be “OFF” for security reasons.
+
+phpinfo
+
+You can look at your phpinfo file through convenient interface to check if all PHP setting are presented and/or enabled on your hosting server according to Dolphin Technical Requirements.
+
+
+-----------------
+We would appreciate your feedback regarding all new Dolphin 7 Beta manuals. Do not hesitate to send your feedback to org@boonex.com
+
+Administration Manual will be updated in Dolphin 7 Beta package and in BoonEx Trac. The link is http://www.boonex.com/trac/dolphin/wiki/DolAdmin
+
+
+
+
+
+
+
+
+
+

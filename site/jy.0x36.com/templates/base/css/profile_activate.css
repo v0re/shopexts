@@ -1,0 +1,11 @@
+div.prof_act_box {
+	margin: 10px;
+}
+
+div.prof_act_box div.prof_act_message_info, div.prof_act_message_status {
+	margin-bottom: 10px;
+}
+
+div.prof_act_message_status, div.prof_act_continue {
+	font-weight: bold;
+}

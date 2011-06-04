@@ -1,0 +1,54 @@
+
+.boxContent .bx_store_unit_rate .votes_small {
+    float:none;
+}
+
+.bx_store_main_photo {
+    border:1px solid #CCCCCC;
+    width:604px;
+    padding:2px 0;
+    margin:0 auto;
+    text-align:center;
+}
+
+.bx_store_main_info {
+    width:604px;
+    margin:2px auto 0px auto;
+}
+
+.bx_store_main_info a:first-child {
+    font-weight:bold;
+}
+
+.bx_store_main_info_text {
+    width:50%;
+    float:left;
+    text-align:left;
+    font-size:11px;
+    line-height:14px;
+}
+.bx_store_main_info_img {
+    width:50%;
+    float:left;
+    text-align:right;
+    font-size:11px;
+}
+
+.bx_store_main_info_img .votes_small {
+    width:auto;
+}
+.bx_store_main_info_img>img {
+    position:relative;
+    top:3px;
+}
+
+#bx_store_share_popup {
+    position:absolute;
+    background-image:url(../images/op40.png);
+    z-index:999;
+}
+
+.bx_store_share_popup {
+    width:300px;
+}
+

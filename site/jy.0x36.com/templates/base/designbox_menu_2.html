@@ -1,0 +1,39 @@
+<div id="dbTopMenu__id__" class="dbTopMenu">
+    <div class="dbTmLeft">
+        <a href="javascript:void(0)" onmouseover="javascript:moveScrollLeftAuto('dbTmContent__id__', true)" onmouseout="javascript:moveScrollLeftAuto('dbTmContent__id__', false)">
+            <img src="<bx_image_url:spacer.gif />" />
+        </a>
+    </div>
+    <div class="dbTmCenter">
+        <div id="dbTmContent__id__" class="dbTmContent">
+            <bx_repeat:items>
+                <div id="__id__-act" class="active" __show_active__>
+                    <bx_if:icon_act>
+                        <img __class__ src="__src__" />
+                    </bx_if:icon_act>
+                    <span __class__>__title__</span>
+                </div>
+                <div id="__id__-pas" class="notActive" __show_passive__>
+                    <bx_if:icon_pas>
+                        <img __class__ src="__src__" />
+                    </bx_if:icon_pas>
+                    <a id="__id__" __class__ __href__ __target__ __on_click__>__title__</a>
+                </div>
+            </bx_repeat:items>
+            <div class="clear_both">&nbsp;</div>
+        </div>
+    </div>
+    <div class="dbTmRight">
+        <a href="javascript:void(0)" onmouseover="javascript:moveScrollRightAuto('dbTmContent__id__', true)" onmouseout="javascript:moveScrollRightAuto('dbTmContent__id__', false)">
+            <img src="<bx_image_url:spacer.gif />" />
+        </a>
+    </div>
+    <div class="clear_both">&nbsp;</div>
+    <script type="text/javascript" language="javascript">
+    <!--
+        $('#dbTopMenu__id__').css('top', '-10000px').parents('.disignBoxFirst').ready(function() {
+            dbTopMenuLoad('__id__');
+        });        
+    -->
+    </script>
+</div>

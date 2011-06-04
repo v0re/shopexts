@@ -1,0 +1,19 @@
+<form id="modules-__type__-form" enctype="multipart/form-data" method="post" action="" class="form_advanced">
+    <div class="modules-items">
+        <bx_repeat:items>
+            <div class="modules-item">
+                <input type="checkbox" class="form_input_checkbox" id="pathes-__name__" name="pathes[]" value="__value__" />
+                <label for="pathes-__name__">__title__</label>
+                <bx_if:update>
+                    <a href="__link__" target="_blank">__text__</a>
+                </bx_if:update>
+                <bx_if:latest>
+                    <span style="color:green">
+                        <bx_text:_adm_txt_modules_update_latest />
+                    </span>
+                </bx_if:latest>
+            </div>
+        </bx_repeat:items>
+    </div>
+    __controls__
+</form>

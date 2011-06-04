@@ -1,0 +1,66 @@
+<script type="text/javascript">
+	function MailBoxReplayMessage()
+	{
+		// call the parent constructor ;
+		this.constructor();
+
+		this.sPageReceiver 			= '__current_page__?ajax_mode=true'; 
+		this.sErrorMessage 			= '__error_message__';
+	}
+
+	// inheritance ;
+	MailBoxReplayMessage.prototype = MailBox.prototype;
+
+	// add some function to the object ;
+
+	/**
+	 * @description : function will close the reply window ;
+	 */
+
+	MailBoxReplayMessage.prototype.cancelReplay = function()
+	{
+        var el = $('.' + htmlSelectors[5]);
+        el.css('display', 'none');
+	}
+
+	// create the object;
+	var oMailBoxReplayMessage = new MailBoxReplayMessage();
+</script>
+<div class="information_block">
+	__information__:
+</div>
+<div class="view_message_container" id="compose_message_block">
+    <div class="replay_wrapper">
+        <div class="replay_thumb">
+            __member_thumbnail__
+        </div>
+        <div class="owner_info">
+            <div class="member_info">
+                <div>
+                    <a href="__member_location__">__member_nick_name__</a>
+                </div>
+                <div>
+                    <img src="__clock_img__" alt="__date_create__" />
+                    __date_create__
+                </div>
+                <div class="subject">
+                    <input type="text" id="compose_subject" value="__message_subject__" />
+                </div>
+            </div>    
+        </div>
+        <div class="clear_both"></div>
+    </div>
+	<div class="message_container">
+		<textarea id="compose_message"></textarea>
+	</div>
+	<div class="message_actions">
+		<div class="messages_options">
+			<label><input type="checkbox" id="to_mail"/>__send_copy_to__</label>
+			<br />
+			<label><input type="checkbox" id="to_my_mail"/>__send_copy_my__</label>
+			<br />
+			<label><input type="checkbox" id="notify_mail"/>__notify__</label>
+		</div>
+        __action_buttons__
+	</div>
+</div>

@@ -1,0 +1,41 @@
+	body
+	{
+		margin:0px;
+		padding:10px;
+		background-color: #FFFFFF;
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size:12px;
+	}
+	td
+	{
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 10px;
+	}
+	p
+	{
+		margin:0px;
+		padding:0px;
+	}
+
+	/* Fix for MS Office unindeted lists */
+	.unIndentedList
+	{
+		margin: 0;
+		padding: 0;
+		list-style-position: inside;
+	}
+	
+	.unIndentedList li
+	{
+		padding:0px;
+	}
+	
+
+/* Fix for MS Office UL lists */
+	ul
+	{
+		margin-top:0px;
+		margin-bottom:0px;
+	}
+
+	

@@ -1,0 +1,85 @@
+
+IMPORTANT: For the latest and extended version of this manual go to http://www.boonex.com/trac/dolphin/wiki/DolModDev 
+
+The main feature of Dolphin 7 for developers in new modules structure and a lot of ready tools which help wring new modules more quickly. Modules are located in modules/{Vendor}/{Module Name} directory. See BoonEx modules for live examples.
+
+This is a quick overview of the features developer can use, for exact description of each feature see appropriate class or file. The following features are available for modules, all these can be done without modifying any single line in base package:
+
+    * Privacy – your content can have privacy settings, which member set for any content, see BxDolPrivacy class. 
+
+    * Alerts – Dolphin rise alerts (events) for different actions, modules can catch these alerts and receive notifications about these updates. Not only Dolphin rise alerts, but modules too, so it is possible to receive notifications about modules alerts. For more information see BxDolAlerts class. 
+
+    * Forms – unified forms across the script, with automatic checking and saving to database, see BxDolForm class. 
+
+    * Page builders – you can design you pages to use page builder, so admin will be able to reorganize blocks on this page, see BxDolPageView class. 
+
+    * Cron – dolphin supports cron system, now modules can install own scripts to run every defined period of time, without needing to install it manually in SSH or cPanel, see BxDolCron?. 
+
+    * Tags – automatically parse and manage tags for any content, see BxDolTags class. 
+
+    * Categories – automatically parse and manage categories for any content, see BxDolCategories class. 
+
+    * Albums – automatically parse and manage albums for any content, see BxDolAlbums class. 
+
+    * ACL (the old name is Memberships) – admin can set access to different sections of the site for different members roles. See checkAction function in membership_levels.inc.php file for more information. 
+
+    * Comments – add section with comments to your module, see BxDolCmts class for more information. 
+
+    * Voting – add voting section to your module, see BxDolVoting class for more information. 
+
+    * Calendar – displays calendar with your custom content to your module, see BxDolCalendar class for more information. 
+
+    * Member Menu – customizable member menu. It is possible to add new items to member’s menu with custom submenus and notifications, see BxDolMemberMenu class for more information. 
+
+    * Top Menu – main site menu can be customizable via sys_menu_top table. 
+
+    * Admin menu – admin menu can be customizable via sys_menu_admin table. It is better to add own links to Modules menu item only. 
+
+    * Admin Top Menu – admin top menu can be customizable via sys_menu_admin_top table but please keep in mind that this menu contains outer links. 
+
+    * Admin Dashboard – customizable admin dashboard page via sys_admin_dashboard table, see BxDolAdminDashboard class. 
+
+    * Bottom Menu – bottom menu can be customizable via sys_menu_bottom table. 
+
+    * Email templates – every module can have email templates which can be managed via admin panel, see BxDolEmailTemplates. 
+
+    * Paginate – use ready paginate class to implement unified interface for your content paginate, see BxDolPaginate. 
+
+    * Admin Settings Form – display and automatically save admin settings for your content, see BxDolAdminSettings class. 
+
+    * Permalinks – it is good practice to use friendly looking permalinks in URLs, see BxDolPermalinks class. 
+
+    * Continuous ratings – see BxDolRate class. 
+
+    * RSS – generate RSS XML for any content, see BxDolRssFactory class. 
+
+    * Site Search – it is possible to search through all content on the site, but module must support this function, see BxDolSearch class. 
+
+    * Services – services are used for inner communication between modules, see BxDolService class. 
+
+    * Subscriptions – it is possible to subscribe to any content, and receive email notifications about any changes, see BxDolSubscription class. 
+
+    * Views – it is possible to track any object views automatically, see BxDolViews class. 
+
+    * Images resizing – to resize image in your module use BxDolImageResize class. 
+
+    * Action buttons – it is easy to display action buttons for your content in separate block or in title zone, see BxBaseFunctions::genObjectsActions, BxBaseMenu::setCustomSubActions and sys_objects_actions table. 
+
+    * Authentication types – by default standard and Facebook Connect (as separate module) authentication types are supported, it is possible to add you own, see sys_objects_auths table. 
+
+    * Injections – you can insert you code to different places on the page, see BxDolTemplate class. 
+
+    * Site stat – display site statistics, see sys_stat_member table. 
+
+    * User stat – display user statistic, see sys_stat_site table. 
+
+Also many modules provide service functions to work with them, for example you can use photos module to store photos for your content, see main module class for list of service functions the module provide.
+
+It is better to install Profiler module, to help in developing modules and check your script execution time.
+
+PACKAGING THE MODULE
+
+When you finished with your module you need to create distribution package. Archive your module's main folder using ZIP archiver. For example, if your module is located in modulesyour_name/module_name folder you need to archive module_name folder with all files. 
+
+
+

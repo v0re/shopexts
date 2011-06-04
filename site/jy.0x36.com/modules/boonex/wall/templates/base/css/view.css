@@ -1,0 +1,364 @@
+div.wall-clear {
+    clear:both;
+    font-size:0px;
+}
+div.wall-view {
+    padding: 10px;
+    position: relative;
+}
+div.wall-divider,
+div.wall-divider-today {
+    height: 16px;
+    padding-left: 20px;
+    
+    position: relative;
+    
+    background-color: #ededed;
+    background-repeat: no-repeat;
+    background-position: 0px center;
+    
+    line-height: 16px;
+    font-size: 11px;
+}
+div.wall-divider-nerrow {
+    height: 2px;
+    margin-left: 25px;
+    
+    position: relative;
+    
+    background-color: #cccccc;
+}
+div.visible {
+    display: block;
+}
+div.hidden {
+    display: none;
+}
+
+div.wall-event {
+    margin-left: 25px;
+    
+    position: relative;    
+}
+div.middle{
+    border-top: 2px solid #cccccc;
+}
+div.wall-loading {
+    width: 89px;
+    height: 64px;
+    position: absolute;
+    z-index: 777;
+    display: none;
+
+    bacground-position: center;
+    background-repeat: no-repeat;
+}
+div.wall-loading img {
+    width: 31px;
+    height: 31px;
+    margin: 16px 0px 0px 29px;
+}
+/*--- Event Caption Styles ---*/
+div.wall-caption {
+    height: 30px;
+    padding-left: 20px;
+    
+    position: relative;
+    
+    background-repeat: no-repeat;
+    background-position: 0px center;
+    
+    line-height: 30px; 
+}
+span.wall-caption-owner {
+    font-weight: bold;
+}
+a.wall-caption-link,
+a.wall-caption-link:link {
+    text-decoration: none;
+    /*color: #3333cc;*/
+}
+a.wall-caption-link:hover,
+a.wall-caption-link:active {
+    text-decoration: underline;
+}
+
+
+/*--- Event Content Styles ---*/
+div.wall-content {
+    position: relative;
+}
+div.status-message {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333333;
+}
+div.wall-shp-wrapper {    
+    position: relative;
+    
+    border: 1px solid #cccccc;    
+}
+img.wall-shp {
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+/*--- Common Post styles ---*/
+div.common {
+    padding: 10px 0px 00px 0px;
+    padding-left: 38px;    
+}
+div.wall-post-actions {
+    top: 13px;
+    right: 3px;
+    height: 16px;
+
+    position: absolute;
+    z-index: 3;
+}
+div.wall-post-action {
+    width: 16px;
+    height: 16px;
+    
+    position: relative;
+    
+    background-repeat: no-repeat;
+    background-position: center;
+}
+div.wall-post-action img {
+    width: 16px;
+    height: 16px;
+}
+div.wall-event div.thumbnail_block {
+    left: 0px;
+    top: 11px;
+
+    position: absolute;
+}
+table.wall-balloon {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    
+    position: relative;
+    
+    border: 0px;
+    border-collapse: collapse;
+    
+    font-size: 11px;
+}
+table.wall-balloon tr,
+table.wall-balloon td {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+tr.wall-head {
+    height: 22px;        
+
+    position: relative;
+
+    line-height: 20px;
+}
+tr.wall-head a {
+    text-decoration: none;
+}
+tr.wall-head a:hover,
+tr.wall-head a:active {
+    text-decoration: underline;
+}
+td.wall-head-l,
+td.wall-head-m,
+td.wall-head-r {        
+    position: relative;
+}
+td.wall-head-l {
+    width: 14px;        
+
+    background-image: url(../images/icons/bln-tl.png);
+    background-repeat: no-repeat;
+    
+    font-size: 0px;
+}
+td.wall-head-m {    
+    background-image: url(../images/icons/bln-tm.png);
+    background-repeat: repeat-x;
+}
+td.wall-head-r {
+    width: 9px;        
+
+    background-image: url(../images/icons/bln-tr.png);
+    background-repeat: no-repeat;
+    
+    font-size: 0px;
+}
+td.wall-cont {    	
+    position: relative;      
+}
+td.wall-cont-l,
+td.wall-cont-m,
+td.wall-cont-r {
+    position: relative;
+}
+td.wall-cont-l {
+    width: 14px;
+
+    background-image: url(../images/icons/bln-ml.png);
+    background-repeat: repeat-y;
+    
+    font-size: 0px;
+}
+td.wall-cont-m {
+    background-color: #e9ecff;
+}
+td.wall-cont-r {
+    width: 9px;
+
+    background-image: url(../images/icons/bln-mr.png);
+    background-repeat: repeat-y;
+    
+    font-size: 0px;
+}
+tr.wall-foot {
+    height: 8px;
+	
+    position: relative;
+    
+    font-size: 0px;
+}
+td.wall-foot-l,
+td.wall-foot-m,
+td.wall-foot-r {        
+    position: relative;      
+}
+td.wall-foot-l {
+    width: 14px;
+
+    background-image: url(../images/icons/bln-bl.png);
+    background-repeat: no-repeat;
+    
+    font-size: 0px;
+}
+td.wall-foot-m {
+    background-image: url(../images/icons/bln-bm.png);
+    background-repeat: repeat-x;
+}
+td.wall-foot-r {
+    width: 9px;       
+
+    background-image: url(../images/icons/bln-br.png);
+    background-repeat: no-repeat;
+    
+    font-size: 0px;
+}
+a.wall-author {
+    text-decoration: none;
+    text-transform: capitalize;
+    /*color: #3333cc;*/
+}
+span.wall-posted-ago {
+    text-transform: lovercase;
+    font-size: 10px;
+    color: #999999;        
+}
+div.wall-body {
+    position: relative;
+}
+
+
+
+div.wall-post-link {
+    position: relative;
+}
+div.wall-lnk-title {
+    position: relative;
+    font-weight: bold;
+}
+div.wall-lnk-url {
+    padding-bottom: 5px;
+    position: relative;
+    font-size: 10px;
+    color: #999999;
+}
+div.wall-lnk-description {
+    position: relative;
+}
+div.wall-post-media {
+    position: relative;
+    clear: both;
+}
+div.wall-pm-thumbnail {
+    margin-right: 5px;
+    
+    position: relative;
+    float: left;    
+    
+    border: 1px solid #cccccc;    
+    background-color: #ffffff;
+}
+img.wall-pm-thumbnail {
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+/*--- Comment Styles ---*/
+div.wall-comments {
+    padding-left: 0px;
+    
+    position: relative;
+    
+    font-size: 10px;
+}
+div.common div.wall-comments {
+    padding-left: 7px;
+}
+div.wall-comments-view-ctl,
+div.wall-comments-post-ctl {    
+    position: relative;
+    float: left;
+    
+    line-height: 10px;
+}
+div.wall-comments-view-ctl {    
+    text-align: left;
+}
+div.wall-comments-post-ctl {
+    float: right;
+    text-align: right;
+}
+div.wall-comments-view-cnt,
+div.wall-comments-post-cnt {
+    position: relative;
+    clear: both;
+    display: none;
+}
+a.wall-cmt-view-exp,
+a.wall-cmt-view-col {
+    padding-left: 10px;
+    
+    background-repeat: no-repeat;
+    background-position: 0px center;
+}
+a.wall-cmt-view-exp {
+    background-image:url(../images/icons/cmt_exp.png);
+}
+a.wall-cmt-view-col {
+    display: none;
+    background-image:url(../images/icons/cmt_col.png);
+}
+
+/*--- Overwrite default Comment styles ---*/
+div.wall-comments div.cmts {
+    padding: 0px;
+    /*display: none;*/
+}
+div.wall-comments div.cmt-reply {
+    padding: 0px;
+    /*display: none;*/
+}
+div.wall-comments div.thumbnail_block {
+    left: -38px;
+    top: 1px;
+}

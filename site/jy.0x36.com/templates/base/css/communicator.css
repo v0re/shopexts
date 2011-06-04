@@ -1,0 +1,230 @@
+	td.cc_td_1_border
+	{
+		border:0px solid red;
+	}
+	
+	td.cc_td_2_border
+	{
+		text-align:left;
+		padding-left:3px;
+		white-space:nowrap;
+		border:0px solid red;
+	}
+	
+	td.cc_td_3_border
+	{
+		border:0px solid blue;
+		width:33px;
+		padding-left:4px;
+	}
+	
+	td.cc_td_4_border
+	{
+		border:0px solid blue;
+		width:33px;
+	}
+
+
+	td.head_td
+	{
+		background-repeat:repeat-x;
+		line-height:25px;
+		text-transform:uppercase;
+
+		/*position:relativ_e;*/
+		border:1px solid #F0F0F9;
+		height:20px;
+		vertical-align:middle;
+		text-align:center;
+		padding-top:2px;
+		
+		font-size:11px;
+		font-weight:bold;
+		color:#3399CC;
+	}
+	tr.tr_bgcolor
+	{
+		background-color:#E7E9FA;
+	}
+	
+/*------------------*/
+	div.commNavigation
+	{
+		/*position:relativ_e;*/
+		border:0px solid red;
+		width:300px;
+		float:right;
+		margin-bottom:15px;
+	}
+	
+	div.commViewBlock
+	{
+		padding:3px;
+	}
+	div.commSubBlock
+	{
+		/*position:relativ_e;*/
+		background-color:#ccc;
+	}
+	div.commSubBlockHead
+	{
+		height:25px;
+		position:relative; /*keep*/
+	}
+	div.commSubBlockHead div
+	{
+		position:absolute;
+		top:1px;
+		background-color:#fff;
+		height:23px;
+		line-height:23px;
+		vertical-align:middle;
+		font-weight:bold;
+		text-align:center;
+	}
+	div.commSubBody
+	{
+		position:relative; /*keep*/
+		height:20px;
+	}
+	div.commSubBody div
+	{
+		position:absolute;
+		top:1px;
+		background-color:#fff;
+		height:18px;
+		line-height:18px;
+		vertical-align:middle;
+		text-align:left;
+		overflow:hidden;
+		/*overflov:hidden;*/
+	}
+	div.profileID
+	{
+		left:1px;
+		width:45px;
+	}
+	div.profileNick
+	{
+		left:47px;
+		width:130px;
+	}
+	div.profileSex
+	{
+		left:178px;
+		width:50px;
+	}
+	div.profileAge
+	{
+		left:229px;
+		width:100px;
+	}
+	
+	div.profileLastLog
+	{
+		left:330px;
+		width:100px;
+	}
+	div.commNavigation span
+	{
+		display:block;
+	}
+/*------------------*/
+	div.commTableBlock
+	{
+		/*position:relativ_e;*/
+		margin-bottom:25px;
+		border:0px solid red;
+		overflow:hidden;
+	}
+	div.commTableBlock table, div.commNavigation table
+	{
+		background-color:silver;
+	}
+	div.commTableBlock table.commTable td
+	{
+		padding:4px;
+	}
+	tr.commTableHeader td
+	{
+		text-align:center;
+		font-weight:bold;
+		background-color: #FFF;
+	}
+	
+	tr.row1
+	{
+		background-color: #F9F9F9;
+	}
+	tr.row2
+	{
+		background-color: #FFF;
+	}
+	tr.row1:hover, tr.row2:hover 
+	{
+		background-color: #f1f1f1;
+	}
+	div.commTableCaption
+	{
+		/*position:relativ_e;*/
+		border:1px solid silver;
+		line-height:20px;
+		vertical-align:middle;
+		padding-left:10px;
+		font-weight:bold;
+		margin-bottom:1px;
+		background-color:#f1f1f1;
+	}
+	table.white td
+	{
+		/*position:relativ_e;*/
+		background-color:#fff;
+		border:0px solid red;
+	}
+	
+	
+	table.commTable td.commActions span
+	{
+		margin-right:5px;
+	}
+	
+/*------------------*/
+	div.commNavigationBlock
+	{
+		/*position:relativ_e;*/
+		text-align:center;
+	}
+/*------------------*/
+	td.lastOnline
+	{
+		
+	}
+	td.lastOnline div.online
+	{
+		/*position:relativ_e;*/
+		color:green;
+		text-align:center;
+		font-weight:bold;
+		
+	}
+	td.lastOnline div.never
+	{
+		/*position:relativ_e;*/
+		color:red;
+		text-align:center;
+		font-weight:bold;
+		
+	}
+/*------------------*/
+	div.commNavigation table
+	{
+		font-weight:bold;
+	}
+	div.commNavigation table td
+	{
+		padding:2px;
+	}
+	td.center
+	{
+		text-align:center;
+	}

@@ -1,0 +1,25 @@
+<div>
+    <div id="__prefix__images_title_curr" class="bx_sys_block_images_title_curr">
+        __title__
+    </div>
+    <div id="__prefix__images_curr" class="bx_sys_block_images_curr" >
+        <img title="__title__" alt="___title__" src="__image_url__" />
+    </div>
+    <div id="__prefix__images_icons" class="bx_sys_block_images_icons">
+        <bx_repeat:images_icons>
+            <div class="sys_icon"><img alt="__image_url__" title="__title__" src="__icon_url__" /></div>
+        </bx_repeat:images_icons>
+        <div class="clear_both"></div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+                bx_center_content ('#__prefix__images_icons', '.sys_icon');
+                $('#__prefix__images_icons > .sys_icon > img').bind('click', function () {
+                    var e = $(this);
+                    $('#__prefix__images_title_curr').html(e.attr('title'));
+                    $('#__prefix__images_curr>img').attr('src', e.attr('alt'));
+                    $('#__prefix__images_curr>img').attr('title', e.attr('title')).attr('alt', e.attr('title'));
+                });
+        });
+    </script>
+</div>

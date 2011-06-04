@@ -1,0 +1,86 @@
+div.wall-post {
+    position: relative;
+}
+iframe.wall_hidden {
+    width: 1px;
+    height: 1px;
+    display: none;
+}
+
+/*--- Post Type GENERAL Styles ---*/
+a.wall-ptype-ctl {
+    padding-left: 20px;
+}
+span.wall-ptype-ctl {
+    text-indent: 20px;
+}
+img.wall-ptype-ctl {    
+    left: 5px;
+    top: 6px;
+    position: absolute;
+}
+
+div.wall-ptype-cnt {
+    position: relative;
+    display: block;
+}
+div.wall_text,
+div.wall_link,
+div.wall_photo,
+div.wall_video,
+div.wall_music {
+    padding: 0px;
+    margin: 10px;
+    display: none;
+    border: 0px;
+}
+div.wall-loading {
+    width: 89px;
+    height: 64px;
+    position: absolute;
+    z-index: 777;
+    display: none;
+
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div.wall-loading img {
+    width: 31px;
+    height: 31px;
+    margin: 16px 0px 0px 29px;
+}
+/*--- Post Type TEXT Styles ---*/
+div.wall_text {
+    display: block;    
+}
+div.wall_text div.input_wrapper_textarea {
+    width: auto;
+    float: none;
+}
+
+/*--- Post Form Styles ---*/
+form.wall-post-event {
+    position: relative;
+}
+div.wall-ctype-ctl {
+    height: 30px;
+    
+    position: relative;
+    display: block;
+    
+    background-color: #ededed;
+    
+    line-height: 30px;
+    text-align: center;
+    font-size: 11px;        
+}
+div.wall-ctype-ctl input {
+    top: -2px;
+    margin: 0px 2px 0px 0px;
+    padding: 0px;
+
+    position: relative;
+}
+div.wall-ptype-cnt div.WallPostText_wrapper textarea.form_input_textarea {
+    height: 80px;
+}

@@ -1,0 +1,48 @@
+#listEdit {
+	border-top:1px solid #999999;
+	border-left:1px solid #999999;
+}
+
+#listEdit tr {
+	margin:0px;
+	padding:0px;
+}
+
+#listEdit td,
+#listEdit th {
+	padding:2px;
+	vertical-align:middle;
+	border-right:1px solid #999999;
+	border-bottom:1px solid #999999;
+}
+
+#listEdit th {
+    padding:2px;
+	text-align:center;
+	font-weight:bold;
+	background-color:#eeeeee;
+}
+
+#listEdit tr.even {
+	background-color:#ffffff;
+}
+
+#listEdit tr.odd {
+	background-color:#dddddd;
+}
+
+#listEdit td .value_input {
+	width:70px;
+}
+
+.tableLabel {
+	border-bottom:1px dashed #000000;
+	cursor:help;
+}
+
+img.row_control {
+	width:16px;
+	height:16px;
+	cursor:pointer;
+	margin-right: 3px;
+}

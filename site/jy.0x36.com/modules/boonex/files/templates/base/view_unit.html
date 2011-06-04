@@ -1,0 +1,42 @@
+<div class="navPanel" style="width:__width_ext__px;" id="view">
+	<div class="navPanelLink">
+		<bx_text:_bx_files_album />: <a href="__albumUri__">__albumCaption__</a>
+	</div>
+	<bx_if:prev>
+	   <a href="__linkPrev__#view" title="__titlePrev__"><img src="<bx_icon_url:prev32.png />" class="navPanelLinkPrev"/></a>
+	</bx_if:prev>
+	<bx_if:next>
+		<a href="__linkNext__#view" title="__titleNext__"><img src="<bx_icon_url:next32.png />"  class="navPanelLinkNext"/></a>
+	</bx_if:next>
+</div>
+<div class="fileUnit">
+    <div class="fileUnitLeft">
+        <div class="fileUnitPic" style="background-image: url('__pic__')">
+            <img src="<bx_icon_url:spacer.gif />" class="fileUnitSpacer"/>
+        </div>    
+    </div>
+    <div class="fileUnitRight">
+        <div class="fileTitle">
+            __fileTitle__
+        </div>
+        <div class="fileSize">
+            <bx_text:_bx_files_size />: __fileSize__ <bx_text:_bx_files_size_unit /> (__fileExt__)
+        </div>
+    </div>
+    <div class="clear_both"></div>
+</div>
+<div class="fileUnitInfo">
+    <div class="fileUnitInfoRate">
+        __rate__
+    </div>
+    <div class="fileUnitInfoCounts">
+        <div class="fileUnitInfoFav">
+        	<img src="<bx_icon_url:action_fave.png />" title="<bx_text:_bx_files_view_alt_fav />"/>
+            __favInfo__
+        </div>
+        <div class="fileUnitInfoView">
+            <img src="<bx_icon_url:eye.png />" title="<bx_text:_bx_files_view_alt_view />"/>
+            __viewInfo__
+        </div>        
+    </div>
+</div>

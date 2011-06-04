@@ -1,0 +1,63 @@
+<div id="BxMap__suffix__" class="bx_map __subclass__">
+    
+</div>
+<script type="text/javascript">
+
+    bx_map_loading ('BxMap__suffix__', 1);
+
+    var bxMapOnloadCallback__suffix__ = function ()	{
+
+        if (!GBrowserIsCompatible()) {
+            $('#BxMap__suffix__>.bx_map_loading').html("__msg_incorrect_google_key__");
+			return;
+		}	
+        
+		glMap__suffix__ = new GMap2(document.getElementById('BxMap__suffix__'));
+
+		switch ('__map_control__') {
+			case 'large': glMap__suffix__.addControl(new GLargeMapControl()); break;
+			case 'small': glMap__suffix__.addControl(new GSmallMapControl()); break;
+		}
+
+		if (__map_is_type_control__) glMap__suffix__.addControl(new GMapTypeControl());
+		if (__map_is_scale_control__) glMap__suffix__.addControl(new GScaleControl());
+		if (__map_is_overview_control__) glMap__suffix__.addControl(new GOverviewMapControl ());
+
+		glMap__suffix__.setCenter(new GLatLng(__map_lat__, __map_lng__), __map_zoom__);
+
+		if (!__map_is_dragable__)
+			glMap__suffix__.disableDragging();
+
+		switch ('__map_type__')
+		{
+			case 'satellite': glMap__suffix__.setMapType(G_SATELLITE_MAP); break;
+            case 'hybrid': glMap__suffix__.setMapType(G_HYBRID_MAP); break;
+            case 'normal':
+			default: glMap__suffix__.setMapType(G_NORMAL_MAP); break;
+        }
+
+        glBxMap__suffix__ = new BxMap (glMap__suffix__, '__data_url__', 'glBxMap__suffix__', 'BxMap__suffix__');
+
+        glBxMap__suffix__.setShadowUrl('__shadow_url__');
+
+        glBxMap__suffix__.setSaveDataUrl('__save_data_url__');
+
+		GEvent.addListener(glMap__suffix__, "dragend", function() { 
+			glBxMap__suffix__.updateLocations();
+		});
+
+		GEvent.addListener(glMap__suffix__, "zoomend", function(oldLevel,  newLevel) { 
+            glBxMap__suffix__.updateLocations();
+        });        
+        
+        glBxMap__suffix__.setSaveLocationUrl('__save_location_url__');
+
+        glBxMap__suffix__.updateLocations();        
+
+        bx_map_loading ('BxMap__suffix__', 0);
+    }    
+
+    google.load("maps", "2.x");
+    google.setOnLoadCallback(bxMapOnloadCallback__suffix__);
+
+</script>

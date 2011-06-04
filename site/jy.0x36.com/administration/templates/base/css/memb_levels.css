@@ -1,0 +1,59 @@
+/*--- 'Available mem levels' section ---*/
+div.adm-mlevels-items {
+    margin: 10px;
+    padding: 0px;
+}
+div.adm-mlevels-item {
+    padding: 2px 0px;
+}
+div.adm-mlevels-enabled {}
+div.adm-mlevels-disabled {
+    color: #999999;
+}
+div.adm-mlevels-item input {
+    margin-left: 0px;
+}
+
+/*--- 'Price for XXX membership level' section ---*/
+div.adm-mlevels-ap-label,
+div.adm-mlevels-ap-input,
+div.adm-mlevels-ap-btn {
+    margin-left: 10px;
+    position: relative;
+    float: left;
+}
+div.adm-mlevels-ap-input {
+    width: 100px;
+    margin: 3px 0px 4px 10px;
+}
+div.adm-mlevels-ap-btn {
+    margin: 1px 0px 4px 10px;
+}
+
+/*--- 'Manage Action' section ---*/
+div.calendar {
+	z-index: 9999;
+}
+div#adm-mlevels-action{
+    width: 562px;    
+}
+div#adm-mlevels-action table.popup_form_wrapper,
+div#adm-mlevels-action table.popup_form_wrapper td.container {
+    width: auto;
+}
+div#adm-mlevels-action div.adm-design-box {
+    margin-bottom: 0px;
+}
+div#adm-mlevels-action-content {
+    width: 480px;
+    height: 223px;
+    overflow: auto;
+}
+iframe.hidden {
+    width: 1px;
+    height: 1px;
+    display: none;
+}
+div.ui-datepicker {
+	z-index: 9999;
+}

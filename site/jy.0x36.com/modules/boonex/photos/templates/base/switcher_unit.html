@@ -1,0 +1,28 @@
+<div class="viewSwitchFile" style="width:__switchWidth__px;">
+	<img src="__picUrl__" id="mainPic"/ __imgWidth__>
+</div>
+<div class="mainInfo" style="width:__switchWidthOut__px;">
+	<bx_if:href>
+		<div class="picTitle">
+			<a href="__href__">__title__</a>
+		</div>
+	</bx_if:href>
+	<bx_if:rate>
+		<div class="picRate">
+			__rate__
+		</div>
+	</bx_if:rate>
+	<div class="clear_both"></div>
+</div>
+<div class="addInfo" style="width:__switchWidthOut__px;">
+	<bx_if:date>
+		<span class="addInfoDate">
+			__date__
+		</span>
+	</bx_if:date>
+	<bx_if:from>
+		<span class="addInfoFrom">
+			<bx_text:_from /> <a href="__profileUrl__">__nick__</a>
+		</span>
+	</bx_if:from>
+</div>

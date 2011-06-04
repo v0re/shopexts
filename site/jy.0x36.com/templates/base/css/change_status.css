@@ -1,0 +1,11 @@
+div.prof_stat {
+	margin: 10px;
+}
+
+div.prof_stat_info .stat_Active, .stat_Suspended {
+	font-weight: bold;
+}
+
+div.prof_stat_form {
+	margin-top: 10px;
+}

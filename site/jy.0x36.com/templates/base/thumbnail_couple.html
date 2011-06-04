@@ -1,0 +1,14 @@
+<div class="thumbnail_block" style="float:__sys_thb_float__;width:__sys_thb_width__px;height:__sys_thb_height__px;">
+	<a href="__usr_profile_url__" style="cursor:pointer;" onmouseover="javascript:startUserInfoTimer( __iProfId__, $(this).find('.sys-online-offline:first') )" onmouseout="javascript:stopUserInfoTimer(__iProfId__)">
+		<div class="thumbnail_image_couple" style="float:left;width:__sys_img_width1__px;height:__sys_img_height1__px;">
+			<img src="<bx_image_url:spacer.gif />" style="float:left;background-image:url(__usr_thumb_url0__);width:__sys_cpl_img_width__px;height:__sys_cpl_img_height__px; border-top-width:2px; border-left-width:2px; border-right-width:0px; border-bottom-width:0px;" alt="__usr_thumb_title0__" title="__usr_thumb_title0__" />
+			<div class="clear_both"></div>
+			<img src="<bx_image_url:spacer.gif />" style="float:right;background-image:url(__usr_thumb_url1__);width:__sys_cpl_img_width__px;height:__sys_cpl_img_height__px;  border-bottom-width:2px; border-right-width:2px; border-top-width:0px; border-left-width:0px;" alt="__usr_thumb_title1__" title="__usr_thumb_title1__" />
+			<img src="__sys_status_url__" alt="__sys_status_title__" title="__sys_status_title__" class="sys-online-offline" onclick="showFloatUserInfo(__iProfId__, $(this)); return false;" />
+		</div>
+	</a>
+	<div class="clear_both"></div>
+</div>
+<bx_if:profileLink>
+    <div class="thumb_username" style="width:__picWidth__px;"><a href="__usr_profile_url__">__nickName__</a></div>
+</bx_if:profileLink>

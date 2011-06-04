@@ -1,0 +1,26 @@
+<div class="MsgBox" id="__id__">
+	<table class="MsgBox" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="msgbox_corner"><img src="<bx_image_url:msgbox_cor_lt.png />" alt="" /></td>
+			<td class="msgbox_top_side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+			<td class="msgbox_corner"><img src="<bx_image_url:msgbox_cor_rt.png />" alt="" /></td>
+		</tr>
+		<tr>
+			<td class="msgbox_left_side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+			<td class="msgbox_content">
+                <div class="msgbox_text">__msgText__</div>
+			</td>
+			<td class="msgbox_right_side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+		</tr>
+		<tr>
+			<td class="msgbox_corner"><img src="<bx_image_url:msgbox_cor_lb.png />" alt="" /></td>
+			<td class="msgbox_bottom_side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+			<td class="msgbox_corner"><img src="<bx_image_url:msgbox_cor_rb.png />" alt="" /></td>
+		</tr>
+	</table>
+	<bx_if:timer>
+        <script type="text/javascript" language="javascript">
+            setTimeout("$('#__id__').bx_anim('hide', 'fade', 'slow', function(){$(this).remove();})", __time__);
+        </script>
+    </bx_if:timer>
+</div>

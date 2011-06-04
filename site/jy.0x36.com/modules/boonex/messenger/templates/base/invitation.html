@@ -1,0 +1,64 @@
+<div id="msg_invite___sender_id__" class="msg_ajax">
+<table class="msg_window">
+	<tr>
+		<td class="corner"><img src="<bx_image_url:op_cor_tl.png />" /></td>
+		<td class="side_ver"><img src="<bx_image_url:spacer.gif />" /></td>
+		<td class="corner"><img src="<bx_image_url:op_cor_tr.png />" /></td>
+	</tr>
+	<tr>
+		<td class="side"><img src="<bx_image_url:spacer.gif />" /></td>
+		<td class="container">
+			<div class="disignBoxFirst">
+				<div class="boxFirstHeader"><bx_text:_messenger_invitation_title />
+					<div class="dbTopMenu">
+						<img class="login_ajx_close" onclick="BxMsgRemoveInvitation(__sender_id__);return false;" src="<bx_image_url:close.gif />"/>
+					</div>
+				</div>
+			</div>
+		</td>
+		<td class="side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+	</tr>
+	
+	<tr>
+		<td class="side"><img src="<bx_image_url:spacer.gif />" /></td>
+		<td class="container">
+			<div class="msg_left_side">__sender_thumbnail__</div>
+			<div class="msg_right_side">
+				<div class="msg_sender">
+					<a href="__sender_profile__" target="_blank">__sender_nickname__</a>
+					<br />
+					<bx_text:_messenger_invitation_description />
+				</div>
+				<table class="msg-balloon">
+					<tr class="msg-head">
+						<td class="msg-head-l">&nbsp;</td>
+						<td class="msg-head-m">&nbsp;</td>
+						<td class="msg-head-r">&nbsp;</td>
+			        </tr>
+					<tr class="msg-cont">
+						<td class="msg-cont-l">&nbsp;</td>
+						<td class="msg-cont-m">
+							<div class="msg-post-body">__invitation_text__</div>
+						</td>
+						<td class="msg-cont-r">&nbsp;</td>
+					</tr>
+					<tr class="msg-foot">
+						<td class="msg-foot-l">&nbsp;</td>
+						<td class="msg-foot-m">&nbsp;</td>
+						<td class="msg-foot-r">&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+			<div class="clear_both">&nbsp;</div>
+			
+			<div class="msg_buttons">__invitation_buttons__</div>
+		</td>
+		<td class="side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+	</tr>
+	<tr>
+		<td class="corner"><img src="<bx_image_url:op_cor_bl.png />" /></td>
+		<td class="side_ver"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+		<td class="corner"><img src="<bx_image_url:op_cor_br.png />" onload="if( navigator.appName == 'Microsoft Internet Explorer' && window.version && version >= 5.5 && version < 7 ) png_fix();" /></td>
+	</tr>
+</table>
+</div>

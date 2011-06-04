@@ -1,0 +1,124 @@
+
+#profile_customize {
+    margin-bottom: 10px;
+}
+
+#profile_customize table.TransBox {
+    width:100%;
+    overflow:hidden;
+}
+
+#profile_customize .TransBox .msgbox_content {
+    background-image:url(../images/op40.png);
+    position:relative;
+}
+
+#profile_customize .TransBox .corner,
+#profile_customize .TransBox .corner img {
+    width:10px;
+    height:10px;
+}
+
+#profile_customize .TransBox .left_side {
+    width:10px;
+}
+
+#profile_customize .TransBox .right_side {
+    width:10px;
+}
+
+#profile_customize .TransBox tr .top_side {
+    height:10px;
+}
+
+#profile_customize .TransBox .bottom_side {
+    height:10px;
+}
+
+#profile_customize .TransBox .actionsBlock .actionItem img {
+    vertical-align:middle;
+}
+
+#profile_customize .TransBox .profile_status img {
+    vertical-align:middle;
+}
+
+#profile_customize .TransBox .profile_status {
+    margin-top:9px;
+}
+
+#profile_customize .TransBox .profile_status_message {
+    margin-top:4px;
+}
+
+#profile_customize .TransBox div.reduce {
+    position:absolute;
+    text-align:right;
+    right:12px;
+}
+
+#profile_customize .buttons_bar {
+	display: block;
+	margin-top: 10px;
+}
+
+#profile_customize div.disignBoxFirst div.dbClose {
+	margin-left: 10px;
+    float: left;
+}
+
+#profile_customize div.disignBoxFirst div.dbClose img {
+	width: 28px;
+	height: 28px;
+}
+
+form#custom_themes_form .thumb {
+    float: left;
+    margin-right: 10px;
+    width: 66px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+form#custom_themes_form .thumb64 {
+    width: 66px;
+    height: 66px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #CCCCCC;
+    background-color:#EDEDED;
+}
+
+form#custom_themes_form .thumb64 img {
+    width: 64px;
+    height: 64px;
+}
+
+form#custom_themes_form .radiobox {
+    top: 1px;
+    left: 1px;
+    width: 21px;
+    height: 21px;    
+    background-color: #ffcccc;
+}
+
+.form_advanced_table .radiobox input {
+	margin: 3px;
+	padding: 0;
+	width: 15px;
+	height: 15px;
+}
+
+#profile_customize .input_wrapper_text {
+    margin-right: 3px;
+}
+
+#dbTopMenuprofile_customizer {
+    margin-right: 38px;
+}
+
+#profile_customize .dbClose {
+    top: 0;
+    right: 0;
+    position: absolute;
+}

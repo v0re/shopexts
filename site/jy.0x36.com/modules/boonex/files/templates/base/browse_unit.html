@@ -1,0 +1,30 @@
+<div class="{unitClass}_unit">
+	<div class="{unitClass}_left">
+        <bx_if:admin>
+            <div class="bx_sys_unit_checkbox">
+                <input type="checkbox" name="entry[]" value="{id}"/>
+            </div>
+        </bx_if:admin>
+        <a href="{titleLink}">
+            <div class="{unitClass}_pic" style="background-image: url({pic})">
+                <img src="{spacer}" class="{unitClass}_spacer"/>
+            </div>    
+        </a>
+    </div>
+    <div class="{unitClass}_right">
+    	<div class="{unitClass}_header">
+	    	<div class="{unitClass}_title"><a href="{titleLink}" title="{title}">{title}</a></div>
+    		<div class="{unitClass}_rate">{rate}</div>
+    		<div class="clear_both"></div>
+    	</div>
+    	<div class="{unitClass}_subheader">
+    		<div class="{unitClass}_from"><bx_text:_From /> <a href="{fromLink}">{from}</a></div>
+	        <div class="{unitClass}_when">&nbsp;| {when}</div>
+	        <div class="clear_both"></div>
+    	</div>
+    	<div class="{unitClass}_bottom">
+    	    <div class="{unitClass}_desc">{desc}</div>
+    	</div>
+    </div>
+    <div class="clear_both"></div>
+</div>

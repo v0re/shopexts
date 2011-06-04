@@ -1,0 +1,39 @@
+	div.error_box
+	{
+		margin-left:auto;
+		margin-right:auto;
+		width:450px;
+	}
+	
+	div.checkout_info
+	{
+		margin-left:auto;
+		margin-right:auto;
+		width:450px;
+	}
+	
+	div.credits_box
+	{
+		margin-left:auto;
+		margin-right:auto;
+		margin-bottom:10px;
+		width:400px;
+	}
+	
+	div.provider_box
+	{
+		margin-left:auto;
+		margin-right:auto;
+		margin-bottom:10px;
+		width:400px;
+	}
+	
+	td.field_caption
+	{
+		font-weight:normal;
+	}
+	
+	td.field_value
+	{
+		font-weight:bold;
+	}

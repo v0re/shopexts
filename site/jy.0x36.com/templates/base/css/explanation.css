@@ -1,0 +1,191 @@
+	body {
+		margin:0px;
+		padding:0px;
+		font-family:Verdana,Arial;
+		font-size:11px;
+		color:#666;
+		background-color:#F4F4F4;
+		width:500px;
+		height:150px;
+		overflow:visible;
+	}
+
+	div#main {
+		position:relative;
+		margin-top:25px;
+		margin-left:auto;
+		margin-right:auto;
+		border:0px solid red;
+		width:450px;
+	}
+
+	div.db_1_block {
+		position:relative;
+		margin-bottom:12px;
+	}
+	div.db_1_block div.caption {
+		position:relative;
+		height:24px;
+		overflow:hidden;
+	}
+	div.db_1_block div.container {
+		position:relative;
+		padding:5px;
+		border-left:1px solid #D8D8D8;
+		border-right:1px solid #D8D8D8;
+		overflow:hidden;
+	}
+	div.db_1_block div.foot {
+		position:relative;
+		height:6px;
+		background-repeat:repeat-x;
+	}
+	div.db_1_block div.caption div.title {
+		position:absolute;
+		top:5px;
+		left:15px;
+		color:#666666;
+		text-transform:uppercase;
+		font-weight:bold;
+	}
+	img.left {
+		position:absolute;
+		top:0px;
+		left:0px;
+	}
+	img.right {
+		position:absolute;
+		top:0px;
+		right:0px;
+	}
+	* html div#left_column_menu img.right, * html div#left_column_content img.right  {
+		right:-1px;
+	}
+
+	div.no_result, div.action {
+		position:relative;
+		border:1px solid #A0C238;
+		padding:1px;
+		margin:10px 0px;
+		width:80%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	div.no_result div, div.action div {
+		position:relative;
+		background-color:#709812;
+		vertical-align:middle;
+		font-weight:bold;
+		color:#fff;
+		text-align:center;
+		margin:0px;
+		padding:0px;
+		line-height:20px;
+	}
+	div.err {
+		position:relative;
+		border:1px solid #FF412D;
+		padding:1px;
+		margin:10px 0px;
+		width:80%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	div.err div {
+		position:relative;
+		background-color:#FF412D;
+		vertical-align:middle;
+		font-weight:bold;
+		color:#fff;
+		text-align:center;
+		line-height:20px;
+	}
+
+	* html div.no_result div, * html div.action div, * html div.err div {
+		line-height:normal;
+		padding:3px 0px;
+	}
+	/*------------------*/
+
+	div.disignBoxFirst {
+		background-color:#fff;
+		border:1px solid #ccc;
+	}
+
+	.boxFirstHeader {
+		position:relative;
+		background-image:url(../images/head_cutting.gif);
+		background-repeat:repeat-x;
+		height:26px;
+		padding:4px 0px 0px 6px;
+		font-size:10px;
+		font-weight:bold;
+		color:#666;
+		font-family:Verdana;
+		text-transform:uppercase;
+	}
+
+	.boxContent {
+		position:relative;
+		overflow:hidden;
+		font-size:10px;
+		color:#666;
+		border:0px solid blue;
+		font-family:Verdana;
+		padding:10px 3px 10px 3px;
+	}
+
+	.clear_both {
+		position:relative;
+		clear:both;
+		height:1px;
+		margin:0px;
+		padding:0px;
+		font-size:1px;
+		border:0px solid red;
+	}
+
+	.box_head_left {
+		position:absolute;
+		top:0px;
+		left:0px;
+	}
+
+	.box_head_right {
+		position:absolute;
+		top:0px;
+		right:0px;
+	}
+
+	/*##############################################################*/
+	div.soundPop {
+		text-align:center;
+	}
+	/*##############################################################*/
+	.shareLinkArea {
+		margin: 0px 0px 10px 0px;
+	}
+
+	.shareLink {
+		position: relative;
+		float: left;
+		margin-left: 2px;
+		width: 16px;
+		height: 16px;
+		border: 1px solid navy;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	.shareLink img {
+		width: 16px;
+		height: 16px;
+		border: 0px;
+	}
+
+	.mediaInfo {
+		font-size: 13px;
+	}
+
+	.form_advanced {
+		margin:10px;
+	}

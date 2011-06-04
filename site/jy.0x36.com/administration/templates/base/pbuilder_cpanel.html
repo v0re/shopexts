@@ -1,0 +1,26 @@
+<div class="adm-db-control-panel">
+    <div class="adm-pb-cp-item">
+        <form name="pageSelector" method="get" action="__url__">
+            <bx_text:_adm_txt_pb_page />
+            <select class="form_input_select" name="Page" onchange="if (this.value && this.value != 'none') this.form.submit()">
+                <bx_repeat:pages>
+                    <option value="__value__" __selected__>__title__</option>
+                </bx_repeat:pages>
+            </select>
+            <input type="submit" value="<bx_text:_adm_btn_Go />" />
+        </form>
+    </div>
+    <div class="adm-pb-cp-item-right">
+        <div class="button_wrapper">
+            <input type="button" value="<bx_text:_adm_btn_add_page />" class="form_input_submit" onclick="showNewPageDialog('__url__')" />
+            <div class="button_wrapper_close">&nbsp;</div>
+        </div>
+    </div>
+    <div class="adm-pb-cp-item-right">
+        <div class="button_wrapper">
+            <input type="button" value="<bx_text:_adm_btn_add_column />" id="addColumnButton" class="form_input_submit" onclick="oPB.addColumn()" disabled="disabled" />
+            <div class="button_wrapper_close">&nbsp;</div>
+        </div>
+    </div>
+    <div class="clear_both">&nbsp;</div>
+</div>

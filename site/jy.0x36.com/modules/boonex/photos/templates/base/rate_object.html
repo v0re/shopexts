@@ -1,0 +1,22 @@
+<script>
+	BxDolVoting.prototype.onvote = function (fRate, iCount) {
+		document.location = '__url__';
+	}
+	BxDolVoting.prototype.onvotefail = function () {
+		document.location = '__url__';
+	}
+</script>
+<div class="rateObject">
+	<div class="ratePart">__ratePart__</div>
+	<div class="fileBody" style="width:__infoWidth__px;">
+		<img src="__fileBody__">
+	</div>
+	<div class="mainInfo" style="width:__infoWidth__px;">
+	   <div class="picTitle"><a href="__fileUri__">__fileTitle__</a></div>
+	   <div class="clear_both"></div>
+	</div>
+	<div class="addInfo" style="width:__infoWidth__px;">
+	   <span class="addInfoDate">__fileWhen__</span>
+	   <span class="addInfoFrom"><bx_text:_from /> <a href="__fileFromLink__">__fileFrom__</span>
+	</div>
+</div>

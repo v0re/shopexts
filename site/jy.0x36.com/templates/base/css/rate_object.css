@@ -1,0 +1,43 @@
+.rateObject {
+    margin: 10px;
+}
+
+.ratePart {
+	margin: 5px;
+}
+
+.fileBody {
+   
+}	
+
+.fileInfo {
+    font-size: 11px;
+    margin: 4px;
+}
+
+.fileInfo div {
+    position: relative;
+}
+
+.fileTitle {
+
+}
+
+.fileWhen {
+	float: left;
+	color: #CCCCCC;
+}
+
+.fileFrom {
+	margin-left: 5px;
+	float: left;
+}	
+
+.fileTitle {
+    font-weight: bold;
+}
+
+/* redeclared classes from another css files */
+.block_rel_100 {
+    margin-top: 5px;
+}

@@ -1,0 +1,45 @@
+<div id="__id__">
+    <table class="popup_form_wrapper">
+    	<tr>
+    		<td class="corner"><img src="<bx_image_url:op_cor_tl.png />" alt="" /></td>
+    		<td class="side_ver"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+    		<td class="corner"><img src="<bx_image_url:op_cor_tr.png />" alt="" /></td>
+    	</tr>
+    	<tr>
+    		<td class="side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+    		<td class="container">
+    			<div class="disignBoxFirst">
+                	<div class="boxFirstHeader">
+                        __title__
+                        <div class="dbTopMenu">
+                            <bx_repeat:actions>
+                                <div id="__id__-act" class="active" <bx_if:hide_active>style="display:none"</bx_if:hide_active>>
+                                    __icon__
+                                    <span __class__>__title__</span>
+                                </div>
+                                <div id="__id__-pas" class="notActive" <bx_if:hide_inactive>style="display:none"</bx_if:hide_inactive>>
+                                    __icon__
+                                    <a id="__id__" __class__ __href__ __target__ __on_click__>__title__</a>
+                                </div>
+    		                </bx_repeat:actions>  
+                            <div class="dbClose" style="background-image:url(<bx_image_url:close.gif />)">
+                                <a href="javascript:void(0)" onclick="javascript:$('#__id__').dolPopupHide({});">
+                                    <img src="<bx_image_url:spacer.gif />" width="28px" height="28px" />
+                                </a>
+                            </div>
+                        </div>
+                	</div>
+                	<div class="boxContent">                    
+                        __content__
+                    </div>                	
+                </div>                    
+            </td>
+    		<td class="side"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+    	</tr>
+    	<tr>
+    		<td class="corner"><img src="<bx_image_url:op_cor_bl.png />" alt="" /></td>
+    		<td class="side_ver"><img src="<bx_image_url:spacer.gif />" alt="" /></td>
+    		<td class="corner"><img src="<bx_image_url:op_cor_br.png />" onload="if( navigator.appName == 'Microsoft Internet Explorer' && window.version && version >= 5.5 && version < 7 ) png_fix();" alt="" /></td>
+    	</tr>
+    </table>
+</div>

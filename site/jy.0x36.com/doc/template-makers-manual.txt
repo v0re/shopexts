@@ -1,0 +1,20 @@
+
+IMPORTANT: For the latest and extended version of this manual go to http://www.boonex.com/trac/dolphin/wiki/DolDesign
+
+Custom template creation
+
+Design templates in new Dolphin 7 are a little bit different from Dolphin 6. Now almost all content representation can be controlled by system templates and modules templates. See description of BxDolTemplate class for complete list.
+
+To start new templates, it is best to make it a copy of UNI template. UNI is empty template which inherit base template only. Base template is never used directly but all other templates must inherit it, and override only necessary features. After you make a copy of UNI template, you can start to override its styles.
+
+For example you need to override body color in common.css file, then you need to add style for body color in your common.css file, which has only one line by default  - inclusion of common.css file from base.  It is strongly prohibited to copy CSS files from base, because it will make future versions upgrades more difficult. 
+
+To override some html template just copy it from base, and make necessary changes. It is bad practice to copy all html templates from base directory without modifying them.
+To override image, place it to your template with the same name, and your image will be used instead of default. To leave default image  - do not copy it from base, it is already used from base if not found in your template.
+
+To override some PHP class, in very basic example, you need to copy the function from base class and place to yours to start making modifications in it. It is strongly prohibited to copy whole PHP class, or all functions from base class. Such modifications make you more flexible in designing new templates, but it requires some basic knowledge of PHP.
+
+In most cases all you need is to override some CSS, html and PHP files, but in some rare cases you need to modify modules design too. In this case you need to follow the same rules but regarding to module templates directory, it also has 'css', 'script' directories like main site templates, and also all modules come with base template. 
+
+For more information about templates see BxDolTemplate class.
+
