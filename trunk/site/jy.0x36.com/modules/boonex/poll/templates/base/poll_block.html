@@ -1,0 +1,72 @@
+<bx_if:start_tag>
+ <div class="poll_block" id="poll_block__uid__">
+</bx_if:start_tag>
+    <div class="pollThumb">
+        __poll_picture__
+    </div>
+    <div class="poll_section">
+        <!-- poll's container -->
+        <div id="dpol__uid__"  class="pollBlock" >
+            <div id="dpol_caption___uid__" class="pollCaption">
+                <a href="__poll_url__"></a>
+            </div>
+            <div id="dpol_question___uid__" class="pollAnswerBlock">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td class="corner"><img alt="corner" src="__l_t_side__"/></td>
+                            <td class="spacer" style="background-image:url(__t_side__)"><img src="__spacer__" alt="spacer" /></td>
+                            <td class="corner"><img alt="corner" src="__r_t_side__" /></td>
+                        </tr>
+                        <tr>
+                            <td style="background-image:url(__l_m_side__)"><img src="__spacer__" alt="spacer" /></td>
+                            <td class="poll">
+                                <div class="poll_wrapper">
+                                    <div id="dpol_arr_m___uid__" class="pollSlBG"></div>
+                                    <div id="dpol_arr_up___uid__" class="pollUp" onmouseover="javascript: scroll_start(document.getElementById('dpol_question_text___uid__'), 'down');" onmouseout="javascript: scroll_stop();"><img src="__pool_up_src__" alt="poll up" /></div>
+                                    <div id="dpol_arr_down___uid__" class="pollDown" onmouseover="javascript: scroll_start(document.getElementById('dpol_question_text___uid__'), 'up');" onmouseout="javascript: scroll_stop();"><img src="__pool_down_src__" alt="pool down" /></div>
+                                    <div id="dpol_question_text___uid__" class="pollQuestionBlock"></div>
+                                </div>
+                                <div class="clear_both"></div>
+                            </td>
+                            <td style="background-image:url(__r_m_side__)"><img src="__spacer__" alt="spacer" /></td>
+                        </tr>
+                        <tr>
+                            <td class="corner"><img alt="corner" src="__l_b_side__"/></td>
+                            <td class="spacer" style="background-image:url(__b_side__)"><img src="__spacer__" alt="spacer" /></td>
+                            <td class="corner"> <img alt="corner" src="__r_b_side__"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script type="text/javascript" language="javascript">
+            send_data( 'dpol_question_text___uid__', 'get_questions', '', '__uid__' );
+        </script>
+        <div class="poll_info">
+            <bx_if:manage_page>
+            <div class="manage_el">
+                <input type="checkbox" value="__uid__" name="poll_el[]"/>
+            </div>
+            </bx_if:manage_page>
+            <div class="owner_info">
+                __by__ __profile_link__&nbsp;&nbsp;<span class="date_add">__date_add__</span>
+            </div>
+            <div class="result_section" id="result_block__uid__">
+                <a href="javascript:void(0);" onclick="PerformSubmit(__uid__, -1)">
+                    __result__
+                </a>
+            </div>
+             <div class="back_poll_section" id="back_poll__uid__">
+                <a href="javascript:void(0);" onclick="getPollBlock('poll_block__uid__', '__uid__')">
+                    __back__
+                </a>
+            </div>
+            <div class="clear_both"></div>
+            __actions__
+        </div>
+    </div>
+    <div class="clear_both"></div>
+<bx_if:end_tag>    
+</div>
+</bx_if:end_tag>

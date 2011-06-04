@@ -1,0 +1,44 @@
+.form_advanced_table th, .form_advanced_table td td {
+	border-bottom-width:0px;
+}
+
+#custom_appl_lists #appl_active {
+	color:green;
+}
+
+#custom_appl_lists #appl_passive {
+	color:red;
+}
+
+#selectable_el {
+	position:relative;
+}
+#selectable_el_div {
+	display:none;
+	position:absolute;
+	right:10px;
+	top:16px;
+}
+#selectable_el:hover #selectable_el_div {
+	display:block;
+}
+
+
+#adding_custom_appl_form .form_advanced_table {
+	border-left-width:0px;
+	border-right-width:0px;
+	border-top-width:0px;
+}
+
+#adding_custom_appl_form .form_advanced_table th, #adding_custom_appl_form .form_advanced_table td {
+	padding:5px 10px;
+}
+
+#application_container .browseUnit {
+	border-width: 2px; border-style:solid;
+	height:70px; width:46%;float:left;margin:5px;position:relative;padding-top:25px;padding-left:10px;
+}
+
+#application_container .addInfo {
+	width:290px;
+}

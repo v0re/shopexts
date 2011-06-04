@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    var oShoutBox = new BxShoutBox();
+    oShoutBox.oMessages.empty_message = '__message_empty_message__';
+    oShoutBox.sPageReceiver  = '__module_path__';
+    oShoutBox.iUpdateTime    = __update_time__;
+    oShoutBox.iLastMessageId = __last_message_id__;
+    oShoutBox.sWaitMessage   = '__wait_cpt__';	
+
+    $('#shoutbox_msg_field').parent().addClass('shoutbox_send_field');
+
+    var elShoutbox = $('.' + oShoutBox.sMessagesContainer);
+    if(elShoutbox) {
+        var iBoxPadding = 20;
+        var iShoutboxParentWidth = elShoutbox.parents('.form_advanced_wrapper').width();
+        elShoutbox.css('width', iShoutboxParentWidth - iBoxPadding);
+    }
+
+    oShoutBox.scrollContent();
+
+    $(document).ready(function () {
+        oShoutBox.getMessages();
+    });
+</script>

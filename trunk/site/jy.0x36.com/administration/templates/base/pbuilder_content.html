@@ -1,0 +1,68 @@
+<div id="buildZoneWrapper">
+	__selector__
+	<bx_if:page>
+    	<div id="buildAreasWrapper">
+    		<div class="block_head"><bx_text:_adm_txt_pb_page_width /></div>
+    		<div class="block_cont_nd">
+    			<div id="pageWidthValue"></div>
+    			<div id="pageWidthSlider"></div>
+    			<div class="clear_both"></div>
+    		</div>
+    		<div class="block_head"><bx_text:_adm_txt_pb_active_blocks /></div>
+    		<div class="block_cont" id="activeAreaWrapper">
+    			<div id="pageControls">
+                    <bx_if:delete_link>
+                        <a href="javascript:void(0)" onclick="oPB.deleteCustomPage()"><bx_text:_Delete /></a>
+                    </bx_if:delete_link>
+                    <bx_if:view_link>
+                        <a href="__site_url__page/__page_name__" target="_blank"><bx_text:_adm_txt_pb_view_page /></a>
+                    </bx_if:view_link>
+    			</div>
+    			
+    			<div id="activeBlocksArea" class="buildArea">
+    				<bx_text:_adm_txt_pb_loading />
+    			</div>
+    		</div>
+    		
+    		<div id="columnsSlider"></div>
+    
+    		<div class="block_head"><bx_text:_adm_txt_pb_inactive_blocks /></div>
+    		<div class="block_cont">
+    			<div id="inactiveBlocksArea" class="buildArea">
+    				<bx_text:_adm_txt_pb_loading />
+    			</div>
+    		</div>
+    		
+    		<div class="block_head"><bx_text:_adm_txt_pb_samples /></div>
+    		<div class="block_cont">
+    			<div id="samplesBlocksArea" class="buildArea">
+    				<bx_text:_adm_txt_pb_loading />
+    			</div>
+    		</div>
+    		
+    		<div class="block_head"><bx_text:_adm_txt_pb_other_pages_width /></div>
+    		<div class="block_cont_nd">
+    			<div id="pageWidthValue1"></div>
+    			<div id="pageWidthSlider1"></div>
+    			<div class="clear_both"></div>
+    		</div>
+    	</div>
+    	
+    	<script language="javascript" type="text/javascript">
+    	<!--
+            $(document).ready(function(){
+                oPB = new BxDolPageBuilder({
+                    parser: '__parser_url__',
+                    page: '__page_name__',
+                    minCols: 1,
+                    maxCols: 4,
+                    pageWidthMin: __page_width_min__,
+                    pageWidthMax: __page_width_max__,
+                    pageWidth: '__page_width__',
+                    otherPagesWidth: '__main_width__'
+                });
+            });
+        -->
+    	</script>
+    </bx_if:page>
+</div>

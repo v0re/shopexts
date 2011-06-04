@@ -1,0 +1,16 @@
+<select name="Classified" id="Classified" onchange="AjaxyAskForSubcatsWithInfo('SubClassified', this.value, 'custom_values');">
+	<option value="-1"><bx_text:_Choose /></option>
+	<option value="-1">----------</option>
+	__sCatOptions__
+</select>&nbsp;&nbsp;&nbsp;&nbsp;
+<select class="size20" name="IDClassifiedsSubs" id="SubClassified" style="">__sSubsRows__
+</select>
+__sScriptHandle__
+
+<hr />
+<span id="ad_CustomFieldCaption1"><bx_text:_bx_ads_Custom_Values /></span>
+<span id="custom_values">__sCustomValues__</span>
+
+<bx_if:cat_warning>
+    <img class="warn" float_info="<bx_text:_bx_ads_category_warn />" src="<bx_icon_url:exclamation.png />" alt="error" style="display:block;" />
+</bx_if:cat_warning>

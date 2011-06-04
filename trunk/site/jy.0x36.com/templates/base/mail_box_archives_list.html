@@ -1,0 +1,34 @@
+<script type="text/javascript">
+	var sContacts_mode  = '__contacts_mode__';
+	var iMessageId		= __message_id__;
+
+	// create the object;
+	oMailBoxArchive = new MailBoxArchive();
+</script>
+<div class="contacts_container">
+	<table cellspacing="1" cellpadding="0" border="0">
+		<bx_repeat:messages>
+			<tr>
+				<td>
+					<div class="checkboxes_block">
+						<input type="checkbox" name="messages[]" value="__message_id__" owner="__message_owner__" >
+					</div>
+					__member_icon__
+					<div class="information_block">
+						<div class="member_link">
+							<b>__message_subject__</b>
+						</div>	
+						<div>
+							__message_date__
+						</div>
+						<div class="clear_both"></div>
+					</div>
+					<div class="images_block">
+						<img src="__message_new_src__" alt="new message" >
+					</div>
+					<div class="clear_both"></div>
+				</td>
+			</tr>
+		</bx_repeat:messages>
+	</table>
+</div>

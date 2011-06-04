@@ -1,0 +1,186 @@
+<?php
+/***************************************************************************
+*                            Dolphin Smart Community Builder
+*                              -------------------
+*     begin                : Mon Mar 23 2006
+*     copyright            : (C) 2007 BoonEx Group
+*     website              : http://www.boonex.com
+* This file is part of Dolphin - Smart Community Builder
+*
+* Dolphin is free software; you can redistribute it and/or modify it under
+* the terms of the GNU General Public License as published by the
+* Free Software Foundation; either version 2 of the
+* License, or  any later version.
+*
+* Dolphin is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU General Public License for more details.
+* You should have received a copy of the GNU General Public License along with Dolphin,
+* see license.txt file; if not, write to marketing@boonex.com
+***************************************************************************/
+require_once( BX_DIRECTORY_PATH_ROOT . 'templates/tmpl_' . $GLOBALS['tmpl'] . '/scripts/BxTemplSearchResultText.php');
+require_once( BX_DIRECTORY_PATH_CLASSES . 'BxDolPaginate.php' );
+require_once( 'BxPollModule.php' );
+
+class BxPollSearch extends BxTemplSearchResultText 
+{
+    var $oPollObject;
+    var $aModule;
+
+    /**
+     * Class constructor ;
+     */
+    function BxPollSearch($oPollObject = null) 
+    {
+        // call the parent constructor ;
+        parent::BxTemplSearchResultText();
+
+        if(!$oPollObject) {
+            $this -> oPollObject = BxDolModule::getInstance('BxPollModule');
+        }
+        else {
+            $this -> oPollObject = $oPollObject;
+        }
+
+        // init some needed db table's fields ;
+
+        /* main settings for shared modules
+		   ownFields - fields which will be got from main table ($this->aCurrent['table'])
+           searchFields - fields which using for full text key search
+           join - array of join tables
+                join array (
+                    'type' - type of join
+                    'table' - join table
+                    'mainField' - field from main table for 'on' condition
+                    'onField' - field from joining table for 'on' condition
+                    'joinFields' - array of fields from joining table 
+                ) 
+		*/
+
+        $this -> aCurrent = array (
+
+            // module name ;
+            'name'  => 'poll',
+            'title' => '_bx_polls',
+            'table' => $this -> oPollObject -> _oDb -> sTablePrefix . 'data',
+
+            'ownFields'     => array('id_poll', 'poll_question', 'poll_answers', 'poll_date'),
+            'searchFields'  => array('poll_question', 'poll_answers', 'poll_tags', 'poll_categories'),
+
+            'join' => array(
+            'profile' => array(
+                    'type' => 'left',
+                    'table' => 'Profiles',
+                    'mainField' => 'id_profile',
+                    'onField' => 'ID',
+                    'joinFields' => array('NickName'),
+                )
+            ),
+
+            'restriction' => array (
+                'activeStatus' => array('value'=>'active', 'field'=>'poll_status', 'operator'=>'='),
+                'approvalStatus' => array('value'=>'1', 'field'=>'poll_approval', 'operator'=>'='),
+                'tag' => array('value'=>'', 'field'=>'poll_tags', 'operator'=>'against', 'paramName'=>'tag'),
+                'category' => array('value'=>'', 'field'=>'poll_categories', 'operator'=>'against', 'paramName'=>'categoryUri'),
+                'owner' => array('value'=>'', 'field'=>'id_profile', 'operator'=>'=', 'paramName'=>'userID'),
+                'featured' => array('value'=>'', 'field'=>'poll_featured', 'operator'=>'='),
+                'unfeatured' => array('value'=>'', 'field'=>'poll_featured', 'operator'=>'='),
+                'my'       => array('value'=>'', 'field'=>'id_profile', 'operator'=>'='),
+                'calendar-min' => array('value' => "", 'field' => 'poll_date', 'operator' => '>=', 'no_quote_value' => true),
+                'calendar-max' => array('value' => "", 'field' => 'poll_date', 'operator' => '<=', 'no_quote_value' => true),
+                'allow_view' => array('value' => "", 'field' => 'allow_view_to', 'operator' => 'in'),
+            ),
+
+            'paginate' => array( 'perPage' => 6, 'page' => 1, 'totalNum' => 10, 'totalPages' => 1),
+            'sorting' => 'last',
+            'view' => 'full',
+            'ident' => 'id_poll'
+        );
+    }
+
+    /**
+     * Function will generate poll block ;
+     *
+     * @return : (text) - Html presentation data ;
+     */
+    function displaySearchUnit($aData)
+    {
+        $sOutputHtml =  $this -> oPollObject -> getPollBlock($aData);
+        return $sOutputHtml;
+    }
+
+    /**
+     * Function will generate searched result;
+     *
+     * @return : (text) - Html presentation data ;
+     */
+    function displaySearchBox ($sCode, $sPaginate = '') 
+    {
+        // generate the init poll's part ;
+        $sInitSection =  $this -> oPollObject -> getInitPollPage(false);
+
+        if (isset($this->aCurrent['rss']) && $this->aCurrent['rss']['link'])
+            $aCaptionMenu = '<div class="dbTopMenu"><div class="notActive notActiveIcon" style="background-image:url('.getTemplateIcon('rss.png').')"><a target="_blank" class="top_members_menu" href="' . $this->aCurrent['rss']['link'] . (false === strpos($this->aCurrent['rss']['link'], '?') ? '?' : '&') . 'rss=1">' . _t('RSS') . '</a></div></div>';
+	    $sCode = DesignBoxContent(_t($this->aCurrent['title']), $sCode. $sPaginate, 1, $aCaptionMenu);
+	    if (!isset($_POST['searchMode'], $_GET['searchMode']))
+            $sCode = '<div id="page_block_'.$this->id.'">'.$sCode.'<div class="clear_both"></div></div>';
+
+        // include css file ;
+        $sCssStyles = $this -> oPollObject -> _oTemplate -> addCss('main.css', true);
+        
+        return $sCssStyles . $sInitSection . $sCode;
+	}
+	
+	function _getPseud () {
+        
+	}
+
+    function getAlterOrder () 
+    {
+        $aSql = array();
+        switch($this->aCurrent['sorting']) {
+            case 'popular' :
+                $aSql['order'] = " ORDER BY `poll_rate` DESC";
+            break;
+
+            case 'last' :
+                $aSql['order'] = " ORDER BY `poll_date` DESC";
+            break;
+
+            default;
+                $aSql['order'] = " ORDER BY `poll_rate_count` DESC";
+            break;
+        }
+
+        return $aSql;
+    }
+
+    function showPagination($sModulePath = null) 
+    {
+        $aParameters['settings'] = array(
+            'count'             => $this -> aCurrent['paginate']['totalNum'],
+            'per_page'          => $this -> aCurrent['paginate']['perPage'],
+            'page'              => $this -> aCurrent['paginate']['page'],
+            'per_page_changer'  => true,
+            'page_reloader'     => true,
+        );
+
+        //define some pagination parameters;
+        if(!$sModulePath) {
+            $aLinkAddon = $this -> getLinkAddByPrams();
+            $aParameters['settings']['page_url']            = $this -> getCurrentUrl('browseAll', 0, '');
+            $aParameters['settings']['on_change_page']      = 'return !loadDynamicBlock(' . $this -> id . ', \'searchKeywordContent.php?searchMode=ajax&section[]=' . $this -> aCurrent['name'] . '&keyword=' . rawurlencode($_REQUEST['keyword']) . $aLinkAddon['params'] . '&page={page}&per_page={per_page}\');';
+            $aParameters['settings']['on_change_per_page']  = 'return !loadDynamicBlock(' . $this -> id . ', \'searchKeywordContent.php?searchMode=ajax&section[]=' . $this -> aCurrent['name'] . '&keyword=' . rawurlencode($_REQUEST['keyword']) . $aLinkAddon['params'] . '&page=1&per_page=\' + this.value);';
+        }
+        else {
+            $aParameters['settings']['page_url']            = $sModulePath . '&page={page}&per_page={per_page}';
+            $aParameters['settings']['on_change_page']      = null;
+            $aParameters['settings']['on_change_per_page']  = null;
+        }
+
+        $oPaginate = new BxDolPaginate( array_shift($aParameters) );
+        $sPaginate = '<div class="clear_both"></div>' . $oPaginate -> getPaginate();
+ 
+        return $sPaginate;
+    }
+}

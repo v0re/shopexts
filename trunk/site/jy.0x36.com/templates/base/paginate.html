@@ -1,0 +1,34 @@
+<div class="paginate">	
+    <bx_if:info>
+		<div class="info">
+			__from__-__to__ <span>__of__</span> __total__
+		</div>
+	</bx_if:info>
+	<bx_if:view_all>
+        <div class="view_all" style="background-image:url(__img_src__)">            
+            <a href="__lnk_url__" title="__lnk_title__">__lnk_content__</a>
+        </div>
+	</bx_if:view_all>
+	<bx_if:reloader>
+        <div class="reloader">
+            <div class="paginate_btn" style="background-image:url(__btn_img_src__)">
+                <a href="__lnk_url__" title="__lnk_title__" __lnk_on_click__>
+                    <img src="__img_src__" alt="__img_title__" alt="__img_title__"/>
+                </a>
+            </div>
+        </div>
+    </bx_if:reloader>
+    <bx_if:per_page>
+    	<div class="per_page">
+            __per_page_caption__&nbsp;
+            <select name="per_page" onchange="__per_page_on_change__">
+                <bx_repeat:options>
+                    <option value="__opt_value__" __opt_selected__>__opt_caption__</option>
+                </bx_repeat:options>
+            </select>
+    	</div>
+    </bx_if:per_page>
+
+	<div class="pages_section">__content__</div>
+	<div class="clear_both"></div>
+</div>

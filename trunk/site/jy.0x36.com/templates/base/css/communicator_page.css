@@ -1,0 +1,182 @@
+.dbContent 
+{
+    margin:0px;
+}
+
+div.top_settings_block 
+{
+    background-color:#EDEDED;
+    height:30px;
+    /*position:relativ_e;*/
+    width:100%;
+}
+
+div.top_settings_block div.left_section 
+{
+    color:#666666;
+    float:left;
+    font-size:11px;
+    padding-left:5px;
+    padding-top:5px;
+    /*position:relativ_e;*/
+}
+
+div.top_settings_block div.right_section 
+{
+    color:#666666;
+    float:right;
+    font-size:11px;
+    padding-right:5px;
+    padding-top:5px;
+    /*position:relativ_e;*/
+}
+
+div.communicator_container
+{
+    padding:10px;
+}
+
+div.communicator_container table
+{
+    background-color:#DCDCDC;
+    width:100%;
+    border:none;
+}
+
+div.communicator_container table td,
+div.communicator_container table tr
+{
+    border:none;
+}
+
+div.communicator_container table table td
+{
+    height:auto !important;
+}
+
+div.communicator_container table tr.filled 
+{
+    background-color:#EDF1FB;
+}
+
+div.communicator_container table tr.not_filled 
+{
+    background-color:#FFFFFF;
+}
+
+div.communicator_container table td 
+{
+    height:49px;
+    overflow:hidden;
+    padding:5px;
+}
+
+
+div.communicator_container table th.toggle_up 
+{
+    background-image:url(../images/icons/toggle_up.png);
+    background-position:right center;
+    background-repeat:no-repeat;
+}
+
+div.communicator_container table th.toggle_down 
+{
+    background-image:url(../images/icons/toggle_down.png);
+    background-position:right center;
+    background-repeat:no-repeat;
+}
+
+div.communicator_container table th.action_section 
+{
+    background-color:#F5F7FA;
+    cursor:pointer;
+    font-weight:bold;
+    height:30px;
+}
+
+div.communicator_container table th.type_section 
+{
+    background-color:#F5F7FA;
+    font-weight:bold;
+    height:30px;
+}
+
+div.communicator_container table th.inputs_section 
+{
+    width:20px;
+}
+
+div.communicator_container table th.date_section 
+{
+    text-align:center;
+}
+
+div.communicator_container table td.input_el_section 
+{
+    width:20px;
+}
+
+div.communicator_container table td.type_section 
+{
+    font-family:Arial;
+    font-size:11px;
+    text-align:center;
+}
+
+div.communicator_container table td.member_section 
+{
+    font-family:Arial;
+    font-size:11px;
+    overflow:hidden;
+    vertical-align:middle;
+    white-space:nowrap;
+    width:200px;
+}
+
+div.communicator_container table td.member_section  div.info 
+{
+    float:none;
+    margin-left:45px;
+    /*position:relativ_e;*/
+}
+
+div.communicator_container table td.member_section  div.info  img
+{
+    vertical-align:text-top;
+}
+
+div.communicator_container table td.member_section  div.info  div.member_link 
+{
+    padding-bottom:5px;
+}
+
+div.communicator_container table td.member_section  div.info  div.member_link  a:link,
+div.communicator_container table td.member_section  div.info  div.member_link  a:visited,
+div.communicator_container table td.member_section  div.info  div.member_link  a:hover,
+div.communicator_container table td.member_section  div.info  div.member_link  a:active
+{
+	/*font-size:11px;
+	font-family:Arial;*/
+	font-weight:bold;
+}
+
+div.communicator_container table td.date_section 
+{
+    font-family:Arial;
+    font-size:11px;
+    text-align:center;
+}
+
+div.communicator_container table td.bottom_actions 
+{
+    background-color:#F5F7FA;
+    color:#707070;
+    font-size:11px;
+    height:26px;
+    text-align:right;
+}
+
+div.communicator_container table td.bottom_actions .input_wrapper
+{
+    float:right;
+}

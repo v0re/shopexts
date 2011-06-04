@@ -1,0 +1,21 @@
+/* redeckaration  settings from another files*/
+.boxContent .votes_small {
+	float: none;
+	/*position:relativ_e;*/
+	width: auto;
+}
+.dbContent {
+	margin: 5px;
+}
+
+.searchContentBlock {
+    margin: 5px auto;
+}
+
+#searchArea {
+    margin: 10px auto;
+}
+
+#searchForm {
+    margin: 10px;
+}

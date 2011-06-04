@@ -1,0 +1,281 @@
+	div#Featured div.db_1_block div.container
+	{
+		overflow:hidden;
+		min-height:10px;
+	}
+
+	/*------------------*/
+
+	div.top_rated_head
+	{
+		color:#3B3B3B;
+		font-weight:normal;
+		text-align:left;
+		margin-bottom:1px;
+	}
+
+	div.rate_block_position
+	{
+		height:auto;
+		top:3px;     
+		padding:0;
+	}
+	div.rate_block_position .votes_small
+	{
+		float:none;
+		width:70px;
+		margin:0;           
+	}
+	div.rate_block_position .votes_small .votes_gray_small
+	{
+		float:none;
+	}
+	div.rate_block_position .votes_small b
+	{
+		float:none;
+		text-align:center;
+	}    
+
+	/*------------------*/
+	div.logged_section_block
+	{
+		height:35px;
+		border:0px solid red;
+		padding-top:0px;
+		padding-left:3px;
+		font-size:13px;
+		font-weight:bold;
+		text-align:center;
+	}
+	div.logged_section_block div
+	{
+		float:left;
+		height:20px;
+		line-height:20px;
+		vertical-align:middle;
+		border:0px solid red;
+		margin-top:9px;
+		margin-right:5px;
+	}
+
+	/*------------------*/
+
+	#indexPhotoBorder {
+		border: 1px solid #cccccc;
+		margin-bottom:11px;
+		position:relative;/*keep*/
+	}
+
+	#indexPhotoBorder div.sys-notifications {
+		top:0px;
+		height:81px;
+	}
+
+	#indexPhotoBorder .jl {
+		position:absolute;
+		right:0;
+		top:0px;
+		/*margin-top:22px;*/
+	}
+
+	#indexPhotoLabel {
+		height:82px;
+		line-height:82px;
+		position:absolute;
+		bottom:0px;
+		width:100%;
+		z-index:1;
+		background:transparent url(../images/opSplash.png) repeat-x scroll left top;
+	}
+
+	#indexPhotoLabel div.sys_title, 
+	#indexPhotoLabel div.label_thumb {
+		font-size:24px;
+		color:#333;
+		font-weight:bold;
+		text-shadow:0 1px 0 #FFFFFF;
+		letter-spacing: -0.02em;
+	}
+	#indexPhotoLabel div.label_thumb {
+		padding-left:10px;
+		position:relative;
+		float:left;
+	}
+	
+	#indexPhotoLabel div.label_thumbnail {
+		padding-left:11px;
+		padding-top:7px;
+		position:relative;
+		float:left;
+	}
+	div.sys_title {
+	   height: 82px;
+	   max-width: 680px;
+
+	   text-indent: 30px;
+	   overflow: hidden;
+	}
+	div.sys_promo {
+        bottom: 0px;
+        right: 0px;
+
+        position: absolute;
+
+        line-height: 0px;
+	}
+	div.sys_promo div.sys_tm_actions {
+	   margin: 0px 30px 20px 0px;
+	   float: none;
+	}
+
+	.bodyBlock {
+		padding-top:10px;
+	}
+
+	#indexPhoto
+	{
+		border: 1px solid #ffffff;
+		height: 262px;
+		overflow: hidden;
+		cursor: pointer;
+	}
+
+	#indexPhoto img {
+		position: absolute;
+	}
+
+	/*h2.pageHeader {
+		display: none;
+	}*/
+
+	.promo_code_wrapper
+	{
+		border:1px solid #ccc;
+		margin-bottom:10px;
+		padding:10px;
+	}
+
+	/*##############################################################*/
+
+	.sys_download_unit {
+		background-position:0 0; 
+		background-repeat:no-repeat; 
+		margin:0px 10px 10px 5px;
+		min-height:56px; 
+		padding-left:63px;   
+	}
+
+	.boxContent>.sys_download_unit:first-child {
+		margin-top:10px;
+	}
+
+	.sys_download_unit>div>a {
+		font-size:12px;
+		font-weight:bold;
+	}
+
+	/*##############################################################*/
+
+	div#prof_of_year,
+	div#prof_of_month,
+	div#prof_of_week,
+	div#prof_of_day
+	{
+		width:70px;
+		margin:5px;
+		left:0px;
+		float:left;
+	}
+
+	div#prof_of_year .votes_small .votes_gray_small ,
+	div#prof_of_month .votes_small .votes_gray_small ,
+	div#prof_of_week .votes_small .votes_gray_small ,
+	div#prof_of_day .votes_small .votes_gray_small {
+		margin:0px auto;
+	}
+
+	div#prof_of_year .votes_small b ,
+	div#prof_of_month .votes_small b ,
+	div#prof_of_week .votes_small b ,
+	div#prof_of_day .votes_small b {
+		margin:0px auto;
+	}
+
+	div.rate_block_position
+	{
+		margin-top:3px;
+		margin-bottom:0px;
+	}
+
+	div.top_rated_nick
+	{
+		text-align:center;
+	}
+
+	.top_rated_head .sex_icon {
+		float:left;width:20px;height:26px;
+	}
+	.top_rated_head .type_vote {
+		float:left;
+	}
+
+	div.featured_block_1
+	{
+		float:left;
+		border:none;
+		margin:5px;
+        position:relative;
+	}
+	div.featured_block_2
+	{
+		float:left;
+		border:none;
+		margin:0px 0px 7px;
+	}
+	div.featured_block
+	{
+		margin:0px 2px 7px 2px;
+		float:left;
+		border:none;
+	}
+
+	* html div.featured_block
+	{
+		margin:3px 0px;
+	}
+
+	/* * * *  * * */
+
+	.siteStatMain {
+		font-size: 11px;
+		margin-left:5px;
+		margin-right:5px;
+		margin-top:10px;
+		margin-bottom:10px;
+	}
+
+	.siteStatUnit
+	{
+		float: left;
+		width: 50%;
+		margin-bottom:5px;
+		font-family:Verdana;
+		font-size:11px;
+		text-transform:lowercase;
+	}
+
+	.siteStatUnit img
+	{
+		width: 16px;
+		height: 16px;
+		vertical-align:middle;
+		padding-right:5px;
+	}
+
+	div.dbContent {
+		margin:4px;
+	}
+
+	a.vacant {
+		color:#999;
+	}

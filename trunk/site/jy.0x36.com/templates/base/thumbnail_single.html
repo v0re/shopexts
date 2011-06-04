@@ -1,0 +1,11 @@
+<div class="thumbnail_block" style="float:__sys_thb_float__;width:__sys_thb_width__px;height:__sys_thb_height__px;">
+	<div class="thumbnail_image" style="width:__sys_img_width1__px;height:__sys_img_height1__px;">
+		<a href="__usr_profile_url__" onmouseover="javascript:startUserInfoTimer( __iProfId__, $(this).find('.sys-online-offline:first') )" onmouseout="javascript:stopUserInfoTimer(__iProfId__)">
+			<img src="<bx_image_url:spacer.gif />" style="background-image:url(__usr_thumb_url0__);" width="__sys_img_width__" height="__sys_img_height__" alt="__usr_thumb_title0__" title="__usr_thumb_title0__" />
+			<img src="__sys_status_url__" alt="__sys_status_title__" title="__sys_status_title__" class="sys-online-offline" onclick="showFloatUserInfo(__iProfId__, $(this)); return false;" width="__sys_status_img_width__" height="__sys_status_img_height__" />
+		</a>
+	</div>	
+</div>
+<bx_if:profileLink>
+    <div class="thumb_username" style="width:__picWidth__px;"><a href="__usr_profile_url__">__nickName__</a></div>
+</bx_if:profileLink>

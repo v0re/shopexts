@@ -1,0 +1,18 @@
+
+.bx_store_unit {
+    position:relative;
+    height: 223px;
+}
+
+.bx_store_unit .sys_file_search_pic {
+    height: 148px;
+}
+
+.bx_store_unit .sys_file_search_pic img {
+    height: 140px;
+}
+
+.bx_store_unit .sys_file_search_size {
+    color:green;
+    margin:2px 0px;
+}

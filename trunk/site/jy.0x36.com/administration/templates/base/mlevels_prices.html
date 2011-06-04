@@ -1,0 +1,36 @@
+<form id="adm-mlevels-prices-form" enctype="multipart/form-data" method="post" action="" class="form_advanced">
+    <a id="prices__id__"></a>
+    <input type="hidden" name="level" value="__id__" />
+    <div class="adm-db-control-panel">
+        <div class="adm-mlevels-ap-label">
+            <bx_text:_adm_txt_mlevels_price_add_days />
+        </div>
+        <div class="input_wrapper input_wrapper_text adm-mlevels-ap-input">
+            <input type="text" name="days" value="" class="form_input_text" />
+            <div class="input_close input_close_text">&nbsp;</div>
+        </div>
+        <div class="adm-mlevels-ap-label">
+            <bx_text:_adm_txt_mlevels_price_add_price />
+        </div>
+        <div class="input_wrapper input_wrapper_text adm-mlevels-ap-input">
+            <input type="text" name="price" value="" class="form_input_text" />
+            <div class="input_close input_close_text">&nbsp;</div>
+        </div>
+        <div class="adm-mlevels-ap-btn">
+            <div class="button_wrapper">
+                <input type="submit" value="<bx_text:_adm_btn_mlevels_add_price />" name="adm-mlevels-prices-add" class="form_input_submit" />
+                <div class="button_wrapper_close">&nbsp;</div>
+            </div>
+        </div>
+        <div class="clear_both">&nbsp;</div>
+    </div>
+    <div class="adm-mlevels-items">
+        <bx_repeat:items>
+            <div class="adm-mlevels-item">
+                <input type="checkbox" class="form_input_checkbox" id="adm-mlevels-__id__" name="prices[]" value="__id__" />
+                <label for="adm-mlevels-__id__">__title__</label>
+            </div>
+        </bx_repeat:items>
+    </div>
+    __controls__
+</form>

@@ -1,0 +1,497 @@
+@import url(../../../../templates/base/css/common.css);
+
+/*--- Body ---*/
+body {
+    background-color: #6d6d6d;
+}
+div#FloatDesc {
+	position:absolute;
+	display:none;
+	z-index:10000;
+	background-color:#ffffe0;
+	border:1px solid #000000;
+	padding:3px;
+	width:180px;
+}
+
+form, p {
+	margin:0px;
+	padding:0px;
+}
+
+a img {
+	border:none;
+}
+
+.err {
+	color: #FF0000;
+}
+
+/*--- Top Header ---*/
+div.adm-header {
+    height: 87px;    
+
+	position: relative;	
+
+    border-bottom: 1px solid #c8c8c8;
+	background-image: url(../images/header_bg.png);
+	background-repeat: repeat-x;
+	background-position: 0px 0px;	
+}
+div.adm-header-content {
+    width: 500px;
+    margin: 0px auto;
+}
+
+img.adm-header-logo {	
+	top: 0px;
+	left: 0px;
+	width: 105px;
+	height: 116px;
+
+	position:absolute;
+}
+div.adm-header-title {
+    padding: 25px 0px 25px 110px;
+
+    position: relative;
+    float: left;
+    
+    line-height: 87px;    
+    font-family: Copperplate Gothic Bold;
+	font-size: 48px;
+	font-weight: bold;
+	color: #333333;
+}
+div.adm-header-verion {
+    top: 20px;
+    left: 148px;
+    width: 60px;
+    height: 10px;
+    position: absolute;
+    
+    line-height: 9px;
+    font-family: Verdana;
+    font-size:9px;
+}
+
+/*--- Top Menu ---*/
+div.adm-top-menu {
+    position: relative;
+    float: right;
+}
+div.adm-tm-item {
+    width: 100px;
+    height: 87px;
+
+    position: relative;
+    float: left;
+}
+div.adm-tm-item-active {
+    background-image: url(../images/tm_item_active_bg.png);
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+}
+div.adm-tm-item a {
+    width: 100px;
+    height: 87px;
+    margin: 0px;
+    padding: 0px;
+    
+    display: block;
+
+    text-decoration: none;
+    color: #333333;
+}
+
+div.adm-tm-item-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0px auto;
+    padding: 23px 0px 5px 0px;
+}
+div.adm-tm-item-icon img {
+    width: 32px;
+    height: 32px;
+}
+div.adm-tm-item-text {
+    text-align: center;
+    font-size: 9px;
+}
+
+/*--- Middle Part ---*/
+div.adm-middle {
+    padding: 30px 0px;
+    background-color: #ffffff;
+}
+table.adm-middle {
+    width: 900px;
+	margin: 0px auto;
+	padding: 0px;
+	
+	border: 0px;
+}
+td.adm-middle-menu {
+	width: 214px;
+	padding: 0px;
+	margin: 0px;
+	
+	border: 0px;
+
+	vertical-align: top;
+}
+td.adm-middle-main {
+    padding: 0px;
+	margin: 0px;
+
+	background-repeat: no-repeat;
+	background-position: 470px 0px;
+	vertical-align: top;
+}
+
+div.adm-page-header {
+    margin: 0px 0px 20px 34px;
+    
+	font-weight: bold;
+	font-size: 30px;
+}
+div.adm-page-content {
+	margin: 0px 0px 0px 34px;
+}
+
+/*--- Main Menu ---*/
+div.adm-main-menu {
+	width: 214px;
+}
+
+div.adm-menu-wrapper {
+    width: 214px;
+	margin-bottom: 15px;
+
+	position: relative;
+}
+div.adm-menu-header,
+div.adm-menu-header-active,
+div.menu_categ_hover_header {
+    height: 39px;
+	padding-left: 44px;
+
+	position: relative;
+	z-index: 5;	
+	
+	background-image: url( ../images/mm_item_bg.png );
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+
+	line-height: 35px;
+	font-size: 16px;
+	font-weight: bold;
+	color: black;	
+}
+div.adm-mmh-hover {
+	background-position: 0px -39px;
+}
+div.adm-mmh-active {
+	background-position: 0px -78px;
+}
+div.adm-mmh-opened {
+	background-position: 0px -117px;
+}
+
+div.adm-menu-header a,
+div.adm-menu-header a:link,
+div.adm-menu-header a:hover,
+div.adm-menu-header a:active,
+div.adm-menu-header a:visited {
+	color:#003399;
+	text-decoration:none;
+}
+
+img.adm-menu-icon {
+    top: -5px;
+	left: 7px;
+
+	position: absolute;	
+	z-index: 10;
+}
+
+img.adm-menu-arrow {
+    top: 11px;
+    right: 11px;
+    width: 17px;
+    height: 17px;
+    
+	position: absolute;
+	z-index: 5;	
+		
+	background-image: url(../images/mm_item_arrow_bg.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	
+	cursor:pointer;
+}
+img.adm-mma-opened {
+    background-position: 0px -17px;
+}
+
+div.adm-menu-items-wrapper {
+    margin: 0px 2px;
+    padding: 5px 0px;
+
+	border: 1px solid #ccc;
+	border-top: none;
+	
+	position: relative;
+	z-index: 1;
+	display: none;
+	
+	
+	font-size: 13px;	
+	color: black;
+}
+div.adm-mmi-opened {
+    display: block;
+}
+
+div.adm-menu-item-wrapper {
+    height: 26px;
+	padding-left: 33px;
+	
+	position: relative;
+
+    line-height: 26px;
+}
+
+div.adm-menu-item-wrapper a,
+div.adm-menu-item-wrapper a:link,
+div.adm-menu-item-wrapper a:hover,
+div.adm-menu-item-wrapper a:active,
+div.adm-menu-item-wrapper a:visited {
+	color: #003399;
+	text-decoration: none;
+}
+
+img.adm-menu-item-icon {
+    top: 5px;
+	left: 9px;
+	width: 16px;
+	height: 16px;
+	
+	position: absolute;	
+	z-index: 5;
+}
+
+
+/*--- Footer Part ---*/
+div.adm-footer {
+	position:relative;
+	height: 73px;	
+
+	background-color: #6e6e6e;
+	background-repeat: repeat-x;
+	background-image: url(../images/bottom_bord.gif);
+
+	font-size: 14px;
+	line-height: 20px;
+	color: #ffffff;
+}
+.adm-footer-logo {
+	position:absolute; 
+	top:20px; 
+	right:20px;
+}
+div.adm-footer-content {
+    padding: 20px 0px 0px 25px;
+}
+
+div.adm-footer a,
+div.adm-footer a:link,
+div.adm-footer a:visited,
+div.adm-footer a:hover,
+div.adm-footer a:active {
+	color:#ffffff;
+}
+
+
+/*--- DesignBox ---*/
+div.adm-design-box {
+	margin-bottom: 10px;
+	
+	border: 1px solid #CCC;
+	background-image: url(../images/head_bg.gif);
+	background-repeat: repeat-x;
+	background-color: #fff;
+}
+div.adm-db-head {
+	height: 28px;	
+	position: relative;
+	border-bottom: 1px solid #ccc;
+
+	line-height: 28px;
+	text-indent: 10px;
+	text-align: left;
+	text-transform: capitalize;
+	
+	font-size: 12px;	
+	font-weight: bold;
+	font-family: Verdana,Arial;
+	color: #333;		
+}
+div.adm-db-content {
+	padding: 1px;
+	font-size: 11px;
+}
+div.adm-db-control-panel {
+    height: 30px;
+    
+    background-color: #ededed;
+    
+    line-height: 30px;
+    font-size: 11px;
+}
+div.adm-db-content-wrapper {
+	padding: 9px;
+	position: relative;
+}
+div.adm-design-box div.adm-db-head .dbTopMenu {
+    top: 0px;
+	right: 1px;
+
+	position: absolute;
+
+	text-transform: capitalize;
+	text-indent: 0px;
+	white-space: nowrap;
+
+	font-size: 11px;
+	font-weight: bold;
+	color: #333;
+}
+.dbTopMenu div.active, 
+.dbTopMenu div.notActive {
+	float: left;
+	padding: 0px 5px;
+	border-left: 0px solid #ccc;
+	height: 28px;
+	line-height: 28px;
+	position: relative;
+	font-weight: normal;
+}
+.dbTopMenu div a,
+.dbTopMenu div a:link,
+.dbTopMenu div a:hover,
+.dbTopMenu div a:active,
+.dbTopMenu div a:visited {
+	color: #666;
+	font-family:Verdana,Arial;
+	font-size:11px;
+}
+.dbTopMenu div.active {
+	background:transparent url(../images/head_ti_left.gif) no-repeat scroll 0%;
+	cursor:pointer;
+	display:block;
+	float:left;
+	height:28px;
+	line-height:28px;
+	padding:0pt 0pt 0pt 5px;
+}
+.dbTopMenu .active span {
+	background:transparent url(../images/head_ti_right.gif) repeat-y scroll right top;
+	display:block;
+	float:left;
+	height:28px;
+	padding:0pt 5px 0pt 0px;
+}
+div.adm-db-head div.notActiveIcon {
+	background-position: 0px 5px;
+	background-repeat: no-repeat;
+	padding-left: 18px;
+}
+div.adm-design-box div.adm-db-close {
+    width: 28px;
+    height: 28px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div.adm-design-box div.adm-db-close img {
+    width: 28px;
+    height: 28px;
+}
+table.popup_form_wrapper div.adm-design-box {
+    margin-bottom: 0px;
+}
+
+/* top settings */
+div.top_settings_block 
+{
+	background-color:#EDEDED;
+	height:30px;
+	width:100%;
+	color:#666666;
+}
+
+div.top_settings_block div.ordered_block 
+{
+	padding-top:5px;
+	padding-left:9px;
+	float:left;
+}
+
+div.top_settings_block div.per_page_block 
+{
+	padding-top:5px;
+	float:right;
+	padding-right:9px;
+}
+
+/* RSS feed block */
+
+.adm-db-content > .RSSAggrCont > .rss_feed_wrapper
+{
+    margin: 9px;
+}
+
+/* boonex promo block */
+
+.adm-boonex-promo {
+	margin-left:2px;
+}
+
+.adm-boonex-promo-head {
+	height:5px;
+	background-image:url(../images/bx-promo-head.png);
+	background-repeat:no-repeat;
+}
+
+.adm-boonex-promo-tail {
+	height:5px;
+	background-image:url(../images/bx-promo-tail.png);
+	background-repeat:no-repeat;
+}
+
+.adm-boonex-promo-cont {
+	background-image:url(../images/bx-promo-cont.png);
+	background-repeat:repeat-y;
+	padding:15px;
+	font-size:12px;
+}
+
+.adm-boonex-promo-cont a {
+	display:block;
+	font-weight:bold;
+}
+
+.sys-adm-active-0 {
+    color:#999;
+}
+
+.sys-adm-enabled {    
+    color:#fff;
+    background-color:#0b0;
+}
+
+.sys-adm-disabled {    
+    color:#fff;
+    background-color:#d00;
+}
+

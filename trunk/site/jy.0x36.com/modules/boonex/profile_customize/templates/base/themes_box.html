@@ -1,0 +1,18 @@
+
+<form name="__form_name__" id="custom_themes_form" method="POST">
+    <div class="" style="overflow: hidden;">
+        <bx_repeat:items>
+            <div class="thumb" onclick="oCustomizer.selectTheme(this, '__id__');">
+                <div class="thumb64" style="background-image: url(__thumbnail__);">
+                    <div class="radiobox">
+                        <input type="radio" name="theme" value="__id__" />
+                    </div>
+                    <img src="__spacer__"/>
+                </div>
+                <p>__name__</p>
+            </div>
+        </bx_repeat:items>
+    </div>
+    <input type="hidden" name="preview_url" id="preview_url" value="__preview_url__" />
+    <input type="hidden" name="save_url" id="save_url" value="__save_url__" />
+</form>

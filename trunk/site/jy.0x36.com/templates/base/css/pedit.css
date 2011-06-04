@@ -1,0 +1,23 @@
+.notice_text {
+	text-align:center;
+	color: green;
+	margin:10px;
+}
+
+.boxContent {
+    padding: 10px;
+}
+
+#edit_form_table {
+	width: auto;
+	margin: 0px auto;
+}
+
+#edit_form_table td.colspan {
+    text-align: center;
+}
+
+#edit_form_table tr.hidable {
+    /* hidden by default */
+    display: none;
+}

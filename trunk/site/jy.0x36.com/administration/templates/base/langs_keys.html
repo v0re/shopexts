@@ -1,0 +1,38 @@
+<form id="adm-keys-form" enctype="multipart/form-data" method="post" action="" class="form_advanced">
+    <div class="adm-db-control-panel">
+        <div class="adm-lk-look">
+            <bx_text:_adm_txt_langs_looks_for />
+        </div>
+        <div class="input_wrapper input_wrapper_text adm-lk-input-filter">
+            <input type="text" id="adm-langs-look-for" value="__filter_value__" class="form_input_text" onkeyup="$('#adm-langs-apply').attr('checked', '')" />
+            <div class="input_close input_close_text">&nbsp;</div>
+        </div>
+        <div class="adm-lk-chb-apply">
+            <input type="checkbox" id="adm-langs-apply" name="adm-langs-apply" onclick="javascript:onApply(this);" __filter_checked__ />
+            <label for="adm-langs-apply">
+                <bx_text:_adm_txt_langs_apply />
+            </label>
+        </div>
+        <div class="adm-lk-btn-new">
+            <div class="button_wrapper">
+                <input type="button" value="<bx_text:_adm_txt_langs_add_key />" name="adm-langs-add-key" class="form_input_submit" onclick="javascript:onCreate()" />
+                <div class="button_wrapper_close">&nbsp;</div>
+            </div>
+        </div>
+        <div class="clear_both">&nbsp;</div>
+    </div>
+    <div class="adm-lk-keys">
+        <bx_repeat:items>
+            <div class="adm-lk-key">
+                <input type="checkbox" class="form_input_checkbox" id="adm-lk-__id__" name="keys[]" value="__id__" />
+                __key__ (__category__) <a href="javascript:void(0)" onclick="javascript:onEditKey(__id__)"><bx_text:_adm_txt_langs_edit /></a>
+            </div>
+        </bx_repeat:items>
+    </div>
+    __control__
+</form>
+<script type="text/javascript" language="javascript">
+<!--
+    var sAdminUrl = '__url_admin__';
+-->
+</script>

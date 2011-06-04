@@ -1,0 +1,59 @@
+<bx_if:menu_position_bottom>
+<div class="control">
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_inbox.png />" alt="__go_inbox__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=inbox">__go_inbox__</a> (__inbox_count__)
+    </div>
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_sent.png />" alt="__go_outbox__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=outbox">__go_outbox__</a> (__outbox_count__)
+    </div>
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_compose.png />" alt="__go_compose__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=compose">__go_compose__</a> 
+    </div>
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_trash.png />" alt="__go_trash__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=trash">__go_trash__</a> (__trash_count__)
+    </div>
+</div>
+</bx_if:menu_position_bottom>
+<bx_repeat:new_message>
+<div class="extra_menu_list">
+    <table>
+        <tbody>
+            <tr>
+                <td class="icon">
+                    __thumbnail__
+                </td>
+                <td valign="top">
+                    <a href="__sender_link__" class="message">__sender_nick__</a>
+                    <div class="message_caption">
+                        <a href="<bx_url_root />mail.php?mode=view_message&messageID=__message_id__" class="msg_link">__msg_caption__</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</bx_repeat:new_message>
+<bx_if:menu_position_top>
+<div class="control">
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_inbox.png />" alt="__go_inbox__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=inbox">__go_inbox__</a> (__inbox_count__)
+    </div>
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_sent.png />" alt="__go_outbox__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=outbox">__go_outbox__</a> (__outbox_count__)
+    </div>
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_compose.png />" alt="__go_compose__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=compose">__go_compose__</a> 
+    </div>
+    <div>
+        <img src="<bx_icon_url:memeber_menu_sub_trash.png />" alt="__go_trash__" width="16" height="16" />
+        <a href="<bx_url_root />mail.php?mode=trash">__go_trash__</a> (__trash_count__)
+    </div>
+</div>
+</bx_if:menu_position_top>

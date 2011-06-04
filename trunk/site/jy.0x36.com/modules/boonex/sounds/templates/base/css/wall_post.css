@@ -1,0 +1,51 @@
+div.sh-music-wall-event {
+    margin-left: 25px;
+    
+    position: relative;    
+}
+div.sh-music-wall-caption {
+    height: 30px;
+    padding-left: 20px;
+    
+    position: relative;
+    
+    background-repeat: no-repeat;
+    background-position: 0px center;
+    
+    line-height: 30px; 
+}
+span.sh-music-wall-caption-owner {
+    font-weight: bold;
+}
+a.sh-music-wall-caption-link,
+a.sh-music-wall-caption-link:link {
+    text-decoration: none;
+}
+a.sh-music-wall-caption-link:hover,
+a.sh-music-wall-caption-link:active {
+    text-decoration: underline;
+}
+div.sh-music-wall-content {
+    position: relative;
+}
+div.sh-music-wall-comments {
+    padding-left: 0px;
+    
+    position: relative;
+    
+    font-size: 10px;
+}
+
+/*--- Overwrite default Comment styles ---*/
+div.sh-music-wall-comments div.cmts {
+    padding: 0px;
+    /*display: none;*/
+}
+div.sh-music-wall-comments div.cmt-reply {
+    padding: 0px;
+    /*display: none;*/
+}
+div.sh-music-wall-comments div.thumbnail_block {
+    left: -38px;
+    top: 1px;
+}

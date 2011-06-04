@@ -1,0 +1,55 @@
+.qsearch_wrapper
+{
+	padding:5px;
+}
+
+.qsearch_form
+{
+	text-align:center;
+	font-weight:bold;
+}
+
+.qsearch_label
+{
+	margin:5px;
+}
+
+.qsearch_notfound
+{
+	text-align:center;
+	font-weight:bold;
+	margin:10px;
+}
+
+
+.qsearch_row
+{
+	margin:5px;
+	border:1px solid silver;
+	background-color:#FFE;
+}
+
+.qsearch_thumb
+{
+	border:0px solid green;
+	float:left;
+	padding:3px;
+}
+
+.qsearch_info
+{
+	width:130px;
+	float:left;
+	margin:3px;
+	border:0px solid green;
+}
+
+.qsearch_actions
+{
+	border:0px solid green;
+	float:right;
+	padding-top:20px;
+	padding-right:3px;
+	text-align:center;
+	font-weight:bold;
+}

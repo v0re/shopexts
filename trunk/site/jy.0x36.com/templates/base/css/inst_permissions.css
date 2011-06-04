@@ -1,0 +1,16 @@
+	tr.head td {
+		background-color:#FFFFFF;
+		font-weight:bold;
+		height:17px;
+		padding:5px;
+		text-align:center;
+	}
+	tr.cont td {
+		height:15px;
+		padding:2px 5px;
+	}
+
+	.install_table (
+		background-color: silver;
+		border-width:0px;
+	}

@@ -1,0 +1,159 @@
+.blog_wrapper {
+    margin:0px 12px 15px;
+}
+
+.blog_author {
+    font-size:11px;
+    color:#999;
+    padding-top:2px;
+    padding-bottom:2px;
+    font-weight:normal;
+}
+
+.cls_categ_name a {
+    font-size:12px;
+}
+
+.cls_categ_name .blog_author {
+    font-size:11px;
+    color:#999;
+}
+
+.blogs_pages {
+    margin:4px;
+    text-align:center;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.blog_text {
+    font-size:11px;
+    TEXT-OVERFLOW: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-align:left;
+    overflow: hidden;
+    white-space: nowrap;
+    width:auto;
+}
+
+/**************************************************************/
+.cls_result_row {
+    margin-bottom:8px;
+}
+
+.clr3 {
+    color:#000000;
+    display:inline;
+}
+
+.cls_info_left {
+    float:left;
+    width:65%;
+    overflow:hidden;
+}
+
+.cls_info {
+    float:right;
+    width:34%;
+    overflow:hidden;
+}
+
+.margined {
+    margin-right:6px;
+}
+
+.cls_res_thumb {
+    float:left;
+}
+
+.cls_categ_name {
+    float:left;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.blog-cat-view,
+.blogs-view {
+    padding:10px 10px 0;
+}
+
+.blog_unit {
+    margin-bottom:10px;
+    position:relative; /*need to below*/
+}
+
+.blog_unit .thumbnail_block {
+    left:0;
+    position:absolute;
+    top:0;
+}
+
+.blog_unit .cls_res_thumb {
+    float:left;
+}
+
+.blog_unit .unit_info {
+    margin-left:48px;
+    min-height:38px;
+}
+
+.blog_unit .title {
+    font-size:12px;
+    margin-bottom:-3px;
+    width:85%;
+}
+
+.blog_unit .fr_small_gray_centered {
+    color:#999;
+    height:15px;
+    line-height:15px;
+    font-size:9px;
+    float:left;
+    overflow:hidden;
+    margin-bottom:5px;
+    vertical-align:middle;
+}
+
+.blog_unit .margined {
+    margin-right:5px;
+    line-height:18px;
+}
+
+.blog_unit .margined10 {
+    margin-right:10px;
+}
+
+.blog_unit .actions {
+    font-weight:bold;
+    font-size:12px;
+}
+
+.blog_unit div.votes_small {
+    position:absolute;right:0px;top:0px;width:auto;
+}
+
+.blog_unit .unit_info .browseCheckbox {
+    background-color:#FFCCCC;
+    height:20px;
+    left:1px;
+    float:left;
+    margin-right:5px;
+    top:1px;
+    width:20px;
+}
+
+.blog_posts_wrapper {
+    padding:4px 5px 0px 5px;
+}
+
+div.hidden {
+    display:none;
+}
+
+#bposts_box {
+    padding:8px 8px 0;
+}
+
+.CreateBlogForm_wrapper .input_wrapper_textarea {
+	width: 400px;
+}

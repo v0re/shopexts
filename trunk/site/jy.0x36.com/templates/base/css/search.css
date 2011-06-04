@@ -1,0 +1,21 @@
+	.form_advanced_wrapper {
+		margin: 5px 10px 10px;
+	}
+
+	.form_advanced_table {
+		margin-top: 5px;
+	}
+
+	div.searchrow_block {
+		height: auto;
+		min-height: 90px;	
+	}
+
+	div.searchrow_block_simple {
+		margin:0px;
+		padding-right:4px;
+	}
+
+	.block_rel_100 .searchrow_block .thumbnail_block {
+		margin:0px;
+	}

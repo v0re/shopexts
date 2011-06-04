@@ -1,0 +1,20 @@
+<!-- Design Box [ Start ] here  -->
+<div class="adm-design-box">
+	<div class="adm-db-head">__title__
+        <div class="dbTopMenu">
+            <bx_repeat:actions>
+                <div id="__id__-act" class="active" <bx_if:hide_active>style="display:none"</bx_if:hide_active>>
+                    __icon__
+                    <span __class__>__title__</span>
+                </div>
+                <div id="__id__-pas" class="notActive" <bx_if:hide_inactive>style="display:none"</bx_if:hide_inactive>>
+                    __icon__
+                    <a id="__id__" __class__ __href__ __target__ __on_click__>__title__</a>
+                </div>
+            </bx_repeat:actions>
+        </div>
+	</div>
+	<div class="adm-db-content">__content__</div>
+	__bottom_items__
+</div>
+<!-- Design Box [ End ] here  -->

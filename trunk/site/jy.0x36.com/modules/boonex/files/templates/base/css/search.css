@@ -1,0 +1,115 @@
+.bx_files_unit {
+    background: #F2F2FF;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.bx_files_left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.bx_files_pic {
+    background: center no-repeat #EDEDED;
+    border: 1px solid #CCCCCC;
+    width: 68px;
+    height: 68px;
+}
+
+.bx_files_spacer {
+    width: 64px;
+    height: 64px;
+}
+
+.bx_files_right {
+   margin-left: 80px;
+   height: 70px;
+   overflow: hidden;
+}
+
+.bx_files_header {
+    margin-top: 6px;
+}
+
+.bx_files_title {
+    float: left;
+    position: relative;
+    font-weight: bold;
+    font-size: 11px;
+	min-height: 15px;
+	max-height: 28px;
+    overflow: hidden;
+	white-space: nowrap;
+}
+
+.bx_files_rate {
+    float: left;
+    position: relative;
+}
+
+.bx_files_bottom {
+    margin-top: 5px;
+}
+
+.bx_files_desc {
+    font-size: 11px;
+    overflow: hidden;
+    text-align: left;
+    white-space: nowrap;
+    TEXT-OVERFLOW: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+.bx_files_from {
+    position: relative;
+    float: left;
+    font-size: 9px;
+}
+
+.bx_files_when {
+    position: relative;
+    float: left;
+    font-size: 9px;
+	margin-left: 2px;
+	color: #888888;
+    text-transform: lowercase;
+}
+
+.bx_files_unit_short {
+    margin: 8px 4px;
+    height: 36px;
+}
+
+.bx_files_unit_short_box {
+    position: relative;
+    float: left;
+    width: 36px;
+    height: 36px;
+}
+
+.bx_files_unit_short_text {
+    position: relative;
+    height: 36px;
+	overflow: hidden;
+    margin: 2px 0px 0px 2px;
+}
+
+.bx_files_unit_short_pic {
+    width: 32px;
+    height: 32px;
+    margin: 1px;
+}
+
+.sys_album_cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 140px;
+    height: 140px;
+}
+
+.sys_album_unit .bx_sys_unit_checkbox {
+	left: 7px;
+	top: 7px;
+}

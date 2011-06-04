@@ -1,0 +1,107 @@
+	div.header
+	{
+		/*position:relativ_e;*/
+		margin:2px 2px 5px 2px;
+		padding:0px 0px 0px 7px;
+		background-repeat:repeat-x;
+		background-color:#E4E4E4;
+		height:25px;
+		line-height:25px;
+		vertical-align:middle;
+		font-weight:bold;
+		text-transform:uppercase;
+	}
+	div.keeper
+	{
+		/*position:relativ_e;*/
+		padding:5px;
+	}
+	/*div.thumbnail_block
+	{
+		margin-left:auto;
+		margin-right:auto;
+	}*/
+
+	/* * * * Friend list * * * */
+
+	.friends_thumb_1
+	{
+		/*position:relativ_e;*/
+		float:left;
+		margin: 0px 7px 7px 0px;	
+	}
+
+	.friends_thumb_2
+	{
+		/*position:relativ_e;*/
+		float:left;
+		margin: 0px 0px 7px;
+	}
+
+	.browse_nick
+	{
+		/*position:relativ_e;*/
+		text-align:center;
+	}
+
+	.rate_scale
+	{
+		border:1px solid #939BB0;
+	}
+
+	.control_panel_table
+	{
+		padding-left:12px;
+	}
+
+	.siteStatUnit
+	{
+		/*position: relative;*/
+		float: left;
+		width: 33%;
+	}
+
+	.siteStatUnit img
+	{
+		width: 16px;
+		height: 16px;
+	}
+
+	/* * * * RSS Feed * * * */
+	.rss_item_header
+	{
+		padding-bottom:5px;
+	}
+
+	.rss_item_info span
+	{
+		margin-right:5px;
+		line-height:18px;		
+	}
+
+	.rss_item_info span img
+	{
+		vertical-align:middle;
+		margin-right:3px;
+	}
+
+	/* * * * Account Ñontrol Block * * * */
+	.account_control_table {
+		margin:2px 9px 2px 9px;
+	}
+
+	.account_control_tr {
+		height:24px;
+	}
+
+	.account_control_left {
+		text-transform:capitalize;
+		color:#999;
+		font-size:11px;
+		width:68px;
+	}
+
+	.account_control_right {
+		color:#333;
+		font-size:11px;
+	}

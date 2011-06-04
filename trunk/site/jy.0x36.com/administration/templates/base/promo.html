@@ -1,0 +1,33 @@
+<div class="adm-db-control-panel">
+    <div class="adm-bs-switcher">
+        <div class="input_wrapper input_wrapper_radio">
+            <input type="radio" __checked_image__ value="image" name="promo_type" class="form_input_radio" id="promo-chb-image" onclick="javascript:togglePromo(this);" />
+            <laber for="promo-chb-image"><bx_text:_adm_txt_settings_promo_image /></label>
+            <div class="input_close input_close_radio"></div>
+        </div>
+        <div class="input_wrapper input_wrapper_radio">
+            <input type="radio" __checked_text__ value="text" name="promo_type" class="form_input_radio" id="promo-chb-text" onclick="javascript:togglePromo(this);" />
+            <laber for="promo-chb-text"><bx_text:_adm_txt_settings_promo_text /></label>
+            <div class="input_close input_close_radio"></div>
+        </div>
+    </div>
+    <script type="text/javascript" language="javascript">
+    <!--
+        function togglePromo(oRadio) {
+            var aSwitcher = {text: 'image', image: 'text'};
+            
+            $('#promo-cnt-' + aSwitcher[$(oRadio).val()]).bx_anim('hide', 'fade', 'slow', function(){
+                $('#promo-cnt-' + $(oRadio).val()).bx_anim('show', 'fade', 'slow');
+            });
+        }        
+    -->
+    </script>
+</div>
+<div class="adm-db-content-wrapper">
+    <div id="promo-cnt-image" style="__style_image__">
+        __content_image__
+    </div>
+    <div id="promo-cnt-text" style="__style_text__">
+        __content_text__
+    </div>
+</div>

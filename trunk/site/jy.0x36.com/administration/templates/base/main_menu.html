@@ -1,0 +1,33 @@
+<div class="adm-main-menu">
+    <bx_repeat:items>
+        <div class="adm-menu-wrapper">
+            <div class="adm-menu-header __class__" onmouseover="$(this).addClass('adm-mmh-hover')" onmouseout="$(this).removeClass('adm-mmh-hover')">
+                <img src="__icon__" class="adm-menu-icon" />
+                <bx_if:collapsible>
+                    <img src="<bx_image_url:spacer.gif />" class="adm-menu-arrow __class__" onclick="javascript:adminMenuCollapse(this);" />
+                </bx_if:collapsible>
+                <bx_if:item-text>
+                    __title__
+                </bx_if:item-text>
+                <bx_if:item-link>
+                    <a href="__link__">__title__</a>
+                </bx_if:item-link>        
+            </div>
+            <bx_if:submenu>
+                <div id="adm-mmi-__id__" class="adm-menu-items-wrapper __class__">
+                    <bx_repeat:subitems>
+                        <div class="adm-menu-item-wrapper">
+                            <img src="__icon__" class="adm-menu-item-icon" />
+                            <bx_if:subitem-text>
+                                __title__
+                            </bx_if:subitem-text>
+                            <bx_if:subitem-link>
+                                <a href="__link__" __onclick__>__title__</a>
+                            </bx_if:subitem-link>
+                        </div>
+                    </bx_repeat:subitems>
+                </div>
+            </bx_if:submenu>
+        </div>
+    </bx_repeat:items>
+</div>

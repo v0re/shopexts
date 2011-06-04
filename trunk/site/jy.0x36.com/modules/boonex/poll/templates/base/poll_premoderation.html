@@ -1,0 +1,38 @@
+__init_js__
+__js_file__
+
+<form action="__action__" method="post" id="poll_form">
+    <bx_repeat:polls>
+    <div class="admin_poll_block">        <div class="link_section">
+            <div><b>__poll_info_c__</b></div>
+            <table width="100%">
+                <tr>
+                    <td>__poll_status_c__ :</td>
+                    <td align="right"><i>__appr_status__</i></td>
+                </tr>
+                <tr>
+                    <td>__is_featured__:</td>
+                    <td align="right"><i>__featured_status__</i></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><a href="__edit_src__">__edit_poll__</a></td>
+                </tr>
+            </table> 
+        </div>
+        <div class="admin_poll_section">
+            
+            <div class="admin_action __poll_status__">
+                <input type="checkbox" value="__poll_uid__" name="poll[]">
+            </div>
+            <label for="__profile_id__">
+                __poll__
+            </label>
+        </div>
+    </div>
+    __clear__
+    </bx_repeat:polls>
+    <div class="clear_both"></div>
+    <br /> 
+    __pagination__
+    __admin_panel__
+</form>

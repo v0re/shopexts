@@ -1,0 +1,37 @@
+<div id="wall-event-__post_id__" class="wall-event common">
+    <a name="wall-event-__post_id__"></a>
+    __author_thumbnail__
+    <table class="wall-balloon">
+        <tr class="wall-head">
+            <td class="wall-head-l">&nbsp;</td>
+            <td class="wall-head-m">
+                <a href="__author_url__" class="wall-author">__author_username__</a> __post_wrote__ <span class="wall-posted-ago">__post_ago__</span>
+            </td>
+            <td class="wall-head-r">&nbsp;</td>
+        </tr>
+        <tr class="wall-cont">
+            <td class="wall-cont-l">&nbsp;</td>
+            <td class="wall-cont-m">
+                <div class="wall-post-body">__post_content__</div>
+            </td>
+            <td class="wall-cont-r">&nbsp;</td>
+        </tr>
+        <tr class="wall-foot">
+            <td class="wall-foot-l">&nbsp;</td>
+            <td class="wall-foot-m">&nbsp;</td>
+            <td class="wall-foot-r">&nbsp;</td>
+        </tr>
+    </table>
+    <div class="wall-comments" id="wall-comment-__post_id__">
+        __comments_content__
+    </div>
+    <div class="wall-post-actions">
+        <bx_if:post_delete>
+            <div class="wall-post-action" style="background-image:url(<bx_icon_url:post_delete.png />)">
+                <a href="javascript:void(0)" onclick="javascript:__js_view_object__.deletePost(__post_id__);">
+                    <img src="<bx_image_url:spacer.gif />" title="__post_delete_txt__" />
+                </a>
+            </div>
+        </bx_if:post_delete>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.fileStatUnit {
+    margin: 10px;
+    text-align: center;
+}
+
+.fileStatCount {
+
+}
+
+.fileStatAdd {
+
+}
+
+.unit_checkbox {
+    position: absolute;
+    top: 1px;
+    width: 20px;
+}
+
+#btnCancel {
+    color:#333;
+}

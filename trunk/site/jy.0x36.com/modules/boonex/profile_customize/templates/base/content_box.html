@@ -1,0 +1,32 @@
+<bx_if:select_target>
+<div class="top_settings_block">
+    <div class="ordered_block">
+        __name_box__ <select name="__name_targets_box__" onchange="oCustomizer.reloadCustomizeBlock(this.value);">
+            <bx_repeat:targets>
+            <option value="__value__" __select__>__name__</option>
+            </bx_repeat:targets>
+        </select>
+    </div>
+</div>
+</bx_if:select_target>
+<div class="bx_sys_default_padding">
+    __content__
+    <div class="buttons_bar">
+        <bx_repeat:buttons>
+		    <div class="button_wrapper">
+		        <input class="form_input_submit" type="__btn_type__" name="__btn_name__" value="__btn_value__" onclick="__btn_action__" />
+		        <div class="button_wrapper_close"></div>
+		    </div>
+	    </bx_repeat:buttons>
+    </div>
+</div>
+<script type="text/javascript">
+    $.colorInput.defaults.cellSize = 10;
+    $.colorInput.defaults.hueWidth = 22;
+    $.colorInput.defaults.hideInput = false;
+    $.colorInput.defaults.hoverSelect = false;
+    $.colorInput.defaults.cancelOnClick = [];
+    $.colorInput.defaults.acceptCancelButtons = true;
+    $.colorInput.defaults.showLeft = false;
+    $("#profile_customize .input_wrapper_text").colorInput();
+</script>

@@ -1,0 +1,145 @@
+body,
+input {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	margin: 0px;
+	padding: 0px;
+}
+
+body{
+    background-color: #ffffff;
+}
+
+
+a img {
+	border: none;
+}
+
+.admin_login_wrapper {
+	background-image: url(../images/admin_login_bg.png);
+	background-repeat: no-repeat;
+	width: 680px;
+	height: 400px;
+	
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left:-340px;
+    margin-top:-146px;
+	
+	overflow: hidden;
+	
+	color: #333333;
+}
+
+.admin_login_wrapper a,
+.admin_login_wrapper a:link,
+.admin_login_wrapper a:visited
+{
+	color: #3333cc;
+	text-decoration: none;
+}
+
+.admin_login_wrapper a:hover,
+.admin_login_wrapper a:active
+{
+	text-decoration: underline;
+}
+
+.admin_login_icon {
+	width: 159px;
+	height: 200px;
+	float: right;
+	margin-right: 45px;
+	margin-top: 40px;
+	position: relative;
+}
+
+.admin_login_form_wrapper {
+	margin-top: 50px;
+	margin-left: 35px;
+}
+
+.admin_license_form_wrapper {
+	margin-left: 15px;
+	margin-top: 25px;
+}
+
+.admin_login_table td {
+	vertical-align: middle;
+}
+
+.admin_login_table td.value {
+	text-align: right;
+}
+
+#admin_password,
+#admin_username,
+#admin_login_license
+{
+	border: none;
+	background-image: url(../images/admin_login_input.png);
+	background-repeat: no-repeat;
+	width: 251px;
+	height: 23px;
+	background-color: transparent;
+	vertical-align: middle;
+	padding: 10px;
+}
+
+#admin_login_license {
+	background-image: url(../images/admin_login_input_long.png);
+	width: 484px;
+}
+
+#admin_login_remember {
+	width: 21px;
+	height: 21px;
+	vertical-align: middle;
+}
+
+.remember_me_row label
+{
+	vertical-align: middle;
+}
+
+#admin_login_form_submit {
+	width: 97px;
+	height: 31px;
+	color: #666666;
+	background-repeat: no-repeat;
+	background-image: url(../images/admin_login_button.png);
+	background-color: transparent;
+	border: none;
+	background-position: left top;
+	overflow: visible;
+}
+
+#admin_login_form_submit:hover {
+	background-position: left -33px;
+}
+
+#admin_login_form_submit:focus {
+	background-position: left -66px;
+}
+
+
+.admin_login_footers {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 54px;
+}
+
+.admin_login_footers .left_banner {
+	float: left;
+	position: relative;
+	margin-left: 30px;
+}
+
+.admin_login_footers .right_banner {
+	float: right;
+	position: relative;
+	margin-right: 30px;
+}

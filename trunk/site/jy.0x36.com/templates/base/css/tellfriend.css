@@ -1,0 +1,85 @@
+	body {
+		margin:0px;
+		padding:0px;
+	}	
+	form {
+		margin:0px;
+		padding:0px;
+	}		
+	.main {
+		border: 0px;
+	}	
+	.disignBoxFirst {
+		margin: 0px;
+	}	
+	.boxContent {		
+		text-align: center;
+		font-size: 11px;
+	}
+	.clear_both {
+		clear:both;
+		height:1px;
+		margin:0px;
+		padding:0px;
+		font-size:1px;
+		border:0px solid red;
+	}
+
+	div.invit_text
+	{
+		text-align:left;
+		line-height:18px;
+		margin-bottom:5px;
+	}
+	div.invite_form
+	{
+	}
+	div.invite_form div
+	{
+		margin:4px 0px;
+	}
+
+	div.no_result, div.action
+	{
+		border:1px solid #A0C238;
+		padding:1px;
+		margin:10px 0px;
+		width:80%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	div.no_result div, div.action div
+	{
+		background-color:#709812;
+		vertical-align:middle;
+		font-weight:bold;
+		color:#fff;
+		text-align:center;
+		margin:0px;
+		padding:0px;
+		line-height:20px;
+	}
+	div.err
+	{
+		border:1px solid #FF412D;
+		padding:1px;
+		margin:10px 0px;
+		width:80%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	div.err div
+	{
+		background-color:#FF412D;
+		vertical-align:middle;
+		font-weight:bold;
+		color:#fff;
+		text-align:center;
+		line-height:20px;
+	}
+
+	* html div.no_result div, * html div.action div, * html div.err div
+	{
+		line-height:normal;
+		padding:3px 0px;
+	}

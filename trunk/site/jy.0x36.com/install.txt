@@ -1,0 +1,342 @@
+Please, check this URL before installation: http://www.boonex.net/dolphin/wiki/ThingsToKnow
+
+
+== Brief Installation Overview ==
+
+These are quick instructions for those who already tried to install web scripts. More detailed instructions follow.
+
+   * Download and unzip the Dolphin package, if you haven't already.
+
+   * Create a database for Dolphin on your web server, as well as a MySQL user who will have all privileges for accessing and modifying it.
+
+   * Place the Dolphin files in the desired location on your web server::
+
+          If you want to install Dolphin in the root folder of your domain (e.g. http://mysite.com/), upload the unzipped files into the root directory of your web server.
+
+          If you want to have your Dolphin installation in its own subdirectory on your web site (e.g. http://mysite.com/mycommunity/), create the corresponding subdirectory under the root folder of your server and upload the unzipped files into that subdirectory.
+
+
+           			
+   * Run the Dolphin installation script by accessing install/index.php in your favorite web browser::
+
+          If you installed Dolphin in the root directory, you should visit: http://mysite.com/install/index.php
+
+          If you installed Dolphin in its own subdirectory called mycommunity, for example, you should visit: http://mysite.com/mycommunity/install/index.php
+	  
+	* Follow the instructions on the installation screen (setting permissions, inputting necessary info, setting cron jobs).
+	
+	Dolphin should be installed now. If you still doubt that the above instructions are not enough for you. You are welcome the page with [wiki:DetailedInstall detailed instructions].
+
+
+
+
+== Detailed installation instructions ==
+
+=== Step 1: Download and Extract ===
+
+[http://www.boonex.com/products/dolphin/download/ Download] and unzip the Dolphin package.
+
+    * If you are going to upload Dolphin to a remote web server, download it to your computer with your favorite web browser and unzip the package into some folder on your local computer.
+
+    * If you have shell access to your web server, you may wish to upload the Dolphin archive directly to your web server using an FTP client. This way, you will avoid FTPing multiple files which usually takes a long time.                    Then you will ba able to unzip the package under your shell account using the following command:
+{{{
+            unzip Dolphin-v.X.X Dolphin-v.X.X.zip
+}}}
+     
+ "v.X.X" stands for current latest version index. Thus, the Dolphin package will be extracted into the folder called Dolphin-v.X.X in the same directory where you have uploaded Dolphin-v.X.X.zip.
+
+
+=== Step 2: Create a Database and a User ===
+
+If your hosting provider has cPanel, you can follow these instructions to create your Dolphin database and user.
+
+   1. Log in to your cPanel.
+   2. Click MySQL Databases.
+   3. Create a database user:
+         1. Choose a username for Dolphin (for example "dolphin") and enter it in the Username field.
+         2. Choose a difficult-to-guess password (ideally containing a combination of upper- and lower-case letters, numbers, and symbols), and input it into the Password field.
+         3. Click Create user. 
+   4. Create a Dolphin database and add the user to it:
+         1. Choose a name for your Dolphin database (for example "dolphin" or "community"), input it in the New Database field and click Create Database.
+	 2. Under Add Users To Your Database, select your Dolphin username from the User dropdown list, then select your Dolphin database from the Database dropdown list. Make sure ALL is checked under Privileges, then click Add User To Database.
+   5. When you return to the main MySQL Account Maintenance screen, cPanel will list information about the database you just created. You should see the username you just added to the database (with ALL PRIVILEGES), as well as a few sample Connection Strings for you to use in Perl or PHP scripts to connect to the database. The PHP code will have the following format: 
+{{{
+$dbh = mysql_connect("hostname", "username", "<PASSWORD HERE>") or die ("message");
+mysql_select_db("databasename");
+}}}
+    Write down the values of ''hostname'', ''username'', ''databasename'', and the password you have chosen. (Note that ''hostname'' will usually be ''localhost''.) 
+
+
+'''Using phpMyAdmin'''
+
+If your web server has phpMyAdmin installed, and you are logged in as the MySQL administrator, you can follow these instructions to create your Dolphin username and database.
+
+'''Note''': These instructions are written for phpMyAdmin 2.6.1; the phpMyAdmin user interface can vary slightly between versions.
+
+   1. Create a database:
+        1. Choose a name for your Dolphin database (for example "dolphin" or "mycommunity"), enter it in the Create new database field and click Create. 
+	2. Click the Home icon in the upper left to return to the main page, then click Privileges and follow these steps tp create a user:
+			1. Click Add a new User.
+			2. Chose a user name for Dolphin (for example "dolphin") and enter it in the User name field (make sure Use text field: is selected from the dropdown list).
+			3. Leave the Host field blank.
+			4. Choose a difficult-to-guess password (ideally containing a combination of upper- and lower-case letters, numbers, and symbols), and enter it in the Password field (make sure Use text field: is selected from the dropdown list.) Re-enter the password in the Re-type field.
+         3. Write down the username and password you have chosen.
+         4. Leave the default values for the Global privileges section.
+         5. Click Go.
+   2. Return to the Privileges screen and click the Edit privileges icon on the user you've just created for Dolphin. In the Database-specific privileges section, select the database you've just created for Dolphin from the Add privileges to the following database dropdown list. The page will refresh with privileges for that database. Click Check All to select all privileges, and click Go.
+   3. On the resulting page, make note of the host name listed after Server: at the top of the page. (This will usually be ''localhost''.) 
+
+
+'''Using MySQL Client'''
+
+If you have shell access to your web server, are comfortable with using the command line, and your MySQL user has the permissions to create MySQL users and databases, you can follow the sample session below to create your Dolphin username and database.
+{{{
+$ mysql -u adminusername -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5340 to server version: 3.23.54
+ 
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+ 
+mysql> CREATE DATABASE databasename;
+Query OK, 1 row affected (0.00 sec)
+ 
+mysql> GRANT ALL PRIVILEGES ON databasename.* TO "dolphinusername"@"hostname" IDENTIFIED BY "password";
+Query OK, 0 rows affected (0.00 sec)
+  
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> EXIT
+Bye
+$ 
+}}}
+
+In the above:
+
+    * adminusername will typically be root, unless you have another high-privileged account set up.
+    * dolphin or mycommunity can be sample values for databasename.
+    * dolphin is a sample value for dolphinusername.
+    * hostname will usually be localhost. If you don't know what this value should be, refer to your system administrator. If you are the system administrator, just figure out what this value should be.
+    * password should be a difficult-to-guess password, ideally containing a combination of upper- and lower-case letters, numbers, and symbols.
+
+Write down the values you used for databasename, dolphinusername, hostname, and password.
+
+
+=== Step 3: Place the files ===
+
+Now you will need to decide where on your web site Dolphin script should be installed. These are possible options:
+
+    * In the root directory of your web site. (For example, http://mysite.com/)
+    * In a subdirectory of your web site. (For example, http://mysite.com/mycommunity/)
+
+Note: The location of your root web directory in the filesystem on your web server will vary across hosting providers and operating systems. Check with your hosting provider or system administrator if you do not know where this is.
+
+In the Root Directory
+
+    * If you need to upload your files into your web server, use your favorite FTP client to upload all the contents of the Dolphin-v.X.X.zip archive into the root directory of your web site.
+    * If your files are already on your web server, and you are using shell access to install Dolphin, move all of the contents of the Dolphin-v.X.X directory (but not the directory itself) into the root directory of your web site.
+
+
+In a Subdirectory
+
+    * If you need to upload your files into your web server, create a directory with your desired name in the root directory of your web site, then use your favorite FTP client to upload the contents of Dolphin-v.X.X.zip archive into the created directory.
+    * If your files are already on your web server, and you are using shell access to install Dolphin, move the Dolphin-v.X.X directory to your desired location within the root directory of your web site and rename the directory to your desired name.
+
+
+=== Step 4: Run the Install Script ===
+
+Using your favorite web browser, navigate to install/index.php within the directory into which you have just installed Dolphin on your web site:
+
+    * If you installed into a subdirectory called ''mycommunity'', you would navigate to http://mysite.com/mycommunity/install/index.php
+    * If you installed into the root directory of your web site, you would open http://mysite.com/install/index.php
+
+After this the installation instruction should appear in your browser's window. Follow them carefully to complete the installation. Here's a summary of the info you will have to specify:
+
+=== Permissions === 
+
+1. On the first page of the install process you can see the files and folders which permissions should be properly set up. There are two ways to do this:
+
+		* Using FTP client.
+			Log into your FTP account using your favorite FTP client and navigate to the folder in which you uploaded the contents of the Dolphin-v.X.X.zip archive.
+			Notice the folders and files names on the installation screen which are unwritable and set the following permissions using right click on the corresponding files and folders:
+{{{
+			writable for folder (777 means that the objects possessing these permissions will be readable, writable and executable).
+}}}
+{{{
+			writable for files (666 means that such objects will be readable and writable).
+}}}
+		NOTE: actual permissions may differ for different servers, depending on server configuation. 
+
+		* Using shell client.
+			Log into your shell account using your favorite shell client and change directory for that which contains your Dolphin script files. Now run the following commands under your SSH prompt:
+
+Dolphin/Ray folders to be writable for script operation:
+
+{{{
+chmod -v 777 ./inc ./backup ./cache ./cache_public ./langs ./media/app ./media/images ./media/images/banners ./media/images/blog ./media/images/classifieds ./media/images/membership ./media/images/profile ./media/images/profile_bg ./media/images/promo ./media/images/promo/original ./tmp ./plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer ./plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/HTML ./plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/CSS ./plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/Test ./plugins/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer/URI 
+chmod -v 777 ./flash/modules/board/files ./flash/modules/chat/files ./flash/modules/photo/files ./flash/modules/im/files ./flash/modules/mp3/files ./flash/modules/video/files ./flash/modules/video_comments/files 
+}}}
+
+Dolphin/Ray files to be writable to perform the installation of all of them:
+
+{{{
+chmod -v 666 inc/prof.inc.php
+}}}
+
+Ray XML files to be writable. This will allow you to install Ray Widgets via Ray Base easily:
+
+{{{
+chmod -v 666 ./flash/modules/global/data/integration.dat ./flash/modules/board/xml/config.xml ./flash/modules/board/xml/langs.xml ./flash/modules/board/xml/main.xml ./flash/modules/board/xml/skins.xml ./flash/modules/chat/xml/config.xml ./flash/modules/chat/xml/langs.xml ./flash/modules/chat/xml/main.xml ./flash/modules/chat/xml/skins.xml ./flash/modules/desktop/xml/config.xml ./flash/modules/desktop/xml/langs.xml ./flash/modules/desktop/xml/main.xml ./flash/modules/desktop/xml/skins.xml ./flash/modules/global/xml/config.xml ./flash/modules/global/xml/main.xml ./flash/modules/im/xml/config.xml ./flash/modules/im/xml/langs.xml ./flash/modules/im/xml/main.xml ./flash/modules/im/xml/skins.xml ./flash/modules/mp3/xml/config.xml ./flash/modules/mp3/xml/langs.xml ./flash/modules/mp3/xml/main.xml ./flash/modules/mp3/xml/skins.xml ./flash/modules/photo/xml/config.xml ./flash/modules/photo/xml/langs.xml ./flash/modules/photo/xml/main.xml ./flash/modules/photo/xml/skins.xml ./flash/modules/video/xml/config.xml ./flash/modules/video/xml/langs.xml ./flash/modules/video/xml/main.xml ./flash/modules/video/xml/skins.xml ./flash/modules/video_comments/xml/config.xml ./flash/modules/video_comments/xml/langs.xml ./flash/modules/video_comments/xml/main.xml ./flash/modules/video_comments/xml/skins.xml
+chmod -v 777 flash/modules/global/app/ffmpeg.exe
+}}}			
+	
+'''NOTE: Do not forget to install [http://www.boonex.net/ray/wiki/RayServerInstall Ray Media Server (RMS)] on your server or use some 3rd-party media server provided by your hosting provider'''.
+		
+
+Click Next to continue.
+
+=== Script Paths ===
+
+2. On the second page of the install you will have to indicate the necessary paths demanded by the script. Here they are:
+	
+	* Site URL: here you should indicate the URL of your Dolphin folder including "http", such as:
+		http://mysite.com/mycommunity/
+		(this path is usually properly determined by the installation script but you still should double check)
+		
+	* Directory root: this should be the server absolute path to the Dolphin folder, such as:
+{{{		
+        /home/myaccount/public_html/mycommunity/
+}}}
+(on Unix systems) or
+{{{
+	C:/webservers/home/myaccount/www/mycommunity/
+}}}
+(on Windows systems) This path is usually properly determined by the installation script but you still should double check.
+		
+	* Path to php binary: here you should indicate the absolute path to php executable file on your server, such as:
+{{{
+	/usr/local/bin/php 
+}}}
+(on Unix systems) or
+{{{
+	C:/php/php.exe 
+}}}
+(on Windows systems) This executable will be used to run crons (periodic tasks).
+		
+	* Path to ''mogrify'', Path to ''convert'' and Path to ''composite'': these paths indicate the location of [http://www.imagemagick.org/ ''ImageMagick''] applications, which will be necessary if ''php'' running on your server is not compiled with [http://www.boutell.com/gd/ ''GD library''];
+	''Imagemagick'' is just an alternative for ''GD'' - image processing application;
+	if ''PHP'' is compiled with ''GD'' library and you're not going to use [http://www.imagemagick.org/ ''ImageMagick''] with Dolphin, you can omit these steps and keep the default values.
+	The actual paths can be such:
+{{{
+	/usr/local/bin/mogrify
+	/usr/local/bin/convert
+	/usr/local/bin/composite
+}}}	
+	* Check ''GD'' installed: this field shows whether GD library is installed or not
+	
+Click Next to continue.
+	
+=== Database Credentials ===
+	
+3. On the third page you will have to specify the database information:
+	
+	* '''SQL file''': this is the relative path to the database creation file, which is determined by default. If your file resides in a different directory, you should indicate its relative path here. The base folder of the path is considered to be the Dolphin installation folder.
+	
+	* '''Empty database''': choose "yes" or "no". Choosing "yes" will empty the whole database, i.e. removes its tables. Think twice before choosing this option. The option "no" is the default option and will make no harm to your database.
+	
+	* '''Empty tables''': choose "yes" or "no". Choosing "yes" will empty all the tables in the database while keeping the tables structure intact. The default option is "yes" and you shouldn't make any changes here.
+	
+	* '''Database host name''': here you should indicate the host name of your database, which is usually 'localhost'. Refer to the notes you made during database creation.
+	
+	* '''Database name, Database user and Database password''': here you should indicate the name of the database and the user requisites you created in the '''Step 2'''. Again, refer to the notes you made when creating the database and the user.
+	
+Click Next to continue.
+
+
+=== General Site Configuration ===
+
+4. On this page you will have to set up General Site Configuration:
+	
+	* '''Site Title/Logo''': this is a word or phrase which will be displayed on the title bar of your web browser
+
+	* '''Site Description''': this is a phrase which will be placed to meta description in your site hmepage
+
+	* '''Site e-mail''': indicate the email which will be used for getting info about purchased memberships, mass mailer's status, spam reports, and requests for canceling subscriptions.
+	
+	* '''Notify e-mail''': indicate the email address which will be shown in the "From" field of cupid and mass mails as well as profiles confirmation and activation messages.
+	
+	* '''Bug report email''': indicate the email address to collecting MySQL bug reports for subsequent debugging.
+
+        * '''Set Admin Login information''' - you should choose the login and password for your Administration Panel.
+				
+To enter your Administration panel please use the following URL:
+
+'''!http://www.mysitedomain.com/admin/'''  -  where ''!http://www.mysitedomain.com/'' is your actual domain. 
+
+If you are installing Dolphin in a sub-directory then the URL will be:
+
+'''!http://www.mysitedomain.com/sub-directory/admin/'''. 
+
+To login to the Administration Panel you should use the information which you have appointed above.
+
+
+=== Setting up Cron jobs ===
+	
+6. If you made the previous steps correctly, the next step will guide you through the setting cron jobs.
+	To set up cron jobs, use one of the following ways:
+		1. Using CPanel:
+			1. Click the Cron Jobs link under your CPanel account and choose Advanced (Linux Style)
+			2. Indicate the email address for collecting information about cron execution
+			3. Return to the Dolphin installation page and copy the command to be run as cron (omitting the zeros and asterisks), for example:
+{{{
+			/usr/local/bin/php -q m:/home/localhost/www/d5605/periodic/cron.php
+}}}
+			and insert it into the first field of your CPanel cron jobs management page
+			schedule the time for this job, which also can be fetched from the Dolphin installation page, such as:
+{{{
+			* * * * * 
+}}}
+			(which means: run the script every minute)
+
+			4. Apply the changes and click Back to return to the Cron Management page
+
+		2. Using shell (for experienced users):
+			run the following command
+{{{
+			crontab -e
+}}}
+			This will open your default text editor, where you will have to insert the following lines of code to be executed:
+{{{
+			MAILTO=myemail@mysite.com
+			* * * * * /usr/local/bin/php -q m:/home/localhost/www/d5605/periodic/cron.php
+			Save the file and exit the editor.
+}}}
+
+'''Hint: The above lines serve as an example. The actual Cron Job commands are generated by the script at 6th step of the installation process. And you can easily copy&paste them into the "crontab" file.'''		
+
+=== Permission Reversal ===
+
+7. Now you should set the post-installation permissions and after '''delete the install folder'''.
+
+		* Using FTP client.
+			Log into your FTP account using your favorite FTP client and navigate to the folder in which you have installed Dolphin script.
+			Notice the chmod commands for specified folders and files on the final installation screen and set the following permissions using right click on the corresponding files and folders:
+{{{
+			755 for folders (755 means that the objects possessing these permissions will be readable and executable).
+}}}
+{{{
+			644 for files (644 means that such objects will be only readable).
+}}}		
+
+
+		* Using shell client.
+			Log into your shell account using your favorite shell client and change directory for that which contains your installed Dolphin script. Now run the following commands under your SSH prompt:
+{{{
+			chmod -v 755 ./inc 
+}}}
+		NOTE: it is ok to skip permission reversal step!
+
+'''Now you must delete the ''/install'' folder'''.			
+
+'''NOTE: Do not forget to install [http://www.boonex.net/ray/wiki/RayServerInstall Ray Media Server (RMS)] on your server or use some 3rd-party media server provided by your hosting provider'''.

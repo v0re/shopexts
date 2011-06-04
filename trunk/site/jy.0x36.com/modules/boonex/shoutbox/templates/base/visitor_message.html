@@ -1,0 +1,15 @@
+<div class="message_block">
+    <div>
+        <bx_if:delete_allowed>
+        <a href="javascript:void(0)" title="__delete_cpt__" onclick="if( confirm('__sure_cpt__') ){oShoutBox.deleteMessage(__message_id__, this)}"><img src="<bx_icon_url:delete.png />" /></a>
+        </bx_if:delete_allowed>
+        <bx_if:block_allowed>
+        <a href="javascript:void(0)" title="__block_cpt__" onclick="if( confirm('__sure_cpt__') ){oShoutBox.blockMessage(__message_id__)}">
+            <img src="<bx_icon_url:lock.png />" />
+        </a>    
+        </bx_if:block_allowed>
+        <span class="date">__date__</span>
+    </div>
+    <div><span class="by">__by__</span> <a href="__owner_link__">__owner_nick__</a></div>
+    <div>__message__</div>
+</div>

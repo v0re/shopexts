@@ -1,0 +1,83 @@
+
+.bx_ava_default_padding {
+    margin:10px;
+}
+
+.bx_ava_margin_top {
+    margin-top:10px;
+}
+
+.bx_ava_tar {
+    width:70px;
+    height:90px;
+    margin:5px;
+    overflow:hidden;
+    float:left;
+}
+
+#bx_ava_site_avatars > .paginate {
+    margin:5px 0 0 0;
+}
+
+#bx_ava_site_avatars > .paginate:first-child {
+    margin:0 0 5px 0;
+}
+
+.bx_ava_actions {
+    text-align:center;
+    margin-top:4px;
+}
+
+#bx_ava_current {
+    float:left;
+    width:70px;
+    height:70px;
+    position:relative;
+}
+
+.bx_ava_block {
+    float:left;
+    margin:0 0 0 10px;    
+    max-width:480px;
+}
+.bx_ava_block > b {
+    font-size:12px;
+    margin:0 0 5px 0px;    
+    display:block;
+}
+
+.bx_ava_block > form {
+    margin:6px 0 0 0;
+}
+
+.bx_ava_block > input {
+    margin:7px 0 0 0;
+    display:block;
+}
+
+#bx_ava_crop_img {
+    display:block;
+    margin:10px 0;
+}
+
+#bx_ava_crop_img_preview {
+    width:64px;
+    height:64px; 
+    overflow:hidden;
+    position:relative;
+    border:2px solid white;
+}
+
+#bx_ava_crop_img_preview_cont {
+    float:left;
+    border:1px solid #ccc;
+}
+
+.bx_ava_err {
+    color:red;
+}
+
+#bx_ava_my_avatars .MsgBox td {
+    padding:0;
+    border:none;
+}

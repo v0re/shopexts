@@ -1,0 +1,18 @@
+.pageable_items {
+    margin:5px 10px 5px 10px;
+    padding:0 20px 0 20px;
+    position:relative;
+    min-height:90px;
+}
+
+.pageable_items .paginate_btn {
+    position:absolute;
+    top:31px;
+    right:0px;
+}
+
+.pageable_items .paginate_btn:first-child {
+    position:absolute;
+    top:31px;
+    left:0px;
+}

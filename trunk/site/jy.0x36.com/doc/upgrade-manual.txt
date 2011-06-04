@@ -1,0 +1,4 @@
+
+Upgrade from 6.1.6 to 7.0.0 - http://www.boonex.com/trac/dolphin/wiki/6.1.6to7.0
+
+Upgrade instructions from 7.0.0.RC to 7.0.0.RC2 - http://www.boonex.com/trac/dolphin/wiki/7.0-RCto7.0-RC2

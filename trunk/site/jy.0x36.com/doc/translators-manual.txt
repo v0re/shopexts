@@ -1,0 +1,104 @@
+
+IMPORTANT: For the latest and extended version of this manual go to http://www.boonex.com/trac/dolphin/wiki/DolLang
+
+== Dolphin Languages ==
+
+'''[http://www.boonex.com/trac/dolphin/wiki/DolLang#Newlanguagecreation New language creation]'''
+
+== New language creation ==
+
+'''''This manual is for Dolphin 7 Beta'''''.[[BR]]
+'''''The manual for Dolphin 6 is available [http://www.boonex.com/trac/dolphin/wiki/GenDolFAQs#HowcanItranslatemysiteintoadifferentlanguage here]'''''
+
+To translate Dolphin's language file you need:
+
+1. Install latest Dolphin
+
+2. Uninstall all available modules from Dolphin Admin Panel -> Tools -> Modules
+
+3. Go to Dolphin administration panel -> Settings -> Languages Settings. In the 'Language Files' block you need to export necessary language file by clicking 'Export' link.
+
+4. The downloaded file will have the following structure
+{{{
+	<?php
+	$aLangInfo=array (
+	  'Name' => 'en',
+	  'Flag' => 'gb',
+	  'Title' => 'English',
+	);
+	$aLangContent=array (
+	  '_add' => 'add',
+	  '_bottom_text' => '2002-{0}. Product of <a class="bottom_text" href="http://www.boonex.com/">BoonEx Group</a>.',
+	  '_copyright' => 'Copyright &copy; {0} Your Company.',
+	  'test_key' => 'Key\'s string',
+	  ...
+	);
+	?>
+
+}}}	
+	* You need to change the 'Name', 'Flag' and 'Title' in accordance with the language you are translating to. Note. You need to use International Language Codes for 'Name' and 'Flag'. You may read more about it using the following link http://www.boonex.com/unity/txt/extension_requirements#LanguageFiles
+	
+	* If you use (') sign in the language string you need to escape it by replacing with (\'). Take a look at example above -> 'test_key' language key.
+
+        * It is necessary that you open and save this file in UTF-8 format. Otherwise non-latin symbols will not be correctly displayed.
+
+        * It exports only system language file, but not modules language files, which are translated a bit different way.
+
+5. Translate language file in each module located in modules/boonex/*/install/langs/en.php. Forum has 2 language files first in the regular location and another one in modules\boonex\forum\integrations\base\langs\en.php. Use the same language code for translated files like in 'Name' field in system language file. 
+
+6. Put all translated files in a folder with all modules structure and exported system language in root of the folder. The name of folder must be named with vendor name, language name, version of the translation. So it may look like this:
+
+
+{{{
+Org-Russian-v.1.3
+  modules
+    boonex
+      ads
+        install
+          langs
+            ru.php
+      articles
+        install
+          langs
+            ru.php
+
+      ...
+
+      forum
+        install
+          langs
+            ru.php
+        integrations
+          base
+            langs
+              ru.php
+   
+      ...
+
+      wall
+        install
+          langs
+            ru.php
+
+
+  lang-ru.php
+  readme.txt
+
+}}}
+
+Don't forget to put readme.txt file into archive with language file info, compatibility with Dolphin and installation instructions. Pack resulted folder in zip archive. 
+
+----
+
+== Installation instructions ==
+
+1. Unpack zip archive
+
+2. Go to Dolphin admin panel -> Settings -> Languages Settings and in the 'Create New' block switch tab to 'Import'. Browse for your system language file (in the root of this folder, like lang-ru.php) and click 'Import'. If everything is OK, you should see new language in the 'Language Files' block.
+
+3. Copy all '''modules''' directory to your dolphin root directory - it will create language file in each module.
+
+4. Go to Dolphin admin panel -> Tools -> Modules, scroll down to '''Installed Modules''' block, select all modules and click '''Recompile Language(s)''' button.
+
+5. Go to Modules -> Orca Forum, click '''[L[Compile Lang:]]ru''' link to compile new language file specifically for orca forum.
+

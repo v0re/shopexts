@@ -1,0 +1,21 @@
+
+.bx_sites_block_percent {
+    margin: 10px;
+    overflow: hidden;
+}
+
+.bx_sites_block_percent .image {
+	text-align: center;
+}
+
+.image img {
+	margin-left: auto;
+	margin-right: auto;
+	border:1px solid #CCC;
+	padding: 2px;
+}
+
+.votes_big {
+	margin: 0 auto 5px auto;
+	width: 155px;
+}

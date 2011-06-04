@@ -1,0 +1,170 @@
+/* main settings  */
+
+.bx_photos_search_unit {
+    height: 230px;
+}
+
+.bx_photos_file_search_pic {
+    height: 148px;
+}
+
+.bx_photos_file_search_pic img{
+    height: 140px;
+}
+
+.sys_album_unit {
+    
+}
+
+.sys_album_unit .bx_sys_unit_checkbox {
+    top: 7px;
+    left: 7px;
+}
+
+.sys_album_cover {
+    height: 140px;
+}
+
+.sharedPhotos_View {
+    margin: 0px 0px 2px 2px;
+    font-size: 11px;
+}
+
+/* scroll picture page */
+.picSwitcher {
+   
+}
+
+.scrollContainer {
+    height: 40px;
+    overflow: hidden;
+    position: static;
+    float: left;
+}
+
+.scrollContainerArea {
+    overflow: hidden;
+    float: left;
+    margin: 0px;
+}
+
+.scrollUnit {
+    width: 36px;
+    height: 36px;
+    float: left;
+    position: relative;
+    margin: 2px 1px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #CCCCCC;
+}
+
+.scrollUnitPic {
+    width: 36px;
+    height: 36px;
+    float: left;
+    position: relative;
+}
+
+.switcherTop {
+	position: relative;
+	margin: 0px auto;
+}
+
+.switcherTop div {
+    position: relative;
+}
+
+.scrollLeft {
+    margin-right: 21px;
+    width: 16px;
+    height: 36px;
+    float: left;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.scrollLeft img {
+    width: 16px;
+    height: 36px;
+}
+
+.scrollRight {
+    margin-left: 21px;
+    width: 16px;
+    height: 36px;
+    float: left;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.scrollRight img {
+    width: 16px;
+    height: 36px;
+}
+
+.mainInfo, .addInfo {
+	margin: 0px auto 5px;
+}
+
+.picTitle {
+	font-size: 16px;
+	float: left;
+}
+
+.picRate {
+	float: right;
+}
+
+.addInfo {
+    
+}
+
+.viewSwitchFile {
+    margin: 10px auto;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+}
+
+.viewSwitchFile img {
+	margin: 1px;
+}
+
+.addInfoDate {
+    text-transform: lowercase;
+    color: #888888;
+}
+
+.addInfoFrom {
+    margin-left: 5px;
+}
+
+.latestFile {
+	margin: 10px auto;
+}
+
+/* redeckaration  settings from another files*/
+.boxContent .votes_small {
+	float: none;
+	position:relative;
+	width: auto;
+}
+
+div.viewFile {
+	margin: 10px auto;
+	padding: 2px;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+}
+
+.searchContentBlock {
+    margin: 5px auto;
+}
+
+#searchArea {
+    margin: 10px auto;
+}
+
+.picSwitcher .paginate {
+    margin-top: 10px;
+}

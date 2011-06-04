@@ -1,0 +1,65 @@
+
+.bx_sites_block_info
+{
+	margin: 5px;
+	overflow: hidden;
+}
+
+.bx_sites_block_info .memberPic 
+{
+    width: 70px;
+    overflow: hidden;
+}
+
+.bx_sites_block_info .infoUnit 
+{
+    width: 143px;
+    overflow: hidden;
+}
+
+.bx_sites_block_view .show_image {
+    text-align: center;
+    border: 1px solid #CCC;
+    padding: 2px;
+}
+
+.show_image img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bx_sites_block_rate {
+   margin-top: 10px;
+   overflow: hidden;
+}
+
+.bx_sites_vote {
+   float: left;
+}
+
+.bx_sites_count {
+   float: right;
+   margin: 0 5px;
+}
+
+.bx_sites_val {
+	float: left;
+	height: 16px;
+	line-height: 16px;
+	width: auto;
+}
+
+.bx_sites_val span {
+	margin-left: 28px;
+}
+
+.votes_big {
+    margin: 0;
+}
+
+.bx_sites_block_view .title {
+	color: green;
+	font-size: 14px;
+	margin: 0 0 10px 0;
+	display: block;
+}

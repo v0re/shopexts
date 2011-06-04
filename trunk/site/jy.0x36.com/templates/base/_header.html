@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=__page_charset__" />
+	<title>__page_header__</title>
+	<base href="<bx_url_root />" />	
+	__page_description__
+	__page_keywords__
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<bx_include_css />
+	<bx_include_js />
+    __dol_images__
+    __dol_lang__
+    __dol_options__
+    <script type="text/javascript" language="javascript">
+		var site_url = '<bx_url_root />';
+        var aUserInfoTimers = new Array();
+		$(document).ready( function() {
+			$( 'div.RSSAggrCont' ).dolRSSFeed();
+		} );
+	</script>
+    <!--[if lt IE 7.]>
+	<script defer type="text/javascript" src="inc/js/pngfix.js"></script>
+	<![endif]-->
+	__extra_js__
+	<bx_injection:injection_head />
+
+    <script type="text/javascript">
+        var oBxUserStatus = new BxUserStatus();
+        oBxUserStatus.userStatusInit('<bx_url_root />', __is_profile_page__);
+    </script>
+</head>
+__flush_header__
+<body <bx_injection:injection_body /> >
+    <bx_injection:injection_header />
+    <div id="notification_window" class="notifi_window"></div>
+	<div id="FloatDesc" style="position:absolute;display:none;z-index:100;"></div>

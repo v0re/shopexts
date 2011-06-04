@@ -1,0 +1,641 @@
+/* * * * Table * * * */
+
+.form_advanced_wrapper {
+	overflow: hidden;
+}
+
+.form_advanced_table {
+    font-size: 11px;
+    position: relative;
+    width: 100%;
+    border-top: 1px solid #dadada;
+    border-right: 1px solid #dadada;
+    border-left: 1px solid #dadada;
+}
+
+.form_advanced_table select,
+.form_advanced_table input,
+.form_advanced_table textarea,
+.form_advanced_table button {
+    font-size: 11px;
+    margin-left: 0px;
+    outline: none;
+	vertical-align: middle;
+}
+
+.form_advanced_table select,
+.form_advanced_table input {
+    padding: 1px;
+}
+
+.form_advanced_table textarea {
+    padding: 0px;
+    margin: 0px;
+}
+
+.form_advanced_table th,
+.form_advanced_table td {
+    padding: 8px;
+    border-bottom: 1px solid #dadada;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.form_advanced_table td.colspan b {
+	text-transform:capitalize;
+}
+
+.form_advanced_table th,
+.form_advanced_table td,
+.input_close,
+.button_wrapper_close
+{
+	background-color: #f4f7fa;
+}
+
+div.view_profile_form_wrapper .input_close,
+div.view_profile_form_wrapper .input_close_value
+{
+	background-color: transparent;
+}
+
+.form_advanced_table th.block_header {
+    text-align: left;
+    font-weight: normal;
+    background-color: #ececec;
+    font-size: 12px;
+}
+
+.form_advanced_table td.caption {
+    text-align: right;
+    width: 35%;
+    
+    padding-right:2px;
+    padding-top:11px;
+    /*text-transform: lowercase;*/
+}
+
+.form_advanced_table td.caption:first-letter {
+    text-transform: capitalize;
+}
+
+.form_advanced_table td.value {
+    padding-left:2px;
+    padding-right: 9px;
+}
+
+.form_advanced_table .required {
+    color: red;
+}
+
+/* * * * [end] Table * * * */
+
+
+
+
+/* * * * Inputs and Wrappers * * * */
+
+.input_wrapper {
+    float: left;
+    position: relative;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.input_wrapper_input_set {
+    float: none;
+}
+
+.input_wrapper_text,
+.input_wrapper_email,
+.input_wrapper_url,
+.input_wrapper_date,
+.input_wrapper_datetime,
+.input_wrapper_password,
+.input_wrapper_number
+{
+    padding: 3px 2px 0px 2px;
+    
+    height: 20px;
+    background-image: url(../images/form_text_wrap.png);
+}
+
+.input_wrapper_range,
+.input_wrapper_doublerange
+{
+    padding: 4px 4px 0px 4px;
+    height: 20px;
+    width: 138px;
+    background-image: url(../images/form_text_wrap.png);
+}
+
+.input_wrapper_textarea {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #B2B2B2 #D9D9D9 #D9D9D9 #B2B2B2;
+    
+    background-color: #fff;
+    padding: 2px;
+}
+
+.input_wrapper_textarea .mceEditor table.mceLayout {
+    border: none;
+}
+
+.input_wrapper_textarea .mceEditor table.mceLayout td {
+    padding: 0px;
+}
+
+.input_wrapper_textarea .mceEditor table.mceLayout tr.mceFirst td {
+    border-top: none;
+}
+
+.input_wrapper_textarea .mceEditor table.mceLayout tr.mceLast td {
+    border-bottom: none;
+}
+
+.input_close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    
+    width: 4px;
+    font-size: 1px;
+    background-position: right top;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.input_close_text,
+.input_close_email,
+.input_close_url,
+.input_close_date,
+.input_close_datetime,
+.input_close_password,
+.input_close_number,
+.input_close_range,
+.input_close_doublerange
+{
+    height: 23px;
+    background-image: url(../images/form_text_wrap.png);
+}
+
+.input_close_button,
+.input_close_submit,
+.input_close_reset {
+    display: none;
+}
+
+.form_advanced_wrapper .input_close_textarea {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    font-size: 1px;
+    overflow: hidden;
+    
+    background-image: url(../images/form_area_corners.png);
+    background-repeat: no-repeat;
+    background-color: #F4F7FA;
+}
+
+.input_close_textarea.left.top {
+    background-position: left top;
+    left: -1px;
+    top: -1px;
+}
+
+.input_close_textarea.left.bottom {
+    background-position: left bottom;
+    position: absolute;
+    left: -1px;
+    bottom: -1px;
+}
+
+.input_close_textarea.right.top {
+    background-position: right top;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+}
+
+.input_close_textarea.right.bottom {
+    background-position: right bottom;
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+}
+
+.form_input_file,
+.form_input_select,
+.form_input_select_multiple,
+.form_input_select_box,
+.form_input_slider,
+.input_wrapper_select_box .form_input_text
+{
+    /*height: 15px;*/
+    width: 198px;
+    border: 1px solid #999999;
+    background-color: #ffffff;
+    margin-bottom: 1px;
+}
+
+.input_wrapper_select_box .form_input_text
+{
+    width: 194px;
+    height: 15px;
+}
+
+.form_input_text,
+.form_input_email,
+.form_input_url,
+.form_input_date,
+.form_input_datetime,
+.form_input_password,
+.form_input_number,
+.form_input_range,
+.form_input_doublerange
+{
+    border: none;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.form_input_textarea {
+    border: none;
+    background-color: #ffffff;
+    width: 100%;
+    height: 157px;
+    resize: none;
+}
+
+.input_wrapper_text,
+.input_wrapper_email,
+.input_wrapper_url,
+.input_wrapper_date,
+.input_wrapper_datetime,
+.input_wrapper_password,
+.input_wrapper_number,
+.input_wrapper_textarea
+{
+    width: 196px;
+}
+
+.form_input_select_multiple
+{
+    height: 160px;
+}
+
+.input_wrapper_value {
+    padding-top: 4px;
+    font-weight: bold;
+    white-space: normal;
+}
+
+.form_input_radio,
+.form_input_checkbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.input_wrapper label
+{
+    vertical-align: middle;
+}
+
+.form_advanced_table .colspan .input_wrapper {
+    /*width: 100%;*/
+    width: auto;
+}
+
+.form_advanced_table .colspan       img.info,
+.form_advanced_table .colspan.error img.warn {
+    display: inline;
+    float: none;
+    margin-top: 0px;
+}
+
+/* * * * [end] Inputs and Wrappers * * * */
+
+
+
+/* * * * Buttons style * * * */
+
+/* Universal (resizable) button */
+.button_wrapper
+{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    background-position: left top;
+}
+
+*+html .button_wrapper
+{
+    display: inline;
+}
+
+*html .button_wrapper
+{
+    display: inline;
+}
+
+.button_wrapper_close
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    
+    font-size: 1px;
+    width: 4px;
+    overflow: hidden;
+    background-position: right top;
+}
+
+.button_wrapper,
+.button_wrapper_close
+{
+    background-image: url(../images/button_bg.png);
+    background-repeat: no-repeat;
+}
+
+.button_wrapper,
+.button_wrapper input,
+.button_wrapper_close
+{
+    height: 25px;
+}
+
+.button_wrapper input.form_input_button,
+.button_wrapper input.form_input_submit,
+.button_wrapper input.form_input_reset
+{
+    background-image: none;
+    width: auto;
+    /*background-color: transparent;*/
+}
+
+.button_wrapper:hover
+{
+    background-position: 0px -50px;
+}
+
+.button_wrapper:hover .button_wrapper_close
+{
+    background-position: right -50px;
+}
+
+.button_wrapper:active
+{
+    background-position: 0px -100px;
+}
+
+.button_wrapper:active .button_wrapper_close
+{
+    background-position: right -100px;
+}
+
+/* [END] Universal (resizable) button */
+
+input[type=submit],
+input[type=button],
+input[type=reset],
+input.submit,
+input.button,
+input.reset
+{
+    border: none;
+    padding: 5px 6px 20px 6px;
+    
+    width: 70px;
+    height: 25px;
+    
+    overflow: visible; /* IE paddings fix */
+    
+    background: transparent url(../images/button1_bg.png) no-repeat scroll left top;
+    /*
+        Note: to create button with other width, create button2_bg.
+    */
+}
+
+input[type=submit]:hover,
+input[type=button]:hover,
+input[type=reset]:hover,
+input.submit:hover,
+input.button:hover,
+input.reset:hover
+{
+    background-position: 0px -50px;
+}
+
+input[type=submit]:active,
+input[type=button]:active,
+input[type=reset]:active,
+input.submit:active,
+input.button:active,
+input.reset:active
+{
+    background-position: 0px -100px;
+}
+
+.button_icon {
+    width: 16px;
+    height: 16px;
+    margin: 4px 0px 0px 4px;
+    
+    position: relative;
+    float: left;
+}
+
+/* * * * [end] Buttons style * * * */
+
+
+
+.form_advanced_table img.info,
+.form_advanced_table img.warn,
+.multiply_add_button,
+.multiply_remove_button,
+.multiply_other_button,
+.reload_button {
+    margin-left: 3px;
+    margin-top: 3px;
+    
+    position: relative;
+    display: block;
+    float: left;
+    cursor: help;
+}
+
+.multiply_add_button,
+.multiply_remove_button,
+.multiply_other_button,
+.reload_button {
+    cursor: pointer;
+}
+
+.form_advanced_table img.warn {
+    display: none;
+}
+
+.error img.warn {
+    display: block;
+}
+
+/* * * * * */
+
+
+.form_advanced .ui-slider {
+    height: 16px;
+    width: auto;
+    margin-top: 0px;
+    margin-right: 18px;
+    position: relative;
+    border: none;
+}
+
+.ui-slider .ui-widget-header {
+    height: 10px;
+    position: absolute;
+    top: 3px;
+    /*background-color: #cccccc;*/
+    font-size: 1px;
+    
+    border:none;
+}
+
+.ui-slider-handle {
+    position: absolute;
+    top: 1px;
+    height: 12px;
+    width: 16px;
+    
+    /*padding-left: 2px;
+    padding-right: 2px;*/
+    cursor: pointer;
+
+    text-align: center;
+    color: #333333;
+    overflow: hidden;
+    font-size: 10px;
+    
+    border: 1px solid #999999;
+    background-color: #ffffff;
+    background-image: url(../images/slider_trigger_bg.gif);
+    background-position: top left;
+    background-repeat: repeat-x;
+}
+
+.ui-slider-handle.handle1 {
+    width: 18px;
+}
+
+
+/* * * * * */
+
+#float_info {
+    background-color: #FFFFD7;
+    border: 1px solid #CCCCCC;
+    padding: 3px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    max-width: 300px;
+}
+
+.block_collapse_btn {
+    float: right;
+    position: relative;
+    cursor: pointer;
+}
+
+/* * * * * Other forms customization * * * * */
+
+.quick_search_form1_wrapper .form_input_file,
+.quick_search_form1_wrapper .form_input_select,
+.quick_search_form1_wrapper .form_input_select_multiple,
+.quick_search_form1_wrapper .form_input_select_box,
+.quick_search_form1_wrapper .form_input_slider,
+.quick_search_form2_wrapper .form_input_file,
+.quick_search_form2_wrapper .form_input_select,
+.quick_search_form2_wrapper .form_input_select_multiple,
+.quick_search_form2_wrapper .form_input_select_box,
+.quick_search_form2_wrapper .form_input_slider,
+.simple_search_form1_wrapper .form_input_file,
+.simple_search_form1_wrapper .form_input_select,
+.simple_search_form1_wrapper .form_input_select_multiple,
+.simple_search_form1_wrapper .form_input_select_box,
+.simple_search_form1_wrapper .form_input_slider,
+.simple_search_form2_wrapper .form_input_file,
+.simple_search_form2_wrapper .form_input_select,
+.simple_search_form2_wrapper .form_input_select_multiple,
+.simple_search_form2_wrapper .form_input_select_box,
+.simple_search_form2_wrapper .form_input_slider,
+.login_box_form_wrapper .form_input_file,
+.login_box_form_wrapper .form_input_select,
+.login_box_form_wrapper .form_input_select_multiple,
+.login_box_form_wrapper .form_input_select_box,
+.login_box_form_wrapper .form_input_slider
+{
+    width: 144px;
+}
+
+.quick_search_form1_wrapper .input_wrapper_text,
+.quick_search_form1_wrapper .input_wrapper_email,
+.quick_search_form1_wrapper .input_wrapper_url,
+.quick_search_form1_wrapper .input_wrapper_date,
+.quick_search_form1_wrapper .input_wrapper_datetime,
+.quick_search_form1_wrapper .input_wrapper_password,
+.quick_search_form1_wrapper .input_wrapper_number,
+.quick_search_form1_wrapper .input_wrapper_textarea,
+.quick_search_form2_wrapper .input_wrapper_text,
+.quick_search_form2_wrapper .input_wrapper_email,
+.quick_search_form2_wrapper .input_wrapper_url,
+.quick_search_form2_wrapper .input_wrapper_date,
+.quick_search_form2_wrapper .input_wrapper_datetime,
+.quick_search_form2_wrapper .input_wrapper_password,
+.quick_search_form2_wrapper .input_wrapper_number,
+.quick_search_form2_wrapper .input_wrapper_textarea,
+.simple_search_form1_wrapper .input_wrapper_text,
+.simple_search_form1_wrapper .input_wrapper_email,
+.simple_search_form1_wrapper .input_wrapper_url,
+.simple_search_form1_wrapper .input_wrapper_date,
+.simple_search_form1_wrapper .input_wrapper_datetime,
+.simple_search_form1_wrapper .input_wrapper_password,
+.simple_search_form1_wrapper .input_wrapper_number,
+.simple_search_form1_wrapper .input_wrapper_textarea,
+.simple_search_form2_wrapper .input_wrapper_text,
+.simple_search_form2_wrapper .input_wrapper_email,
+.simple_search_form2_wrapper .input_wrapper_url,
+.simple_search_form2_wrapper .input_wrapper_date,
+.simple_search_form2_wrapper .input_wrapper_datetime,
+.simple_search_form2_wrapper .input_wrapper_password,
+.simple_search_form2_wrapper .input_wrapper_number,
+.simple_search_form2_wrapper .input_wrapper_textarea,
+.login_box_form_wrapper .input_wrapper_text,
+.login_box_form_wrapper .input_wrapper_email,
+.login_box_form_wrapper .input_wrapper_url,
+.login_box_form_wrapper .input_wrapper_date,
+.login_box_form_wrapper .input_wrapper_datetime,
+.login_box_form_wrapper .input_wrapper_password,
+.login_box_form_wrapper .input_wrapper_number,
+.login_box_form_wrapper .input_wrapper_textarea,
+.subscribe_form_wrapper .input_wrapper_text
+{
+    width: 142px;
+}
+
+/* * * * * location field * * * * */
+.location_wrapper > div:first-child {
+    margin-bottom:5px;
+}
+
+.location_wrapper .form_input_metric {
+    width:auto;
+}
+
+.location_wrapper .form_input_distance,
+.location_wrapper .form_input_zip {
+    border: 1px solid #999999;
+    width:60px;
+}
+
+

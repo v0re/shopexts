@@ -1,0 +1,35 @@
+div#alertsView {	
+    padding: 0px 5px;
+}
+div#alertsMenu {
+	text-align: center;
+}
+div.alertsBody {
+	margin-bottom: 10px;
+}
+div.alertAuthorPic {
+	float: left;
+}
+div.alertAuthorPic img {
+	width: 16px;
+    height: 16px;
+}
+div.alertMessage {
+	margin: 0px 0px 5px 5px;
+	float: left;
+}
+div.alrMsgCont {
+    width: 209px;
+    height: 14px;
+    line-height: 14px;
+    font-size: 11px;
+    overflow: hidden;
+}
+div.alrMsgTime {
+    width: 209px;
+    height: 13px;
+    line-height: 13px;
+    font-size: 10px;
+    color: #999999;
+    overflow: hidden;
+}

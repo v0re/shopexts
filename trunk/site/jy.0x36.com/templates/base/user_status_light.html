@@ -1,0 +1,15 @@
+<div class="statusTab" style="margin-left:10px;">
+	<table id="edit_form_table" class="form_advanced_table" cellspacing="0" cellpadding="0">
+		<tr>
+			<td class="value" colspan="2" style="padding-top:5px;">
+				<div class="input_wrapper input_wrapper_text" style="width:345px; margin:1px 0px 0px 0px;">
+					<input id="UserStatusMessBut_nm" class="form_input_text" type="text" value="__status_message__" name="UserStatusMessage" onkeyup="if (typeof oBxUserStatus != undefined) oBxUserStatus.sendStatusMessage(event, this);return false;" />
+					<div class="input_close input_close_text"></div>
+				</div>
+                <div class="input_wrapper input_wrapper_submit">
+                    <input type="button" value="<bx_text:_Submit />" name="UserStatusMessBut" onclick="if (typeof oBxUserStatus != undefined) oBxUserStatus.PerformSendingStatusMess(document.getElementById('UserStatusMessBut_nm'));return false;" style="margin-left:10px;" />
+                </div>
+			</td>
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,28 @@
+<div class="adm-mp-members-extended">
+    <bx_repeat:items>
+        <div class="adm-mp-member-extended">        
+            <div class="adm-mp-ms-check">
+                <input type="checkbox" class="form_input_checkbox" id="adm-mp-__id__" name="members[]" value="__id__" />
+            </div>
+            <div class="adm-mp-ms-thumbnail">__thumbnail__</div>
+            <div class="adm-mp-ms-info">
+        		<div class="adm-mp-ms-nick">
+                    <a href="__edit_link__" class="__edit_class__">__username__</a>:
+                    __headline__
+                </div>
+        		<div class="adm-mp-ms-age">
+        			<img src="__sex_link__" />
+        			__age__ 
+        			<bx_if:flag>
+                        <img src="__flag_link__" alt="flag" />
+        			</bx_if:flag>
+        			 __city__, 
+        			 __country__
+        		</div>
+        		<div class="adm-mp-ms-desc">__description__</div>
+        	</div>
+        	<div class="clear_both">&nbsp;</div>
+        </div>
+    </bx_repeat:items>    
+</div>
+__paginate__
