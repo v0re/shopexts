@@ -24,3 +24,5 @@ last modify %%mtime(%Y-%m-%d %H:%M:%S %A)
  - [ECshop XSS脚本跨站漏洞 11041501.html]
  - [易开店及shopex485系统遍历文件漏洞 11072101.html]
  - [易开店及shopex485系统遍历文件漏洞 11072102.html]
+ - [易开店及shopex485后台模板编辑中任意文件打包下载漏洞 11072701.html]
+ - [易开店及shopex485后台模板编辑中文件删除漏洞 11072702.html]
