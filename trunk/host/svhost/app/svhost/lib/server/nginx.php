@@ -61,9 +61,10 @@ server
         access_log  off;
     }
     
-    location ~ .*\.php?$
+    location ~ .*\.php
     {
         include php_fcgi.conf;
+        include pathinfo.conf;
     }
     
     location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
@@ -75,8 +76,8 @@ server
     {
         expires      1h;
     }
-    
-    access_log off;
+    access_log /var/log/nginx/access.log;
+    #access_log off;
 }
 EOF;
  
