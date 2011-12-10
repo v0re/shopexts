@@ -105,7 +105,7 @@ class cmd_products extends mdl_products {
                 $goodsId = array();
                 foreach($oGoods->getGoodsIdByKeyword(array($v)) as $idv)
                     $goodsId[] = $idv['goods_id'];
-                foreach( $this->db->select('SELECT goods_id FROM sdb_products WHERE bn = \''.trim($v).'\' ') as $pidv)
+                foreach( $this->db->select('SELECT goods_id FROM sdb_products WHERE bn like \''.trim($v).'%\' ') as $pidv)
                     $goodsId[] = $pidv['goods_id'];
                 $sql[]='(name LIKE \'%'.$word[$k].'%\' or bn LIKE \'%'.$word[$k].'%\' '.( $goodsId?' or goods_id IN ('.implode(',',$goodsId).') ':'' ).')';
             }
