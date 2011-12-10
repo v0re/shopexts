@@ -90,7 +90,8 @@ class cmd_products extends mdl_products {
 		
 
 	function wFilter($words){
-        $replace = array(",","+");
+        //$replace = array(",","+");
+        $replace = array(",");
         $enStr=preg_replace("/[^chr(128)-chr(256)]+/is"," ",$words);
         $otherStr=preg_replace("/[chr(128)-chr(256)]+/is"," ",$words);
         $words=$enStr.' '.$otherStr;
