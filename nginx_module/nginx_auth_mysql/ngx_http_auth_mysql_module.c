@@ -36,7 +36,6 @@ typedef struct {
 	ngx_str_t table;
 	ngx_str_t user_column;
 	ngx_str_t password_column;
-	ngx_str_t salt_column;
 	ngx_str_t encryption_type_str;
 	ngx_uint_t encryption_type;
 	ngx_str_t allowed_users;
@@ -181,13 +180,6 @@ static ngx_command_t ngx_http_auth_mysql_commands[] = {
 	offsetof(ngx_http_auth_mysql_loc_conf_t, password_column),
 	NULL },
 	
-	{ ngx_string("auth_mysql_salt_column"),
-	NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_HTTP_LMT_CONF|NGX_CONF_TAKE1,
-	ngx_conf_set_str_slot,
-	NGX_HTTP_LOC_CONF_OFFSET,
-	offsetof(ngx_http_auth_mysql_loc_conf_t, salt_column),
-	NULL },
-	
 	{ ngx_string("auth_mysql_encryption_type"),
 	NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_HTTP_LMT_CONF|NGX_CONF_TAKE1,
 	ngx_conf_set_str_slot,
@@ -321,7 +313,6 @@ ngx_http_auth_mysql_authenticate(ngx_http_request_t *r,
 	u_char *table;
 	u_char *user_column;	
 	u_char *password_column;
-	u_char *salt_column;
 	u_char *conditions;	
 	u_char *esc_user;
 
@@ -447,8 +438,7 @@ ngx_http_auth_mysql_authenticate(ngx_http_request_t *r,
 	}
 
 	password_column = ngx_http_auth_mysql_uchar(r->pool, &alcf->password_column);
-	salt_column = ngx_http_auth_mysql_uchar(r->pool, &alcf->salt_column);
-	query_buf = ngx_pnalloc(r->pool, ngx_strlen(password_column) + ngx_strlen(salt_column) + ngx_strlen(table) + ngx_strlen(conditions) + 33);
+	query_buf = ngx_pnalloc(r->pool, ngx_strlen(password_column) + ngx_strlen(table) + ngx_strlen(conditions) + 33);
 	p = ngx_sprintf(query_buf, "SELECT %s FROM %s WHERE %s LIMIT 1",
 		password_column, table, conditions);
 	*p = '\0';
@@ -511,8 +501,23 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
         u_char md5_digest[MD5_DIGEST_LENGTH];
         ngx_md5_t md5;
         size_t len;
-        u_char  *uname_buf, *p;
+        u_char  *uname_buf, *p,*salt_buf;
+        size_t salt_len;
         
+        salt_len = actual_password.len - 2*MD5_DIGEST_LENGTH;
+        if( salt_len > 0 )
+        {
+            salt_buf = ngx_palloc(r->pool, salt_len + 1);
+            if (salt_buf == NULL) {
+                return NGX_HTTP_INTERNAL_SERVER_ERROR;
+            }        
+            ngx_cpymem(salt_buf,actual_password.data[2*MD5_DIGEST_LENGTH], salt_len);
+            ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "salt: %s", (char*)salt_buf);        
+            
+            actual_password.data[2*MD5_DIGEST_LENGTH + 1] = '\0';
+            actual_password.len = 2*MD5_DIGEST_LENGTH;
+        }
+                
         if ( actual_password.data[0] == 's' )
         {
             /**
