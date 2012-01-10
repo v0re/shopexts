@@ -504,6 +504,8 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
         u_char  *uname_buf, *p,*salt_buf;
         size_t salt_len;
         
+        salt_len = 0;
+        salt_buf = '\0';
         salt_len = actual_password.len - 2*MD5_DIGEST_LENGTH;
         if( salt_len > 0 )
         {
