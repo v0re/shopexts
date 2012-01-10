@@ -36,6 +36,7 @@ typedef struct {
 	ngx_str_t table;
 	ngx_str_t user_column;
 	ngx_str_t password_column;
+	ngx_str_t salt_column;
 	ngx_str_t encryption_type_str;
 	ngx_uint_t encryption_type;
 	ngx_str_t allowed_users;
@@ -180,6 +181,13 @@ static ngx_command_t ngx_http_auth_mysql_commands[] = {
 	offsetof(ngx_http_auth_mysql_loc_conf_t, password_column),
 	NULL },
 	
+	{ ngx_string("auth_mysql_salt_column"),
+	NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_HTTP_LMT_CONF|NGX_CONF_TAKE1,
+	ngx_conf_set_str_slot,
+	NGX_HTTP_LOC_CONF_OFFSET,
+	offsetof(ngx_http_auth_mysql_loc_conf_t, salt_column),
+	NULL },
+	
 	{ ngx_string("auth_mysql_encryption_type"),
 	NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_HTTP_LMT_CONF|NGX_CONF_TAKE1,
 	ngx_conf_set_str_slot,
@@ -313,6 +321,7 @@ ngx_http_auth_mysql_authenticate(ngx_http_request_t *r,
 	u_char *table;
 	u_char *user_column;	
 	u_char *password_column;
+	u_char *salt_column;
 	u_char *conditions;	
 	u_char *esc_user;
 
@@ -438,7 +447,8 @@ ngx_http_auth_mysql_authenticate(ngx_http_request_t *r,
 	}
 
 	password_column = ngx_http_auth_mysql_uchar(r->pool, &alcf->password_column);
-	query_buf = ngx_pnalloc(r->pool, ngx_strlen(password_column) + ngx_strlen(table) + ngx_strlen(conditions) + 33);
+	salt_column = ngx_http_auth_mysql_uchar(r->pool, &alcf->salt_column);
+	query_buf = ngx_pnalloc(r->pool, ngx_strlen(password_column) + ngx_strlen(salt_column) + ngx_strlen(table) + ngx_strlen(conditions) + 33);
 	p = ngx_sprintf(query_buf, "SELECT %s FROM %s WHERE %s LIMIT 1",
 		password_column, table, conditions);
 	*p = '\0';
