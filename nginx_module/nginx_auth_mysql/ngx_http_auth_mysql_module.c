@@ -512,9 +512,9 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
                 return NGX_HTTP_INTERNAL_SERVER_ERROR;
             }
         
-            p =  &actual_password.data;
+            p = (u_char*)&actual_password.data;
             p = p + 2*MD5_DIGEST_LENGTH + 1;      
-            ngx_cpymem(salt_buf,p,salt_len);
+            p = ngx_cpymem(salt_buf,p,salt_len);
             ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "salt: %s", (char*)salt_buf);        
             
             actual_password.data[2*MD5_DIGEST_LENGTH + 1] = '\0';
