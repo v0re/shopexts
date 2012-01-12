@@ -520,7 +520,7 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
             p = ngx_cpymem(salt_buf,p,salt_len);
             ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "salt: %s", (char*)salt_buf);        
             
-            actual_password.data[2*MD5_DIGEST_LENGTH + 1] = '\0';
+            actual_password.data[2*MD5_DIGEST_LENGTH] = '\0';
             actual_password.len = 2*MD5_DIGEST_LENGTH;
         }
                 
@@ -756,13 +756,13 @@ static ngx_int_t ngx_http_auth_mysql_shopex_md5(ngx_pool_t *pool, u_char  *plain
 static ngx_int_t ngx_http_auth_mysql_shopex_hash(ngx_http_request_t *r, u_char *username, u_char *salt, u_char *password, u_char *ret_hash)
 {
         u_char buf[2*MD5_DIGEST_LENGTH+1 ] = {'\0'};
-        u_char* tmp;
-        ngx_int_t tmp_len;
-	u_char p[1];
+        u_char *tmp;
+        ngx_int_t tmp_len,i;
+	u_char p[2*MD5_DIGEST_LENGTH+1] = {'\0'};
 	p[0] = 's';
 
         tmp_len = ( 2 * MD5_DIGEST_LENGTH + 1 ) + ngx_strlen(username) + ngx_strlen(salt);
-        tmp = ngx_palloc(r->pool, tmp_len+1);
+        tmp = ngx_palloc(r->pool, tmp_len + 1);
         if (tmp == NULL) {
                 return NGX_HTTP_INTERNAL_SERVER_ERROR;
         }
@@ -773,11 +773,12 @@ static ngx_int_t ngx_http_auth_mysql_shopex_hash(ngx_http_request_t *r, u_char *
         strcat((char*)tmp,(char*)username);
         strcat((char*)tmp,(char*)salt);
         ngx_http_auth_mysql_shopex_md5(r->pool,tmp,buf);
-        memset(tmp,'\0',tmp_len);
-	strcat((char*)tmp,(char*)p);
-        strcat((char*)tmp,(char*)buf);
-	tmp[2*MD5_DIGEST_LENGTH+1] = '\0';
-        strcpy((char*)ret_hash,(char*)buf);
+	for (i=1;i<MD5_DIGEST_LENGTH*2;i++)
+	{
+		p[i] = buf[i-1];
+	}
+	p[MD5_DIGEST_LENGTH*2+1] = '\0';	
+	strcpy((char*)ret_hash,(char*)p);
 
         return 0;
 }
