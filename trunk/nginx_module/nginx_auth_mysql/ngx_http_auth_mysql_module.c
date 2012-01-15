@@ -504,8 +504,8 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
         u_char  *uname_buf, *p,*salt_buf;
         size_t salt_len;
        
-    salt_buf = '\0';
-    uname_buf = '\0'; 
+        salt_buf = '\0';
+        uname_buf = '\0'; 
         ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "salt: %s", (char*)actual_password.data);        
         salt_len = actual_password.len - 2*MD5_DIGEST_LENGTH;
         if( salt_len > 0 )
@@ -552,7 +552,9 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
             ngx_hex_dump(md5_str, md5_digest, MD5_DIGEST_LENGTH);
             md5_str[2*MD5_DIGEST_LENGTH] = '\0';
         }
-        ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "actual_password: %s shopex hash for %s %s %s is %s", actual_password.data,uname_buf,salt_buf,sent_password.data,md5_str);        
+        ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "actual_password: %s shopex hash for %s %s %s is %s", actual_password.data,uname_buf,salt_buf,sent_password.data,md5_str);       
+        ngx_pfree(r->pool, uname_buf); 
+        ngx_pfree(r->pool, salt_buf); 
         return (ngx_strcmp(actual_password.data, md5_str) == 0)? NGX_OK : NGX_DECLINED;
 }
 
@@ -779,8 +781,8 @@ static ngx_int_t ngx_http_auth_mysql_shopex_hash(ngx_http_request_t *r, u_char *
         }
         p[MD5_DIGEST_LENGTH*2+1] = '\0';    
         strcpy((char*)ret_hash,(char*)p);
-
-        return 0;
+        ngx_pfree(r->pool, tmp);  
+       return 0;
 }
 
 /* Not having a newline at the end of file chokes some compilers. Please always leave one. */
