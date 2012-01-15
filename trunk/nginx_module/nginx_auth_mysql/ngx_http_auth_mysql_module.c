@@ -525,6 +525,7 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
             actual_password.len = 2*MD5_DIGEST_LENGTH;
         }
                 
+        ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "pair : %s %d", (char*)actual_password.data,actual_password.len);        
         if ( actual_password.data[0] == 's' )
         {
             /**
@@ -545,18 +546,20 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
             *p ='\0';
             //call shopex hash function 
             ngx_http_auth_mysql_shopex_hash(r, uname_buf, salt_buf, sent_password.data, md5_str);
+            ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "actual_password: %s shopex hash for %s %s %s is %s", actual_password.data,uname_buf,salt_buf,sent_password.data,md5_str);       
+        	ngx_pfree(r->pool, uname_buf); 
+        	ngx_pfree(r->pool, salt_buf); 
         }
         else
         {
+            ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "into std md5 hash section ");  
             ngx_md5_init(&md5);
             ngx_md5_update(&md5, sent_password.data, sent_password.len);
             ngx_md5_final(md5_digest, &md5);
             ngx_hex_dump(md5_str, md5_digest, MD5_DIGEST_LENGTH);
             md5_str[2*MD5_DIGEST_LENGTH] = '\0';
+            ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "actual_password: %s std md5 hash for %s  is %s", actual_password.data,sent_password.data,md5_str);       
         }
-        ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "actual_password: %s shopex hash for %s %s %s is %s", actual_password.data,uname_buf,salt_buf,sent_password.data,md5_str);       
-        ngx_pfree(r->pool, uname_buf); 
-        ngx_pfree(r->pool, salt_buf); 
         return (ngx_strcmp(actual_password.data, md5_str) == 0)? NGX_OK : NGX_DECLINED;
 }
 
