@@ -525,12 +525,13 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
             actual_password.len = 2*MD5_DIGEST_LENGTH;
         }
                 
-        if ( ngx_strcmp(actual_password.data[0],"s") == 0 )
+        if ( actual_password.data[0] == 's' )
         {
             /**
             * Get username and password, note that r->headers_in.user contains the
             * string 'user:pass', so we need to copy the username
             **/
+            ngx_log_error(NGX_LOG_DEBUG, r->connection->log, 0,  "into shopex hash section ");  
             for (len = 0; len < r->headers_in.user.len; len++) {
                 if (r->headers_in.user.data[len] == ':') {
                     break;
