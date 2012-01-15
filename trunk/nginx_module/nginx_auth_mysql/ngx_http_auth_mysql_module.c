@@ -525,7 +525,7 @@ ngx_http_auth_mysql_check_md5(ngx_http_request_t *r, ngx_str_t sent_password, ng
             actual_password.len = 2*MD5_DIGEST_LENGTH;
         }
                 
-        if ( ngx_strcmp(actual_password.data[0],'s' )== 0 )
+        if ( ngx_strcmp(actual_password.data[0],"s") == 0 )
         {
             /**
             * Get username and password, note that r->headers_in.user contains the
