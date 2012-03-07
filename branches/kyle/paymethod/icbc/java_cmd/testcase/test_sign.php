@@ -5,7 +5,7 @@ $prikey = $realpath."/cert/user.key";
 $password = "123456";
 
 $message = 'i am plain text';
-$merSignMsg = icbc_sign($message);
+$merSignMsg = icbc_sign($prikey,$password,$message);
 print $merSignMsg;
 
 echo "<hr>all done";
