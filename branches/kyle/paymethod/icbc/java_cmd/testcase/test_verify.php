@@ -14,7 +14,7 @@ var_export($rst);
 * @param String $pubcert	 公钥文件的绝对路径，注意这里应该是工行的公钥文件ebb2cpublic.crt 
 * @param String $message	 需要验签的明文
 * @param String enc_text     验签的密文
-* @return String enc_text     验签成功返回1，失败返回0
+* @return int    验签成功返回1，失败返回0
 * @工行验签函数
 */
 function icbc_verify($pubcert,$message,$enc_text){
