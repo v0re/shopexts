@@ -33,7 +33,7 @@ function icbc_sign($message){
             $merSignMsg .= fread($handle,1024);
         }
         pclose($handle);
-        echo $merSignMsg;
+        $merSignMsg = str_replace("\n","",$merSignMsg);
         if(preg_match('/<message>(.+)<\/message>/',$merSignMsg,$match)){
             $merSignMsg = $match[1];
         }
