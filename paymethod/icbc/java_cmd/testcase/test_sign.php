@@ -2,7 +2,7 @@
 
 $realpath = dirname(__FILE__);
 $prikey = $realpath."/cert/user.key";
-$password = "11111111";
+$password = "123456";
 
 $message = 'i am plain text';
 $merSignMsg = icbc_sign($message);
@@ -25,7 +25,7 @@ function icbc_sign($message){
             $prikey = str_replace('/','\\',$prikey);
         }
 
-	    $cmd = "java icbc_sign -classpath {$classpath}  ".$prikey." ".$password." '{$message}'";
+	    $cmd = "java icbc_sign -classpath {$classpath} {$prikey} {$password} \"{$message}\"";
     
 	    echo $cmd;
 	    die();
