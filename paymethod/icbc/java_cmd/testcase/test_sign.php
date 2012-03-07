@@ -37,10 +37,6 @@ function icbc_sign($message){
         if(preg_match('/<message>(.+)<\/message>/',$merSignMsg,$match)){
             $merSignMsg = $match[1];
         }
-    	var_dump($match);
+    	return $merSignMsg;
 }
 
-
-
-
-?>
