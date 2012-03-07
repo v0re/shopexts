@@ -8,6 +8,15 @@ $sigend = "zUKBqnwN5qQT6vrphJDA9IShGuqxoopbntwuQiNM6fuJiVoaYlPE+D+TxP7PQhL5FY3BV
 $rst = icbc_verify($pubcert,$message,$sigend);
 var_export($rst);
 
+/*
+* Comment for PHP.
+* @access public
+* @param String $title	 Title Name of the Field
+* @param Int $id	 Id of the field
+* @return void|bool	 Result
+* @desc Example of the PHP function&class comment.
+*/
+
 function icbc_verify($pubcert,$message,$enc_text){
     $libpath = realpath(dirname(__FILE__)."/lib");
     $self_classpath = $libpath.":";

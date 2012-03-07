@@ -27,9 +27,16 @@ import cn.com.infosec.icbc.ReturnValue;
 
 			byte[] DecSign = ReturnValue.base64dec(EncSign);
             int veriyCode = ReturnValue.verifySign(byteSrc,byteSrc.length,bcert,DecSign);
+            
+            int rnt = 0;
+            if( veriyCode == 0 ){
+                rnt = 1;
+            }else{
+                rnt = 0;
+            }
 
 			System.out.print("<message>");
-			System.out.print(veriyCode);
+			System.out.print(rnt);
 			System.out.print("</message>");
 		}
 		catch(Exception ex)
