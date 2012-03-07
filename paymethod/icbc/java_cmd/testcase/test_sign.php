@@ -26,9 +26,6 @@ function icbc_sign($message){
         }
 
 	    $cmd = "java -classpath {$classpath} icbc_sign {$prikey} {$password} \"{$message}\"";
-    
-	    echo $cmd;
-	    die();
 	
 	    $handle = popen($cmd, 'r');
     	while(!feof($handle)){ 
@@ -38,7 +35,7 @@ function icbc_sign($message){
     	if(preg_match('/<message>(.+)<\/message>/',$merSignMsg,$match)){
     		$merSignMsg = $match[1];
     	}
-    	var_export($merSignMsg);
+    	return $merSignMsg;
 }
 
 
