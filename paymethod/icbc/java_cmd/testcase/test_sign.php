@@ -25,7 +25,7 @@ function icbc_sign($message){
             $prikey = str_replace('/','\\',$prikey);
         }
 
-	    $cmd = "java icbc_sign -classpath {$classpath} {$prikey} {$password} \"{$message}\"";
+	    $cmd = "java -classpath {$classpath} icbc_sign {$prikey} {$password} \"{$message}\"";
     
 	    echo $cmd;
 	    die();
