@@ -28,14 +28,15 @@ function icbc_sign($message){
 	    $cmd = "java -classpath {$classpath} icbc_sign {$prikey} {$password} \"{$message}\"";
 	
 	    $handle = popen($cmd, 'r');
-    	while(!feof($handle)){ 
-    		$merSignMsg .= fread($handle,1024);
-    	}
-    	pclose($handle);
-    	if(preg_match('/<message>(.+)<\/message>/',$merSignMsg,$match)){
-    		$merSignMsg = $match[1];
-    	}
-    	return $merSignMsg;
+	    $merSignMsg = '';
+        while(!feof($handle)){ 
+            $merSignMsg .= fread($handle,1024);
+        }
+        pclose($handle);
+        if(preg_match('/<message>(.+)<\/message>/',$merSignMsg,$match)){
+            $merSignMsg = $match[1];
+        }
+    	var_dump($merSignMsg);
 }
 
 
