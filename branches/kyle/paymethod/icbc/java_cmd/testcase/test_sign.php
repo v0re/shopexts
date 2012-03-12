@@ -27,7 +27,7 @@ function icbc_sign($prikey,$password,$message){
     	$libpath = realpath(dirname(__FILE__)."/lib");
 		$self_classpath = $libpath.":";
 		$self_classpath .= $libpath."/icbc.jar:";
-		$self_classpath .= $libpath."/InfosecCrypto_Java1_02_JDK13+.jar:";
+		$self_classpath .= $libpath."/InfosecCrypto_Java1_02_JDK14+.jar:";
 		$glob_classpath = getenv('CLASSPATH');
 		$classpath = $self_classpath.':'.$glob_classpath; 
 		
