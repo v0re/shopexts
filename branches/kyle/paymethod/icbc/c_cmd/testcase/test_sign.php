@@ -24,6 +24,9 @@ echo "<hr>all done";
 */
 
 function icbc_sign($prikey,$password,$message){
-    
+    $cmd = "/bin/icbc_sign '{$prikey}' '{$password}' '{$message}'";
+    $handle = popen($cmd, 'r');
+    $merSignMsg = fread($handle, 2096);
+    return $merSignMsg;
 }
 
