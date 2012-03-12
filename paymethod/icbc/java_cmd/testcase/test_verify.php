@@ -31,6 +31,7 @@ function icbc_verify($pubcert,$message,$enc_text){
         $prikey = str_replace('/','\\',$prikey);
     }
     
+    $message = addslashes($message);
     $cmd = "java -classpath {$classpath} icbc_verify {$pubcert}  \"{$message}\"  \"{$enc_text}\"";
 
 	$handle = popen($cmd, 'r');

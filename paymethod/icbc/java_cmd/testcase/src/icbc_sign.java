@@ -21,9 +21,9 @@ import cn.com.infosec.icbc.ReturnValue;
 			//System.out.println(priCertFile);
 			//System.out.println(password);
 			//System.out.println(tranData);
-					
-            byte[] byteSrc = tranData.getBytes();
-            char[] keyPass = password.toCharArray();
+						
+            byte[] byteSrc = tranData.trim().getBytes();
+            char[] keyPass = password.trim().toCharArray();
             
             FileInputStream in2 = new FileInputStream(priCertFile);
             byte[] bkey = new byte[in2.available()];
