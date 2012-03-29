@@ -38,6 +38,7 @@ import cn.com.infosec.icbc.ReturnValue;
             }            
             byte[] EncSign = ReturnValue.base64enc(sign);
             String SignMsgBase64=new String(EncSign).toString();
+
 			System.out.println("test bkey:"+new String(bkey).toString());  
 			System.out.print("test <message>");
 			System.out.print(SignMsgBase64);
